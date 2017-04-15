@@ -5,11 +5,6 @@ require('dotenv').config();
 var mongojs = require('mongojs');
 var db = mongojs(process.env.MONGODB_URI, ['recipes']);
 
-/* GET api listing. */
-router.get('/', (req, res) => {
-  res.send('api works');
-});
-
 // Get all recipes
 router.get('/recipes', function (req, res, next) { 
     db.recipes.find(function (err, recipes) { 
@@ -33,13 +28,13 @@ router.get('/recipe/:id', function (req, res, next) {
 // Save recipe
 router.post('/recipe', function (req, res, next) { 
     var recipe = req.body;
-    if (!recipe.name) {
+    if (!recipe.title) {
         res.status(400);
         res.json({
-            "error": "No Recipe Name"
+            "error": "No Recipe Title"
         });
     } else {
-        db.tasks.save(task, function(err, task){
+        db.recipes.save(recipe, function(err, recipe){
             if(err){
             res.send(err);
         }
