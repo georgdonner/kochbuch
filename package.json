@@ -5,7 +5,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build && node server.js",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
@@ -20,7 +20,11 @@
     "@angular/platform-browser": "^4.0.0",
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
+    "body-parser": "^1.17.1",
     "core-js": "^2.4.1",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.2",
+    "mongojs": "^2.4.0",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
   },
