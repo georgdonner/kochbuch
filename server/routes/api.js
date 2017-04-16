@@ -44,7 +44,7 @@ router.post('/recipe', function (req, res, next) {
  });
 
 // Delete recipe
-router.delete('/recipe/:id', function (req, res, next) { 
+router.delete('/recipe/:id', function (req, res, next) {
     db.recipes.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, recipe) { 
         if(err){
             res.send(err);

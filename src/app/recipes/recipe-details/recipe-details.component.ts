@@ -17,6 +17,9 @@ export class RecipeDetailsComponent implements OnInit {
   @Output()
   activeRecipe: EventEmitter<Recipe> = new EventEmitter();
 
+  @Output()
+  delete: EventEmitter<Recipe> = new EventEmitter();
+
   fullDetails: boolean;
 
   constructor() { }
@@ -32,6 +35,10 @@ export class RecipeDetailsComponent implements OnInit {
     } else {
       this.activeRecipe.emit(null);
     }
+  }
+
+  deleteRecipe() {
+    this.delete.emit(this.recipe);
   }
 
 }

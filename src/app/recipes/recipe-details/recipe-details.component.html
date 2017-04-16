@@ -11,4 +11,5 @@
   </p>
   <p *ngFor="let ingredient of recipe.ingredients">{{ ingredient.quantity }} {{ ingredient.name }}</p>
   <p class="card-text">{{ recipe.description }}</p>
+  <button class="btn btn-danger" type="button" (click)="deleteRecipe()">Löschen</button>
 </div>

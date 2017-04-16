@@ -5,5 +5,6 @@
 
   <app-recipe-list
     [recipes]="recipes"
-    (isActiveDetails)="onActiveDetails($event)"></app-recipe-list>
+    (isActiveDetails)="onActiveDetails($event)"
+    (delete)="deleteRecipe($event)"></app-recipe-list>
 </div>

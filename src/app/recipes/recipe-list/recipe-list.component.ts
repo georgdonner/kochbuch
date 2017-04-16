@@ -14,7 +14,7 @@ export class RecipeListComponent {
   recipes: Recipe[];
 
   @Output()
-  add: EventEmitter<Recipe> = new EventEmitter();
+  delete: EventEmitter<Recipe> = new EventEmitter();
 
   @Output()
   isActiveDetails: EventEmitter<boolean> = new EventEmitter();
@@ -32,6 +32,10 @@ export class RecipeListComponent {
       this.activeRecipe = false;
     }
     this.isActiveDetails.emit(this.activeRecipe);
+  }
+
+  deleteRecipe(recipe: Recipe) {
+    this.delete.emit(recipe);
   }
 
 }

@@ -9,5 +9,6 @@
   <app-recipe-details
     [recipe]="selectedRecipe"
     [active]="activeRecipe"
-    (activeRecipe)="onActiveRecipe($event)"></app-recipe-details>
+    (activeRecipe)="onActiveRecipe($event)"
+    (delete)="deleteRecipe($event)"></app-recipe-details>
 </div>

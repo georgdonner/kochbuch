@@ -30,6 +30,15 @@ export class RecipesComponent implements OnInit {
       });
   }
 
+  deleteRecipe(recipe) {
+    this.recipesService.deleteRecipe(recipe._id)
+      .subscribe(() => null);
+    // no active recipe anymore
+    this.activeRecipe = false;
+    // reload to get fresh db data and index view
+    location.reload();
+  }
+
   onActiveDetails(active: boolean) {
     this.activeRecipe = active;
   }
