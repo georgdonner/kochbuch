@@ -1,8 +1,14 @@
-<div class="card card-block" (click)="toggleFullDetails()">
+<div class="card card-block" *ngIf="!fullDetails" (click)="toggleFullDetails()">
   <h4 class="card-title">{{ recipe.title }}</h4>
+  <p class="card-text">{{ recipe.description }}</p>
+</div>
+<div *ngIf="fullDetails">
+  <h4 class="card-title">{{ recipe.title }}</h4>
+  <button type="button" (click)="toggleFullDetails()">X</button>
   <p class="card-text" *ngIf="fullDetails">
     Das Rezept dauert etwa {{ recipe.duration }} Minuten 
     und hat einen Schwierigkeitsgrad von {{ recipe.difficulty }}.
   </p>
+  <p *ngFor="let ingredient of recipe.ingredients">{{ ingredient.quantity }} {{ ingredient.name }}</p>
   <p class="card-text">{{ recipe.description }}</p>
 </div>
