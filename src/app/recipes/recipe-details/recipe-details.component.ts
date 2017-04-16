@@ -9,6 +9,7 @@ import { Recipe } from "../recipe";
 export class RecipeDetailsComponent {
 
   @Input() recipe: Recipe;
+  @Input() fullDetails: boolean;
 
   constructor() { }
 

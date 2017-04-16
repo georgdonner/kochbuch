@@ -10,6 +10,9 @@ import { Ingredient } from "../ingredient";
 })
 export class RecipesComponent implements OnInit {
 
+  // full details to be shown?
+  fullDetails: boolean;
+
   // instantiate recipes to an empty array
   recipes: Recipe[];
   ingredients = new Array<Ingredient>();
@@ -45,5 +48,9 @@ export class RecipesComponent implements OnInit {
         this.ingredients.push(ingr);
         this.newIngredient = new Ingredient('', '');
       }
+  }
+
+  toggleFullDetails() {
+    this.fullDetails = !this.fullDetails;
   }
 }

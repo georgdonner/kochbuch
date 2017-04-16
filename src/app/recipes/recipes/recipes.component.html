@@ -12,9 +12,9 @@
     </div>
   </form>
 
-  <div class="row" *ngFor="let recipe of recipes">
+  <div class="row" *ngFor="let recipe of recipes" (click)="toggleFullDetails()">
     <app-recipe-details
       [recipe]="recipe"
-      (click)=""></app-recipe-details>
+      [fullDetails]="fullDetails"></app-recipe-details>
   </div>
 </div>
