@@ -10,6 +10,7 @@ import { RecipesComponent } from './recipes/recipes/recipes.component';
 import { RecipesService } from "./recipes/recipes.service";
 import { RecipeDetailsComponent } from './recipes/recipe-details/recipe-details.component';
 import { RecipeFormComponent } from './recipes/recipe-form/recipe-form.component';
+import { RecipeListComponent } from './recipes/recipe-list/recipe-list.component';
 
 const ROUTES = [
   {
@@ -32,7 +33,8 @@ const ROUTES = [
     AppComponent,
     RecipesComponent,
     RecipeDetailsComponent,
-    RecipeFormComponent
+    RecipeFormComponent,
+    RecipeListComponent
   ],
   imports: [
     BrowserModule,

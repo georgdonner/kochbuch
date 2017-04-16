@@ -2,9 +2,7 @@
   <app-recipe-form
     (add)="addRecipe($event)"></app-recipe-form>
 
-  <div class="row" *ngFor="let recipe of recipes" (click)="toggleFullDetails()">
-    <app-recipe-details
-      [recipe]="recipe"
-      [fullDetails]="fullDetails"></app-recipe-details>
-  </div>
+  <app-recipe-list
+    [recipes]="recipes"
+    (activeDetails)="onActiveDetails($event)"></app-recipe-list>
 </div>

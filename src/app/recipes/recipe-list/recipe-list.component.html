@@ -1,0 +1,5 @@
+<div class="row" *ngFor="let recipe of recipes" (click)="toggleFullDetails()">
+    <app-recipe-details
+      [recipe]="recipe"
+      [fullDetails]="fullDetails"></app-recipe-details>
+</div>

@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Recipe } from "../recipe";
 import { RecipesService } from "../recipes.service";
-import { Ingredient } from "../ingredient";
 
 @Component({
   selector: 'app-recipes',
@@ -10,15 +9,12 @@ import { Ingredient } from "../ingredient";
 })
 export class RecipesComponent implements OnInit {
 
-  // full details to be shown?
-  fullDetails: boolean;
+  @Input()
+  showFullDetails: boolean;
 
-  // instantiate recipes to an empty array
   recipes: Recipe[];
 
-  constructor(private recipesService: RecipesService) {
-
-  }
+  constructor(private recipesService: RecipesService) { }
 
   ngOnInit() {
     // retrieve recipes from the API
@@ -27,14 +23,15 @@ export class RecipesComponent implements OnInit {
     });
   }
 
-  addRecipe(newRecipe: Recipe){
+  addRecipe(newRecipe) {
     this.recipesService.addRecipe(newRecipe)
       .subscribe(recipe => {
         this.recipes.push(recipe);
       });
   }
 
-  toggleFullDetails() {
-    this.fullDetails = !this.fullDetails;
+  onActiveDetails(active: boolean) {
+    this.showFullDetails = active;
+    console.log(this.showFullDetails);
   }
 }

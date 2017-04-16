@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { Recipe } from "../recipe";
 import { Ingredient } from "../ingredient";
 
@@ -18,7 +18,7 @@ export class RecipeFormComponent {
 
   constructor() { }
 
-  addRecipe(recipe: Recipe){
+  addRecipe(recipe: Recipe) {
     this.add.emit(recipe);
   }
 
