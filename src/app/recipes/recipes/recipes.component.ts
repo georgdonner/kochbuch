@@ -32,6 +32,5 @@ export class RecipesComponent implements OnInit {
 
   onActiveDetails(active: boolean) {
     this.activeRecipe = active;
-    console.log(this.activeRecipe);
   }
 }

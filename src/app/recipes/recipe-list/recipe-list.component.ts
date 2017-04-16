@@ -8,11 +8,10 @@ import { Recipe } from "../recipe";
 })
 export class RecipeListComponent {
 
-  activeRecipes = 0;
+  selectedRecipe: Recipe;
 
   @Input()
   recipes: Recipe[];
-  activeDetails: boolean;
 
   @Output()
   add: EventEmitter<Recipe> = new EventEmitter();
@@ -20,20 +19,19 @@ export class RecipeListComponent {
   @Output()
   isActiveDetails: EventEmitter<boolean> = new EventEmitter();
 
-  constructor() { }
+  activeRecipe: boolean;
 
-  onActiveDetails(active: boolean) {
-    if (active) {
-      this.activeRecipes++;
+  constructor() {
+  }
+
+  onActiveRecipe(recipe: Recipe) {
+    if (recipe != null) {
+      this.selectedRecipe = recipe;
+      this.activeRecipe = true;
     } else {
-      this.activeRecipes--;
+      this.activeRecipe = false;
     }
-    console.log(this.activeRecipes);
-    if (this.activeRecipes > 0) {
-      this.isActiveDetails.emit(true);
-    } else {
-      this.isActiveDetails.emit(false);
-    }
+    this.isActiveDetails.emit(this.activeRecipe);
   }
 
 }
