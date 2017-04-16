@@ -8,21 +8,32 @@ import { Recipe } from "../recipe";
 })
 export class RecipeListComponent {
 
-  fullDetails: boolean;
+  activeRecipes = 0;
 
   @Input()
   recipes: Recipe[];
+  activeDetails: boolean;
 
   @Output()
   add: EventEmitter<Recipe> = new EventEmitter();
 
   @Output()
-  activeDetails: EventEmitter<boolean> = new EventEmitter();
+  isActiveDetails: EventEmitter<boolean> = new EventEmitter();
 
   constructor() { }
 
-  toggleFullDetails() {
-    this.fullDetails = !this.fullDetails;
-    this.activeDetails.emit(this.fullDetails);
+  onActiveDetails(active: boolean) {
+    if (active) {
+      this.activeRecipes++;
+    } else {
+      this.activeRecipes--;
+    }
+    console.log(this.activeRecipes);
+    if (this.activeRecipes > 0) {
+      this.isActiveDetails.emit(true);
+    } else {
+      this.isActiveDetails.emit(false);
+    }
   }
+
 }

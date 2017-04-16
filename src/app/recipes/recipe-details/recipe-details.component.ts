@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Recipe } from "../recipe";
 
 @Component({
@@ -8,9 +8,19 @@ import { Recipe } from "../recipe";
 })
 export class RecipeDetailsComponent {
 
-  @Input() recipe: Recipe;
-  @Input() fullDetails: boolean;
+  @Input()
+  recipe: Recipe;
+
+  @Output()
+  activeDetails: EventEmitter<boolean> = new EventEmitter();
+
+  fullDetails: boolean;
 
   constructor() { }
+
+  toggleFullDetails() {
+    this.fullDetails = !this.fullDetails;
+    this.activeDetails.emit(this.fullDetails);
+  }
 
 }

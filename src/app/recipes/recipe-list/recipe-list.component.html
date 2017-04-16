@@ -1,5 +1,5 @@
-<div class="row" *ngFor="let recipe of recipes" (click)="toggleFullDetails()">
+<div class="row" *ngFor="let recipe of recipes">
     <app-recipe-details
       [recipe]="recipe"
-      [fullDetails]="fullDetails"></app-recipe-details>
+      (activeDetails)="onActiveDetails($event)"></app-recipe-details>
 </div>
