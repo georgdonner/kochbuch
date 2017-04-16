@@ -1,9 +1,12 @@
-import { Ingredient } from "../ingredient";
+import { Ingredient } from "./ingredient";
 
 export class Recipe {
-  title: string;
-  duration: number;
-  difficulty: number;
-  ingredients: Ingredient[];
-  description: string;
+
+    constructor(
+      public title: string,
+      public duration: number,
+      public difficulty: number,
+      public ingredients: Array<Ingredient>,
+      public description: string
+    ) {  }
 }

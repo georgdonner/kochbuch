@@ -1,13 +1,13 @@
 <div class="container">
   <form class="well">
     <div class="form-group">
-      <input type="text" [(ngModel)]="title" name="title" class="form-control" placeholder="Title">
-      <input type="number" [(ngModel)]="duration" name="duration" id="duration" class="form-control"><span>Minutes</span>
-      <input type="number" [(ngModel)]="difficulty" name="difficulty" id="difficulty" class="form-control"><span>Difficulty</span>
+      <input type="text" [(ngModel)]="model.title" name="title" class="form-control" placeholder="Titel">
+      <input type="number" [(ngModel)]="model.duration" name="duration" id="duration" class="form-control"><span>Minuten</span>
+      <input type="number" [(ngModel)]="model.difficulty" name="difficulty" id="difficulty" class="form-control"><span>Schwierigkeit</span>
       <input type="text" [(ngModel)]="newIngredient.name" name="newIngredient.name" class="form-control" placeholder="Name">
-      <input type="text" [(ngModel)]="newIngredient.quantity" name="newIngredient.quantity" class="form-control" placeholder="Quantity">
+      <input type="text" [(ngModel)]="newIngredient.quantity" name="newIngredient.quantity" class="form-control" placeholder="Menge">
       <input type="button" value="Add" class="btn btn-primary" (click)=addIngredient($event)>
-      <input type="text" [(ngModel)]="description" name="description" class="form-control" placeholder="Description">
+      <input type="text" [(ngModel)]="model.description" name="description" class="form-control" placeholder="Beschreibung">
       <input type="button" value="Add" class="btn btn-primary" (click)=addRecipe($event)>
     </div>
   </form>

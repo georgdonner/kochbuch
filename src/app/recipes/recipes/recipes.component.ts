@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Recipe } from "../recipe";
 import { RecipesService } from "../recipes.service";
-import { Ingredient } from "../../ingredient";
+import { Ingredient } from "../ingredient";
 
 @Component({
   selector: 'app-recipes',
@@ -12,16 +12,12 @@ export class RecipesComponent implements OnInit {
 
   // instantiate recipes to an empty array
   recipes: Recipe[];
-  title: string;
-  duration: number;
-  difficulty: number;
-  ingredients: Ingredient[];
-  newIngredient: Ingredient;
-  description: string;
+  ingredients = new Array<Ingredient>();
+  newIngredient = new Ingredient('', '');
+  model = new Recipe('', 0, 0, this.ingredients, '');
 
   constructor(private recipesService: RecipesService) {
-    this.ingredients = new Array<Ingredient>();
-    this.newIngredient = new Ingredient();
+
   }
 
   ngOnInit() {
@@ -33,13 +29,8 @@ export class RecipesComponent implements OnInit {
 
   addRecipe(event){
     event.preventDefault();
-    var newRecipe = {
-      title: this.title,
-      duration: this.duration,
-      difficulty: this.difficulty,
-      ingredients: this.ingredients,
-      description: this.description
-    }
+
+    const newRecipe = this.model;
 
     this.recipesService.addRecipe(newRecipe)
       .subscribe(recipe => {
@@ -48,17 +39,11 @@ export class RecipesComponent implements OnInit {
   }
 
   addIngredient() {
-        if (this.newIngredient) {
+    if (this.newIngredient) {
+        const ingr = this.newIngredient;
 
-            var entry = {
-                'name': this.newIngredient.name,
-                'quantity': this.newIngredient.quantity
-            };
-
-            this.ingredients.push(entry);
-            this.newIngredient.name = '';
-            this.newIngredient.quantity = '';
-        }
-    }
-
+        this.ingredients.push(ingr);
+        this.newIngredient = new Ingredient('', '');
+      }
+  }
 }
