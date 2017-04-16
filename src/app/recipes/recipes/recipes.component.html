@@ -1,5 +1,6 @@
 <div class="container">
   <app-recipe-form
+    *ngIf="!activeRecipe"
     (add)="addRecipe($event)"></app-recipe-form>
 
   <app-recipe-list

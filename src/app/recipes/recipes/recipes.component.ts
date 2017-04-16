@@ -10,7 +10,7 @@ import { RecipesService } from "../recipes.service";
 export class RecipesComponent implements OnInit {
 
   @Input()
-  showFullDetails: boolean;
+  activeRecipe = false;
 
   recipes: Recipe[];
 
@@ -31,7 +31,7 @@ export class RecipesComponent implements OnInit {
   }
 
   onActiveDetails(active: boolean) {
-    this.showFullDetails = active;
-    console.log(this.showFullDetails);
+    this.activeRecipe = active;
+    console.log(this.activeRecipe);
   }
 }
