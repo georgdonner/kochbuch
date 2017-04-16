@@ -15,9 +15,6 @@ export class RecipesComponent implements OnInit {
 
   // instantiate recipes to an empty array
   recipes: Recipe[];
-  ingredients = new Array<Ingredient>();
-  newIngredient = new Ingredient('', '');
-  model = new Recipe('', 0, 0, this.ingredients, '');
 
   constructor(private recipesService: RecipesService) {
 
@@ -30,24 +27,11 @@ export class RecipesComponent implements OnInit {
     });
   }
 
-  addRecipe(event){
-    event.preventDefault();
-
-    const newRecipe = this.model;
-
+  addRecipe(newRecipe: Recipe){
     this.recipesService.addRecipe(newRecipe)
       .subscribe(recipe => {
         this.recipes.push(recipe);
-      })
-  }
-
-  addIngredient() {
-    if (this.newIngredient) {
-        const ingr = this.newIngredient;
-
-        this.ingredients.push(ingr);
-        this.newIngredient = new Ingredient('', '');
-      }
+      });
   }
 
   toggleFullDetails() {

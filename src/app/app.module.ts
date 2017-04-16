@@ -9,6 +9,7 @@ import { RecipesComponent } from './recipes/recipes/recipes.component';
 
 import { RecipesService } from "./recipes/recipes.service";
 import { RecipeDetailsComponent } from './recipes/recipe-details/recipe-details.component';
+import { RecipeFormComponent } from './recipes/recipe-form/recipe-form.component';
 
 const ROUTES = [
   {
@@ -30,7 +31,8 @@ const ROUTES = [
   declarations: [
     AppComponent,
     RecipesComponent,
-    RecipeDetailsComponent
+    RecipeDetailsComponent,
+    RecipeFormComponent
   ],
   imports: [
     BrowserModule,
