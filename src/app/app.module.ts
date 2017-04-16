@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { RecipesComponent } from './recipes/recipes/recipes.component';
 
 import { RecipesService } from "./recipes/recipes.service";
+import { RecipeDetailsComponent } from './recipes/recipe-details/recipe-details.component';
 
 const ROUTES = [
   {
@@ -18,13 +19,18 @@ const ROUTES = [
   {
     path: 'recipes',
     component: RecipesComponent
+  },
+  {
+    path: 'recipe/:id',
+    component: RecipeDetailsComponent
   }
 ]
 
 @NgModule({
   declarations: [
     AppComponent,
-    RecipesComponent
+    RecipesComponent,
+    RecipeDetailsComponent
   ],
   imports: [
     BrowserModule,

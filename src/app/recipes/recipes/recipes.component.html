@@ -13,9 +13,8 @@
   </form>
 
   <div class="row" *ngFor="let recipe of recipes">
-    <div class="card card-block">
-      <h4 class="card-title">{{ recipe.title }}</h4>
-      <p class="card-text">{{ recipe.description }}</p>
-    </div>
+    <app-recipe-details
+      [recipe]="recipe"
+      (click)=""></app-recipe-details>
   </div>
 </div>
