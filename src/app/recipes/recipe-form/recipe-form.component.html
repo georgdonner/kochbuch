@@ -7,6 +7,7 @@
     <input type="text" [(ngModel)]="newIngredient.quantity" name="newIngredient.quantity" class="form-control" placeholder="Menge">
     <input type="button" value="Add" class="btn btn-primary" (click)=addIngredient($event)>
     <input type="text" [(ngModel)]="model.description" name="description" class="form-control" placeholder="Beschreibung">
+    <input type="button" value="Upload" onclick="showPicker()" />
     <input type="button" value="Add" class="btn btn-primary" (click)=addRecipe(model)>
   </div>
 </form>
