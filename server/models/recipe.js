@@ -31,7 +31,7 @@ module.exports.addRecipe = function (newRecipe, callback) {
 };
 
 module.exports.removeRecipe = function (id, callback) {
-    Recipe.remove({ _id: id}, callback);
+    Recipe.findOneAndRemove({ _id: id}, callback);
 };
 
 module.exports.updateRecipe = function (id, newData, callback) {

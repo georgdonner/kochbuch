@@ -22,8 +22,8 @@ export class RecipesService {
   }
 
   deleteRecipe(recipeId) {
-    console.log('api/recipe/'+recipeId)
-    return this.http.delete('api/recipe/' + recipeId);
+    return this.http.delete('api/recipe/' + recipeId)
+      .map(res => res.json());
   }
 
 }

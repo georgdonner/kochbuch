@@ -43,12 +43,11 @@ router.post('/recipe', function (req, res, next) {
 
 // Delete recipe
 router.delete('/recipe/:id', function (req, res, next) {
-    Recipe.removeRecipe(req.params.id, function (err) { 
+    Recipe.removeRecipe(req.params.id, function (err, recipe) { 
         if (err) {
-            res.json({success: false, msg:'Failed to remove recipe'});
-        } else {
-            res.json({success: true, msg:'Recipe removed'});
+            res.send(err);
         }
+        res.json(recipe);
      });
  });
 
