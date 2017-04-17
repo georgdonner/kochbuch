@@ -11,16 +11,5 @@
 </head>
 <body>
   <app-root>Loading...</app-root>
-  <script src="https://static.filestackapi.com/v3/filestack-0.5.0.js"></script>
-  <script>
-    var url = '';
-    var client = filestack.init('AwD48ceQaWtGBs9plMog7z');
-    function showPicker() {
-        client.pick({
-        }).then(function(result) {
-            url = JSON.stringify(result.filesUploaded[0].url)
-        });
-    }
-  </script>
 </body>
 </html>
