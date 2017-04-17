@@ -11,7 +11,7 @@ export class RecipeFormComponent {
 
   ingredients = new Array<Ingredient>();
   newIngredient = new Ingredient('', '');
-  model = new Recipe('', 0, 0, this.ingredients, '');
+  model = new Recipe('', 0, 0, this.ingredients, '', '');
 
   @Output()
   add: EventEmitter<Recipe> = new EventEmitter();

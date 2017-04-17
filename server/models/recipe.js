@@ -2,7 +2,8 @@ const mongoose = require('mongoose');
 require('dotenv').config();
 
 // Recipe Schema
-const RecipeSchema = mongoose.Schema({
+var Schema = mongoose.Schema
+const RecipeSchema = new Schema({
     title: {
         type: String,
         required: true
@@ -13,7 +14,8 @@ const RecipeSchema = mongoose.Schema({
         name: String,
         quantity: String
     }],
-    description: String
+    description: String,
+    image: String
 });
 
 const Recipe = module.exports = mongoose.model('Recipe', RecipeSchema);

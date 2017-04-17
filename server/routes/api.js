@@ -30,7 +30,8 @@ router.post('/recipe', function (req, res, next) {
         duration: req.body.duration,
         difficulty: req.body.difficulty,
         ingredients: req.body.ingredients,
-        description: req.body.description
+        description: req.body.description,
+        image: req.body.image
     });
 
     Recipe.addRecipe(newRecipe, function (err, recipe) {
@@ -58,7 +59,8 @@ router.put('/recipe/:id', function (req, res, next) {
         duration: req.body.duration,
         difficulty: req.body.difficulty,
         ingredients: req.body.ingredients,
-        description: req.body.description
+        description: req.body.description,
+        image: req.body.image
     });
 
     var newData = updRecipe.toObject();
