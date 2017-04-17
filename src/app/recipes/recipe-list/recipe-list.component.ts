@@ -36,6 +36,8 @@ export class RecipeListComponent {
 
   deleteRecipe(recipe: Recipe) {
     this.delete.emit(recipe);
+    this.activeRecipe = false;
+    this.isActiveDetails.emit(this.activeRecipe);
   }
 
 }

@@ -35,8 +35,6 @@ export class RecipesComponent implements OnInit {
       .subscribe((recipe) => {
         this.recipes.splice(this.recipes.indexOf(recipe),1);
       });
-    // no active recipe anymore
-    this.activeRecipe = false;
   }
 
   onActiveDetails(active: boolean) {
