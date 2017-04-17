@@ -1,13 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-require('dotenv').config();
-var mongojs = require('mongojs');
-var db = mongojs(process.env.MONGODB_URI, ['recipes']);
+var Recipe = require('../models/recipe');    
 
 // Get all recipes
 router.get('/recipes', function (req, res, next) { 
-    db.recipes.find(function (err, recipes) { 
+    Recipe.getAllRecipes(function (err, recipes) { 
         if(err){
             res.send(err);
         }
@@ -17,7 +15,7 @@ router.get('/recipes', function (req, res, next) {
 
 // Get single recipe
 router.get('/recipe/:id', function (req, res, next) { 
-    db.recipes.findOne({_id: mongojs.ObjectId(req.params.id)}, function(err, recipe) { 
+    Recipe.getRecipeById(req.params.id, function (err, recipe) { 
         if(err){
             res.send(err);
         }
@@ -27,66 +25,52 @@ router.get('/recipe/:id', function (req, res, next) {
 
 // Save recipe
 router.post('/recipe', function (req, res, next) { 
-    var recipe = req.body;
-    if (!recipe.title) {
-        res.status(400);
-        res.json({
-            "error": "No Recipe Title"
-        });
-    } else {
-        db.recipes.save(recipe, function(err, recipe){
-            if(err){
-            res.send(err);
+    let newRecipe = new Recipe({
+        title: req.body.title,
+        duration: req.body.duration,
+        difficulty: req.body.difficulty,
+        ingredients: req.body.ingredients,
+        description: req.body.description
+    });
+
+    Recipe.addRecipe(newRecipe, function (err, recipe) {
+        if (err) {
+            res.json({success: false, msg:'Failed to add recipe'});
+        } else {
+            res.json({success: true, msg:'Recipe added'});
         }
-        res.json(recipe);
-        });
-    }
+    });
  });
 
 // Delete recipe
 router.delete('/recipe/:id', function (req, res, next) {
-    db.recipes.remove({_id: mongojs.ObjectId(req.params.id)}, function(err, recipe) { 
-        if(err){
-            res.send(err);
+    Recipe.removeRecipe(req.params.id, function (err) { 
+        if (err) {
+            res.json({success: false, msg:'Failed to remove recipe'});
+        } else {
+            res.json({success: true, msg:'Recipe removed'});
         }
-        res.json(recipe);
      });
  });
 
 // Update recipe
 router.put('/recipe/:id', function (req, res, next) {
-    var recipe = req.body;
-    var updRecipe = {};
+    let updRecipe = new Recipe({
+        title: req.body.title,
+        duration: req.body.duration,
+        difficulty: req.body.difficulty,
+        ingredients: req.body.ingredients,
+        description: req.body.description
+    });
 
-    if(recipe.name){
-        updRecipe.name = recipe.name;
-    }
-    if(recipe.duration){
-        updRecipe.duration = recipe.duration;
-    }
-    if(recipe.difficulty){
-        updRecipe.difficulty = recipe.difficulty;
-    }
-    if(recipe.ingredients){
-        updRecipe.ingredients = recipe.ingredients;
-    }
-    if(recipe.description){
-        updRecipe.description = recipe.description;
-    }
-
-    if(!updRecipe){
-        res.status(400);
-        res.json({
-            "error": "Bad Data"
-        });
-    } else {
-        db.recipes.update({_id: mongojs.ObjectId(req.params.id)},updRecipe, {}, function(err, recipe) { 
-            if(err){
-                res.send(err);
-            }
-            res.json(recipe);
-        });
-    }
+    var newData = updRecipe.toObject();
+    delete newData._id;
+    Recipe.updateRecipe(req.params.id, newData, function (err, recipe) { 
+        if(err){
+            res.send(err);
+        }
+        res.json(recipe);
+     });
  });
 
 module.exports = router;
