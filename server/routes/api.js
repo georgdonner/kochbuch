@@ -35,10 +35,9 @@ router.post('/recipe', function (req, res, next) {
 
     Recipe.addRecipe(newRecipe, function (err, recipe) {
         if (err) {
-            res.json({success: false, msg:'Failed to add recipe'});
-        } else {
-            res.json({success: true, msg:'Recipe added'});
+            res.send(err);
         }
+        res.json(recipe);
     });
  });
 
