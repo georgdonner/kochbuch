@@ -40,7 +40,7 @@
         {{ ctg }}  
       </span>
       <label for="category">Kategorien</label>
-      <input type="text" name="category" class="form-control" id="category" (keyup.enter)=addCategory($event)>
+      <input #category type="text" name="category" class="form-control" id="category" (keyup.enter)="addCategory(category.value); category.value=''">
     </div>
     <button type="submit" class="btn btn-success" [disabled]="!recipeForm.form.valid">Submit</button>
   </form>

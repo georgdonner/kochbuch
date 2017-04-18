@@ -1,7 +1,4 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { Http } from "@angular/http";
-import { FileUploader, FileSelectDirective } from 'ng2-file-upload';
-import 'rxjs/add/operator/map';
 
 import { Recipe } from "../recipe";
 import { Ingredient } from "../ingredient";
@@ -52,9 +49,8 @@ export class RecipeFormComponent {
     this.ingredients.splice(this.ingredients.indexOf(ingredient), 1);
   }
 
-  addCategory(event) {
-    this.categories.push(event.target.value);
-    event.target.value = '';
+  addCategory(category) {
+    this.categories.push(category);
   }
 
   async showPicker() {
