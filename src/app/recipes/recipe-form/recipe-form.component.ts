@@ -15,7 +15,6 @@ declare const filestack: {
 })
 export class RecipeFormComponent {
 
-  uploadedFileUrls: string[] = [];
   ingredients = new Array<Ingredient>();
   newIngredient = new Ingredient('', '');
   model = new Recipe('', 0, 0, this.ingredients, '');
@@ -38,15 +37,11 @@ export class RecipeFormComponent {
       }
   }
 
-  hello() {
-    console.log('hello');
-  }
-
   async showPicker() {
     const client = filestack.init('AwD48ceQaWtGBs9plMog7z');
     const result = await client.pick({ maxFiles: 1 });
     const url = JSON.stringify(result.filesUploaded[0].url);
-    this.uploadedFileUrls.push(url);
+    console.log(url);
   }
 
 }
