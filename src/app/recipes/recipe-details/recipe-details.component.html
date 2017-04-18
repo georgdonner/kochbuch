@@ -9,7 +9,11 @@
     Das Rezept dauert etwa {{ recipe.duration }} Minuten 
     und hat einen Schwierigkeitsgrad von {{ recipe.difficulty }}.
   </p>
+  <p>Zutaten:</p>
   <p *ngFor="let ingredient of recipe.ingredients">{{ ingredient.quantity }} {{ ingredient.name }}</p>
-  <p class="card-text">{{ recipe.description }}</p>
+  <p>Beschreibung: </p>
+  <p *ngIf="recipe.description" class="card-text">{{ recipe.description }}</p>
+  <img *ngIf="recipe.descrImage" src="{{recipe.descrImage}}" alt="Recipe description">
+
   <button class="btn btn-danger" type="button" (click)="deleteRecipe()">Löschen</button>
 </div>
