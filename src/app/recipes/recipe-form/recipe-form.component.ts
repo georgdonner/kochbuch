@@ -57,7 +57,7 @@ export class RecipeFormComponent {
     const client = filestack.init('AwD48ceQaWtGBs9plMog7z');
     const result = await client.pick({ maxFiles: 1 });
     const url = JSON.stringify(result.filesUploaded[0].url);
-    console.log(url);
+    this.model.descrImage = url;
   }
 
 }
