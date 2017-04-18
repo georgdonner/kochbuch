@@ -15,26 +15,42 @@ declare const filestack: {
 })
 export class RecipeFormComponent {
 
-  ingredients = new Array<Ingredient>();
+  // initialize with empty ingredient to enable display in template
+  ingredients = [new Ingredient("","")];
   newIngredient = new Ingredient('', '');
+  categories = [''];
   model = new Recipe('', 0, 0, this.ingredients, '');
+  ingredientAdded = false;
 
   @Output()
   add: EventEmitter<Recipe> = new EventEmitter();
 
   constructor() { }
 
-  addRecipe(recipe: Recipe) {
-    this.add.emit(recipe);
+  addRecipe() {
+    this.add.emit(this.model);
   }
 
   addIngredient() {
     if (this.newIngredient) {
-        const ingr = this.newIngredient;
+      const ingr = this.newIngredient;
+      this.ingredients.push(ingr);
+      this.newIngredient = new Ingredient('', '');
+    }
+    if (!this.ingredientAdded){
+      // Remove initial empty ingredient on first addition
+      this.ingredients.splice(0,1);
+      this.ingredientAdded = true;
+    }
+  }
 
-        this.ingredients.push(ingr);
-        this.newIngredient = new Ingredient('', '');
-      }
+  removeIngredient(ingredient) {
+    this.ingredients.splice(this.ingredients.indexOf(ingredient), 1);
+  }
+
+  addCategory(event) {
+    this.categories.push(event.target.value);
+    event.target.value = '';
   }
 
   async showPicker() {
@@ -45,3 +61,4 @@ export class RecipeFormComponent {
   }
 
 }
+
