@@ -10,8 +10,9 @@ import { Ingredient } from "../ingredient";
 export class RecipeFormComponent {
 
   // initialize with empty ingredient to enable display in template
-  ingredients = [new Ingredient("","")]
+  ingredients = [new Ingredient("","")];
   newIngredient = new Ingredient('', '');
+  categories = [''];
   model = new Recipe('', 0, 0, this.ingredients, '');
   ingredientAdded = false;
 
@@ -39,6 +40,11 @@ export class RecipeFormComponent {
 
   removeIngredient(ingredient) {
     this.ingredients.splice(this.ingredients.indexOf(ingredient), 1);
+  }
+
+  addCategory(event) {
+    this.categories.push(event.target.value);
+    event.target.value = '';
   }
 
 }
