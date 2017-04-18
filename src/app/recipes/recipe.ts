@@ -7,7 +7,8 @@ export class Recipe {
       public duration: number,
       public difficulty: number,
       public ingredients: Array<Ingredient>,
-      public description: string,
-      public image: string
+      public description?: string,
+      public descrImage?: string,
+      public categories?: Array<string>
     ) {  }
 }

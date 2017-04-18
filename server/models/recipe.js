@@ -15,7 +15,8 @@ const RecipeSchema = new Schema({
         quantity: String
     }],
     description: String,
-    image: String
+    descrImage: String,
+    categories: [String]
 });
 
 const Recipe = module.exports = mongoose.model('Recipe', RecipeSchema);

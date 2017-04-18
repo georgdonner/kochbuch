@@ -6,7 +6,11 @@ import 'rxjs/add/operator/map';
 import { Recipe } from "../recipe";
 import { Ingredient } from "../ingredient";
 
-const URL = 'https://www.filestackapi.com/api/store/S3?key=AwD48ceQaWtGBs9plMog7z';
+declare const filestack: {
+  init(apiKey: string): {
+    pick({ maxFiles }: { maxFiles: number}): Promise<{ filesUploaded: { url: string }[] }> 
+  }
+};
 
 @Component({
   selector: 'app-recipe-form',
@@ -15,33 +19,50 @@ const URL = 'https://www.filestackapi.com/api/store/S3?key=AwD48ceQaWtGBs9plMog7
 })
 export class RecipeFormComponent {
 
-  public uploader: FileUploader;
-
-  ingredients = new Array<Ingredient>();
+  // initialize with empty ingredient to enable display in template
+  ingredients = [new Ingredient( '', '' )];
   newIngredient = new Ingredient('', '');
-  model = new Recipe('', 0, 0, this.ingredients, '', '');
+  categories = [''];
+  model = new Recipe('', 0, 0, this.ingredients, '');
+  ingredientAdded = false;
 
   @Output()
   add: EventEmitter<Recipe> = new EventEmitter();
 
-  constructor() {
-    this.uploader = new FileUploader({url: URL, disableMultipart: true});
-    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-      this.model.image = JSON.parse(response).url;
-    };
-  }
+  constructor() { }
 
-  addRecipe(recipe: Recipe) {
-    this.add.emit(recipe);
+  addRecipe() {
+    this.add.emit(this.model);
   }
 
   addIngredient() {
     if (this.newIngredient) {
-        const ingr = this.newIngredient;
+      const ingr = this.newIngredient;
+      this.ingredients.push(ingr);
+      this.newIngredient = new Ingredient('', '');
+    }
+    if (!this.ingredientAdded){
+      // Remove initial empty ingredient on first addition
+      this.ingredients.splice(0,1);
+      this.ingredientAdded = true;
+    }
+  }
 
-        this.ingredients.push(ingr);
-        this.newIngredient = new Ingredient('', '');
-      }
+  removeIngredient(ingredient) {
+    this.ingredients.splice(this.ingredients.indexOf(ingredient), 1);
+  }
+
+  addCategory(event) {
+    this.categories.push(event.target.value);
+    event.target.value = '';
+  }
+
+  async showPicker() {
+    const client = filestack.init('AwD48ceQaWtGBs9plMog7z');
+    const result = await client.pick({ maxFiles: 1 });
+    const url = result.filesUploaded[0].url;
+    this.model.descrImage = url;
   }
 
 }
+
