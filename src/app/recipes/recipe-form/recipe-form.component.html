@@ -18,7 +18,9 @@
     </div>
     <div class="form-group">
       <p>Zutaten: </p>
-      {{diagnosis}}
+      <div *ngFor="let ingr of ingredients; let i = index">
+        {{ ingr.quantity }} {{ ingr.name }}
+      </div>
       <label for="name">Name</label>
       <input type="text" [(ngModel)]="newIngredient.name" name="name" class="form-control" id="name">
       <label for="quantity">Menge</label>

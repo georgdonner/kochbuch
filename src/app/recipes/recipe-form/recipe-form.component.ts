@@ -9,11 +9,11 @@ import { Ingredient } from "../ingredient";
 })
 export class RecipeFormComponent {
 
-  ingredients = new Array<Ingredient>();
-  array = new Array<String>();
+  // initialize with empty ingredient to enable display in template
+  ingredients = [new Ingredient("","")]
   newIngredient = new Ingredient('', '');
   model = new Recipe('', 0, 0, this.ingredients, '');
-  diagnosis = JSON.stringify(this.newIngredient);
+  ingredientAdded = false;
 
   @Output()
   add: EventEmitter<Recipe> = new EventEmitter();
@@ -26,12 +26,15 @@ export class RecipeFormComponent {
 
   addIngredient() {
     if (this.newIngredient) {
-        const ingr = this.newIngredient;
-
-        this.ingredients.push(ingr);
-        console.log(this.ingredients);
-        this.newIngredient = new Ingredient('', '');
-  }
+      const ingr = this.newIngredient;
+      this.ingredients.push(ingr);
+      this.newIngredient = new Ingredient('', '');
+    }
+    if (!this.ingredientAdded){
+      // Remove initial empty ingredient on first addition
+      this.ingredients.splice(0,1);
+      this.ingredientAdded = true;
+    }
 }
 
 }
