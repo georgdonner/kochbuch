@@ -10,16 +10,18 @@ import { Ingredient } from "../ingredient";
 export class RecipeFormComponent {
 
   ingredients = new Array<Ingredient>();
+  array = new Array<String>();
   newIngredient = new Ingredient('', '');
   model = new Recipe('', 0, 0, this.ingredients, '');
+  diagnosis = JSON.stringify(this.newIngredient);
 
   @Output()
   add: EventEmitter<Recipe> = new EventEmitter();
 
   constructor() { }
 
-  addRecipe(recipe: Recipe) {
-    this.add.emit(recipe);
+  addRecipe() {
+    this.add.emit(this.model);
   }
 
   addIngredient() {
@@ -27,8 +29,9 @@ export class RecipeFormComponent {
         const ingr = this.newIngredient;
 
         this.ingredients.push(ingr);
+        console.log(this.ingredients);
         this.newIngredient = new Ingredient('', '');
-      }
   }
+}
 
 }

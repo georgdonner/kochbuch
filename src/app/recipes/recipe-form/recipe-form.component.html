@@ -1,12 +1,35 @@
-<form class="well">
-  <div class="form-group">
-    <input type="text" [(ngModel)]="model.title" name="title" class="form-control" placeholder="Titel">
-    <input type="number" [(ngModel)]="model.duration" name="duration" id="duration" class="form-control"><span>Minuten</span>
-    <input type="number" [(ngModel)]="model.difficulty" name="difficulty" id="difficulty" class="form-control"><span>Schwierigkeit</span>
-    <input type="text" [(ngModel)]="newIngredient.name" name="newIngredient.name" class="form-control" placeholder="Name">
-    <input type="text" [(ngModel)]="newIngredient.quantity" name="newIngredient.quantity" class="form-control" placeholder="Menge">
+<div class="container">
+  <form (ngSubmit)="addRecipe()" #recipeForm="ngForm">
+    <div class="form-group">
+      <label for="title">Titel</label>
+      <input type="text" [(ngModel)]="model.title" name="title" class="form-control" id="title" required #title="ngModel">
+    </div>
+    <div [hidden]="title.valid || title.pristine"
+          class="alert alert-danger">
+      Das Rezept muss einen Titel haben
+    </div>
+    <div class="form-group">
+      <label for="duration">Dauer</label>
+      <input type="number" [(ngModel)]="model.duration" name="duration" id="duration" class="form-control"><span> Minuten</span>
+    </div>
+    <div class="form-group">
+      <label for="difficulty">Schwierigkeit</label>
+      <input type="number" [(ngModel)]="model.difficulty" name="difficulty" id="difficulty" class="form-control">
+    </div>
+    <div class="form-group">
+      <p>Zutaten: </p>
+      {{diagnosis}}
+      <label for="name">Name</label>
+      <input type="text" [(ngModel)]="newIngredient.name" name="name" class="form-control" id="name">
+      <label for="quantity">Menge</label>
+      <input type="text" [(ngModel)]="newIngredient.quantity" name="quantity" class="form-control" id="quantity">
+    </div>
+    
     <input type="button" value="Add" class="btn btn-primary" (click)=addIngredient($event)>
-    <input type="text" [(ngModel)]="model.description" name="description" class="form-control" placeholder="Beschreibung">
-    <input type="button" value="Add" class="btn btn-primary" (click)=addRecipe(model)>
-  </div>
-</form>
+    <div class="form-group">
+      <label for="description">Beschreibung</label>
+      <input type="text" [(ngModel)]="model.description" name="description" class="form-control" id="description">
+    </div>
+    <button type="submit" class="btn btn-success" [disabled]="!recipeForm.form.valid">Submit</button>
+  </form>
+</div>
