@@ -20,6 +20,7 @@
       <p>Zutaten: </p>
       <div *ngFor="let ingr of ingredients; let i = index">
         {{ ingr.quantity }} {{ ingr.name }}
+        <input *ngIf="ingredientAdded" type="button" value="X" class="btn btn-danger" (click)=removeIngredient(ingr)>
       </div>
       <label for="name">Name</label>
       <input type="text" [(ngModel)]="newIngredient.name" name="name" class="form-control" id="name">

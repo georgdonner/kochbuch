@@ -35,6 +35,10 @@ export class RecipeFormComponent {
       this.ingredients.splice(0,1);
       this.ingredientAdded = true;
     }
-}
+  }
+
+  removeIngredient(ingredient) {
+    this.ingredients.splice(this.ingredients.indexOf(ingredient), 1);
+  }
 
 }
