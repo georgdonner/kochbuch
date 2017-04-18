@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from "@angular/router";
-import { FileSelectDirective } from 'ng2-file-upload/ng2-file-upload';
 
 import { AppComponent } from './app.component';
 import { RecipesComponent } from './recipes/recipes/recipes.component';
@@ -35,8 +34,7 @@ const ROUTES = [
     RecipesComponent,
     RecipeDetailsComponent,
     RecipeFormComponent,
-    RecipeListComponent,
-    FileSelectDirective
+    RecipeListComponent
   ],
   imports: [
     BrowserModule,
