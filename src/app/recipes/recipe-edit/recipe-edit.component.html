@@ -21,7 +21,7 @@
       <p>Zutaten: </p>
       <div *ngFor="let ingr of recipe.ingredients; let i = index">
         {{ ingr.quantity }} {{ ingr.name }}
-        <button type="button" class="btn btn-danger" (click)=removeIngredient(ingr)>X</button>
+        <button type="button" class="btn btn-danger btn-xs" (click)=removeIngredient(ingr)>X</button>
       </div>
       <label for="name">Name</label>
       <input type="text" [(ngModel)]="newIngredient.name" name="name" class="form-control" id="name">
@@ -34,13 +34,13 @@
       <label for="description">Beschreibung</label>
       <input type="text" [(ngModel)]="recipe.description" name="description" class="form-control" id="description">
     </div>
-    <img *ngIf="recipe.descrImage" src="{{recipe.descrImage}}" alt="Recipe description">
+    <img *ngIf="recipe.descrImage" class="img-responsive" src="{{recipe.descrImage}}" alt="Recipe description">
     <button type="button" (click)=showPicker()>Neues Bild</button>
     <div class="form-group">
       <label for="category">Kategorien: </label>
       <span *ngFor="let ctg of recipe.categories">
         {{ ctg }}
-        <button type="button" value="X" class="btn btn-danger" (click)="removeCategory(ctg)">X</button>
+        <button type="button" value="X" class="btn btn-danger btn-xs" (click)="removeCategory(ctg)">X</button>
       </span>
       <input #category type="text" name="category" class="form-control" id="category" (keyup.enter)="addCategory(category.value); category.value=''" placeholder="Enter drücken zum Hinzufügen">
     </div>
