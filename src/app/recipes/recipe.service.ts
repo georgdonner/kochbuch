@@ -21,32 +21,16 @@ export class RecipeService {
       .map(res => res.json());
   }
 
-  addRecipe(newRecipe): Observable<Recipe> {
-    console.log(JSON.stringify(newRecipe));
+  addRecipe(newRecipe) {
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('api/recipe', JSON.stringify(newRecipe), {headers: headers})
-      .map(res => res.json().data)
-      .catch(this.handleError);
+      .map(res => res.json());
   }
 
   deleteRecipe(recipeId) {
     return this.http.delete('api/recipe/' + recipeId)
       .map(res => res.json());
-  }
-
-  private handleError (error: Response | any) {
-    // In a real world app, you might use a remote logging infrastructure
-    let errMsg: string;
-    if (error instanceof Response) {
-      const body = error.json() || '';
-      const err = JSON.stringify(body);
-      errMsg = `${error.status} - ${error.statusText || ''} ${err}`;
-    } else {
-      errMsg = error.message ? error.message : error.toString();
-    }
-    console.error(errMsg);
-    return Observable.throw(errMsg);
   }
 
 }
