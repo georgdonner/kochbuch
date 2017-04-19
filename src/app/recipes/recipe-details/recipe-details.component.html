@@ -1,8 +1,8 @@
 <div class="container" *ngIf="recipe">
-  <button type="button" (click)="gotoRecipes()">Zurück</button>
+  <svg class="icon icon-chevron-left" (click)="gotoRecipes()"><use xlink:href="#icon-chevron-left"></use></svg>
   <svg class="icon icon-spoon-knife" (click)="cooked()"><use xlink:href="#icon-spoon-knife"></use></svg>
   <span class="badge cook-badge">{{ recipe.cookCount }}</span>
-  <div class="page-header">
+  <div class="page-header text-center">
     <h1 class="h1">{{ recipe.title }}</h1>
   </div>
   <img *ngIf="recipe.heroImage" class="img-responsive"  src="{{recipe.heroImage}}" alt="{{recipe.title}}">
