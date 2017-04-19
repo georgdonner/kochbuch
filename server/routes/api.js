@@ -27,8 +27,10 @@ router.get('/recipe/:id', function (req, res, next) {
 router.post('/recipe', function (req, res, next) { 
     let newRecipe = new Recipe({
         title: req.body.title,
+        heroImage: req.body.heroImage,
         duration: req.body.duration,
         difficulty: req.body.difficulty,
+        cookCount: req.body.cookCount,
         ingredients: req.body.ingredients,
         description: req.body.description,
         descrImage: req.body.descrImage,
@@ -57,8 +59,10 @@ router.delete('/recipe/:id', function (req, res, next) {
 router.put('/recipe/:id', function (req, res, next) {
     let updRecipe = new Recipe({
         title: req.body.title,
+        heroImage: req.body.heroImage,
         duration: req.body.duration,
         difficulty: req.body.difficulty,
+        cookCount: req.body.cookCount,
         ingredients: req.body.ingredients,
         description: req.body.description,
         descrImage: req.body.descrImage,

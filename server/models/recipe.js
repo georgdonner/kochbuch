@@ -8,8 +8,10 @@ const RecipeSchema = new Schema({
         type: String,
         required: true
     },
+    heroImage: String,
     duration: Number,
     difficulty: Number,
+    cookCount: Number,
     ingredients: [{
         name: String,
         quantity: String
