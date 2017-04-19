@@ -22,3 +22,17 @@
     top: 50px;
     right: 20px;
 }
+
+@media only screen and (max-width: 767px) {
+    .icon-spoon-knife {
+        top: 10px;
+    }
+
+    .icon-chevron-left {
+        display: none;
+    }
+
+    .badge.cook-badge {
+        top: 10px;
+    }
+}
