@@ -3,6 +3,7 @@
   <div class="page-header">
     <h1 class="h1">{{ recipe.title }}</h1>
   </div>
+  <img *ngIf="recipe.heroImage" class="img-responsive"  src="{{recipe.heroImage}}" alt="{{recipe.title}}">
   <p>
     Das Rezept dauert etwa {{ recipe.duration }} Minuten 
     und hat einen Schwierigkeitsgrad von {{ recipe.difficulty }}.

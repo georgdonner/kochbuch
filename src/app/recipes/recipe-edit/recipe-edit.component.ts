@@ -8,7 +8,7 @@ import { RecipeService } from '../recipe.service';
 
 declare const filestack: {
   init(apiKey: string): {
-    pick({ maxFiles }: { maxFiles: number}): Promise<{ filesUploaded: { url: string }[] }> 
+    pick({ accept, maxFiles }: { accept: Array<string>, maxFiles: number}): Promise<{ filesUploaded: { url: string }[] }> 
   }
 };
 
@@ -63,9 +63,22 @@ export class RecipeEditComponent implements OnInit {
     this.recipe.categories.splice(this.recipe.categories.indexOf(category),1);
   }
 
-  async showPicker() {
+  async showHeroPicker() {
     const client = filestack.init('AwD48ceQaWtGBs9plMog7z');
-    const result = await client.pick({ maxFiles: 1 });
+    const result = await client.pick({ 
+      accept: ['image/*'],
+      maxFiles: 1 
+    });
+    const url = result.filesUploaded[0].url;
+    this.recipe.heroImage = url;
+  }
+
+  async showDescPicker() {
+    const client = filestack.init('AwD48ceQaWtGBs9plMog7z');
+    const result = await client.pick({
+      accept: ['image/*'],
+      maxFiles: 1
+    });
     const url = result.filesUploaded[0].url;
     this.recipe.descrImage = url;
   }

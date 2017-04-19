@@ -9,6 +9,9 @@
           class="alert alert-danger">
       Das Rezept muss einen Titel haben
     </div>
+    <label>Titelbild</label>
+    <img *ngIf="recipe.heroImage" class="img-responsive" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
+    <button type="button" class="btn btn-default" (click)=showHeroPicker()>Neues Bild</button>
     <div class="form-group">
       <label for="duration">Dauer</label>
       <input type="number" [(ngModel)]="recipe.duration" name="duration" id="duration" class="form-control"><span> Minuten</span>
@@ -35,7 +38,7 @@
       <input type="text" [(ngModel)]="recipe.description" name="description" class="form-control" id="description">
     </div>
     <img *ngIf="recipe.descrImage" class="img-responsive" src="{{recipe.descrImage}}" alt="Recipe description">
-    <button type="button" (click)=showPicker()>Neues Bild</button>
+    <button type="button" class="btn btn-default" (click)=showDescPicker()>Neues Bild</button>
     <div class="form-group">
       <label for="category">Kategorien: </label>
       <span *ngFor="let ctg of recipe.categories">

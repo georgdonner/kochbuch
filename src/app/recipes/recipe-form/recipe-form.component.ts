@@ -7,7 +7,7 @@ import { RecipeService } from '../recipe.service';
 
 declare const filestack: {
   init(apiKey: string): {
-    pick({ maxFiles }: { maxFiles: number}): Promise<{ filesUploaded: { url: string }[] }> 
+    pick({ accept, maxFiles }: { accept: Array<string>, maxFiles: number}): Promise<{ filesUploaded: { url: string, filename: string }[] }> 
   }
 };
 
@@ -20,8 +20,11 @@ export class RecipeFormComponent {
   ingredients = [new Ingredient( '', '' )];
   newIngredient = new Ingredient('', '');
   categories = [];
-  model = new Recipe('', 0, 0, this.ingredients, '');
+  model = new Recipe('', 0, 0, 0, this.ingredients, '');
   ingredientAdded = false;
+
+  heroFilename: string;
+  descrFilename: string;
 
   constructor(
     private recipeService: RecipeService,
@@ -63,10 +66,25 @@ export class RecipeFormComponent {
     this.categories.splice(this.categories.indexOf(category),1);
   }
 
-  async showPicker() {
+  async showHeroPicker() {
     const client = filestack.init('AwD48ceQaWtGBs9plMog7z');
-    const result = await client.pick({ maxFiles: 1 });
+    const result = await client.pick({
+      accept: ['image/*'],
+      maxFiles: 1
+    });
     const url = result.filesUploaded[0].url;
+    this.heroFilename = result.filesUploaded[0].filename;
+    this.model.heroImage = url;
+  }
+
+  async showDescPicker() {
+    const client = filestack.init('AwD48ceQaWtGBs9plMog7z');
+    const result = await client.pick({
+      accept: ['image/*'],
+      maxFiles: 1
+    });
+    const url = result.filesUploaded[0].url;
+    this.descrFilename = result.filesUploaded[0].filename;
     this.model.descrImage = url;
   }
 

@@ -8,6 +8,10 @@
           class="alert alert-danger">
       Das Rezept muss einen Titel haben
     </div>
+    <div>
+      <button type="button" class="btn btn-default" (click)=showHeroPicker()>Titelbild Hochladen</button>
+      <span *ngIf="model.heroImage"> "{{ heroFilename }}" wurde erfolgreich hochgeladen!</span>
+    </div>
     <div class="form-inline">
       <div class="form-group">
         <label for="duration">Dauer</label>
@@ -35,13 +39,14 @@
       <label for="description">Beschreibung</label>
       <input type="text" [(ngModel)]="model.description" name="description" class="form-control" id="description">
     </div>
-    <button type="button" (click)=showPicker()>Hochladen</button>
+    <button type="button" class="btn btn-default" (click)=showDescPicker()>Anleitung Hochladen</button>
+    <span *ngIf="model.descrImage"> "{{ descrFilename }}" wurde erfolgreich hochgeladen!</span>
     <div class="form-group">
+      <label for="category">Kategorien: </label>
       <span *ngFor="let ctg of categories">
         {{ ctg }}
-        <button type="button" value="x" class="btn btn-danger btn-xs" (click)="removeCategory(ctg)"></button>  
+        <button type="button" class="close noFloat" (click)="removeCategory(ctg)">x</button>  
       </span>
-      <label for="category">Kategorien</label>
       <input #category type="text" name="category" class="form-control" id="category" (keyup.enter)="addCategory(category.value); category.value=''">
     </div>
     <button type="button" (click)="addRecipe(); gotoRecipes()" class="btn btn-success" [disabled]="!recipeForm.form.valid">Speichern</button>
