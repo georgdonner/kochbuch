@@ -34,7 +34,6 @@ export class RecipeEditComponent implements OnInit {
   }
 
   save() {
-    console.log(this.recipe);
     this.recipeService.updateRecipe(this.recipe)
       .subscribe();
   }

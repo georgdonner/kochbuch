@@ -7,10 +7,12 @@ import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RecipesModule } from './recipes/recipes.module';
+import { SvgIconComponent } from './svgicons/svg-icon/svg-icon.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SvgIconComponent
   ],
   imports: [
     BrowserModule,

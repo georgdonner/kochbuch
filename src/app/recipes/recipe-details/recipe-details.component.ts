@@ -29,6 +29,12 @@ export class RecipeDetailsComponent implements OnInit {
     this.router.navigate(['/recipes']);
   }
 
+  cooked() {
+    ++this.recipe.cookCount;
+    this.recipeService.updateRecipe(this.recipe)
+      .subscribe();
+  }
+
   edit(recipe: Recipe) {
     this.router.navigate(['/recipe', recipe._id, 'edit']);
   }
