@@ -38,6 +38,7 @@ export class RecipeDetailsComponent implements OnInit {
   }
 
   deleteRecipe() {
-    this.recipeService.deleteRecipe(this.recipe._id);
+    this.recipeService.deleteRecipe(this.recipe._id)
+      .subscribe();
   }
 }

@@ -11,5 +11,5 @@
   <p *ngIf="recipe.description" class="card-text">{{ recipe.description }}</p>
   <img *ngIf="recipe.descrImage" src="{{recipe.descrImage}}" alt="Recipe description">
 
-  <button class="btn btn-danger" type="button" (click)="deleteRecipe()">Löschen</button>
+  <button class="btn btn-danger" type="button" (click)="deleteRecipe(); gotoRecipes()">Löschen</button>
 </div>

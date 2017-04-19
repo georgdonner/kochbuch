@@ -29,7 +29,8 @@ export class RecipeFormComponent {
   ) { }
 
   addRecipe() {
-    this.recipeService.addRecipe(this.model);
+    this.recipeService.addRecipe(this.model)
+      .subscribe();
   }
 
   addIngredient() {
