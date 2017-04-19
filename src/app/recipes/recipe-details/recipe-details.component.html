@@ -1,11 +1,7 @@
-<div class="card card-block" *ngIf="!fullDetails" (click)="toggleFullDetails()">
+<div class="container" *ngIf="recipe">
+  <button type="button" (click)="gotoRecipes()">Zurück</button>
   <h4 class="card-title">{{ recipe.title }}</h4>
-  <p class="card-text">{{ recipe.description }}</p>
-</div>
-<div *ngIf="fullDetails">
-  <h4 class="card-title">{{ recipe.title }}</h4>
-  <button type="button" (click)="toggleFullDetails()">X</button>
-  <p class="card-text" *ngIf="fullDetails">
+  <p class="card-text">
     Das Rezept dauert etwa {{ recipe.duration }} Minuten 
     und hat einen Schwierigkeitsgrad von {{ recipe.difficulty }}.
   </p>

@@ -1,43 +1,37 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Recipe } from "../recipe";
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { Recipe } from '../recipe';
+import { RecipeService } from '../recipe.service';
 
 @Component({
-  selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.css']
 })
-export class RecipeListComponent {
+export class RecipeListComponent implements OnInit{
 
   selectedRecipe: Recipe;
-
-  @Input()
   recipes: Recipe[];
 
-  @Output()
-  delete: EventEmitter<Recipe> = new EventEmitter();
+  constructor(
+    private router: Router,
+    private recipeService: RecipeService
+  ) { }
 
-  @Output()
-  isActiveDetails: EventEmitter<boolean> = new EventEmitter();
-
-  activeRecipe: boolean;
-
-  constructor() {
+  ngOnInit() {
+    // retrieve recipes from the API
+    this.recipeService.getAllRecipes().subscribe(recipes => {
+      this.recipes = recipes;
+      console.log(this.recipes);
+    });
   }
 
-  onActiveRecipe(recipe: Recipe) {
-    if (recipe != null) {
-      this.selectedRecipe = recipe;
-      this.activeRecipe = true;
-    } else {
-      this.activeRecipe = false;
-    }
-    this.isActiveDetails.emit(this.activeRecipe);
+  onSelect(recipe: Recipe) {
+    this.router.navigate(['/recipe', recipe._id]);
   }
 
-  deleteRecipe(recipe: Recipe) {
-    this.delete.emit(recipe);
-    this.activeRecipe = false;
-    this.isActiveDetails.emit(this.activeRecipe);
+  newRecipe() {
+    this.router.navigate(['/recipes/new']);
   }
 
 }

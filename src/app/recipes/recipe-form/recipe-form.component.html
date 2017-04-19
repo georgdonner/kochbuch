@@ -1,6 +1,6 @@
 
 <div class="container">
-  <form (ngSubmit)="addRecipe()" #recipeForm="ngForm">
+  <form (ngSubmit)="addRecipe(); gotoRecipes()" #recipeForm="ngForm">
     <div class="form-group">
       <label for="title">Titel</label>
       <input type="text" [(ngModel)]="model.title" name="title" class="form-control" id="title" required #title="ngModel">

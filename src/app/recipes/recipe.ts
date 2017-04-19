@@ -1,4 +1,4 @@
-import { Ingredient } from "./ingredient";
+import { Ingredient } from './ingredient';
 
 export class Recipe {
 
@@ -9,6 +9,7 @@ export class Recipe {
       public ingredients: Array<Ingredient>,
       public description?: string,
       public descrImage?: string,
-      public categories?: Array<string>
+      public categories?: Array<string>,
+      public _id?: string
     ) {  }
 }

@@ -1,44 +1,43 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { Recipe } from "../recipe";
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute, Params } from '@angular/router';
+import 'rxjs/add/operator/switchMap';
+
+import { Recipe } from '../recipe';
+import { RecipeService } from '../recipe.service';
 
 @Component({
-  selector: 'app-recipe-details',
   templateUrl: './recipe-details.component.html',
   styleUrls: ['./recipe-details.component.css']
 })
 export class RecipeDetailsComponent implements OnInit {
 
-  @Input()
   recipe: Recipe;
 
-  @Input()
-  active: boolean;
-
-  @Output()
-  activeRecipe: EventEmitter<Recipe> = new EventEmitter();
-
-  @Output()
-  delete: EventEmitter<Recipe> = new EventEmitter();
-
-  fullDetails: boolean;
-
-  constructor() { }
+  constructor(
+    private recipeService: RecipeService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
   ngOnInit() {
-    this.fullDetails = this.active;
+    /*var id = '';
+    this.route.params.subscribe(params => {
+      id = params['id'];
+    })
+    this.recipeService.getRecipe(id).subscribe(recipe => {
+      this.recipe = recipe;
+    });
+    console.log(id);*/
+    this.route.params
+      .switchMap((params: Params) => this.recipeService.getRecipe(params['id']))
+      .subscribe((recipe: Recipe) => this.recipe = recipe);
   }
 
-  toggleFullDetails() {
-    this.fullDetails = !this.fullDetails;
-    if (this.fullDetails) {
-      this.activeRecipe.emit(this.recipe);
-    } else {
-      this.activeRecipe.emit(null);
-    }
+  gotoRecipes() {
+    this.router.navigate(['/recipes']);
   }
 
   deleteRecipe() {
-    this.delete.emit(this.recipe);
+    this.recipeService.deleteRecipe(this.recipe._id);
   }
-
 }

@@ -4,7 +4,7 @@ var router = express.Router();
 var Recipe = require('../models/recipe');    
 
 // Get all recipes
-router.get('/recipes', function (req, res, next) { 
+router.get('/recipes', function (req, res, next) {
     Recipe.getAllRecipes(function (err, recipes) { 
         if(err){
             res.send(err);
@@ -14,7 +14,7 @@ router.get('/recipes', function (req, res, next) {
  });
 
 // Get single recipe
-router.get('/recipe/:id', function (req, res, next) { 
+router.get('/recipe/:id', function (req, res, next) {
     Recipe.getRecipeById(req.params.id, function (err, recipe) { 
         if(err){
             res.send(err);

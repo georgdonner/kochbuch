@@ -1,14 +1,8 @@
-<div *ngIf="!activeRecipe">
-  <div class="row" *ngFor="let recipe of recipes">
-    <app-recipe-details
-      [recipe]="recipe"
-      (activeRecipe)="onActiveRecipe($event)"></app-recipe-details>
-  </div>
-</div>
-<div class="row" *ngIf="activeRecipe">
-  <app-recipe-details
-    [recipe]="selectedRecipe"
-    [active]="activeRecipe"
-    (activeRecipe)="onActiveRecipe($event)"
-    (delete)="deleteRecipe($event)"></app-recipe-details>
-</div>
+<h2>Rezepte</h2>
+<ul class="items">
+  <li *ngFor="let recipe of recipes"
+    (click)="onSelect(recipe)">
+    <span class="badge">{{ recipe.title }}</span>
+  </li>
+</ul>
+<button type="button" (click)="newRecipe()">Neues Rezept</button>

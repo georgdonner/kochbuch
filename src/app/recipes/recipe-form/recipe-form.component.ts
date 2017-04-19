@@ -1,7 +1,9 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { Recipe } from "../recipe";
-import { Ingredient } from "../ingredient";
+import { Recipe } from '../recipe';
+import { Ingredient } from '../ingredient';
+import { RecipeService } from '../recipe.service';
 
 declare const filestack: {
   init(apiKey: string): {
@@ -10,26 +12,24 @@ declare const filestack: {
 };
 
 @Component({
-  selector: 'app-recipe-form',
   templateUrl: './recipe-form.component.html',
   styleUrls: ['./recipe-form.component.css']
 })
 export class RecipeFormComponent {
 
-  // initialize with empty ingredient to enable display in template
   ingredients = [new Ingredient( '', '' )];
   newIngredient = new Ingredient('', '');
   categories = [''];
   model = new Recipe('', 0, 0, this.ingredients, '');
   ingredientAdded = false;
 
-  @Output()
-  add: EventEmitter<Recipe> = new EventEmitter();
-
-  constructor() { }
+  constructor(
+    private recipeService: RecipeService,
+    private router: Router
+  ) { }
 
   addRecipe() {
-    this.add.emit(this.model);
+    this.recipeService.addRecipe(this.model);
   }
 
   addIngredient() {
@@ -58,6 +58,10 @@ export class RecipeFormComponent {
     const result = await client.pick({ maxFiles: 1 });
     const url = result.filesUploaded[0].url;
     this.model.descrImage = url;
+  }
+
+  gotoRecipes() {
+    this.router.navigate(['/recipes']);
   }
 
 }
