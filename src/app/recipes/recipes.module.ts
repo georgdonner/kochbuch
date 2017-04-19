@@ -9,6 +9,7 @@ import { RecipeListComponent } from './recipe-list/recipe-list.component';
 import { RecipeService } from './recipe.service';
 
 import { RecipeRoutingModule } from './recipes-routing.module';
+import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 
 @NgModule({
   imports: [
@@ -19,7 +20,8 @@ import { RecipeRoutingModule } from './recipes-routing.module';
   declarations: [
     RecipeDetailsComponent,
     RecipeFormComponent,
-    RecipeListComponent
+    RecipeListComponent,
+    RecipeEditComponent
   ],
   providers: [ RecipeService ]
 })
