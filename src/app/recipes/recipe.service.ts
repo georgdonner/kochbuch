@@ -33,4 +33,11 @@ export class RecipeService {
       .map(res => res.json());
   }
 
+  updateRecipe(updRecipe) {
+    var headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+    return this.http.put('api/recipe/' + updRecipe._id, JSON.stringify(updRecipe), {headers: headers})
+      .map(res => res.json());
+  }
+
 }

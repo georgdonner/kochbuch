@@ -10,6 +10,7 @@
   <p>Beschreibung: </p>
   <p *ngIf="recipe.description" class="card-text">{{ recipe.description }}</p>
   <img *ngIf="recipe.descrImage" src="{{recipe.descrImage}}" alt="Recipe description">
-  <button class="btn btn-primary" type="button" (click)="edit(recipe)">Edit</button>
+  <p *ngIf="recipe.categories">Kategorien: <span *ngFor="let ctg of recipe.categories">{{ ctg }} </span></p>
+  <button class="btn btn-primary" type="button" (click)="edit(recipe)">Update</button>
   <button class="btn btn-danger" type="button" (click)="deleteRecipe(); gotoRecipes()">Löschen</button>
 </div>

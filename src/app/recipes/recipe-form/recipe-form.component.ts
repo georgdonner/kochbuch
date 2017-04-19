@@ -19,7 +19,7 @@ export class RecipeFormComponent {
 
   ingredients = [new Ingredient( '', '' )];
   newIngredient = new Ingredient('', '');
-  categories = [''];
+  categories = [];
   model = new Recipe('', 0, 0, this.ingredients, '');
   ingredientAdded = false;
 
@@ -29,6 +29,10 @@ export class RecipeFormComponent {
   ) { }
 
   addRecipe() {
+    if(this.categories.length > 0) {
+      this.model.categories = this.categories
+    }
+    console.log(this.model.categories);
     this.recipeService.addRecipe(this.model)
       .subscribe();
   }
@@ -52,6 +56,11 @@ export class RecipeFormComponent {
 
   addCategory(category) {
     this.categories.push(category);
+    console.log(this.categories);
+  }
+
+  removeCategory(category) {
+    this.categories.splice(this.categories.indexOf(category),1);
   }
 
   async showPicker() {

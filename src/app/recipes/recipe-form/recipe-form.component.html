@@ -1,6 +1,6 @@
 
 <div class="container">
-  <form (ngSubmit)="addRecipe(); gotoRecipes()" #recipeForm="ngForm">
+  <form #recipeForm="ngForm">
     <div class="form-group">
       <label for="title">Titel</label>
       <input type="text" [(ngModel)]="model.title" name="title" class="form-control" id="title" required #title="ngModel">
@@ -29,19 +29,20 @@
       <input type="text" [(ngModel)]="newIngredient.quantity" name="quantity" class="form-control" id="quantity">
     </div>
     
-    <input type="button" value="Add" class="btn btn-primary" (click)=addIngredient()>
+    <button type="button" class="btn btn-primary" (click)=addIngredient()>Hinzufügen</button>
     <div class="form-group">
       <label for="description">Beschreibung</label>
       <input type="text" [(ngModel)]="model.description" name="description" class="form-control" id="description">
     </div>
-    <input type="button" value="Upload" (click)=showPicker() />
+    <button type="button" (click)=showPicker()>Hochladen</button>
     <div class="form-group">
       <span *ngFor="let ctg of categories">
-        {{ ctg }}  
+        {{ ctg }}
+        <button type="button" value="x" (click)="removeCategory(ctg)"></button>  
       </span>
       <label for="category">Kategorien</label>
       <input #category type="text" name="category" class="form-control" id="category" (keyup.enter)="addCategory(category.value); category.value=''">
     </div>
-    <button type="submit" class="btn btn-success" [disabled]="!recipeForm.form.valid">Submit</button>
+    <button type="button" (click)="addRecipe(); gotoRecipes()" class="btn btn-success" [disabled]="!recipeForm.form.valid">Speichern</button>
   </form>
 </div>
