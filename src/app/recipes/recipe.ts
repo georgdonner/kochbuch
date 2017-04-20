@@ -4,6 +4,7 @@ export class Recipe {
 
     constructor(
       public title: string,
+      public servings: number,
       public duration: number,
       public difficulty: number,
       public cookCount: number,

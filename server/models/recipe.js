@@ -9,12 +9,13 @@ const RecipeSchema = new Schema({
         required: true
     },
     heroImage: String,
+    servings: Number,
     duration: Number,
     difficulty: Number,
     cookCount: Number,
     ingredients: [{
         name: String,
-        quantity: String
+        hint: String
     }],
     description: String,
     descrImage: String,

@@ -28,6 +28,7 @@ router.post('/recipe', function (req, res, next) {
     let newRecipe = new Recipe({
         title: req.body.title,
         heroImage: req.body.heroImage,
+        servings: req.body.servings,
         duration: req.body.duration,
         difficulty: req.body.difficulty,
         cookCount: req.body.cookCount,
@@ -60,6 +61,7 @@ router.put('/recipe/:id', function (req, res, next) {
     let updRecipe = new Recipe({
         title: req.body.title,
         heroImage: req.body.heroImage,
+        servings: req.body.servings,
         duration: req.body.duration,
         difficulty: req.body.difficulty,
         cookCount: req.body.cookCount,
