@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
-import { FilterByIngredientPipe } from '../filter-by-ingredient.pipe';
 
 @Component({
   templateUrl: './recipe-list.component.html',

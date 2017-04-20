@@ -1,8 +1,9 @@
 <h2>Rezepte</h2>
 <input #ingrSearch (keyup)="0" type="text" name="ingredient-search" placeholder="Suche nach Zutaten">
+<input #ctgSearch (keyup)="0" type="text" name="category-search" placeholder="Suche nach Kategorien">
 <ul class="items">
   <div *ngIf="recipes">
-    <li *ngFor="let recipe of recipes | filterByIngredient:ingrSearch.value"
+    <li *ngFor="let recipe of recipes | filterRecipes:ingrSearch.value:ctgSearch.value"
       (click)="onSelect(recipe)">
       <span class="badge">{{ recipe.title }}</span>
     </li>

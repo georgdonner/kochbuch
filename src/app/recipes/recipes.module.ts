@@ -11,7 +11,7 @@ import { RecipeService } from './recipe.service';
 import { RecipeRoutingModule } from './recipes-routing.module';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { CalcServingsPipe } from './calc-servings.pipe';
-import { FilterByIngredientPipe } from './filter-by-ingredient.pipe';
+import { FilterRecipesPipe } from './filter-recipes.pipe';
 
 @NgModule({
   imports: [
@@ -25,7 +25,7 @@ import { FilterByIngredientPipe } from './filter-by-ingredient.pipe';
     RecipeListComponent,
     RecipeEditComponent,
     CalcServingsPipe,
-    FilterByIngredientPipe
+    FilterRecipesPipe
   ],
   providers: [ RecipeService ]
 })
