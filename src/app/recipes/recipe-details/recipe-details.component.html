@@ -10,8 +10,16 @@
     Das Rezept dauert etwa {{ recipe.duration }} Minuten 
     und hat einen Schwierigkeitsgrad von {{ recipe.difficulty }}.
   </p>
+  <div class="form-inline">
+    <div class="form-group">
+      <label for="servings">Portionen</label>
+      <input type="number" name="servings" id="servings" value="{{recipe.servings}}">
+    </div>
+  </div>
   <p>Zutaten:</p>
-  <p *ngFor="let ingredient of recipe.ingredients">{{ ingredient.quantity }} {{ ingredient.name }}</p>
+  <p *ngFor="let ingredient of recipe.ingredients">
+    {{ ingredient.name }} {{ ingredient.hint }}
+  </p>
   <p>Beschreibung: </p>
   <p *ngIf="recipe.description">{{ recipe.description }}</p>
   <img *ngIf="recipe.descrImage" class="img-responsive" src="{{recipe.descrImage}}" alt="Recipe description">
