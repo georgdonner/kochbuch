@@ -1,8 +1,11 @@
 <h2>Rezepte</h2>
+<input #ingrSearch (keyup)="0" type="text" name="ingredient-search" placeholder="Suche nach Zutaten">
 <ul class="items">
-  <li *ngFor="let recipe of recipes"
-    (click)="onSelect(recipe)">
-    <span class="badge">{{ recipe.title }}</span>
-  </li>
+  <div *ngIf="recipes">
+    <li *ngFor="let recipe of recipes | filterByIngredient:ingrSearch.value"
+      (click)="onSelect(recipe)">
+      <span class="badge">{{ recipe.title }}</span>
+    </li>
+  </div>
 </ul>
 <button type="button" (click)="newRecipe()">Neues Rezept</button>
