@@ -18,7 +18,7 @@
   </div>
   <p>Zutaten:</p>
   <p *ngFor="let ingredient of recipe.ingredients">
-    {{ ingredient.name | calcServings:recipe.servings:desiredServings }} {{ ingredient.hint }}
+    {{ ingredient.name | calcServings:recipe.servings:desiredServings }} ({{ ingredient.hint }})
   </p>
   <p>Beschreibung: </p>
   <p *ngIf="recipe.description">{{ recipe.description }}</p>
