@@ -20,7 +20,7 @@ export class RecipeFormComponent {
   ingredients = [new Ingredient( '', '' )];
   newIngredient = new Ingredient('', '');
   categories = [];
-  model = new Recipe('', 0, 0, 0, this.ingredients, '');
+  model = new Recipe('', 2, 0, 0, 0, this.ingredients, '');
   ingredientAdded = false;
 
   heroFilename: string;
