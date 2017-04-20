@@ -10,6 +10,7 @@ import { RecipeService } from './recipe.service';
 
 import { RecipeRoutingModule } from './recipes-routing.module';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
+import { CalcServingsPipe } from './calc-servings.pipe';
 
 @NgModule({
   imports: [
@@ -21,7 +22,8 @@ import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
     RecipeDetailsComponent,
     RecipeFormComponent,
     RecipeListComponent,
-    RecipeEditComponent
+    RecipeEditComponent,
+    CalcServingsPipe
   ],
   providers: [ RecipeService ]
 })

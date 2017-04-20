@@ -35,7 +35,6 @@ export class RecipeFormComponent {
     if(this.categories.length > 0) {
       this.model.categories = this.categories
     }
-    console.log(this.model.categories);
     this.recipeService.addRecipe(this.model)
       .subscribe();
   }

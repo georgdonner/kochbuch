@@ -12,6 +12,7 @@ import { RecipeService } from '../recipe.service';
 export class RecipeDetailsComponent implements OnInit {
 
   recipe: Recipe;
+  desiredServings: number;
 
   constructor(
     private recipeService: RecipeService,
@@ -22,7 +23,10 @@ export class RecipeDetailsComponent implements OnInit {
   ngOnInit() {
     this.route.params
       .switchMap((params: Params) => this.recipeService.getRecipe(params['id']))
-      .subscribe((recipe: Recipe) => this.recipe = recipe);
+      .subscribe((recipe: Recipe) => {
+        this.recipe = recipe
+        this.desiredServings = recipe.servings
+      });
   }
 
   gotoRecipes() {
