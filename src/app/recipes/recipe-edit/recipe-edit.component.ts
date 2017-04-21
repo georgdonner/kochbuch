@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
+import { environment } from '../../../environments/environment';
 
 import { Recipe } from '../recipe';
 import { Ingredient } from '../ingredient';
@@ -20,6 +21,7 @@ declare const filestack: {
   ]
 })
 export class RecipeEditComponent implements OnInit {
+  filestackKey: string = environment.filestackKey;
 
   recipe: Recipe;
   newIngredient = new Ingredient('', '');
@@ -68,7 +70,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   async showHeroPicker() {
-    const client = filestack.init('AwD48ceQaWtGBs9plMog7z');
+    const client = filestack.init(this.filestackKey);
     const result = await client.pick({ 
       accept: ['image/*'],
       maxFiles: 1 
@@ -78,7 +80,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   async showDescPicker() {
-    const client = filestack.init('AwD48ceQaWtGBs9plMog7z');
+    const client = filestack.init(this.filestackKey);
     const result = await client.pick({
       accept: ['image/*'],
       maxFiles: 1

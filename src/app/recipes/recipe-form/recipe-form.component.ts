@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '../../../environments/environment';
 
 import { Recipe } from '../recipe';
 import { Ingredient } from '../ingredient';
@@ -16,6 +17,7 @@ declare const filestack: {
   styleUrls: ['./recipe-form.component.css']
 })
 export class RecipeFormComponent {
+  filestackKey: string = environment.filestackKey;
 
   ingredients = [new Ingredient( '', '' )];
   newIngredient = new Ingredient('', '');
@@ -68,7 +70,7 @@ export class RecipeFormComponent {
   }
 
   async showHeroPicker() {
-    const client = filestack.init('AwD48ceQaWtGBs9plMog7z');
+    const client = filestack.init(this.filestackKey);
     const result = await client.pick({
       accept: ['image/*'],
       maxFiles: 1
@@ -79,7 +81,7 @@ export class RecipeFormComponent {
   }
 
   async showDescPicker() {
-    const client = filestack.init('AwD48ceQaWtGBs9plMog7z');
+    const client = filestack.init(this.filestackKey);
     const result = await client.pick({
       accept: ['image/*'],
       maxFiles: 1

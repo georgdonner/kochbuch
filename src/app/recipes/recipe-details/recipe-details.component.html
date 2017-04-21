@@ -5,27 +5,43 @@
   <div class="page-header text-center">
     <h1 class="h1">{{ recipe.title }}</h1>
   </div>
-  <img *ngIf="recipe.heroImage" class="img-responsive"  src="{{recipe.heroImage}}" alt="{{recipe.title}}">
-  <p>
-    Das Rezept dauert etwa {{ recipe.duration }} Minuten 
-    und hat einen Schwierigkeitsgrad von {{ recipe.difficulty }}.
-  </p>
-  <div class="form-inline">
-    <div class="form-group">
-      <label for="servings">Portionen</label>
-      <input type="number" name="servings" id="servings" [(ngModel)]="desiredServings">
+  <img *ngIf="recipe.heroImage" class="img-fullwidth"  src="{{recipe.heroImage}}" alt="{{recipe.title}}">
+  <div class="row top-margin bottom-margin">
+    <div class="col-sm-2">
+      <div class="input-group">
+        <div class="input-group-addon"><svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg></div>
+        <input type="number" [(ngModel)]="desiredServings" name="servings" id="servings" class="form-control">
+      </div>
+    </div>
+    <div class="col-sm-5 top-info text-center">
+      <div *ngIf="recipe.categories"><span *ngFor="let ctg of recipe.categories"> #<strong>{{ ctg }}</strong> </span></div>
+    </div>
+    <div class="col-sm-3 top-info">
+      <svg class="icon icon-clock-o">
+        <use xlink:href="#icon-clock-o"></use>
+      </svg>
+      <span>{{ recipe.duration }} Minuten</span>
+    </div>
+    <div class="col-sm-2 top-info">
+      <svg class="icon icon-star-o">
+        <use xlink:href="#icon-star-o"></use>
+      </svg>
+      <span>{{ recipe.difficulty | difficultyString }}</span>
     </div>
   </div>
-  <p>Zutaten:</p>
-  <p *ngFor="let ingredient of recipe.ingredients">
-    {{ ingredient.name | calcServings:recipe.servings:desiredServings }} ({{ ingredient.hint }})
+  <h2 class="h2 section-header">Zutaten</h2>
+  <p class="ingredient" *ngFor="let ingredient of recipe.ingredients">
+    {{ ingredient.name | calcServings:recipe.servings:desiredServings }} 
+    <span *ngIf="ingredient.hint"> ({{ ingredient.hint }})</span>
   </p>
-  <p>Beschreibung: </p>
+  <h2 class="h2 section-header">Zubereitung</h2>
   <p *ngIf="recipe.description">{{ recipe.description }}</p>
-  <img *ngIf="recipe.descrImage" class="img-responsive" src="{{recipe.descrImage}}" alt="Recipe description">
-  <p *ngIf="recipe.categories">Kategorien: <span *ngFor="let ctg of recipe.categories">{{ ctg }} </span></p>
-  <button class="btn btn-primary" type="button" (click)="edit(recipe)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
-  <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#deleteModal"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+  <img #descrImage *ngIf="recipe.descrImage" src="{{recipe.descrImage}}"
+       alt="Recipe description" class="img-responsive">
+  <div class="bottom-margin top-margin">
+    <button class="btn btn-primary" type="button" (click)="edit(recipe)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+    <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#deleteModal"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></button>
+  </div>
 
   <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
     <div class="modal-dialog" role="document">
