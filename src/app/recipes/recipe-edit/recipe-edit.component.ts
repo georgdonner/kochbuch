@@ -14,7 +14,10 @@ declare const filestack: {
 
 @Component({
   templateUrl: './recipe-edit.component.html',
-  styleUrls: ['./recipe-edit.component.css']
+  styleUrls: [
+    './recipe-edit.component.css',
+    '../recipe-form/recipe-form.component.css'
+  ]
 })
 export class RecipeEditComponent implements OnInit {
 

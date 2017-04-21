@@ -1,62 +1,79 @@
 <div *ngIf="recipe" class="container">
   <form #recipeForm="ngForm">
-    <h1>{{ recipe.title }}</h1>
-    <div class="form-group">
-      <label for="title">Titel</label>
-      <input type="text" [(ngModel)]="recipe.title" name="title" class="form-control" id="title" required #title="ngModel">
+    <h1 class="page-header h1">{{ recipe.title }}</h1>
+    <img *ngIf="recipe.heroImage" class="img-responsive bottom-margin" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
+    <div class="row form-group">
+      <div class="col-sm-9">
+        <input type="text" [(ngModel)]="recipe.title" name="title" class="form-control " id="title" required #title="ngModel" placeholder="Titel">
+      </div>
+      <div class="col-sm-3">
+        <button type="button" class="btn btn-default" (click)=showHeroPicker()>Neues Bild</button>
+      </div>
     </div>
     <div [hidden]="title.valid || title.pristine"
           class="alert alert-danger">
       Das Rezept muss einen Titel haben
     </div>
-    <label>Titelbild</label>
-    <img *ngIf="recipe.heroImage" class="img-responsive" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
-    <button type="button" class="btn btn-default" (click)=showHeroPicker()>Neues Bild</button>
-    <div class="form-inline">
-      <div class="form-group">
-        <input type="number" [(ngModel)]="recipe.servings" name="servings" id="servings" class="form-control"><span> Portionen</span>
+    <div class="row form-group">
+      <div class="col-sm-2">
+        <div class="input-group">
+          <div class="input-group-addon"><svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg></div>
+          <input type="number" [(ngModel)]="recipe.servings" name="servings" id="servings" class="form-control">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="duration">Dauer</label>
-        <input type="number" [(ngModel)]="recipe.duration" name="duration" id="duration" class="form-control"><span> Minuten</span>
+      <div class="col-sm-4 col-sm-offset-1">
+        <div class="input-group">
+          <div class="input-group-addon"><svg class="icon icon-clock-o"><use xlink:href="#icon-clock-o"></use></svg></div>
+          <input type="number" [(ngModel)]="recipe.duration" name="duration" id="duration" class="form-control">
+          <div class="input-group-addon">Minuten</div>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="difficulty">Schwierigkeit</label>
-        <input type="number" [(ngModel)]="recipe.difficulty" name="difficulty" id="difficulty" class="form-control">
+      <div class="col-sm-4 col-sm-offset-1">
+        <div class="btn-group" role="group" aria-label="...">
+          <button type="button" class="btn btn-default" [ngClass]="{'active':recipe.difficulty==1}" (click)="recipe.difficulty=1">Einfach</button>
+          <button type="button" class="btn btn-default" [ngClass]="{'active':recipe.difficulty==2}" (click)="recipe.difficulty=2">Mittel</button>
+          <button type="button" class="btn btn-default" [ngClass]="{'active':recipe.difficulty==3}" (click)="recipe.difficulty=3">Schwer</button>
+        </div>
+      </div>
+    </div>
+    <h3 class="h3">Zutaten</h3>
+    <div class="list" *ngFor="let ingr of recipe.ingredients; let i = index">
+      {{ ingr.name }} <span *ngIf="ingr.hint!=''">({{ ingr.hint }})</span>
+      <button type="button" class="close no-float" (click)=removeIngredient(ingr)><span aria-hidden="true">&times;</span></button>
+    </div>
+    <div class="row form-group">
+      <div class="col-sm-5">
+          <input type="text" [(ngModel)]="newIngredient.name" name="name" class="form-control" id="name" 
+                (keyup.enter)="addIngredient()" placeholder="Enter drücken zum Hinzufügen" #ingredient>
+      </div>
+      <div class="col-sm-7">
+        <div class="input-group">
+          <div class="input-group-addon">Hinweis</div>
+          <input type="text" [(ngModel)]="newIngredient.hint" name="hint" class="form-control" id="hint" 
+                (keyup.enter)="addIngredient(); ingredient.focus()" placeholder="Klammern werden automatisch gesetzt">
+        </div>
       </div>
     </div>
     <div class="form-group">
-      <p>Zutaten: </p>
-      <div *ngFor="let ingr of ingredients; let i = index">
-        {{ ingr.name }} <span *ngIf="ingr.hint!=''">({{ ingr.hint }})</span>
-        <input *ngIf="ingredientAdded" type="button" value="X" class="btn btn-danger btn-xs" (click)=removeIngredient(ingr)>
-      </div>
-      <input type="text" [(ngModel)]="newIngredient.name" name="name" class="form-control" id="name" 
-            (keyup.enter)="addIngredient()" placeholder="Enter drücken zum Hinzufügen">
-      <label for="hint">Hinweis</label>
-      <input type="text" [(ngModel)]="newIngredient.hint" name="hint" class="form-control" id="hint" 
-            (keyup.enter)="addIngredient()" placeholder="z.B. (Am besten frisch) - Klammern werden automatisch gesetzt">
-    </div>
-    <div class="form-group">
-      <label for="description">Beschreibung</label>
-      <input type="text" [(ngModel)]="recipe.description" name="description" class="form-control" id="description" required #description="ngModel">
+      <h3 class="h3">Info</h3>
+      <textarea rows="3" [(ngModel)]="recipe.description" name="description" class="form-control" id="description" required #description="ngModel" placeholder="Beschreibung..."></textarea>
     </div>
     <div [hidden]="description.valid || description.pristine"
           class="alert alert-danger">
       <p *ngIf="recipe.descrImage">Bitte gib dem Rezept noch eine kurze Beschreibung</p>
       <p *ngIf="!recipe.descrImage">Das Rezept braucht eine Beschreibung, vor allem ohne Bild!</p>
     </div>
-    <img *ngIf="recipe.descrImage" class="img-responsive" src="{{recipe.descrImage}}" alt="Recipe description">
-    <button type="button" class="btn btn-default" (click)=showDescPicker()>Neues Bild</button>
+    <img *ngIf="recipe.descrImage" class="img-responsive bottom-margin" src="{{recipe.descrImage}}" alt="Recipe description">
+    <button type="button" class="btn btn-default" (click)=showDescPicker()>Neue Anleitung</button>
     <div class="form-group">
-      <label for="category">Kategorien: </label>
-      <span *ngFor="let ctg of recipe.categories">
+      <h3 class="h3">Kategorien</h3>
+      <div class="list" *ngFor="let ctg of recipe.categories">
         {{ ctg }}
-        <button type="button" class="close no-float" (click)="removeCategory(ctg)">x</button>
-      </span>
+        <button type="button" class="close no-float" (click)="removeCategory(ctg)">x</button>  
+      </div>
       <input #category type="text" name="category" class="form-control" id="category" 
             (keyup.enter)="addCategory(category.value); category.value=''" placeholder="Enter drücken zum Hinzufügen">
     </div>
-    <button type="button" (click)="save(); gotoRecipe(recipe)" class="btn btn-success" [disabled]="!recipeForm.form.valid">Speichern</button>
+    <button type="button" (click)="save(); gotoRecipe(recipe)" class="btn btn-success bottom-margin" [disabled]="!recipeForm.form.valid">Speichern</button>
   </form>
 </div>

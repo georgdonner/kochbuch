@@ -70,13 +70,13 @@
     <span *ngIf="model.descrImage" style="padding-left: 5px;"> "{{ descrFilename }}" wurde erfolgreich hochgeladen!</span>
     <div class="form-group">
       <h3 class="h3">Kategorien</h3>
-      <div class="list-inline" *ngFor="let ctg of categories">
+      <div class="list" *ngFor="let ctg of categories">
         {{ ctg }}
         <button type="button" class="close no-float" (click)="removeCategory(ctg)">x</button>  
       </div>
       <input #category type="text" name="category" class="form-control" id="category" 
             (keyup.enter)="addCategory(category.value); category.value=''" placeholder="Enter drücken zum Hinzufügen">
     </div>
-    <button type="button" (click)="addRecipe(); gotoRecipes()" class="btn btn-success" [disabled]="!recipeForm.form.valid" style="margin-bottom: 20px">Speichern</button>
+    <button type="button" (click)="addRecipe(); gotoRecipes()" class="btn btn-success bottom-margin" [disabled]="!recipeForm.form.valid">Speichern</button>
   </form>
 </div>
