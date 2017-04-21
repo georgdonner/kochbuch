@@ -20,9 +20,10 @@ export class RecipeFormComponent {
   ingredients = [new Ingredient( '', '' )];
   newIngredient = new Ingredient('', '');
   categories = [];
-  model = new Recipe('', 2, 0, 0, 0, this.ingredients, '');
-  ingredientAdded = false;
+  model = new Recipe('', 2, 0, 1, 0, this.ingredients, '');
 
+  // helper variables
+  ingredientAdded = false;
   heroFilename: string;
   descrFilename: string;
 
@@ -90,6 +91,10 @@ export class RecipeFormComponent {
 
   gotoRecipes() {
     this.router.navigate(['/recipes']);
+  }
+
+  show() {
+    console.log(this.model);
   }
 
 }
