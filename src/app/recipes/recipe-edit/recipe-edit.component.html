@@ -14,15 +14,15 @@
     <button type="button" class="btn btn-default" (click)=showHeroPicker()>Neues Bild</button>
     <div class="form-inline">
       <div class="form-group">
-        <input type="number" [(ngModel)]="model.servings" name="servings" id="servings" class="form-control"><span> Portionen</span>
+        <input type="number" [(ngModel)]="recipe.servings" name="servings" id="servings" class="form-control"><span> Portionen</span>
       </div>
       <div class="form-group">
         <label for="duration">Dauer</label>
-        <input type="number" [(ngModel)]="model.duration" name="duration" id="duration" class="form-control"><span> Minuten</span>
+        <input type="number" [(ngModel)]="recipe.duration" name="duration" id="duration" class="form-control"><span> Minuten</span>
       </div>
       <div class="form-group">
         <label for="difficulty">Schwierigkeit</label>
-        <input type="number" [(ngModel)]="model.difficulty" name="difficulty" id="difficulty" class="form-control">
+        <input type="number" [(ngModel)]="recipe.difficulty" name="difficulty" id="difficulty" class="form-control">
       </div>
     </div>
     <div class="form-group">
@@ -37,10 +37,14 @@
       <input type="text" [(ngModel)]="newIngredient.hint" name="hint" class="form-control" id="hint" 
             (keyup.enter)="addIngredient()" placeholder="z.B. (Am besten frisch) - Klammern werden automatisch gesetzt">
     </div>
-
     <div class="form-group">
       <label for="description">Beschreibung</label>
-      <input type="text" [(ngModel)]="recipe.description" name="description" class="form-control" id="description">
+      <input type="text" [(ngModel)]="recipe.description" name="description" class="form-control" id="description" required #description="ngModel">
+    </div>
+    <div [hidden]="description.valid || description.pristine"
+          class="alert alert-danger">
+      <p *ngIf="recipe.descrImage">Bitte gib dem Rezept noch eine kurze Beschreibung</p>
+      <p *ngIf="!recipe.descrImage">Das Rezept braucht eine Beschreibung, vor allem ohne Bild!</p>
     </div>
     <img *ngIf="recipe.descrImage" class="img-responsive" src="{{recipe.descrImage}}" alt="Recipe description">
     <button type="button" class="btn btn-default" (click)=showDescPicker()>Neues Bild</button>

@@ -57,8 +57,9 @@ export class RecipeFormComponent {
   }
 
   addCategory(category) {
-    this.categories.push(category);
-    console.log(this.categories);
+    if (!this.categories.includes(category)) {
+      this.categories.push(category);
+    }
   }
 
   removeCategory(category) {

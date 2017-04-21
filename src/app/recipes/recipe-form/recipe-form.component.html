@@ -42,7 +42,12 @@
     
     <div class="form-group">
       <label for="description">Beschreibung</label>
-      <input type="text" [(ngModel)]="model.description" name="description" class="form-control" id="description">
+      <input type="text" [(ngModel)]="model.description" name="description" class="form-control" id="description" required #description="ngModel">
+    </div>
+    <div [hidden]="description.valid || description.pristine"
+          class="alert alert-danger">
+      <p *ngIf="model.descrImage">Bitte gib dem Rezept noch eine kurze Beschreibung</p>
+      <p *ngIf="!model.descrImage">Das Rezept braucht eine Beschreibung, vor allem ohne Bild!</p>
     </div>
     <button type="button" class="btn btn-default" (click)=showDescPicker()>Anleitung Hochladen</button>
     <span *ngIf="model.descrImage"> "{{ descrFilename }}" wurde erfolgreich hochgeladen!</span>

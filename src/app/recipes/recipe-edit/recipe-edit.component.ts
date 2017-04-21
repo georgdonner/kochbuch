@@ -53,6 +53,8 @@ export class RecipeEditComponent implements OnInit {
   addCategory(category) {
     if(!this.recipe.categories) {
       this.recipe.categories = [category]
+    } else if(this.recipe.categories.includes(category)) {
+      // leave the categories as is
     } else {
       this.recipe.categories.push(category);
     }
