@@ -52,7 +52,7 @@
       <label for="category">Kategorien: </label>
       <span *ngFor="let ctg of recipe.categories">
         {{ ctg }}
-        <button type="button" value="X" class="btn btn-danger btn-xs" (click)="removeCategory(ctg)">X</button>
+        <button type="button" class="close no-float" (click)="removeCategory(ctg)">x</button>
       </span>
       <input #category type="text" name="category" class="form-control" id="category" 
             (keyup.enter)="addCategory(category.value); category.value=''" placeholder="Enter drücken zum Hinzufügen">

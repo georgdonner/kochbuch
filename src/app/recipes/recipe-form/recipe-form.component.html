@@ -1,26 +1,34 @@
 <div class="container">
   <form #recipeForm="ngForm">
-    <div class="form-group">
-      <label for="title">Titel</label>
-      <input type="text" [(ngModel)]="model.title" name="title" class="form-control" id="title" required #title="ngModel">
+    <h1 class="page-header h1">{{ model.title }}</h1>
+    <div class="row form-group">
+      <div class="col-sm-9">
+        <input type="text" [(ngModel)]="model.title" name="title" class="form-control " id="title" required #title="ngModel" placeholder="Titel">
+      </div>
+      <div class="col-sm-3">
+        <button type="button" class="btn btn-default" (click)=showHeroPicker()>Titelbild Hochladen</button>
+      </div>
+      <span class="text-right" *ngIf="model.heroImage"> "{{ heroFilename }}" wurde erfolgreich hochgeladen!</span>
     </div>
     <div [hidden]="title.valid || title.pristine"
           class="alert alert-danger">
       Das Rezept muss einen Titel haben
     </div>
-    <div>
-      <button type="button" class="btn btn-default" (click)=showHeroPicker()>Titelbild Hochladen</button>
-      <span *ngIf="model.heroImage"> "{{ heroFilename }}" wurde erfolgreich hochgeladen!</span>
-    </div>
-    <div class="form-inline">
-      <div class="form-group">
-        <input type="number" [(ngModel)]="model.servings" name="servings" id="servings" class="form-control"><span> Portionen</span>
+    <div class="row">
+      <div class="form-group col-sm-2">
+        <div class="input-group">
+          <div class="input-group-addon"><svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg></div>
+          <input type="number" [(ngModel)]="model.servings" name="servings" id="servings" class="form-control">
+        </div>
       </div>
-      <div class="form-group">
-        <label for="duration">Dauer</label>
-        <input type="number" [(ngModel)]="model.duration" name="duration" id="duration" class="form-control"><span> Minuten</span>
+      <div class="form-group col-sm-4">
+        <div class="input-group">
+          <div class="input-group-addon"><svg class="icon icon-clock-o"><use xlink:href="#icon-clock-o"></use></svg></div>
+          <input type="number" [(ngModel)]="model.duration" name="duration" id="duration" class="form-control">
+          <div class="input-group-addon">Minuten</div>
+        </div>
       </div>
-      <div class="form-group">
+      <div class="form-group col-sm-4">
         <label for="difficulty">Schwierigkeit</label>
         <input type="number" [(ngModel)]="model.difficulty" name="difficulty" id="difficulty" class="form-control">
       </div>
@@ -55,7 +63,7 @@
       <label for="category">Kategorien: </label>
       <span *ngFor="let ctg of categories">
         {{ ctg }}
-        <button type="button" class="close noFloat" (click)="removeCategory(ctg)">x</button>  
+        <button type="button" class="close no-float" (click)="removeCategory(ctg)">x</button>  
       </span>
       <input #category type="text" name="category" class="form-control" id="category" 
             (keyup.enter)="addCategory(category.value); category.value=''" placeholder="Enter drücken zum Hinzufügen">
