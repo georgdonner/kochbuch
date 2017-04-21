@@ -10,8 +10,9 @@ import { RecipeService } from './recipe.service';
 
 import { RecipeRoutingModule } from './recipes-routing.module';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
-import { CalcServingsPipe } from './calc-servings.pipe';
-import { FilterRecipesPipe } from './filter-recipes.pipe';
+import { CalcServingsPipe } from './pipes/calc-servings.pipe';
+import { FilterRecipesPipe } from './pipes/filter-recipes.pipe';
+import { DifficultyStringPipe } from './pipes/difficulty-string.pipe';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import { FilterRecipesPipe } from './filter-recipes.pipe';
     RecipeListComponent,
     RecipeEditComponent,
     CalcServingsPipe,
-    FilterRecipesPipe
+    FilterRecipesPipe,
+    DifficultyStringPipe
   ],
   providers: [ RecipeService ]
 })
