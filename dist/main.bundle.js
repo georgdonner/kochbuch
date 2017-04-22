@@ -102,7 +102,6 @@ var CalcServingsPipe = (function () {
     CalcServingsPipe.prototype.transform = function (value, origServings, newServings) {
         var quantityCheck = value.match(/\d+(\.|\,|\/)?\d*/i);
         var quantity = getQuantity(value);
-        var quantityString = quantityCheck[0];
         var multUnit_n = /\d\s?((prise|zehe|stange|dose|flasche|tasse|messerspitze)\w*)/i;
         var multUnit_en = /\d\s?((packung)\w*)/i;
         var glas = /\d\s?(glas|gläser)/i;
@@ -110,6 +109,7 @@ var CalcServingsPipe = (function () {
         var name_en = /\w*en$/i;
         if (origServings == newServings) {
             if (quantityCheck != null) {
+                var quantityString = quantityCheck[0];
                 return value.replace(quantityString, beautifulNumber(quantity));
             }
             return value;
@@ -117,6 +117,7 @@ var CalcServingsPipe = (function () {
         else {
             if (quantityCheck != null) {
                 // just apply a new value when there is one
+                var quantityString = quantityCheck[0];
                 var newQuantity = quantity * (newServings / origServings);
                 value = value.replace(quantityString, beautifulNumber(newQuantity));
             }

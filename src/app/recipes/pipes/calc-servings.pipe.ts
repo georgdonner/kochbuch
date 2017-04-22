@@ -8,7 +8,6 @@ export class CalcServingsPipe implements PipeTransform {
   transform(value: string, origServings: number, newServings: number): string {
     const quantityCheck = value.match(/\d+(\.|\,|\/)?\d*/i);
     const quantity: number = getQuantity(value);
-    var quantityString: string = quantityCheck[0];
 
     var multUnit_n = /\d\s?((prise|zehe|stange|dose|flasche|tasse|messerspitze)\w*)/i;
     var multUnit_en = /\d\s?((packung)\w*)/i;
@@ -18,6 +17,7 @@ export class CalcServingsPipe implements PipeTransform {
 
     if (origServings==newServings) {
       if (quantityCheck != null) {
+        var quantityString: string = quantityCheck[0];
         return value.replace(quantityString, beautifulNumber(quantity));
       }
       return value;
@@ -25,6 +25,7 @@ export class CalcServingsPipe implements PipeTransform {
     else {
       if (quantityCheck != null) {
         // just apply a new value when there is one
+        var quantityString: string = quantityCheck[0];
         var newQuantity: number = quantity * (newServings/origServings);
         value = value.replace(quantityString, beautifulNumber(newQuantity));
       } else {
