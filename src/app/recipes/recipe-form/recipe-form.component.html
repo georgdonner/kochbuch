@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="row form-group mt-3">
-      <div class="col-sm-5">
+      <div class="col-sm-6">
         <div class="input-group">
           <span class="input-group-btn">
             <button class="btn btn-primary click hidden-lg-up" type="button" (click)="addIngredient()">Enter</button>
@@ -54,7 +54,7 @@
                 (keyup.enter)="addIngredient()" placeholder="Enter drücken zum Hinzufügen" #ingredient>
         </div>
       </div>
-      <div class="col-sm-7">
+      <div class="col-sm-6">
         <div class="input-group">
           <div class="input-group-addon">Hinweis</div>
           <input type="text" [(ngModel)]="newIngredient.hint" name="hint" class="form-control" id="hint" 
