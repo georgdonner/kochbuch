@@ -313,31 +313,33 @@ var FilterRecipesPipe = (function () {
         var ctgArray = ctgQuery.trim().split(',');
         if (ctgQuery == '') {
             recipes.forEach(function (recipe) {
+                var ingrArrayTmp = ingrArray.slice(0);
                 recipe.ingredients.forEach(function (ingredient) {
-                    ingrArray.forEach(function (ingr) {
+                    ingrArrayTmp.forEach(function (ingr) {
                         if (ingredient.name.toLowerCase().indexOf(ingr.toLowerCase()) !== -1) {
-                            ingrArray.splice(ingrArray.indexOf(ingr), 1);
+                            ingrArrayTmp.splice(ingrArrayTmp.indexOf(ingr), 1);
                         }
                     });
                 });
-                if (ingrArray.length === 0) {
+                if (ingrArrayTmp.length === 0) {
                     filteredRecipes.push(recipe);
                 }
             });
             return filteredRecipes;
         }
         if (ingrQuery == '') {
+            var ctgArrayTmp_1 = ctgArray.slice(0);
             recipes.forEach(function (recipe) {
                 if (recipe.categories) {
                     recipe.categories.forEach(function (category) {
-                        ctgArray.forEach(function (ctg) {
+                        ctgArrayTmp_1.forEach(function (ctg) {
                             if (category.toLowerCase().indexOf(ctg.toLowerCase()) !== -1) {
-                                ctgArray.splice(ctgArray.indexOf(ctg), 1);
+                                ctgArrayTmp_1.splice(ctgArrayTmp_1.indexOf(ctg), 1);
                             }
                         });
                     });
                 }
-                if (ctgArray.length === 0) {
+                if (ctgArrayTmp_1.length === 0) {
                     filteredRecipes.push(recipe);
                 }
             });
@@ -345,25 +347,27 @@ var FilterRecipesPipe = (function () {
         }
         recipes.forEach(function (recipe) {
             var ingrMatch = true;
+            var ingrArrayTmp = ingrArray.slice(0);
             recipe.ingredients.forEach(function (ingredient) {
-                ingrArray.forEach(function (ingr) {
+                ingrArrayTmp.forEach(function (ingr) {
                     if (ingredient.name.toLowerCase().indexOf(ingr.toLowerCase()) !== -1) {
-                        ingrArray.splice(ingrArray.indexOf(ingr), 1);
+                        ingrArrayTmp.splice(ingrArrayTmp.indexOf(ingr), 1);
                     }
                 });
-                if (ingrArray.length === 0) {
+                if (ingrArrayTmp.length === 0) {
                     ingrMatch = true;
                 }
             });
             if (recipe.categories && ingrMatch) {
+                var ctgArrayTmp_2 = ctgArray.slice(0);
                 recipe.categories.forEach(function (category) {
-                    ctgArray.forEach(function (ctg) {
+                    ctgArrayTmp_2.forEach(function (ctg) {
                         if (category.toLowerCase().indexOf(ctg.toLowerCase()) !== -1) {
-                            ctgArray.splice(ctgArray.indexOf(ctg), 1);
+                            ctgArrayTmp_2.splice(ctgArrayTmp_2.indexOf(ctg), 1);
                         }
                     });
                 });
-                if (ctgArray.length === 0) {
+                if (ctgArrayTmp_2.length === 0) {
                     filteredRecipes.push(recipe);
                 }
             }

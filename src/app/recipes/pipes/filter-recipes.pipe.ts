@@ -12,38 +12,40 @@ export class FilterRecipesPipe implements PipeTransform {
       return recipes;
     }
 
-    var filteredRecipes = new Array<Recipe>();
+    let filteredRecipes = new Array<Recipe>();
 
-    var ingrArray = ingrQuery.trim().split(',');
-    var ctgArray = ctgQuery.trim().split(',');
+    const ingrArray = ingrQuery.trim().split(',');
+    const ctgArray = ctgQuery.trim().split(',');
 
     if (ctgQuery == '') {
       recipes.forEach((recipe) => {
+        let ingrArrayTmp = ingrArray.slice(0);
         recipe.ingredients.forEach((ingredient) => {
-          ingrArray.forEach((ingr) => {
+          ingrArrayTmp.forEach((ingr) => {
             if(ingredient.name.toLowerCase().indexOf(ingr.toLowerCase())!==-1) {
-              ingrArray.splice(ingrArray.indexOf(ingr),1);
+              ingrArrayTmp.splice(ingrArrayTmp.indexOf(ingr),1);
             }
           })
         });
-        if (ingrArray.length === 0) {
+        if (ingrArrayTmp.length === 0) {
           filteredRecipes.push(recipe);
         }
       });
       return filteredRecipes
     }
     if (ingrQuery == '') {
+      let ctgArrayTmp = ctgArray.slice(0);
       recipes.forEach((recipe) => {
         if (recipe.categories) {
           recipe.categories.forEach((category) => {
-            ctgArray.forEach((ctg) => {
+            ctgArrayTmp.forEach((ctg) => {
               if(category.toLowerCase().indexOf(ctg.toLowerCase())!==-1) {
-                ctgArray.splice(ctgArray.indexOf(ctg),1);
+                ctgArrayTmp.splice(ctgArrayTmp.indexOf(ctg),1);
               }
             })
           });
         }
-        if (ctgArray.length === 0) {
+        if (ctgArrayTmp.length === 0) {
           filteredRecipes.push(recipe);
         }
       });
@@ -51,25 +53,27 @@ export class FilterRecipesPipe implements PipeTransform {
     }
     recipes.forEach((recipe) => {
       let ingrMatch: boolean = true;
+      let ingrArrayTmp = ingrArray.slice(0);
       recipe.ingredients.forEach((ingredient) => {
-        ingrArray.forEach((ingr) => {
+        ingrArrayTmp.forEach((ingr) => {
           if(ingredient.name.toLowerCase().indexOf(ingr.toLowerCase())!==-1) {
-            ingrArray.splice(ingrArray.indexOf(ingr),1);
+            ingrArrayTmp.splice(ingrArrayTmp.indexOf(ingr),1);
           }
         })
-        if(ingrArray.length === 0) {
+        if(ingrArrayTmp.length === 0) {
           ingrMatch = true;
         }
       });
       if (recipe.categories && ingrMatch) {
+        let ctgArrayTmp = ctgArray.slice(0);
         recipe.categories.forEach((category) => {
-          ctgArray.forEach((ctg) => {
+          ctgArrayTmp.forEach((ctg) => {
             if(category.toLowerCase().indexOf(ctg.toLowerCase())!==-1) {
-              ctgArray.splice(ctgArray.indexOf(ctg),1);
+              ctgArrayTmp.splice(ctgArrayTmp.indexOf(ctg),1);
             }
           })
         });
-        if (ctgArray.length === 0) {
+        if (ctgArrayTmp.length === 0) {
           filteredRecipes.push(recipe);
         }
       }
