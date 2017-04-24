@@ -2,6 +2,13 @@ button {
     cursor: pointer;
 }
 
+
+@media only screen and (min-width: 992px) {
+    .mb-lg-4 {
+        margin-top: 0 !important;
+    }   
+}
+
 .img-fullwidth {
     width: 100%;
     height: 300px;
@@ -54,16 +61,16 @@ button {
 }
 
 @media only screen and (max-width: 767px) {
-    .icon-spoon-knife {
-        top: 10px;
+    .icon.icon-spoon-knife {
+        top: 0;
     }
 
-    .icon-chevron-left {
-        display: none;
+    .icon.icon-chevron-left {
+        top: 0;
     }
 
     .badge.cook-badge {
-        top: 10px;
+        top: 0;
     }
 }
 

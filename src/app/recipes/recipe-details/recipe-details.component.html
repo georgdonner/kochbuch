@@ -2,26 +2,26 @@
   <svg class="icon icon-chevron-left" (click)="gotoRecipes()"><use xlink:href="#icon-chevron-left"></use></svg>
   <svg class="icon icon-spoon-knife" (click)="cooked()"><use xlink:href="#icon-spoon-knife"></use></svg>
   <span class="badge cook-badge">{{ recipe.cookCount }}</span>
-  <h1 class="display-3 text-center" style="margin-top: 20px;">{{ recipe.title }}</h1>
+  <h1 class="display-3 text-center mt-4">{{ recipe.title }}</h1>
   <hr class="my-4">
   <img *ngIf="recipe.heroImage" class="img-fullwidth" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
-  <div class="row m-4">
-    <div class="col-sm-4 col-lg-2">
+  <div class="row my-4">
+    <div class="col-4 col-lg-2">
       <div class="input-group">
         <div class="input-group-addon"><svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg></div>
         <input type="number" [(ngModel)]="desiredServings" name="servings" id="servings" class="form-control">
       </div>
     </div>
-    <div class="col-sm-8 col-lg-5 top-info text-center">
+    <div class="col-8 col-lg-5 top-info text-center">
       <div *ngIf="recipe.categories"><span *ngFor="let ctg of recipe.categories"> #<strong>{{ ctg }}</strong> </span></div>
     </div>
-    <div class="col-sm-6 col-lg-3 top-info">
+    <div class="col-6 col-lg-3 mt-3 mt-lg-0 top-info">
       <svg class="icon icon-clock-o">
         <use xlink:href="#icon-clock-o"></use>
       </svg>
       <span>{{ recipe.duration }} Minuten</span>
     </div>
-    <div class="col-sm-6 col-lg-2 top-info">
+    <div class="col-6 col-lg-2 mt-3 mt-lg-0 top-info">
       <svg class="icon icon-star-o">
         <use xlink:href="#icon-star-o"></use>
       </svg>
@@ -39,7 +39,7 @@
       </ul>
     </div>
     <div class="col-lg-6">
-      <h2 class="mb-4">Zubereitung</h2>
+      <h2 class="my-4 mb-lg-4">Zubereitung</h2>
       <p *ngIf="recipe.description">{{ recipe.description }}</p>
       <img #descrImage *ngIf="recipe.descrImage" src="{{recipe.descrImage}}"
           alt="Recipe description" class="img-fluid">
