@@ -14,7 +14,7 @@
       </div>
     </div>
     <div class="col-sm-5 top-info text-center">
-      <div *ngIf="recipe.categories"><span *ngFor="let ctg of recipe.categories"> #<strong>{{ ctg }}</strong> </span></div>
+      <div *ngIf="recipe.categories"><span *ngFor="let ctg of recipe.categories" (click)="searchCtg(ctg)"> #<strong>{{ ctg }}</strong> </span></div>
     </div>
     <div class="col-sm-3 top-info">
       <svg class="icon icon-clock-o">

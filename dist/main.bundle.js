@@ -708,7 +708,7 @@ module.exports = "<svg-icons></svg-icons>\r\n<router-outlet></router-outlet>\r\n
 /***/ 170:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\" *ngIf=\"recipe\">\r\n  <svg class=\"icon icon-chevron-left\" (click)=\"gotoRecipes()\"><use xlink:href=\"#icon-chevron-left\"></use></svg>\r\n  <svg class=\"icon icon-spoon-knife\" (click)=\"cooked()\"><use xlink:href=\"#icon-spoon-knife\"></use></svg>\r\n  <span class=\"badge cook-badge\">{{ recipe.cookCount }}</span>\r\n  <div class=\"page-header text-center\">\r\n    <h1 class=\"h1\">{{ recipe.title }}</h1>\r\n  </div>\r\n  <img *ngIf=\"recipe.heroImage\" class=\"img-fullwidth\"  src=\"{{recipe.heroImage}}\" alt=\"{{recipe.title}}\">\r\n  <div class=\"row top-margin bottom-margin\">\r\n    <div class=\"col-sm-2\">\r\n      <div class=\"input-group\">\r\n        <div class=\"input-group-addon\"><svg class=\"icon icon-user\"><use xlink:href=\"#icon-user\"></use></svg></div>\r\n        <input type=\"number\" [(ngModel)]=\"desiredServings\" name=\"servings\" id=\"servings\" class=\"form-control\">\r\n      </div>\r\n    </div>\r\n    <div class=\"col-sm-5 top-info text-center\">\r\n      <div *ngIf=\"recipe.categories\"><span *ngFor=\"let ctg of recipe.categories\"> #<strong>{{ ctg }}</strong> </span></div>\r\n    </div>\r\n    <div class=\"col-sm-3 top-info\">\r\n      <svg class=\"icon icon-clock-o\">\r\n        <use xlink:href=\"#icon-clock-o\"></use>\r\n      </svg>\r\n      <span>{{ recipe.duration }} Minuten</span>\r\n    </div>\r\n    <div class=\"col-sm-2 top-info\">\r\n      <svg class=\"icon icon-star-o\">\r\n        <use xlink:href=\"#icon-star-o\"></use>\r\n      </svg>\r\n      <span>{{ recipe.difficulty | difficultyString }}</span>\r\n    </div>\r\n  </div>\r\n  <h2 class=\"h2 section-header\">Zutaten</h2>\r\n  <p class=\"ingredient\" *ngFor=\"let ingredient of recipe.ingredients\">\r\n    {{ ingredient.name | calcServings:recipe.servings:desiredServings }} \r\n    <span *ngIf=\"ingredient.hint\"> ({{ ingredient.hint }})</span>\r\n  </p>\r\n  <h2 class=\"h2 section-header\">Zubereitung</h2>\r\n  <p *ngIf=\"recipe.description\">{{ recipe.description }}</p>\r\n  <img #descrImage *ngIf=\"recipe.descrImage\" src=\"{{recipe.descrImage}}\"\r\n       alt=\"Recipe description\" class=\"img-responsive\">\r\n  <div class=\"bottom-margin top-margin\">\r\n    <button class=\"btn btn-primary\" type=\"button\" (click)=\"edit(recipe)\"><span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\"></span></button>\r\n    <button class=\"btn btn-danger\" type=\"button\" data-toggle=\"modal\" data-target=\"#deleteModal\"><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>\r\n  </div>\r\n\r\n  <div class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" id=\"deleteModal\">\r\n    <div class=\"modal-dialog\" role=\"document\">\r\n      <div class=\"modal-content\">\r\n        <div class=\"modal-header\">\r\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\r\n          <h4 class=\"modal-title\">Möchtest du \"{{ recipe.title }}\" wirklich löschen?</h4>\r\n        </div>\r\n        <div class=\"modal-footer\">\r\n          <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Abbrechen</button>\r\n          <button type=\"button\" class=\"btn btn-danger\" (click)=\"deleteRecipe(); gotoRecipes()\" data-dismiss=\"modal\">Löschen</button>\r\n        </div>\r\n      </div>\r\n      <!-- /.modal-content -->\r\n    </div>\r\n    <!-- /.modal-dialog -->\r\n  </div>\r\n  <!-- /.modal -->\r\n</div> "
+module.exports = "<div class=\"container\" *ngIf=\"recipe\">\r\n  <svg class=\"icon icon-chevron-left\" (click)=\"gotoRecipes()\"><use xlink:href=\"#icon-chevron-left\"></use></svg>\r\n  <svg class=\"icon icon-spoon-knife\" (click)=\"cooked()\"><use xlink:href=\"#icon-spoon-knife\"></use></svg>\r\n  <span class=\"badge cook-badge\">{{ recipe.cookCount }}</span>\r\n  <div class=\"page-header text-center\">\r\n    <h1 class=\"h1\">{{ recipe.title }}</h1>\r\n  </div>\r\n  <img *ngIf=\"recipe.heroImage\" class=\"img-fullwidth\"  src=\"{{recipe.heroImage}}\" alt=\"{{recipe.title}}\">\r\n  <div class=\"row top-margin bottom-margin\">\r\n    <div class=\"col-sm-2\">\r\n      <div class=\"input-group\">\r\n        <div class=\"input-group-addon\"><svg class=\"icon icon-user\"><use xlink:href=\"#icon-user\"></use></svg></div>\r\n        <input type=\"number\" [(ngModel)]=\"desiredServings\" name=\"servings\" id=\"servings\" class=\"form-control\">\r\n      </div>\r\n    </div>\r\n    <div class=\"col-sm-5 top-info text-center\">\r\n      <div *ngIf=\"recipe.categories\"><span *ngFor=\"let ctg of recipe.categories\" (click)=\"searchCtg(ctg)\"> #<strong>{{ ctg }}</strong> </span></div>\r\n    </div>\r\n    <div class=\"col-sm-3 top-info\">\r\n      <svg class=\"icon icon-clock-o\">\r\n        <use xlink:href=\"#icon-clock-o\"></use>\r\n      </svg>\r\n      <span>{{ recipe.duration }} Minuten</span>\r\n    </div>\r\n    <div class=\"col-sm-2 top-info\">\r\n      <svg class=\"icon icon-star-o\">\r\n        <use xlink:href=\"#icon-star-o\"></use>\r\n      </svg>\r\n      <span>{{ recipe.difficulty | difficultyString }}</span>\r\n    </div>\r\n  </div>\r\n  <h2 class=\"h2 section-header\">Zutaten</h2>\r\n  <p class=\"ingredient\" *ngFor=\"let ingredient of recipe.ingredients\">\r\n    {{ ingredient.name | calcServings:recipe.servings:desiredServings }} \r\n    <span *ngIf=\"ingredient.hint\"> ({{ ingredient.hint }})</span>\r\n  </p>\r\n  <h2 class=\"h2 section-header\">Zubereitung</h2>\r\n  <p *ngIf=\"recipe.description\">{{ recipe.description }}</p>\r\n  <img #descrImage *ngIf=\"recipe.descrImage\" src=\"{{recipe.descrImage}}\"\r\n       alt=\"Recipe description\" class=\"img-responsive\">\r\n  <div class=\"bottom-margin top-margin\">\r\n    <button class=\"btn btn-primary\" type=\"button\" (click)=\"edit(recipe)\"><span class=\"glyphicon glyphicon-pencil\" aria-hidden=\"true\"></span></button>\r\n    <button class=\"btn btn-danger\" type=\"button\" data-toggle=\"modal\" data-target=\"#deleteModal\"><span class=\"glyphicon glyphicon-trash\" aria-hidden=\"true\"></span></button>\r\n  </div>\r\n\r\n  <div class=\"modal fade\" tabindex=\"-1\" role=\"dialog\" id=\"deleteModal\">\r\n    <div class=\"modal-dialog\" role=\"document\">\r\n      <div class=\"modal-content\">\r\n        <div class=\"modal-header\">\r\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\"><span aria-hidden=\"true\">&times;</span></button>\r\n          <h4 class=\"modal-title\">Möchtest du \"{{ recipe.title }}\" wirklich löschen?</h4>\r\n        </div>\r\n        <div class=\"modal-footer\">\r\n          <button type=\"button\" class=\"btn btn-default\" data-dismiss=\"modal\">Abbrechen</button>\r\n          <button type=\"button\" class=\"btn btn-danger\" (click)=\"deleteRecipe(); gotoRecipes()\" data-dismiss=\"modal\">Löschen</button>\r\n        </div>\r\n      </div>\r\n      <!-- /.modal-content -->\r\n    </div>\r\n    <!-- /.modal-dialog -->\r\n  </div>\r\n  <!-- /.modal -->\r\n</div> "
 
 /***/ }),
 
@@ -915,6 +915,7 @@ var Ingredient = (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__recipe_service__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__current_query_service__ = __webpack_require__(64);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecipeDetailsComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -929,10 +930,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var RecipeDetailsComponent = (function () {
-    function RecipeDetailsComponent(rd, recipeService, route, router) {
-        this.rd = rd;
+    function RecipeDetailsComponent(recipeService, queryService, route, router) {
         this.recipeService = recipeService;
+        this.queryService = queryService;
         this.route = route;
         this.router = router;
     }
@@ -948,6 +950,10 @@ var RecipeDetailsComponent = (function () {
     RecipeDetailsComponent.prototype.gotoRecipes = function () {
         this.router.navigate(['/recipes']);
     };
+    RecipeDetailsComponent.prototype.searchCtg = function (ctg) {
+        this.queryService.setQuery('', ctg);
+        this.gotoRecipes();
+    };
     RecipeDetailsComponent.prototype.cooked = function () {
         ++this.recipe.cookCount;
         this.recipeService.updateRecipe(this.recipe)
@@ -962,19 +968,15 @@ var RecipeDetailsComponent = (function () {
     };
     return RecipeDetailsComponent;
 }());
-__decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_11" /* ViewChild */])('descrImage'),
-    __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["l" /* ElementRef */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["l" /* ElementRef */]) === "function" && _a || Object)
-], RecipeDetailsComponent.prototype, "el", void 0);
 RecipeDetailsComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_10" /* Component */])({
         template: __webpack_require__(170),
         styles: [__webpack_require__(164), __webpack_require__(52)]
     }),
-    __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* Renderer2 */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_core__["_12" /* Renderer2 */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__recipe_service__["a" /* RecipeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__recipe_service__["a" /* RecipeService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === "function" && _e || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__recipe_service__["a" /* RecipeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__recipe_service__["a" /* RecipeService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__current_query_service__["a" /* CurrentQueryService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__current_query_service__["a" /* CurrentQueryService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === "function" && _d || Object])
 ], RecipeDetailsComponent);
 
-var _a, _b, _c, _d, _e;
+var _a, _b, _c, _d;
 //# sourceMappingURL=recipe-details.component.js.map
 
 /***/ }),

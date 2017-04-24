@@ -1,9 +1,10 @@
-import { Component, OnInit, ElementRef, Renderer2, ViewChild, AfterViewInit }  from '@angular/core';
+import { Component, OnInit }  from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
 import { Recipe } from '../recipe';
 import { RecipeService } from '../recipe.service';
+import { CurrentQueryService } from '../current-query.service';
 
 @Component({
   templateUrl: './recipe-details.component.html',
@@ -13,15 +14,14 @@ import { RecipeService } from '../recipe.service';
   ]
 })
 export class RecipeDetailsComponent implements OnInit {
-  @ViewChild('descrImage') el:ElementRef;
   recipe: Recipe;
   desiredServings: number;
 
   descrImageRatio: number;
 
   constructor(
-    private rd: Renderer2,
     private recipeService: RecipeService,
+    private queryService: CurrentQueryService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -37,6 +37,11 @@ export class RecipeDetailsComponent implements OnInit {
 
   gotoRecipes() {
     this.router.navigate(['/recipes']);
+  }
+
+  searchCtg(ctg: string) {
+    this.queryService.setQuery('', ctg);
+    this.gotoRecipes();
   }
 
   cooked() {
