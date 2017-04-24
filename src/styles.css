@@ -2,3 +2,7 @@
 .click {
     cursor: pointer;
 }
+
+.section-header {
+  font-weight: 400;
+}

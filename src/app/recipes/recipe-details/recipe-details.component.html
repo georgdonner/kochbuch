@@ -30,7 +30,7 @@
   </div>
   <div class="row">
     <div class="col-lg-6">
-      <h2 class="mb-4">Zutaten</h2>
+      <h2 class="mb-4 section-header">Zutaten</h2>
       <ul class="list-group">
         <li class="list-group-item" *ngFor="let ingredient of recipe.ingredients">
           {{ ingredient.name | calcServings:recipe.servings:desiredServings }}
@@ -39,13 +39,13 @@
       </ul>
     </div>
     <div class="col-lg-6">
-      <h2 class="my-4 mb-lg-4">Zubereitung</h2>
+      <h2 class="my-4 mb-lg-4 section-header">Zubereitung</h2>
       <p *ngIf="recipe.description">{{ recipe.description }}</p>
       <img #descrImage *ngIf="recipe.descrImage" src="{{recipe.descrImage}}"
           alt="Recipe description" class="img-fluid">
     </div>
   </div>
-  <div class="bottom-margin top-margin">
+  <div class="my-3">
     <button class="btn btn-primary click" type="button" (click)="edit(recipe)">Bearbeiten</button>
     <button class="btn btn-danger click" type="button" data-toggle="modal" data-target="#deleteModal">Löschen</button>
   </div>
