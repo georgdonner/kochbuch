@@ -4,10 +4,10 @@
     <p>Durchsuche unser Kochbuch nach ausgewählten Rezepten, die wir hier mit Liebe zusammengestellt haben :)</p>
     <div class="row">
       <div class="col-sm-5">
-        <input #ingrSearch (keyup)="0" type="text" class="form-control" name="ingredient-search" placeholder="Suche nach Zutaten z.B. Tomate, Kartoffel">
+        <input #ingrSearch (keyup)="0" [(ngModel)]="ingrQuery" type="text" class="form-control" name="ingredient-search" placeholder="Suche nach Zutaten z.B. Tomate, Kartoffel">
       </div>
       <div class="col-sm-5">
-        <input #ctgSearch (keyup)="0" type="text" class="form-control" name="category-search" placeholder="Suche nach Kategorien z.B. Pasta, Vegan">
+        <input #ctgSearch (keyup)="0" [(ngModel)]="ctgQuery" type="text" class="form-control" name="category-search" value=getCtgQuery() placeholder="Suche nach Kategorien z.B. Pasta, Vegan">
       </div>
       <div class="col-sm-2">
         <button type="button" class="btn btn-primary" (click)="newRecipe()">Neues Rezept</button>

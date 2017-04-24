@@ -472,11 +472,12 @@ RecipeRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__recipe_form_recipe_form_component__ = __webpack_require__(67);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__recipe_list_recipe_list_component__ = __webpack_require__(68);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__recipe_service__ = __webpack_require__(18);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__recipes_routing_module__ = __webpack_require__(106);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__recipe_edit_recipe_edit_component__ = __webpack_require__(66);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pipes_calc_servings_pipe__ = __webpack_require__(102);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pipes_filter_recipes_pipe__ = __webpack_require__(104);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pipes_difficulty_string_pipe__ = __webpack_require__(103);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__current_query_service__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__recipes_routing_module__ = __webpack_require__(106);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__recipe_edit_recipe_edit_component__ = __webpack_require__(66);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pipes_calc_servings_pipe__ = __webpack_require__(102);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pipes_filter_recipes_pipe__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pipes_difficulty_string_pipe__ = __webpack_require__(103);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecipesModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -484,6 +485,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -506,18 +508,21 @@ RecipesModule = __decorate([
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["i" /* CommonModule */],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_7__recipes_routing_module__["a" /* RecipeRoutingModule */]
+            __WEBPACK_IMPORTED_MODULE_8__recipes_routing_module__["a" /* RecipeRoutingModule */]
         ],
         declarations: [
             __WEBPACK_IMPORTED_MODULE_3__recipe_details_recipe_details_component__["a" /* RecipeDetailsComponent */],
             __WEBPACK_IMPORTED_MODULE_4__recipe_form_recipe_form_component__["a" /* RecipeFormComponent */],
             __WEBPACK_IMPORTED_MODULE_5__recipe_list_recipe_list_component__["a" /* RecipeListComponent */],
-            __WEBPACK_IMPORTED_MODULE_8__recipe_edit_recipe_edit_component__["a" /* RecipeEditComponent */],
-            __WEBPACK_IMPORTED_MODULE_9__pipes_calc_servings_pipe__["a" /* CalcServingsPipe */],
-            __WEBPACK_IMPORTED_MODULE_10__pipes_filter_recipes_pipe__["a" /* FilterRecipesPipe */],
-            __WEBPACK_IMPORTED_MODULE_11__pipes_difficulty_string_pipe__["a" /* DifficultyStringPipe */]
+            __WEBPACK_IMPORTED_MODULE_9__recipe_edit_recipe_edit_component__["a" /* RecipeEditComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__pipes_calc_servings_pipe__["a" /* CalcServingsPipe */],
+            __WEBPACK_IMPORTED_MODULE_11__pipes_filter_recipes_pipe__["a" /* FilterRecipesPipe */],
+            __WEBPACK_IMPORTED_MODULE_12__pipes_difficulty_string_pipe__["a" /* DifficultyStringPipe */]
         ],
-        providers: [__WEBPACK_IMPORTED_MODULE_6__recipe_service__["a" /* RecipeService */]]
+        providers: [
+            __WEBPACK_IMPORTED_MODULE_6__recipe_service__["a" /* RecipeService */],
+            __WEBPACK_IMPORTED_MODULE_7__current_query_service__["a" /* CurrentQueryService */]
+        ]
     })
 ], RecipesModule);
 
@@ -682,7 +687,7 @@ module.exports = "<div class=\"container\">\r\n  <form #recipeForm=\"ngForm\">\r
 /***/ 172:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"jumbotron\">\r\n  <div class=\"container\">\r\n    <h1>Maries und Georgs Rezeptebuch</h1>\r\n    <p>Durchsuche unser Kochbuch nach ausgewählten Rezepten, die wir hier mit Liebe zusammengestellt haben :)</p>\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-5\">\r\n        <input #ingrSearch (keyup)=\"0\" type=\"text\" class=\"form-control\" name=\"ingredient-search\" placeholder=\"Suche nach Zutaten z.B. Tomate, Kartoffel\">\r\n      </div>\r\n      <div class=\"col-sm-5\">\r\n        <input #ctgSearch (keyup)=\"0\" type=\"text\" class=\"form-control\" name=\"category-search\" placeholder=\"Suche nach Kategorien z.B. Pasta, Vegan\">\r\n      </div>\r\n      <div class=\"col-sm-2\">\r\n        <button type=\"button\" class=\"btn btn-primary\" (click)=\"newRecipe()\">Neues Rezept</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\">\r\n  <div *ngIf=\"recipes\" class=\"row\">\r\n    <div *ngFor=\"let recipe of recipes | filterRecipes:ingrSearch.value:ctgSearch.value\"\r\n      (click)=\"onSelect(recipe)\" class=\"col-sm-6 col-md-4\">\r\n      <div class=\"thumbnail\">\r\n        <img *ngIf=\"recipe.heroImage\" src=\"{{recipe.heroImage}}\" alt=\"{{recipe.title}}\">\r\n        <img *ngIf=\"!recipe.heroImage\" src=\"../../../assets/images/comingsoon.jpg\" alt=\"Coming soon\">\r\n        <div class=\"caption\">\r\n          <h3>{{ recipe.title }}</h3>\r\n          <p>{{ recipe.description }}</p>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"jumbotron\">\r\n  <div class=\"container\">\r\n    <h1>Maries und Georgs Rezeptebuch</h1>\r\n    <p>Durchsuche unser Kochbuch nach ausgewählten Rezepten, die wir hier mit Liebe zusammengestellt haben :)</p>\r\n    <div class=\"row\">\r\n      <div class=\"col-sm-5\">\r\n        <input #ingrSearch (keyup)=\"0\" [(ngModel)]=\"ingrQuery\" type=\"text\" class=\"form-control\" name=\"ingredient-search\" placeholder=\"Suche nach Zutaten z.B. Tomate, Kartoffel\">\r\n      </div>\r\n      <div class=\"col-sm-5\">\r\n        <input #ctgSearch (keyup)=\"0\" [(ngModel)]=\"ctgQuery\" type=\"text\" class=\"form-control\" name=\"category-search\" value=getCtgQuery() placeholder=\"Suche nach Kategorien z.B. Pasta, Vegan\">\r\n      </div>\r\n      <div class=\"col-sm-2\">\r\n        <button type=\"button\" class=\"btn btn-primary\" (click)=\"newRecipe()\">Neues Rezept</button>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"container\">\r\n  <div *ngIf=\"recipes\" class=\"row\">\r\n    <div *ngFor=\"let recipe of recipes | filterRecipes:ingrSearch.value:ctgSearch.value\"\r\n      (click)=\"onSelect(recipe)\" class=\"col-sm-6 col-md-4\">\r\n      <div class=\"thumbnail\">\r\n        <img *ngIf=\"recipe.heroImage\" src=\"{{recipe.heroImage}}\" alt=\"{{recipe.title}}\">\r\n        <img *ngIf=\"!recipe.heroImage\" src=\"../../../assets/images/comingsoon.jpg\" alt=\"Coming soon\">\r\n        <div class=\"caption\">\r\n          <h3>{{ recipe.title }}</h3>\r\n          <p>{{ recipe.description }}</p>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -760,6 +765,49 @@ var _a;
 
 module.exports = __webpack_require__(94);
 
+
+/***/ }),
+
+/***/ 209:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return CurrentQueryService; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var CurrentQueryService = (function () {
+    function CurrentQueryService() {
+        this.query = {
+            ingrQuery: '',
+            ctgQuery: ''
+        };
+    }
+    CurrentQueryService.prototype.setQuery = function (ingr, ctg) {
+        this.query = {
+            ingrQuery: ingr,
+            ctgQuery: ctg
+        };
+    };
+    CurrentQueryService.prototype.getQuery = function () {
+        return this.query;
+    };
+    return CurrentQueryService;
+}());
+CurrentQueryService = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["w" /* Injectable */])(),
+    __metadata("design:paramtypes", [])
+], CurrentQueryService);
+
+//# sourceMappingURL=current-query.service.js.map
 
 /***/ }),
 
@@ -1224,6 +1272,7 @@ var _a, _b;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__recipe_service__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__current_query_service__ = __webpack_require__(209);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecipeListComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1237,19 +1286,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
+
 var RecipeListComponent = (function () {
-    function RecipeListComponent(router, recipeService) {
+    function RecipeListComponent(router, recipeService, queryService) {
         this.router = router;
         this.recipeService = recipeService;
+        this.queryService = queryService;
+        this.ingrQuery = '';
+        this.ctgQuery = '';
     }
     RecipeListComponent.prototype.ngOnInit = function () {
         var _this = this;
         // retrieve recipes from the API
         this.recipeService.getAllRecipes().subscribe(function (recipes) {
             _this.recipes = recipes;
+            _this.getQuery();
         });
     };
+    RecipeListComponent.prototype.getQuery = function () {
+        this.ingrQuery = this.queryService.getQuery().ingrQuery;
+        this.ctgQuery = this.queryService.getQuery().ctgQuery;
+    };
     RecipeListComponent.prototype.onSelect = function (recipe) {
+        this.queryService.setQuery(this.ingrQuery, this.ctgQuery);
         this.router.navigate(['/recipe', recipe._id]);
     };
     RecipeListComponent.prototype.newRecipe = function () {
@@ -1262,10 +1321,10 @@ RecipeListComponent = __decorate([
         template: __webpack_require__(172),
         styles: [__webpack_require__(165)]
     }),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__recipe_service__["a" /* RecipeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__recipe_service__["a" /* RecipeService */]) === "function" && _b || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_2__recipe_service__["a" /* RecipeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__recipe_service__["a" /* RecipeService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_3__current_query_service__["a" /* CurrentQueryService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__current_query_service__["a" /* CurrentQueryService */]) === "function" && _c || Object])
 ], RecipeListComponent);
 
-var _a, _b;
+var _a, _b, _c;
 //# sourceMappingURL=recipe-list.component.js.map
 
 /***/ }),

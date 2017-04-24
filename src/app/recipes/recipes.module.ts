@@ -7,6 +7,7 @@ import { RecipeFormComponent } from './recipe-form/recipe-form.component';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
 
 import { RecipeService } from './recipe.service';
+import { CurrentQueryService } from './current-query.service';
 
 import { RecipeRoutingModule } from './recipes-routing.module';
 import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
@@ -29,7 +30,10 @@ import { DifficultyStringPipe } from './pipes/difficulty-string.pipe';
     FilterRecipesPipe,
     DifficultyStringPipe
   ],
-  providers: [ RecipeService ]
+  providers: [ 
+    RecipeService,
+    CurrentQueryService
+  ]
 })
 
 export class RecipesModule {}
