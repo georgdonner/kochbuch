@@ -9,18 +9,8 @@
   background: lightblue;
 }
 
-.close.no-float {
-  float: none;
-  padding-left: 5px;
-}
-
-.list {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.bottom-margin {
-  margin-bottom: 20px;
+.section-header {
+  font-weight: 400;
 }
 
 .top-margin {
