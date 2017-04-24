@@ -33,9 +33,10 @@ export class FilterRecipesPipe implements PipeTransform {
       });
       return filteredRecipes
     }
+    
     if (ingrQuery == '') {
-      let ctgArrayTmp = ctgArray.slice(0);
       recipes.forEach((recipe) => {
+        let ctgArrayTmp = ctgArray.slice(0);
         if (recipe.categories) {
           recipe.categories.forEach((category) => {
             ctgArrayTmp.forEach((ctg) => {
@@ -51,8 +52,9 @@ export class FilterRecipesPipe implements PipeTransform {
       });
       return filteredRecipes;
     }
+
     recipes.forEach((recipe) => {
-      let ingrMatch: boolean = true;
+      let ingrMatch: boolean = false;
       let ingrArrayTmp = ingrArray.slice(0);
       recipe.ingredients.forEach((ingredient) => {
         ingrArrayTmp.forEach((ingr) => {
