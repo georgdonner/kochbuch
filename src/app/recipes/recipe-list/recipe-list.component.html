@@ -22,8 +22,8 @@
     <div *ngFor="let recipe of recipes | filterRecipes:ingrQuery:ctgQuery"
       (click)="onSelect(recipe)" class="col-lg-6 col-xl-4">
       <div class="card recipe-card">
-        <img *ngIf="recipe.heroImage" class="card-img-top thumb-img" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
-        <img *ngIf="!recipe.heroImage" class="card-img-top thumb-img" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">
+        <img *ngIf="recipe.heroImage" class="card-img-top img-fluid" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
+        <img *ngIf="!recipe.heroImage" class="card-img-top img-fluid" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">
         <div class="card-block">
           <h3 class="card-title">{{ recipe.title }}</h3>
           <p class="card-text">{{ recipe.description }}</p>
