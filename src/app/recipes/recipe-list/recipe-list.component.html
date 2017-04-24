@@ -21,12 +21,18 @@
   <div *ngIf="recipes" class="row">
     <div *ngFor="let recipe of recipes | filterRecipes:ingrQuery:ctgQuery"
       (click)="onSelect(recipe)" class="col-lg-6 col-xl-4 click">
-      <div class="card recipe-card">
+      <div class="card mb-4">
         <img *ngIf="recipe.heroImage" class="card-img-top thumb-img" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
         <img *ngIf="!recipe.heroImage" class="card-img-top thumb-img" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">
-        <div class="card-block">
+        <div class="card-block recipe-block">
           <h3 class="card-title">{{ recipe.title }}</h3>
-          <p class="card-text">{{ recipe.description }}</p>
+        </div>
+        <div class="card-footer">
+          <svg class="icon icon-clock-o">
+            <use xlink:href="#icon-clock-o"></use>
+          </svg>
+          <span>{{ recipe.duration }} Minuten</span>
+          <div *ngIf="recipe.categories"><span *ngFor="let ctg of recipe.categories" class="click"> #<strong>{{ ctg }}</strong> </span></div>
         </div>
       </div>
     </div>
