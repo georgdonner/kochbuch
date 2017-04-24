@@ -1,20 +1,19 @@
 <div class="container">
   <form #recipeForm="ngForm">
-    <h1 class="page-header h1">{{ model.title }}</h1>
-    <div class="row form-group">
-      <div class="col-sm-9">
-        <input type="text" [(ngModel)]="model.title" name="title" class="form-control " id="title" required #title="ngModel" placeholder="Titel">
-      </div>
-      <div class="col-sm-3">
-        <button type="button" class="btn btn-default" (click)=showHeroPicker()>Titelbild Hochladen</button>
-      </div>
-      <div class="text-right col-xs-12 title-message" *ngIf="model.heroImage"> "{{ heroFilename }}" wurde erfolgreich hochgeladen!</div>
+    <h1 class="display-3 text-center mt-4">{{ model.title }}</h1>
+    <hr class="my-4">
+    <div class="input-group">
+      <input type="text" [(ngModel)]="model.title" name="title" class="form-control " id="title" required #title="ngModel" placeholder="Titel">
+      <span class="input-group-btn">
+        <button class="btn btn-secondary" type="button" (click)="showHeroPicker()">Titelbild</button>
+      </span>
     </div>
+    <div class="text-right py-2" *ngIf="model.heroImage"> "{{ heroFilename }}" wurde erfolgreich hochgeladen!</div>
     <div [hidden]="title.valid || title.pristine"
           class="alert alert-danger">
       Das Rezept muss einen Titel haben
     </div>
-    <div class="row form-group">
+    <div class="row form-group mt-3">
       <div class="col-sm-2">
         <div class="input-group">
           <div class="input-group-addon"><svg class="icon icon-user"><use xlink:href="#icon-user"></use></svg></div>
@@ -30,9 +29,9 @@
       </div>
       <div class="col-sm-4 col-sm-offset-1">
         <div class="btn-group" role="group" aria-label="...">
-          <button type="button" class="btn btn-default" [ngClass]="{'active':model.difficulty==1}" (click)="model.difficulty=1">Einfach</button>
-          <button type="button" class="btn btn-default" [ngClass]="{'active':model.difficulty==2}" (click)="model.difficulty=2">Mittel</button>
-          <button type="button" class="btn btn-default" [ngClass]="{'active':model.difficulty==3}" (click)="model.difficulty=3">Schwer</button>
+          <button type="button" class="btn btn-secondary" [ngClass]="{'active':model.difficulty==1}" (click)="model.difficulty=1">Einfach</button>
+          <button type="button" class="btn btn-secondary" [ngClass]="{'active':model.difficulty==2}" (click)="model.difficulty=2">Mittel</button>
+          <button type="button" class="btn btn-secondary" [ngClass]="{'active':model.difficulty==3}" (click)="model.difficulty=3">Schwer</button>
         </div>
       </div>
     </div>
