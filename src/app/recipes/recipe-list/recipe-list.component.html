@@ -4,10 +4,10 @@
     <p>Durchsuche unser Kochbuch nach ausgewählten Rezepten, die wir hier mit Liebe zusammengestellt haben :)</p>
     <div class="row">
       <div class="col-sm-5">
-        <input #ingrSearch (keyup)="0" [(ngModel)]="ingrQuery" type="text" class="form-control" name="ingredient-search" placeholder="Suche nach Zutaten z.B. Tomate, Kartoffel">
+        <input [(ngModel)]="ingrQuery" type="text" class="form-control" name="ingredient-search" placeholder="Suche nach Zutaten z.B. Tomate, Kartoffel">
       </div>
       <div class="col-sm-5">
-        <input #ctgSearch (keyup)="0" [(ngModel)]="ctgQuery" type="text" class="form-control" name="category-search" value=getCtgQuery() placeholder="Suche nach Kategorien z.B. Pasta, Vegan">
+        <input [(ngModel)]="ctgQuery" type="text" class="form-control" name="category-search" placeholder="Suche nach Kategorien z.B. Pasta, Vegan">
       </div>
       <div class="col-sm-2">
         <button type="button" class="btn btn-primary" (click)="newRecipe()">Neues Rezept</button>
@@ -18,7 +18,7 @@
 
 <div class="container">
   <div *ngIf="recipes" class="row">
-    <div *ngFor="let recipe of recipes | filterRecipes:ingrSearch.value:ctgSearch.value"
+    <div *ngFor="let recipe of recipes | filterRecipes:ingrQuery:ctgQuery"
       (click)="onSelect(recipe)" class="col-sm-6 col-md-4">
       <div class="thumbnail">
         <img *ngIf="recipe.heroImage" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
