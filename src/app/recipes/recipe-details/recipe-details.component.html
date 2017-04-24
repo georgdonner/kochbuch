@@ -1,6 +1,6 @@
 <div class="container" *ngIf="recipe">
-  <svg class="icon icon-chevron-left" (click)="gotoRecipes()"><use xlink:href="#icon-chevron-left"></use></svg>
-  <svg class="icon icon-spoon-knife" (click)="cooked()"><use xlink:href="#icon-spoon-knife"></use></svg>
+  <svg class="icon icon-chevron-left click" (click)="gotoRecipes()"><use xlink:href="#icon-chevron-left"></use></svg>
+  <svg class="icon icon-spoon-knife click" (click)="cooked()"><use xlink:href="#icon-spoon-knife"></use></svg>
   <span class="badge cook-badge">{{ recipe.cookCount }}</span>
   <h1 class="display-3 text-center mt-4">{{ recipe.title }}</h1>
   <hr class="my-4">
@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class="col-8 col-lg-5 top-info text-center">
-      <div *ngIf="recipe.categories"><span *ngFor="let ctg of recipe.categories"> #<strong>{{ ctg }}</strong> </span></div>
+      <div *ngIf="recipe.categories"><span *ngFor="let ctg of recipe.categories" class="click"> #<strong>{{ ctg }}</strong> </span></div>
     </div>
     <div class="col-6 col-lg-3 mt-3 mt-lg-0 top-info">
       <svg class="icon icon-clock-o">
@@ -46,8 +46,8 @@
     </div>
   </div>
   <div class="bottom-margin top-margin">
-    <button class="btn btn-primary" type="button" (click)="edit(recipe)">Bearbeiten</button>
-    <button class="btn btn-danger" type="button" data-toggle="modal" data-target="#deleteModal">Löschen</button>
+    <button class="btn btn-primary click" type="button" (click)="edit(recipe)">Bearbeiten</button>
+    <button class="btn btn-danger click" type="button" data-toggle="modal" data-target="#deleteModal">Löschen</button>
   </div>
 
   <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
@@ -58,8 +58,8 @@
           <h4 class="modal-title">Möchtest du "{{ recipe.title }}" wirklich löschen?</h4>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Abbrechen</button>
-          <button type="button" class="btn btn-danger" (click)="deleteRecipe(); gotoRecipes()" data-dismiss="modal">Löschen</button>
+          <button type="button" class="btn btn-default click" data-dismiss="modal">Abbrechen</button>
+          <button type="button" class="btn btn-danger click" (click)="deleteRecipe(); gotoRecipes()" data-dismiss="modal">Löschen</button>
         </div>
       </div>
       <!-- /.modal-content -->

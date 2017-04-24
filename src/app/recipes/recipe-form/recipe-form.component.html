@@ -5,7 +5,7 @@
     <div class="input-group">
       <input type="text" [(ngModel)]="model.title" name="title" class="form-control " id="title" required #title="ngModel" placeholder="Titel">
       <span class="input-group-btn">
-        <button class="btn btn-secondary" type="button" (click)="showHeroPicker()">Titelbild</button>
+        <button class="btn btn-secondary click" type="button" (click)="showHeroPicker()">Titelbild</button>
       </span>
     </div>
     <div class="text-right py-2" *ngIf="model.heroImage"> "{{ heroFilename }}" wurde erfolgreich hochgeladen!</div>
@@ -29,9 +29,9 @@
       </div>
       <div class="col-sm-4 col-sm-offset-1">
         <div class="btn-group" role="group" aria-label="...">
-          <button type="button" class="btn btn-secondary" [ngClass]="{'active':model.difficulty==1}" (click)="model.difficulty=1">Einfach</button>
-          <button type="button" class="btn btn-secondary" [ngClass]="{'active':model.difficulty==2}" (click)="model.difficulty=2">Mittel</button>
-          <button type="button" class="btn btn-secondary" [ngClass]="{'active':model.difficulty==3}" (click)="model.difficulty=3">Schwer</button>
+          <button type="button" class="btn btn-secondary click" [ngClass]="{'active':model.difficulty==1}" (click)="model.difficulty=1">Einfach</button>
+          <button type="button" class="btn btn-secondary click" [ngClass]="{'active':model.difficulty==2}" (click)="model.difficulty=2">Mittel</button>
+          <button type="button" class="btn btn-secondary click" [ngClass]="{'active':model.difficulty==3}" (click)="model.difficulty=3">Schwer</button>
         </div>
       </div>
     </div>
@@ -39,7 +39,7 @@
     <div class="list" *ngFor="let ingr of ingredients; let i = index">
       <div *ngIf="ingr.name != ''">
         {{ ingr.name }} <span *ngIf="ingr.hint!=''">({{ ingr.hint }})</span>
-        <button *ngIf="ingredientAdded" type="button" class="close no-float" (click)=removeIngredient(ingr)><span aria-hidden="true">&times;</span></button>
+        <button *ngIf="ingredientAdded" type="button" class="close no-float click" (click)=removeIngredient(ingr)><span aria-hidden="true">&times;</span></button>
       </div>
     </div>
     <div class="row form-group">
@@ -65,17 +65,17 @@
       <p *ngIf="model.descrImage">Bitte gib dem Rezept noch eine kurze Beschreibung</p>
       <p *ngIf="!model.descrImage">Das Rezept braucht eine Beschreibung, vor allem ohne Bild!</p>
     </div>
-    <button type="button" class="btn btn-default" (click)=showDescPicker()>Anleitung Hochladen</button>
+    <button type="button" class="btn btn-default click" (click)=showDescPicker()>Anleitung Hochladen</button>
     <span *ngIf="model.descrImage" style="padding-left: 5px;"> "{{ descrFilename }}" wurde erfolgreich hochgeladen!</span>
     <div class="form-group">
       <h3 class="h3">Kategorien</h3>
       <div class="list" *ngFor="let ctg of categories">
         {{ ctg }}
-        <button type="button" class="close no-float" (click)="removeCategory(ctg)">x</button>  
+        <button type="button" class="close no-float click" (click)="removeCategory(ctg)">x</button>  
       </div>
       <input #category type="text" name="category" class="form-control" id="category" 
             (keyup.enter)="addCategory(category.value); category.value=''" placeholder="Enter drücken zum Hinzufügen">
     </div>
-    <button type="button" (click)="addRecipe(); gotoRecipes()" class="btn btn-success bottom-margin" [disabled]="!recipeForm.form.valid">Speichern</button>
+    <button type="button" (click)="addRecipe(); gotoRecipes()" class="btn btn-success bottom-margin click" [disabled]="!recipeForm.form.valid">Speichern</button>
   </form>
 </div>

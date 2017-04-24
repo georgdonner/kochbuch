@@ -11,7 +11,7 @@
         <input [(ngModel)]="ctgQuery" type="text" class="form-control" name="category-search" placeholder="Suche nach Kategorien z.B. Pasta, Vegan">
       </div>
       <div class="col-sm-2">
-        <button type="button" class="btn btn-primary" (click)="newRecipe()">Neues Rezept</button>
+        <button type="button" class="btn btn-primary click" (click)="newRecipe()">Neues Rezept</button>
       </div>
     </div>
   </div>
@@ -20,7 +20,7 @@
 <div class="container">
   <div *ngIf="recipes" class="row">
     <div *ngFor="let recipe of recipes | filterRecipes:ingrQuery:ctgQuery"
-      (click)="onSelect(recipe)" class="col-lg-6 col-xl-4">
+      (click)="onSelect(recipe)" class="col-lg-6 col-xl-4 click">
       <div class="card recipe-card">
         <img *ngIf="recipe.heroImage" class="card-img-top thumb-img" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
         <img *ngIf="!recipe.heroImage" class="card-img-top thumb-img" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">

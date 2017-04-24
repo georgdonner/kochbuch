@@ -1,8 +1,3 @@
-button {
-    cursor: pointer;
-}
-
-
 @media only screen and (min-width: 992px) {
     .mb-lg-4 {
         margin-top: 0 !important;
