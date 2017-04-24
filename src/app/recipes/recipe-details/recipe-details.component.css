@@ -1,5 +1,7 @@
-button {
-    margin-right: 15px;
+@media only screen and (min-width: 992px) {
+    .mb-lg-4 {
+        margin-top: 0 !important;
+    }   
 }
 
 .img-fullwidth {
@@ -18,28 +20,10 @@ button {
     line-height: 34px;
 }
 
-.section-header {
-    margin-bottom: 20px;
-}
-
-.ingredient {
-    font-size: 16px;
-}
-
-.landscape {
-    width: 100%;
-    height: auto;
-}
-
-.portrait {
-    float: right;
-    width: 50%;
-}
-
 .icon.icon-spoon-knife {
     fill: #222;
     position: absolute;
-    top: 50px;
+    top: 30px;
     right: 50px;
     width: 20px;
     height: 20px;
@@ -48,7 +32,7 @@ button {
 .icon.icon-chevron-left {
     fill: #222;
     position: absolute;
-    top: 50px;
+    top: 30px;
     left: 20px;
     width: 2em;
     height: 2em;
@@ -67,21 +51,21 @@ button {
 .badge.cook-badge {
     background-color: #222;
     position: absolute;
-    top: 50px;
+    top: 30px;
     right: 20px;
 }
 
 @media only screen and (max-width: 767px) {
-    .icon-spoon-knife {
-        top: 10px;
+    .icon.icon-spoon-knife {
+        top: 0;
     }
 
-    .icon-chevron-left {
-        display: none;
+    .icon.icon-chevron-left {
+        top: 0;
     }
 
     .badge.cook-badge {
-        top: 10px;
+        top: 0;
     }
 }
 

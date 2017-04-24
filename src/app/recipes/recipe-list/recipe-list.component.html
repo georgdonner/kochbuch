@@ -1,7 +1,8 @@
-<div class="jumbotron">
+<div class="jumbotron jumbotron-fluid">
   <div class="container">
-    <h1>Maries und Georgs Rezeptebuch</h1>
-    <p>Durchsuche unser Kochbuch nach ausgewählten Rezepten, die wir hier mit Liebe zusammengestellt haben :)</p>
+    <h1 class="display-3">Maries und Georgs Rezeptebuch</h1>
+    <p class="lead" >Durchsuche unser Kochbuch nach ausgewählten Rezepten, die wir hier mit Liebe zusammengestellt haben :)</p>
+    <hr class="my-4">
     <div class="row">
       <div class="col-sm-5">
         <input [(ngModel)]="ingrQuery" type="text" class="form-control" name="ingredient-search" placeholder="Suche nach Zutaten z.B. Tomate, Kartoffel">
@@ -10,7 +11,7 @@
         <input [(ngModel)]="ctgQuery" type="text" class="form-control" name="category-search" placeholder="Suche nach Kategorien z.B. Pasta, Vegan">
       </div>
       <div class="col-sm-2">
-        <button type="button" class="btn btn-primary" (click)="newRecipe()">Neues Rezept</button>
+        <button type="button" class="btn btn-primary click" (click)="newRecipe()">Neues Rezept</button>
       </div>
     </div>
   </div>
@@ -19,13 +20,13 @@
 <div class="container">
   <div *ngIf="recipes" class="row">
     <div *ngFor="let recipe of recipes | filterRecipes:ingrQuery:ctgQuery"
-      (click)="onSelect(recipe)" class="col-sm-6 col-md-4">
-      <div class="thumbnail">
-        <img *ngIf="recipe.heroImage" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
-        <img *ngIf="!recipe.heroImage" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">
-        <div class="caption">
-          <h3>{{ recipe.title }}</h3>
-          <p>{{ recipe.description }}</p>
+      (click)="onSelect(recipe)" class="col-lg-6 col-xl-4 click">
+      <div class="card recipe-card">
+        <img *ngIf="recipe.heroImage" class="card-img-top thumb-img" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
+        <img *ngIf="!recipe.heroImage" class="card-img-top thumb-img" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">
+        <div class="card-block">
+          <h3 class="card-title">{{ recipe.title }}</h3>
+          <p class="card-text">{{ recipe.description }}</p>
         </div>
       </div>
     </div>

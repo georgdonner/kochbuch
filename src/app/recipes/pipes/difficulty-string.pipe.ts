@@ -15,7 +15,7 @@ export class DifficultyStringPipe implements PipeTransform {
         return 'Schwer'
 
       default:
-        return 'Kein Schwierigkeitsgrad angegeben'
+        return 'Keine Info'
     }
   }
 

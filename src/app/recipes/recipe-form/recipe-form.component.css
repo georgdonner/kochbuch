@@ -5,18 +5,8 @@
   border-left: 5px solid #a94442; /* red */
 }
 
-.close.no-float {
-  float: none;
-  padding-left: 5px;
-}
-
-.list {
-  font-size: 16px;
-  margin-bottom: 10px;
-}
-
-.bottom-margin {
-  margin-bottom: 20px;
+.active {
+  background: lightblue;
 }
 
 .top-margin {
@@ -30,8 +20,4 @@
 .icon-clock-o {
   height: 1em;
   width: 1em;
-}
-
-.title-message {
-  padding: 5px;
 }
