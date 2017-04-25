@@ -32,7 +32,8 @@
   </div>
   <div class="row">
     <div class="col-lg-6">
-      <h2 class="mb-4 section-header">Zutaten</h2>
+      <h2 class="mb-4 section-header d-inline-block">Zutaten</h2>
+      <converter class="float-right"></converter>
       <ul class="list-group">
         <li class="list-group-item" *ngFor="let ingredient of recipe.ingredients">
           {{ ingredient.name | calcServings:recipe.servings:desiredServings }}
@@ -47,6 +48,7 @@
           alt="Recipe description" class="img-fluid">
     </div>
   </div>
+
   <div class="my-3">
     <button class="btn btn-primary click" type="button" (click)="edit()">Bearbeiten</button>
     <button class="btn btn-danger click" type="button" data-toggle="modal" data-target="#deleteModal">Löschen</button>

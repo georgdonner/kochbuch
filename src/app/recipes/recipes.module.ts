@@ -1,6 +1,7 @@
 import { NgModule }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { FormsModule }    from '@angular/forms';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { InlineHrefDirective } from 'ng-inline-href';
 
@@ -23,7 +24,8 @@ import { ConverterComponent } from './components/converter/converter.component';
   imports: [
     CommonModule,
     FormsModule,
-    RecipeRoutingModule
+    RecipeRoutingModule,
+    NgbModule
   ],
   exports: [
     InlineHrefDirective

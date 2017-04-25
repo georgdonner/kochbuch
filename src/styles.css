@@ -15,6 +15,11 @@
 
 /* ICONS */
 
+.icon {
+    width: 1em;
+    height: 1em;
+}
+
 .icon.icon-spoon-knife {
     fill: #222;
     position: absolute;
@@ -38,9 +43,8 @@
     height: 0.9285714285714285em;
 }
 
-.icon {
-    width: 1em;
-    height: 1em;
+.icon-refresh {
+  width: 0.8571428571428571em;
 }
 
 .icon-user {
