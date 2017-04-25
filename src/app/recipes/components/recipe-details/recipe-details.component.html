@@ -32,7 +32,7 @@
   </div>
   <div class="row">
     <div class="col-lg-6">
-      <h2 class="mb-4 section-header d-inline-block">Zutaten</h2>
+      <h2 class="mb-4 d-inline-block">Zutaten</h2>
       <converter class="float-right"></converter>
       <ul class="list-group">
         <li class="list-group-item" *ngFor="let ingredient of recipe.ingredients">
@@ -42,7 +42,7 @@
       </ul>
     </div>
     <div class="col-lg-6">
-      <h2 class="my-4 mb-lg-4 section-header">Zubereitung</h2>
+      <h2 class="my-4 mb-lg-4">Zubereitung</h2>
       <p *ngIf="recipe.description">{{ recipe.description }}</p>
       <img #descrImage *ngIf="recipe.descrImage" src="{{recipe.descrImage}}"
           alt="Recipe description" class="img-fluid">
