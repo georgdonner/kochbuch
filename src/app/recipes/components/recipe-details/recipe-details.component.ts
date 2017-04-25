@@ -2,9 +2,9 @@ import { Component, OnInit }  from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
-import { Recipe } from '../recipe';
-import { RecipeService } from '../recipe.service';
-import { CurrentQueryService } from '../current-query.service';
+import { Recipe } from '../../recipe';
+import { RecipeService } from '../../services/recipe.service';
+import { CurrentQueryService } from '../../services/current-query.service';
 
 @Component({
   templateUrl: './recipe-details.component.html',

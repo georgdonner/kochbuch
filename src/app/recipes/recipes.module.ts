@@ -4,15 +4,15 @@ import { FormsModule }    from '@angular/forms';
 
 import { InlineHrefDirective } from 'ng-inline-href';
 
-import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
-import { RecipeFormComponent } from './recipe-form/recipe-form.component';
-import { RecipeListComponent } from './recipe-list/recipe-list.component';
+import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
+import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
+import { RecipeFormComponent } from './components/recipe-form/recipe-form.component';
+import { RecipeEditComponent } from './components/recipe-edit/recipe-edit.component';
 
-import { RecipeService } from './recipe.service';
-import { CurrentQueryService } from './current-query.service';
+import { RecipeService } from './services/recipe.service';
+import { CurrentQueryService } from './services/current-query.service';
 
 import { RecipeRoutingModule } from './recipes-routing.module';
-import { RecipeEditComponent } from './recipe-edit/recipe-edit.component';
 import { CalcServingsPipe } from './pipes/calc-servings.pipe';
 import { FilterRecipesPipe } from './pipes/filter-recipes.pipe';
 import { DifficultyStringPipe } from './pipes/difficulty-string.pipe';

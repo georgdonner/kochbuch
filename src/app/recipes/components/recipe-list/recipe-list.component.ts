@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { Recipe } from '../recipe';
-import { RecipeService } from '../recipe.service';
-import { CurrentQueryService } from '../current-query.service';
+import { Recipe } from '../../recipe';
+import { RecipeService } from '../../services/recipe.service';
+import { CurrentQueryService } from '../../services/current-query.service';
 
 @Component({
   templateUrl: './recipe-list.component.html',

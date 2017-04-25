@@ -1,5 +1,3 @@
-import { Ingredient } from './ingredient';
-
 export class Recipe {
 
     constructor(
@@ -15,4 +13,12 @@ export class Recipe {
       public categories?: Array<string>,
       public _id?: string
     ) {  }
+}
+
+export class Ingredient {
+  
+    constructor(
+        public name: string,
+        public hint: string
+    ) {}
 }

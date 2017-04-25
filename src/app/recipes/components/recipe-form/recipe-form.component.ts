@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 
-import { Recipe } from '../recipe';
-import { Ingredient } from '../ingredient';
-import { RecipeService } from '../recipe.service';
+import { Recipe, Ingredient } from '../../recipe';
+import { RecipeService } from '../../services/recipe.service';
 
 declare const filestack: {
   init(apiKey: string): {

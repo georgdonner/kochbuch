@@ -3,7 +3,7 @@ import { Http, Headers, RequestOptions } from '@angular/http';
 import { Observable } from 'rxjs/Rx';
 import 'rxjs/add/operator/map';
 
-import { Recipe } from './recipe';
+import { Recipe } from '../recipe';
 
 @Injectable()
 export class RecipeService {
