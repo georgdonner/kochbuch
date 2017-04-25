@@ -8,6 +8,7 @@ import { RecipeListComponent } from './components/recipe-list/recipe-list.compon
 import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
 import { RecipeFormComponent } from './components/recipe-form/recipe-form.component';
 import { RecipeEditComponent } from './components/recipe-edit/recipe-edit.component';
+import { RecipePrintComponent } from './components/recipe-print/recipe-print.component';
 
 import { RecipeService } from './services/recipe.service';
 import { CurrentQueryService } from './services/current-query.service';
@@ -34,7 +35,8 @@ import { DifficultyStringPipe } from './pipes/difficulty-string.pipe';
     CalcServingsPipe,
     FilterRecipesPipe,
     DifficultyStringPipe,
-    InlineHrefDirective
+    InlineHrefDirective,
+    RecipePrintComponent
   ],
   providers: [ 
     RecipeService,

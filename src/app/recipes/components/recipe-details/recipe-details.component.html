@@ -48,8 +48,9 @@
     </div>
   </div>
   <div class="my-3">
-    <button class="btn btn-primary click" type="button" (click)="edit(recipe)">Bearbeiten</button>
+    <button class="btn btn-primary click" type="button" (click)="edit()">Bearbeiten</button>
     <button class="btn btn-danger click" type="button" data-toggle="modal" data-target="#deleteModal">Löschen</button>
+    <button class="btn btn-secondary pull-right click" type="button" (click)="printView()">Druckansicht</button>
   </div>
 
   <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">

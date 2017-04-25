@@ -50,12 +50,16 @@ export class RecipeDetailsComponent implements OnInit {
       .subscribe();
   }
 
-  edit(recipe: Recipe) {
-    this.router.navigate(['/recipe', recipe._id, 'edit']);
+  edit() {
+    this.router.navigate(['/recipe', this.recipe._id, 'edit']);
   }
 
   deleteRecipe() {
     this.recipeService.deleteRecipe(this.recipe._id)
       .subscribe();
+  }
+
+  printView() {
+    this.router.navigate(['/recipe', this.recipe._id, 'print']);
   }
 }
