@@ -23,8 +23,8 @@
 .icon.icon-spoon-knife {
     fill: #222;
     position: absolute;
-    top: 30px;
-    right: 50px;
+    top: 50px;
+    right: 30px;
     width: 20px;
     height: 20px;
 }
@@ -32,8 +32,8 @@
 .icon.icon-chevron-left {
     fill: #222;
     position: absolute;
-    top: 30px;
-    left: 20px;
+    top: 50px;
+    left: 5px;
     width: 2em;
     height: 2em;
 }
@@ -51,21 +51,21 @@
 .badge.cook-badge {
     background-color: #222;
     position: absolute;
-    top: 30px;
-    right: 20px;
+    top: 50px;
+    right: 5px;
 }
 
 @media only screen and (max-width: 767px) {
     .icon.icon-spoon-knife {
-        top: 0;
+        top: 20px;
     }
 
     .icon.icon-chevron-left {
-        top: 0;
+        top: 20px;
     }
 
     .badge.cook-badge {
-        top: 0;
+        top: 20px;
     }
 }
 

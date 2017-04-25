@@ -1,8 +1,10 @@
-<div class="container" *ngIf="recipe">
+<div *ngIf="recipe">
   <svg class="icon icon-chevron-left click" (click)="gotoRecipes()"><use inlineHref="#icon-chevron-left"></use></svg>
   <svg class="icon icon-spoon-knife click" (click)="cooked()"><use inlineHref="#icon-spoon-knife"></use></svg>
   <span class="badge cook-badge">{{ recipe.cookCount }}</span>
-  <h1 class="display-3 text-center mt-4">{{ recipe.title }}</h1>
+</div>
+<div class="container" *ngIf="recipe">
+  <h1 class="display-3 text-center mt-4 px-1">{{ recipe.title }}</h1>
   <hr class="my-4">
   <img *ngIf="recipe.heroImage" class="img-fullwidth" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
   <div class="row my-4">

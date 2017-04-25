@@ -65,14 +65,14 @@ exports = module.exports = __webpack_require__(12)();
 
 
 // module
-exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\r\n.click {\r\n    cursor: pointer;\r\n}\r\n\r\n.section-header {\r\n  font-weight: 400;\r\n}\r\n\r\n/* ICONS */\r\n\r\n.icon.icon-spoon-knife {\r\n    fill: #222;\r\n    position: absolute;\r\n    top: 30px;\r\n    right: 50px;\r\n    width: 20px;\r\n    height: 20px;\r\n}\r\n\r\n.icon.icon-chevron-left {\r\n    fill: #222;\r\n    position: absolute;\r\n    top: 30px;\r\n    left: 20px;\r\n    width: 2em;\r\n    height: 2em;\r\n}\r\n\r\n.icon.icon-star-o {\r\n    width: 0.9285714285714285em;\r\n    height: 0.9285714285714285em;\r\n}\r\n\r\n.icon {\r\n    width: 1em;\r\n    height: 1em;\r\n}\r\n\r\n.icon-user {\r\n  height: 1em;\r\n  width: 1em;\r\n}\r\n.icon-clock-o {\r\n  height: 1em;\r\n  width: 1em;\r\n}", ""]);
+exports.push([module.i, "/* You can add global styles to this file, and also import other style files */\r\n.click {\r\n    cursor: pointer;\r\n}\r\n\r\n.section-header {\r\n  font-weight: 400;\r\n}\r\n\r\n@media only screen and (max-width: 767px) {\r\n    .display-3 {\r\n        font-size: 3rem;\r\n    }\r\n}\r\n\r\n/* ICONS */\r\n\r\n.icon.icon-spoon-knife {\r\n    fill: #222;\r\n    position: absolute;\r\n    top: 30px;\r\n    right: 50px;\r\n    width: 20px;\r\n    height: 20px;\r\n}\r\n\r\n.icon.icon-chevron-left {\r\n    fill: #222;\r\n    position: absolute;\r\n    top: 30px;\r\n    left: 20px;\r\n    width: 2em;\r\n    height: 2em;\r\n}\r\n\r\n.icon.icon-star-o {\r\n    width: 0.9285714285714285em;\r\n    height: 0.9285714285714285em;\r\n}\r\n\r\n.icon {\r\n    width: 1em;\r\n    height: 1em;\r\n}\r\n\r\n.icon-user {\r\n  height: 1em;\r\n  width: 1em;\r\n}\r\n.icon-clock-o {\r\n  height: 1em;\r\n  width: 1em;\r\n}", ""]);
 
 // exports
 
 
 /***/ }),
 
-/***/ 205:
+/***/ 206:
 /***/ (function(module, exports) {
 
 /*
@@ -325,7 +325,7 @@ function updateLink(linkElement, obj) {
 
 /***/ }),
 
-/***/ 209:
+/***/ 210:
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = __webpack_require__(97);
@@ -342,7 +342,7 @@ module.exports = __webpack_require__(97);
 var content = __webpack_require__(162);
 if(typeof content === 'string') content = [[module.i, content, '']];
 // add the styles to the DOM
-var update = __webpack_require__(205)(content, {});
+var update = __webpack_require__(206)(content, {});
 if(content.locals) module.exports = content.locals;
 // Hot Module Replacement
 if(false) {
@@ -360,5 +360,5 @@ if(false) {
 
 /***/ })
 
-},[209]);
+},[210]);
 //# sourceMappingURL=styles.bundle.js.map
