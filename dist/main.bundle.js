@@ -535,6 +535,7 @@ RecipeRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pipes_calc_servings_pipe__ = __webpack_require__(103);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pipes_filter_recipes_pipe__ = __webpack_require__(105);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pipes_difficulty_string_pipe__ = __webpack_require__(104);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_converter_converter_component__ = __webpack_require__(228);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecipesModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -542,6 +543,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -581,7 +583,8 @@ RecipesModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_13__pipes_filter_recipes_pipe__["a" /* FilterRecipesPipe */],
             __WEBPACK_IMPORTED_MODULE_14__pipes_difficulty_string_pipe__["a" /* DifficultyStringPipe */],
             __WEBPACK_IMPORTED_MODULE_3_ng_inline_href__["InlineHrefDirective"],
-            __WEBPACK_IMPORTED_MODULE_8__components_recipe_print_recipe_print_component__["a" /* RecipePrintComponent */]
+            __WEBPACK_IMPORTED_MODULE_8__components_recipe_print_recipe_print_component__["a" /* RecipePrintComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__components_converter_converter_component__["a" /* ConverterComponent */]
         ],
         providers: [
             __WEBPACK_IMPORTED_MODULE_9__services_recipe_service__["a" /* RecipeService */],
@@ -1436,7 +1439,68 @@ module.exports = module.exports.toString();
 /***/ 227:
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"recipe\" class=\"top-icons\">\n  <svg class=\"icon icon-chevron-left click\" (click)=\"back()\"><use inlineHref=\"#icon-chevron-left\"></use></svg>\n  <svg class=\"icon icon-spoon-knife click\"><use inlineHref=\"#icon-spoon-knife\"></use></svg>\n  <span class=\"badge cook-badge\">{{ recipe.cookCount }}</span>\n</div>\n\n<div class=\"container\" *ngIf=\"recipe\">\n  <h1 class=\"text-center mt-4 px-1\">{{ recipe.title }}</h1>\n  <div class=\"row my-4\">\n    <div class=\"col top-info\">\n        <svg class=\"icon icon-user\">\n          <use inlineHref=\"#icon-user\"></use>\n        </svg>\n        <span>{{ recipe.servings }}</span>\n    </div>\n    <div class=\"col top-info\">\n      <svg class=\"icon icon-clock-o\">\n        <use inlineHref=\"#icon-clock-o\"></use>\n      </svg>\n      <span>{{ recipe.duration }} Minuten</span>\n    </div>\n    <div class=\"col top-info\">\n      <svg class=\"icon icon-star-o\">\n        <use inlineHref=\"#icon-star-o\"></use>\n      </svg>\n      <span>{{ recipe.difficulty | difficultyString }}</span>\n    </div>\n  </div>\n  <div class=\"row\">\n    <div class=\"col-6\">\n      <h4 class=\"mb-2 section-header\">Zutaten</h4>\n      <ul class=\"list-unstyled\">\n        <li class=\"mb-1\"*ngFor=\"let ingredient of recipe.ingredients\">\n          - {{ ingredient.name }}\n          <span *ngIf=\"ingredient.hint\" class=\"ml-1\">({{ ingredient.hint }})</span>\n        </li>\n      </ul>\n    </div>\n    <div class=\"col-6\">\n      <h4 class=\"mb-2 section-header\">Zubereitung</h4>\n      <p *ngIf=\"recipe.description\">{{ recipe.description }}</p>\n      <img #descrImage *ngIf=\"recipe.descrImage\" src=\"{{recipe.descrImage}}\"\n          alt=\"Recipe description\" class=\"img-fluid\">\n    </div>\n  </div>\n"
+module.exports = "<div *ngIf=\"recipe\" class=\"top-icons\">\r\n  <svg class=\"icon icon-chevron-left click\" (click)=\"back()\"><use inlineHref=\"#icon-chevron-left\"></use></svg>\r\n  <svg class=\"icon icon-spoon-knife click\"><use inlineHref=\"#icon-spoon-knife\"></use></svg>\r\n  <span class=\"badge cook-badge\">{{ recipe.cookCount }}</span>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"recipe\">\r\n  <h1 class=\"text-center mt-4 px-1\">{{ recipe.title }}</h1>\r\n  <div class=\"row my-4\">\r\n    <div class=\"col top-info\">\r\n        <svg class=\"icon icon-user\">\r\n          <use inlineHref=\"#icon-user\"></use>\r\n        </svg>\r\n        <span>{{ recipe.servings }}</span>\r\n    </div>\r\n    <div class=\"col top-info\">\r\n      <svg class=\"icon icon-clock-o\">\r\n        <use inlineHref=\"#icon-clock-o\"></use>\r\n      </svg>\r\n      <span>{{ recipe.duration }} Minuten</span>\r\n    </div>\r\n    <div class=\"col top-info\">\r\n      <svg class=\"icon icon-star-o\">\r\n        <use inlineHref=\"#icon-star-o\"></use>\r\n      </svg>\r\n      <span>{{ recipe.difficulty | difficultyString }}</span>\r\n    </div>\r\n  </div>\r\n  <div class=\"row\">\r\n    <div class=\"col-6\">\r\n      <h4 class=\"mb-2 section-header\">Zutaten</h4>\r\n      <ul class=\"list-unstyled\">\r\n        <li class=\"mb-1\"*ngFor=\"let ingredient of recipe.ingredients\">\r\n          - {{ ingredient.name }}\r\n          <span *ngIf=\"ingredient.hint\" class=\"ml-1\">({{ ingredient.hint }})</span>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n    <div class=\"col-6\">\r\n      <h4 class=\"mb-2 section-header\">Zubereitung</h4>\r\n      <p *ngIf=\"recipe.description\">{{ recipe.description }}</p>\r\n      <img #descrImage *ngIf=\"recipe.descrImage\" src=\"{{recipe.descrImage}}\"\r\n          alt=\"Recipe description\" class=\"img-fluid\">\r\n    </div>\r\n  </div>\r\n"
+
+/***/ }),
+
+/***/ 228:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(1);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConverterComponent; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ConverterComponent = (function () {
+    function ConverterComponent() {
+    }
+    ConverterComponent.prototype.ngOnInit = function () {
+    };
+    return ConverterComponent;
+}());
+ConverterComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'converter',
+        template: __webpack_require__(230),
+        styles: [__webpack_require__(229)]
+    }),
+    __metadata("design:paramtypes", [])
+], ConverterComponent);
+
+//# sourceMappingURL=converter.component.js.map
+
+/***/ }),
+
+/***/ 229:
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(12)();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/*** EXPORTS FROM exports-loader ***/
+module.exports = module.exports.toString();
+
+/***/ }),
+
+/***/ 230:
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  converter works!\n</p>\n"
 
 /***/ }),
 

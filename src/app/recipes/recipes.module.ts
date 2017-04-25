@@ -17,6 +17,7 @@ import { RecipeRoutingModule } from './recipes-routing.module';
 import { CalcServingsPipe } from './pipes/calc-servings.pipe';
 import { FilterRecipesPipe } from './pipes/filter-recipes.pipe';
 import { DifficultyStringPipe } from './pipes/difficulty-string.pipe';
+import { ConverterComponent } from './components/converter/converter.component';
 
 @NgModule({
   imports: [
@@ -36,7 +37,8 @@ import { DifficultyStringPipe } from './pipes/difficulty-string.pipe';
     FilterRecipesPipe,
     DifficultyStringPipe,
     InlineHrefDirective,
-    RecipePrintComponent
+    RecipePrintComponent,
+    ConverterComponent
   ],
   providers: [ 
     RecipeService,
