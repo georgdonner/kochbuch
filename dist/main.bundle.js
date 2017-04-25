@@ -1162,6 +1162,7 @@ RecipeRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pipes_filter_recipes_pipe__ = __webpack_require__(180);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pipes_difficulty_string_pipe__ = __webpack_require__(179);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__components_converter_converter_component__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pipes_round_pipe__ = __webpack_require__(291);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecipesModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1169,6 +1170,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1212,7 +1214,8 @@ RecipesModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_15__pipes_difficulty_string_pipe__["a" /* DifficultyStringPipe */],
             __WEBPACK_IMPORTED_MODULE_4_ng_inline_href__["InlineHrefDirective"],
             __WEBPACK_IMPORTED_MODULE_9__components_recipe_print_recipe_print_component__["a" /* RecipePrintComponent */],
-            __WEBPACK_IMPORTED_MODULE_16__components_converter_converter_component__["a" /* ConverterComponent */]
+            __WEBPACK_IMPORTED_MODULE_16__components_converter_converter_component__["a" /* ConverterComponent */],
+            __WEBPACK_IMPORTED_MODULE_17__pipes_round_pipe__["a" /* RoundPipe */]
         ],
         providers: [
             __WEBPACK_IMPORTED_MODULE_10__services_recipe_service__["a" /* RecipeService */],
@@ -1441,7 +1444,7 @@ module.exports = "<svg-icons></svg-icons>\r\n<router-outlet></router-outlet>\r\n
 /***/ 246:
 /***/ (function(module, exports) {
 
-module.exports = "<ng-template #content let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <h4 class=\"modal-title\">Umrechner</h4>\r\n    <button type=\"button\" class=\"close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    <input type=\"number\" step=\"any\" class=\"form-control col-6 col-sm-8 d-inline-block\" name=\"ml\" [ngModel]=\"quantity\" (ngModelChange)=\"quantity=$event\">\r\n    <span class=\"pl-1 col-6 col-sm-4\"><strong>ml</strong> (Milliliter)</span>\r\n    <input type=\"number\" step=\"any\" class=\"form-control col-6 col-sm-8 d-inline-block\" name=\"l\" [ngModel]=\"quantity/1000\" (ngModelChange)=\"quantity=$event*1000\">\r\n    <span class=\"pl-1 col-6 col-sm-4\"><strong>l</strong> (Liter)</span>\r\n    <input type=\"number\" step=\"any\" class=\"form-control col-6 col-sm-8 d-inline-block\" name=\"tl\" [ngModel]=\"quantity/5\" (ngModelChange)=\"quantity=$event*5\">\r\n    <span class=\"pl-1 col-6 col-sm-4\"><strong>TL</strong> (Teelöffel)</span>\r\n    <input type=\"number\" step=\"any\" class=\"form-control col-6 col-sm-8 d-inline-block\" name=\"el\" [ngModel]=\"quantity/15\" (ngModelChange)=\"quantity=$event*15\">\r\n    <span class=\"pl-1 col-6 col-sm-4\"><strong>EL</strong> (Esslöffel)</span>\r\n    <input type=\"number\" step=\"any\" class=\"form-control col-6 col-sm-8 d-inline-block\" name=\"kleine-tasse\" [ngModel]=\"quantity/125\" (ngModelChange)=\"quantity=$event*125\">\r\n    <span class=\"pl-1 col-6 col-sm-4\"><strong>kleine</strong> Tasse</span>\r\n    <input type=\"number\" step=\"any\" class=\"form-control col-6 col-sm-8 d-inline-block\" name=\"grosse-tasse\" [ngModel]=\"quantity/200\" (ngModelChange)=\"quantity=$event*200\">\r\n    <span class=\"pl-1 col-6 col-sm-4\"><strong>große</strong> Tasse</span>\r\n    <input type=\"number\" step=\"any\" class=\"form-control col-6 col-sm-8 d-inline-block\" name=\"cup\" [ngModel]=\"quantity/250\" (ngModelChange)=\"quantity=$event*250\">\r\n    <span class=\"pl-1 col-6 col-sm-4\"><strong>Cup</strong> (amerik.)</span>\r\n  </div>\r\n</ng-template>\r\n\r\n<button type=\"button\" class=\"btn btn-secondary\" (click)=\"open(content)\">\r\n  <svg class=\"icon icon-refresh\"><use inlineHref=\"#icon-refresh\"></use></svg>\r\n  <span class=\"pl-1\">Umrechner</span>\r\n</button>\r\n"
+module.exports = "<ng-template #content let-c=\"close\" let-d=\"dismiss\">\r\n  <div class=\"modal-header\">\r\n    <h4 class=\"modal-title\">Umrechner</h4>\r\n    <button type=\"button\" class=\"close\" (click)=\"d('Cross click')\">\r\n      <span aria-hidden=\"true\">&times;</span>\r\n    </button>\r\n  </div>\r\n  <div class=\"modal-body\">\r\n    <input type=\"number\" step=\"any\" class=\"form-control col-6 col-sm-8 d-inline-block\" name=\"ml\" [ngModel]=\"quantity | round:3\" (ngModelChange)=\"quantity=$event\">\r\n    <span class=\"pl-1 col-6 col-sm-4\"><strong>ml</strong> (Milliliter)</span>\r\n    <input type=\"number\" step=\"any\" class=\"form-control col-6 col-sm-8 d-inline-block\" name=\"l\" [ngModel]=\"quantity/1000 | round:3\" (ngModelChange)=\"quantity=$event*1000\">\r\n    <span class=\"pl-1 col-6 col-sm-4\"><strong>l</strong> (Liter)</span>\r\n    <input type=\"number\" step=\"any\" class=\"form-control col-6 col-sm-8 d-inline-block\" name=\"tl\" [ngModel]=\"quantity/5 | round:3\" (ngModelChange)=\"quantity=$event*5\">\r\n    <span class=\"pl-1 col-6 col-sm-4\"><strong>TL</strong> (Teelöffel)</span>\r\n    <input type=\"number\" step=\"any\" class=\"form-control col-6 col-sm-8 d-inline-block\" name=\"el\" [ngModel]=\"quantity/15 | round:3\" (ngModelChange)=\"quantity=$event*15\">\r\n    <span class=\"pl-1 col-6 col-sm-4\"><strong>EL</strong> (Esslöffel)</span>\r\n    <input type=\"number\" step=\"any\" class=\"form-control col-6 col-sm-8 d-inline-block\" name=\"kleine-tasse\" [ngModel]=\"quantity/125 | round:3\" (ngModelChange)=\"quantity=$event*125\">\r\n    <span class=\"pl-1 col-6 col-sm-4\"><strong>kleine</strong> Tasse</span>\r\n    <input type=\"number\" step=\"any\" class=\"form-control col-6 col-sm-8 d-inline-block\" name=\"grosse-tasse\" [ngModel]=\"quantity/200 | round:3\" (ngModelChange)=\"quantity=$event*200\">\r\n    <span class=\"pl-1 col-6 col-sm-4\"><strong>große</strong> Tasse</span>\r\n    <input type=\"number\" step=\"any\" class=\"form-control col-6 col-sm-8 d-inline-block\" name=\"cup\" [ngModel]=\"quantity/250 | round:3\" (ngModelChange)=\"quantity=$event*250\">\r\n    <span class=\"pl-1 col-6 col-sm-4\"><strong>Cup</strong> (amerik.)</span>\r\n  </div>\r\n</ng-template>\r\n\r\n<button type=\"button\" class=\"btn btn-secondary\" (click)=\"open(content)\">\r\n  <svg class=\"icon icon-refresh\"><use inlineHref=\"#icon-refresh\"></use></svg>\r\n  <span class=\"pl-1\">Umrechner</span>\r\n</button>\r\n"
 
 /***/ }),
 
@@ -1492,6 +1495,42 @@ module.exports = "<svg style=\"position: absolute; width: 0; height: 0; overflow
 
 module.exports = __webpack_require__(166);
 
+
+/***/ }),
+
+/***/ 291:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RoundPipe; });
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+var RoundPipe = (function () {
+    function RoundPipe() {
+    }
+    RoundPipe.prototype.transform = function (value, precision) {
+        if (value % 1 === 0) {
+            return value.toString();
+        }
+        else {
+            return value.toPrecision(precision);
+        }
+    };
+    return RoundPipe;
+}());
+RoundPipe = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Pipe"])({
+        name: 'round'
+    })
+], RoundPipe);
+
+//# sourceMappingURL=round.pipe.js.map
 
 /***/ }),
 

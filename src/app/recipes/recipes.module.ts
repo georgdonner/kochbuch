@@ -19,6 +19,7 @@ import { CalcServingsPipe } from './pipes/calc-servings.pipe';
 import { FilterRecipesPipe } from './pipes/filter-recipes.pipe';
 import { DifficultyStringPipe } from './pipes/difficulty-string.pipe';
 import { ConverterComponent } from './components/converter/converter.component';
+import { RoundPipe } from './pipes/round.pipe';
 
 @NgModule({
   imports: [
@@ -40,7 +41,8 @@ import { ConverterComponent } from './components/converter/converter.component';
     DifficultyStringPipe,
     InlineHrefDirective,
     RecipePrintComponent,
-    ConverterComponent
+    ConverterComponent,
+    RoundPipe
   ],
   providers: [ 
     RecipeService,
