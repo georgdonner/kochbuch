@@ -2,6 +2,8 @@ import { NgModule }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { FormsModule }    from '@angular/forms';
 
+import { InlineHrefDirective } from 'ng-inline-href';
+
 import { RecipeDetailsComponent } from './recipe-details/recipe-details.component';
 import { RecipeFormComponent } from './recipe-form/recipe-form.component';
 import { RecipeListComponent } from './recipe-list/recipe-list.component';
@@ -21,6 +23,9 @@ import { DifficultyStringPipe } from './pipes/difficulty-string.pipe';
     FormsModule,
     RecipeRoutingModule
   ],
+  exports: [
+    InlineHrefDirective
+  ],
   declarations: [
     RecipeDetailsComponent,
     RecipeFormComponent,
@@ -28,7 +33,8 @@ import { DifficultyStringPipe } from './pipes/difficulty-string.pipe';
     RecipeEditComponent,
     CalcServingsPipe,
     FilterRecipesPipe,
-    DifficultyStringPipe
+    DifficultyStringPipe,
+    InlineHrefDirective
   ],
   providers: [ 
     RecipeService,

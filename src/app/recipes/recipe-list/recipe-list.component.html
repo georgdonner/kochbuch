@@ -29,7 +29,7 @@
         </div>
         <div class="card-footer">
           <svg class="icon icon-clock-o">
-            <use xlink:href="#icon-clock-o"></use>
+            <use inlineHref="#icon-clock-o"></use>
           </svg>
           <span>{{ recipe.duration }} Minuten</span>
           <div *ngIf="recipe.categories"><span *ngFor="let ctg of recipe.categories" class="click"> #<strong>{{ ctg }}</strong> </span></div>
