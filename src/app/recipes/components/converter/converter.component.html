@@ -6,20 +6,20 @@
     </button>
   </div>
   <div class="modal-body">
-    <input type="number" class="form-control w-75 d-inline-block" name="ml" [ngModel]="quantity" (ngModelChange)="quantity=$event">
-    <span class="pl-1"><strong>ml</strong> (Milliliter)</span>
-    <input type="number" class="form-control w-75 d-inline-block" name="l" [ngModel]="quantity/1000" (ngModelChange)="quantity=$event*1000">
-    <span class="pl-1"><strong>l</strong> (Liter)</span>
-    <input type="number" class="form-control w-75 d-inline-block" name="tl" [ngModel]="quantity/5" (ngModelChange)="quantity=$event*5">
-    <span class="pl-1"><strong>TL</strong> (Teelöffel)</span>
-    <input type="number" class="form-control w-75 d-inline-block" name="el" [ngModel]="quantity/15" (ngModelChange)="quantity=$event*15">
-    <span class="pl-1"><strong>EL</strong> (Esslöffel)</span>
-    <input type="number" class="form-control w-75 d-inline-block" name="kleine-tasse" [ngModel]="quantity/125" (ngModelChange)="quantity=$event*125">
-    <span class="pl-1"><strong>kleine</strong> Tasse</span>
-    <input type="number" class="form-control w-75 d-inline-block" name="grosse-tasse" [ngModel]="quantity/200" (ngModelChange)="quantity=$event*200">
-    <span class="pl-1"><strong>große</strong> Tasse</span>
-    <input type="number" class="form-control w-75 d-inline-block" name="cup" [ngModel]="quantity/250" (ngModelChange)="quantity=$event*250">
-    <span class="pl-1"><strong>Cup</strong> (amerik.)</span>
+    <input type="number" class="form-control col-6 col-sm-8 d-inline-block" name="ml" [ngModel]="quantity" (ngModelChange)="quantity=$event">
+    <span class="pl-1 col-6 col-sm-4"><strong>ml</strong> (Milliliter)</span>
+    <input type="number" class="form-control col-6 col-sm-8 d-inline-block" name="l" [ngModel]="quantity/1000" (ngModelChange)="quantity=$event*1000">
+    <span class="pl-1 col-6 col-sm-4"><strong>l</strong> (Liter)</span>
+    <input type="number" class="form-control col-6 col-sm-8 d-inline-block" name="tl" [ngModel]="quantity/5" (ngModelChange)="quantity=$event*5">
+    <span class="pl-1 col-6 col-sm-4"><strong>TL</strong> (Teelöffel)</span>
+    <input type="number" class="form-control col-6 col-sm-8 d-inline-block" name="el" [ngModel]="quantity/15" (ngModelChange)="quantity=$event*15">
+    <span class="pl-1 col-6 col-sm-4"><strong>EL</strong> (Esslöffel)</span>
+    <input type="number" class="form-control col-6 col-sm-8 d-inline-block" name="kleine-tasse" [ngModel]="quantity/125" (ngModelChange)="quantity=$event*125">
+    <span class="pl-1 col-6 col-sm-4"><strong>kleine</strong> Tasse</span>
+    <input type="number" class="form-control col-6 col-sm-8 d-inline-block" name="grosse-tasse" [ngModel]="quantity/200" (ngModelChange)="quantity=$event*200">
+    <span class="pl-1 col-6 col-sm-4"><strong>große</strong> Tasse</span>
+    <input type="number" class="form-control col-6 col-sm-8 d-inline-block" name="cup" [ngModel]="quantity/250" (ngModelChange)="quantity=$event*250">
+    <span class="pl-1 col-6 col-sm-4"><strong>Cup</strong> (amerik.)</span>
   </div>
 </ng-template>
 
