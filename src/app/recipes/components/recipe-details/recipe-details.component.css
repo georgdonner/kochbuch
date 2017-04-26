@@ -57,15 +57,15 @@
 
 @media only screen and (max-width: 767px) {
     .icon.icon-spoon-knife {
-        top: 20px;
+        top: 10px;
     }
 
     .icon.icon-chevron-left {
-        top: 20px;
+        top: 10px;
     }
 
     .badge.cook-badge {
-        top: 20px;
+        top: 10px;
     }
 }
 
