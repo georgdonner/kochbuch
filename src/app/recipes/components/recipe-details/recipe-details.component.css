@@ -10,6 +10,10 @@
     object-fit: cover;
 }
 
+.description-text {
+    white-space: pre-wrap;
+}
+
 .top-info {
     line-height: 34px; 
     font-size: 16px;
