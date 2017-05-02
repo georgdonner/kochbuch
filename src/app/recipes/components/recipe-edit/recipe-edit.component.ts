@@ -25,6 +25,9 @@ export class RecipeEditComponent implements OnInit {
   recipe: Recipe;
   newIngredient = new Ingredient('', '');
 
+  editing = false;
+  editIngr: number;
+
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
@@ -48,6 +51,23 @@ export class RecipeEditComponent implements OnInit {
       this.recipe.ingredients.push(ingr);
       this.newIngredient = new Ingredient('', '');
     }
+  }
+
+  editIngredient(index) {
+    if (this.editing) {
+      this.newIngredient = new Ingredient('', '');
+      this.editing = false;
+    } else {
+      this.editing = true;
+      this.editIngr = index;
+      this.newIngredient = this.recipe.ingredients[index];
+    }
+  }
+
+  updateIngredient(index) {
+    this.recipe.ingredients[index] = this.newIngredient;
+    this.newIngredient = new Ingredient('', '');
+    this.editing = false;
   }
 
   removeIngredient(ingredient) {
