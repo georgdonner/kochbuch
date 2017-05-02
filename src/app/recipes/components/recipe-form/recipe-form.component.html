@@ -64,7 +64,7 @@
     </div>
     
     <h2 class="mb-3 section-header">Info</h2>
-    <textarea rows="3" [(ngModel)]="model.description" name="description" class="form-control" id="description" #description="ngModel" placeholder="Beschreibung..."></textarea>
+    <textarea rows="8" [(ngModel)]="model.description" name="description" class="form-control" id="description" #description="ngModel" placeholder="Beschreibung..."></textarea>
     <button type="button" class="btn btn-default click mt-3" (click)=showDescPicker()>Anleitung Hochladen</button>
     <span *ngIf="model.descrImage" class="pl-3"> "{{ descrFilename }}" wurde erfolgreich hochgeladen!</span>
 

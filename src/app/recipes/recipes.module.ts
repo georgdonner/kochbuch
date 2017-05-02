@@ -1,6 +1,7 @@
-import { NgModule }       from '@angular/core';
-import { CommonModule }   from '@angular/common';
-import { FormsModule }    from '@angular/forms';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MarkdownModule } from 'angular2-markdown';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { InlineHrefDirective } from 'ng-inline-href';
@@ -26,7 +27,8 @@ import { RoundPipe } from './pipes/round.pipe';
     CommonModule,
     FormsModule,
     RecipeRoutingModule,
-    NgbModule
+    NgbModule,
+    MarkdownModule
   ],
   exports: [
     InlineHrefDirective

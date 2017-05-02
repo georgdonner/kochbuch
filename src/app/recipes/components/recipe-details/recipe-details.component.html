@@ -43,7 +43,7 @@
     </div>
     <div class="col-lg-6">
       <h2 class="my-4 mb-lg-4">Zubereitung</h2>
-      <p *ngIf="recipe.description" class="description-text">{{ recipe.description }}</p>
+      <markdown *ngIf="recipe.description" class="description-text">{{ recipe.description }}</markdown>
       <img #descrImage *ngIf="recipe.descrImage" src="{{recipe.descrImage}}"
           alt="Recipe description" class="img-fluid">
     </div>

@@ -64,7 +64,7 @@
     </div>
 
     <h2 class="mb-3 section-header">Info</h2>
-    <textarea rows="3" [(ngModel)]="recipe.description" name="description" class="form-control" id="description" #description="ngModel" placeholder="Beschreibung..."></textarea>
+    <textarea rows="8" [(ngModel)]="recipe.description" name="description" class="form-control" id="description" #description="ngModel" placeholder="Beschreibung..."></textarea>
     <img *ngIf="recipe.descrImage" class="img-fluid my-3" src="{{recipe.descrImage}}" alt="Recipe description">
     <button type="button" class="btn btn-default click mt-3" (click)=showDescPicker()>Neue Anleitung</button>
 
