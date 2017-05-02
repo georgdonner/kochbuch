@@ -96,8 +96,9 @@
         <span class="input-group-btn">
           <button class="btn btn-primary click hidden-lg-up" type="button" (click)="addCategory(category.value); category.value=''">Enter</button>
         </span>
-        <input #category type="text" name="category" class="form-control" id="category" 
-              (keyup.enter)="addCategory(category.value); category.value=''" placeholder="Enter drücken zum Hinzufügen">
+        <input *ngIf="recipes" #category auto-complete type="text" name="category" class="form-control w-100" id="category" 
+              (keyup.enter)="addCategory(category.value); category.value=''" placeholder="Enter drücken zum Hinzufügen" 
+              [source]="getCategories()" [min-chars]="1" [accept-user-input]="true" no-match-found-text="Kategorie ist neu">
       </div>
       
     <button type="button" (click)="save(); gotoRecipe(recipe)" class="btn btn-success my-3 click" [disabled]="!recipeForm.form.valid">Speichern</button>

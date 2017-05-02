@@ -23,6 +23,7 @@ export class RecipeEditComponent implements OnInit {
   filestackKey: string = environment.filestackKey;
 
   recipe: Recipe;
+  recipes: Recipe[];
   newIngredient = new Ingredient('', '');
 
   editing = false;
@@ -38,6 +39,9 @@ export class RecipeEditComponent implements OnInit {
     this.route.params
       .switchMap((params: Params) => this.recipeService.getRecipe(params['id']))
       .subscribe((recipe: Recipe) => this.recipe = recipe);
+    this.recipeService.getAllRecipes().subscribe(recipes => {
+      this.recipes = recipes;
+    });
   }
 
   save() {
@@ -86,6 +90,16 @@ export class RecipeEditComponent implements OnInit {
 
   removeCategory(category) {
     this.recipe.categories.splice(this.recipe.categories.indexOf(category),1);
+  }
+
+  getCategories() {
+    let categories = new Set<string>();
+    this.recipes.forEach(recipe => {
+      recipe.categories.forEach(ctg => {
+        categories.add(ctg);
+      });
+    });
+    return Array.from(categories);
   }
 
   async showHeroPicker() {

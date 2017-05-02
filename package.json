@@ -21,6 +21,7 @@
     "@angular/platform-browser-dynamic": "^4.0.0",
     "@angular/router": "^4.0.0",
     "@ng-bootstrap/ng-bootstrap": "^1.0.0-alpha.25",
+    "@ngui/auto-complete": "^0.13.2",
     "angular2-markdown": "^1.6.0",
     "body-parser": "^1.17.1",
     "bootstrap": "^3.3.7",

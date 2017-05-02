@@ -154,6 +154,9 @@ var RecipeEditComponent = (function () {
         this.route.params
             .switchMap(function (params) { return _this.recipeService.getRecipe(params['id']); })
             .subscribe(function (recipe) { return _this.recipe = recipe; });
+        this.recipeService.getAllRecipes().subscribe(function (recipes) {
+            _this.recipes = recipes;
+        });
     };
     RecipeEditComponent.prototype.save = function () {
         this.recipeService.updateRecipe(this.recipe)
@@ -198,6 +201,15 @@ var RecipeEditComponent = (function () {
     };
     RecipeEditComponent.prototype.removeCategory = function (category) {
         this.recipe.categories.splice(this.recipe.categories.indexOf(category), 1);
+    };
+    RecipeEditComponent.prototype.getCategories = function () {
+        var categories = new Set();
+        this.recipes.forEach(function (recipe) {
+            recipe.categories.forEach(function (ctg) {
+                categories.add(ctg);
+            });
+        });
+        return Array.from(categories);
     };
     RecipeEditComponent.prototype.showHeroPicker = function () {
         return __awaiter(this, void 0, void 0, function () {
@@ -743,8 +755,8 @@ AppModule = __decorate([
         ],
         imports: [
             __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_3__angular_http__["a" /* HttpModule */],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormsModule"],
+            __WEBPACK_IMPORTED_MODULE_3__angular_http__["HttpModule"],
             __WEBPACK_IMPORTED_MODULE_8__recipes_recipes_module__["a" /* RecipesModule */],
             __WEBPACK_IMPORTED_MODULE_7__app_routing_module__["a" /* AppRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_4__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */].forRoot(),
@@ -1238,21 +1250,23 @@ RecipeRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_markdown__ = __webpack_require__(295);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ng_bootstrap_ng_bootstrap__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng_inline_href__ = __webpack_require__(244);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng_inline_href___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_ng_inline_href__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_recipe_list_recipe_list_component__ = __webpack_require__(139);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_recipe_details_recipe_details_component__ = __webpack_require__(136);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_recipe_form_recipe_form_component__ = __webpack_require__(138);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_recipe_edit_recipe_edit_component__ = __webpack_require__(137);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_recipe_print_recipe_print_component__ = __webpack_require__(140);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__services_recipe_service__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_current_query_service__ = __webpack_require__(59);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__recipes_routing_module__ = __webpack_require__(182);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__pipes_calc_servings_pipe__ = __webpack_require__(178);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pipes_filter_recipes_pipe__ = __webpack_require__(180);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pipes_difficulty_string_pipe__ = __webpack_require__(179);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__components_converter_converter_component__ = __webpack_require__(177);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pipes_round_pipe__ = __webpack_require__(181);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngui_auto_complete__ = __webpack_require__(322);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ngui_auto_complete___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__ngui_auto_complete__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ng_inline_href__ = __webpack_require__(244);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ng_inline_href___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_ng_inline_href__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_recipe_list_recipe_list_component__ = __webpack_require__(139);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_recipe_details_recipe_details_component__ = __webpack_require__(136);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_recipe_form_recipe_form_component__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_recipe_edit_recipe_edit_component__ = __webpack_require__(137);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_recipe_print_recipe_print_component__ = __webpack_require__(140);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__services_recipe_service__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_current_query_service__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__recipes_routing_module__ = __webpack_require__(182);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__pipes_calc_servings_pipe__ = __webpack_require__(178);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__pipes_filter_recipes_pipe__ = __webpack_require__(180);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pipes_difficulty_string_pipe__ = __webpack_require__(179);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__components_converter_converter_component__ = __webpack_require__(177);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pipes_round_pipe__ = __webpack_require__(181);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecipesModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1260,6 +1274,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1287,31 +1302,32 @@ var RecipesModule = (function () {
 RecipesModule = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"])({
         imports: [
-            __WEBPACK_IMPORTED_MODULE_1__angular_common__["c" /* CommonModule */],
-            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["a" /* FormsModule */],
-            __WEBPACK_IMPORTED_MODULE_13__recipes_routing_module__["a" /* RecipeRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"],
+            __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormsModule"],
+            __WEBPACK_IMPORTED_MODULE_14__recipes_routing_module__["a" /* RecipeRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_4__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */],
-            __WEBPACK_IMPORTED_MODULE_3_angular2_markdown__["a" /* MarkdownModule */]
+            __WEBPACK_IMPORTED_MODULE_3_angular2_markdown__["a" /* MarkdownModule */],
+            __WEBPACK_IMPORTED_MODULE_5__ngui_auto_complete__["NguiAutoCompleteModule"]
         ],
         exports: [
-            __WEBPACK_IMPORTED_MODULE_5_ng_inline_href__["InlineHrefDirective"]
+            __WEBPACK_IMPORTED_MODULE_6_ng_inline_href__["InlineHrefDirective"]
         ],
         declarations: [
-            __WEBPACK_IMPORTED_MODULE_7__components_recipe_details_recipe_details_component__["a" /* RecipeDetailsComponent */],
-            __WEBPACK_IMPORTED_MODULE_8__components_recipe_form_recipe_form_component__["a" /* RecipeFormComponent */],
-            __WEBPACK_IMPORTED_MODULE_6__components_recipe_list_recipe_list_component__["a" /* RecipeListComponent */],
-            __WEBPACK_IMPORTED_MODULE_9__components_recipe_edit_recipe_edit_component__["a" /* RecipeEditComponent */],
-            __WEBPACK_IMPORTED_MODULE_14__pipes_calc_servings_pipe__["a" /* CalcServingsPipe */],
-            __WEBPACK_IMPORTED_MODULE_15__pipes_filter_recipes_pipe__["a" /* FilterRecipesPipe */],
-            __WEBPACK_IMPORTED_MODULE_16__pipes_difficulty_string_pipe__["a" /* DifficultyStringPipe */],
-            __WEBPACK_IMPORTED_MODULE_5_ng_inline_href__["InlineHrefDirective"],
-            __WEBPACK_IMPORTED_MODULE_10__components_recipe_print_recipe_print_component__["a" /* RecipePrintComponent */],
-            __WEBPACK_IMPORTED_MODULE_17__components_converter_converter_component__["a" /* ConverterComponent */],
-            __WEBPACK_IMPORTED_MODULE_18__pipes_round_pipe__["a" /* RoundPipe */]
+            __WEBPACK_IMPORTED_MODULE_8__components_recipe_details_recipe_details_component__["a" /* RecipeDetailsComponent */],
+            __WEBPACK_IMPORTED_MODULE_9__components_recipe_form_recipe_form_component__["a" /* RecipeFormComponent */],
+            __WEBPACK_IMPORTED_MODULE_7__components_recipe_list_recipe_list_component__["a" /* RecipeListComponent */],
+            __WEBPACK_IMPORTED_MODULE_10__components_recipe_edit_recipe_edit_component__["a" /* RecipeEditComponent */],
+            __WEBPACK_IMPORTED_MODULE_15__pipes_calc_servings_pipe__["a" /* CalcServingsPipe */],
+            __WEBPACK_IMPORTED_MODULE_16__pipes_filter_recipes_pipe__["a" /* FilterRecipesPipe */],
+            __WEBPACK_IMPORTED_MODULE_17__pipes_difficulty_string_pipe__["a" /* DifficultyStringPipe */],
+            __WEBPACK_IMPORTED_MODULE_6_ng_inline_href__["InlineHrefDirective"],
+            __WEBPACK_IMPORTED_MODULE_11__components_recipe_print_recipe_print_component__["a" /* RecipePrintComponent */],
+            __WEBPACK_IMPORTED_MODULE_18__components_converter_converter_component__["a" /* ConverterComponent */],
+            __WEBPACK_IMPORTED_MODULE_19__pipes_round_pipe__["a" /* RoundPipe */]
         ],
         providers: [
-            __WEBPACK_IMPORTED_MODULE_11__services_recipe_service__["a" /* RecipeService */],
-            __WEBPACK_IMPORTED_MODULE_12__services_current_query_service__["a" /* CurrentQueryService */]
+            __WEBPACK_IMPORTED_MODULE_12__services_recipe_service__["a" /* RecipeService */],
+            __WEBPACK_IMPORTED_MODULE_13__services_current_query_service__["a" /* CurrentQueryService */]
         ]
     })
 ], RecipesModule);
@@ -1391,7 +1407,7 @@ var RecipeService = (function () {
             .map(function (res) { return res.json(); });
     };
     RecipeService.prototype.addRecipe = function (newRecipe) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Headers */]();
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
         return this.http.post('api/recipe', JSON.stringify(newRecipe), { headers: headers })
             .map(function (res) { return res.json(); });
@@ -1401,7 +1417,7 @@ var RecipeService = (function () {
             .map(function (res) { return res.json(); });
     };
     RecipeService.prototype.updateRecipe = function (updRecipe) {
-        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["d" /* Headers */]();
+        var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
         return this.http.put('api/recipe/' + updRecipe._id, JSON.stringify(updRecipe), { headers: headers })
             .map(function (res) { return res.json(); });
@@ -1410,7 +1426,7 @@ var RecipeService = (function () {
 }());
 RecipeService = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"])(),
-    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["c" /* Http */]) === "function" && _a || Object])
+    __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_http__["Http"]) === "function" && _a || Object])
 ], RecipeService);
 
 var _a;
@@ -1550,7 +1566,7 @@ module.exports = "<div *ngIf=\"recipe\">\r\n  <svg class=\"icon icon-chevron-lef
 /***/ 249:
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"recipe\" class=\"container\">\r\n  <form #recipeForm=\"ngForm\">\r\n    <h1 class=\"display-3 text-center mt-4\">{{ recipe.title }}</h1>\r\n    <hr class=\"my-4\">\r\n    <img *ngIf=\"recipe.heroImage\" class=\"img-fluid mb-3\" src=\"{{recipe.heroImage}}\" alt=\"{{recipe.title}}\">\r\n    <div class=\"input-group\">\r\n        <input type=\"text\" [(ngModel)]=\"recipe.title\" name=\"title\" class=\"form-control \" id=\"title\" required #title=\"ngModel\" placeholder=\"Titel\">\r\n        <span class=\"input-group-btn\">\r\n          <button type=\"button\" class=\"btn btn-secondary\" (click)=\"showHeroPicker()\">Neues Bild</button>\r\n        </span>\r\n    </div>\r\n    <div [hidden]=\"title.valid || title.pristine\"\r\n          class=\"alert alert-danger\">\r\n      Das Rezept muss einen Titel haben\r\n    </div>\r\n\r\n    <div class=\"row form-group mt-3 w-100 justify-content-center\">\r\n      <div class=\"col-sm-4 col-lg-2\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\"><svg class=\"icon icon-user\"><use inlineHref=\"#icon-user\"></use></svg></div>\r\n          <input type=\"number\" [(ngModel)]=\"recipe.servings\" name=\"servings\" id=\"servings\" class=\"form-control\">\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-6 offset-sm-2 offset-md-0 col-md-4 col-lg-4 offset-lg-1\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\"><svg class=\"icon icon-clock-o\"><use inlineHref=\"#icon-clock-o\"></use></svg></div>\r\n          <input type=\"number\" [(ngModel)]=\"recipe.duration\" name=\"duration\" id=\"duration\" class=\"form-control\">\r\n          <div class=\"input-group-addon\">Minuten</div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-12 col-md-4 col-lg-4 offset-lg-1 mt-3 mt-md-0\">\r\n        <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active':recipe.difficulty==1}\" (click)=\"recipe.difficulty=1\">Einfach</button>\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active':recipe.difficulty==2}\" (click)=\"recipe.difficulty=2\">Mittel</button>\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active':recipe.difficulty==3}\" (click)=\"recipe.difficulty=3\">Schwer</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <h2 class=\"mb-3 section-header\">Zutaten</h2>\r\n    <div class=\"mb-2\" *ngFor=\"let ingr of recipe.ingredients; let i = index\">\r\n      <div class=\"d-inline-block\">\r\n        {{ ingr.name }} <span *ngIf=\"ingr.hint!=''\">({{ ingr.hint }})</span>\r\n        <a class=\"pl-3 click\" (click)=\"editIngredient(i)\"><svg class=\"icon icon-edit\"><use inlineHref=\"#icon-edit\"></use></svg></a>\r\n        <button type=\"button\" class=\"close pl-3 click\" (click)=removeIngredient(ingr)><span aria-hidden=\"true\">&times;</span></button>\r\n      </div>\r\n    </div>\r\n    <div *ngIf=\"!editing\" class=\"row form-group mt-3\">\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <span class=\"input-group-btn\">\r\n            <button class=\"btn btn-primary click hidden-lg-up\" type=\"button\" (click)=\"addIngredient()\">Enter</button>\r\n          </span>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.name\" name=\"name\" class=\"form-control\" id=\"name\" \r\n                (keyup.enter)=\"addIngredient()\" placeholder=\"Enter drücken zum Hinzufügen\" #ingredient>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\">Hinweis</div>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.hint\" name=\"hint\" class=\"form-control\" id=\"hint\" \r\n                (keyup.enter)=\"addIngredient(); ingredient.focus()\" placeholder=\"Klammern werden automatisch gesetzt\">\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div *ngIf=\"editing\" class=\"row form-group\">\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <span class=\"input-group-btn\">\r\n            <button class=\"btn btn-primary click hidden-lg-up\" type=\"button\" (click)=\"updateIngredient(editIngr)\">Enter</button>\r\n          </span>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.name\" name=\"newName\" class=\"form-control\" id=\"newName\" \r\n                (keyup.enter)=\"updateIngredient(editIngr)\" placeholder=\"Enter drücken zum Bearbeiten\" #ingredient>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\">Hinweis</div>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.hint\" name=\"newHint\" class=\"form-control\" id=\"newHint\" \r\n                (keyup.enter)=\"updateIngredient(editIngr)\" placeholder=\"Klammern werden automatisch gesetzt\">\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <h2 class=\"mb-3 section-header\">Info</h2>\r\n    <textarea rows=\"8\" [(ngModel)]=\"recipe.description\" name=\"description\" class=\"form-control\" id=\"description\" #description=\"ngModel\" placeholder=\"Beschreibung...\"></textarea>\r\n    <img *ngIf=\"recipe.descrImage\" class=\"img-fluid my-3\" src=\"{{recipe.descrImage}}\" alt=\"Recipe description\">\r\n    <button type=\"button\" class=\"btn btn-default click mt-3\" (click)=showDescPicker()>Neue Anleitung</button>\r\n\r\n      <h2 class=\"my-3 section-header\">Kategorien</h2>\r\n      <div class=\"mb-2 d-inline-block\" *ngFor=\"let ctg of recipe.categories\">\r\n        {{ ctg }}\r\n        <button type=\"button\" class=\"close px-2 click\" (click)=\"removeCategory(ctg)\">x</button>  \r\n      </div>\r\n      <div class=\"input-group\">\r\n        <span class=\"input-group-btn\">\r\n          <button class=\"btn btn-primary click hidden-lg-up\" type=\"button\" (click)=\"addCategory(category.value); category.value=''\">Enter</button>\r\n        </span>\r\n        <input #category type=\"text\" name=\"category\" class=\"form-control\" id=\"category\" \r\n              (keyup.enter)=\"addCategory(category.value); category.value=''\" placeholder=\"Enter drücken zum Hinzufügen\">\r\n      </div>\r\n      \r\n    <button type=\"button\" (click)=\"save(); gotoRecipe(recipe)\" class=\"btn btn-success my-3 click\" [disabled]=\"!recipeForm.form.valid\">Speichern</button>\r\n  </form>\r\n</div>\r\n"
+module.exports = "<div *ngIf=\"recipe\" class=\"container\">\r\n  <form #recipeForm=\"ngForm\">\r\n    <h1 class=\"display-3 text-center mt-4\">{{ recipe.title }}</h1>\r\n    <hr class=\"my-4\">\r\n    <img *ngIf=\"recipe.heroImage\" class=\"img-fluid mb-3\" src=\"{{recipe.heroImage}}\" alt=\"{{recipe.title}}\">\r\n    <div class=\"input-group\">\r\n        <input type=\"text\" [(ngModel)]=\"recipe.title\" name=\"title\" class=\"form-control \" id=\"title\" required #title=\"ngModel\" placeholder=\"Titel\">\r\n        <span class=\"input-group-btn\">\r\n          <button type=\"button\" class=\"btn btn-secondary\" (click)=\"showHeroPicker()\">Neues Bild</button>\r\n        </span>\r\n    </div>\r\n    <div [hidden]=\"title.valid || title.pristine\"\r\n          class=\"alert alert-danger\">\r\n      Das Rezept muss einen Titel haben\r\n    </div>\r\n\r\n    <div class=\"row form-group mt-3 w-100 justify-content-center\">\r\n      <div class=\"col-sm-4 col-lg-2\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\"><svg class=\"icon icon-user\"><use inlineHref=\"#icon-user\"></use></svg></div>\r\n          <input type=\"number\" [(ngModel)]=\"recipe.servings\" name=\"servings\" id=\"servings\" class=\"form-control\">\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-6 offset-sm-2 offset-md-0 col-md-4 col-lg-4 offset-lg-1\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\"><svg class=\"icon icon-clock-o\"><use inlineHref=\"#icon-clock-o\"></use></svg></div>\r\n          <input type=\"number\" [(ngModel)]=\"recipe.duration\" name=\"duration\" id=\"duration\" class=\"form-control\">\r\n          <div class=\"input-group-addon\">Minuten</div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-12 col-md-4 col-lg-4 offset-lg-1 mt-3 mt-md-0\">\r\n        <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active':recipe.difficulty==1}\" (click)=\"recipe.difficulty=1\">Einfach</button>\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active':recipe.difficulty==2}\" (click)=\"recipe.difficulty=2\">Mittel</button>\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active':recipe.difficulty==3}\" (click)=\"recipe.difficulty=3\">Schwer</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <h2 class=\"mb-3 section-header\">Zutaten</h2>\r\n    <div class=\"mb-2\" *ngFor=\"let ingr of recipe.ingredients; let i = index\">\r\n      <div class=\"d-inline-block\">\r\n        {{ ingr.name }} <span *ngIf=\"ingr.hint!=''\">({{ ingr.hint }})</span>\r\n        <a class=\"pl-3 click\" (click)=\"editIngredient(i)\"><svg class=\"icon icon-edit\"><use inlineHref=\"#icon-edit\"></use></svg></a>\r\n        <button type=\"button\" class=\"close pl-3 click\" (click)=removeIngredient(ingr)><span aria-hidden=\"true\">&times;</span></button>\r\n      </div>\r\n    </div>\r\n    <div *ngIf=\"!editing\" class=\"row form-group mt-3\">\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <span class=\"input-group-btn\">\r\n            <button class=\"btn btn-primary click hidden-lg-up\" type=\"button\" (click)=\"addIngredient()\">Enter</button>\r\n          </span>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.name\" name=\"name\" class=\"form-control\" id=\"name\" \r\n                (keyup.enter)=\"addIngredient()\" placeholder=\"Enter drücken zum Hinzufügen\" #ingredient>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\">Hinweis</div>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.hint\" name=\"hint\" class=\"form-control\" id=\"hint\" \r\n                (keyup.enter)=\"addIngredient(); ingredient.focus()\" placeholder=\"Klammern werden automatisch gesetzt\">\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div *ngIf=\"editing\" class=\"row form-group\">\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <span class=\"input-group-btn\">\r\n            <button class=\"btn btn-primary click hidden-lg-up\" type=\"button\" (click)=\"updateIngredient(editIngr)\">Enter</button>\r\n          </span>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.name\" name=\"newName\" class=\"form-control\" id=\"newName\" \r\n                (keyup.enter)=\"updateIngredient(editIngr)\" placeholder=\"Enter drücken zum Bearbeiten\" #ingredient>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\">Hinweis</div>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.hint\" name=\"newHint\" class=\"form-control\" id=\"newHint\" \r\n                (keyup.enter)=\"updateIngredient(editIngr)\" placeholder=\"Klammern werden automatisch gesetzt\">\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <h2 class=\"mb-3 section-header\">Info</h2>\r\n    <textarea rows=\"8\" [(ngModel)]=\"recipe.description\" name=\"description\" class=\"form-control\" id=\"description\" #description=\"ngModel\" placeholder=\"Beschreibung...\"></textarea>\r\n    <img *ngIf=\"recipe.descrImage\" class=\"img-fluid my-3\" src=\"{{recipe.descrImage}}\" alt=\"Recipe description\">\r\n    <button type=\"button\" class=\"btn btn-default click mt-3\" (click)=showDescPicker()>Neue Anleitung</button>\r\n\r\n      <h2 class=\"my-3 section-header\">Kategorien</h2>\r\n      <div class=\"mb-2 d-inline-block\" *ngFor=\"let ctg of recipe.categories\">\r\n        {{ ctg }}\r\n        <button type=\"button\" class=\"close px-2 click\" (click)=\"removeCategory(ctg)\">x</button>  \r\n      </div>\r\n      <div class=\"input-group\">\r\n        <span class=\"input-group-btn\">\r\n          <button class=\"btn btn-primary click hidden-lg-up\" type=\"button\" (click)=\"addCategory(category.value); category.value=''\">Enter</button>\r\n        </span>\r\n        <input *ngIf=\"recipes\" #category auto-complete type=\"text\" name=\"category\" class=\"form-control w-100\" id=\"category\" \r\n              (keyup.enter)=\"addCategory(category.value); category.value=''\" placeholder=\"Enter drücken zum Hinzufügen\" \r\n              [source]=\"getCategories()\" [min-chars]=\"1\" [accept-user-input]=\"true\" no-match-found-text=\"Kategorie ist neu\">\r\n      </div>\r\n      \r\n    <button type=\"button\" (click)=\"save(); gotoRecipe(recipe)\" class=\"btn btn-success my-3 click\" [disabled]=\"!recipeForm.form.valid\">Speichern</button>\r\n  </form>\r\n</div>\r\n"
 
 /***/ }),
 
