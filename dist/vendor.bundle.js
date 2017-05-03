@@ -78074,6 +78074,1038 @@ function toSubscriber(nextOrObserver, error, complete) {
 exports.toSubscriber = toSubscriber;
 //# sourceMappingURL=toSubscriber.js.map
 
+/***/ }),
+/* 321 */,
+/* 322 */,
+/* 323 */,
+/* 324 */,
+/* 325 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__dnd_utils__ = __webpack_require__(328);
+/* unused harmony export DataTransferEffect */
+/* unused harmony export DragImage */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DragDropConfig; });
+// Copyright (C) 2016 Sergey Akopkokhyants
+// This project is licensed under the terms of the MIT license.
+// https://github.com/akserg/ng2-dnd
+
+var DataTransferEffect = (function () {
+    function DataTransferEffect(name) {
+        this.name = name;
+    }
+    DataTransferEffect.COPY = new DataTransferEffect('copy');
+    DataTransferEffect.LINK = new DataTransferEffect('link');
+    DataTransferEffect.MOVE = new DataTransferEffect('move');
+    DataTransferEffect.NONE = new DataTransferEffect('none');
+    return DataTransferEffect;
+}());
+var DragImage = (function () {
+    function DragImage(imageElement, x_offset, y_offset) {
+        if (x_offset === void 0) { x_offset = 0; }
+        if (y_offset === void 0) { y_offset = 0; }
+        this.imageElement = imageElement;
+        this.x_offset = x_offset;
+        this.y_offset = y_offset;
+        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__dnd_utils__["b" /* isString */])(this.imageElement)) {
+            // Create real image from string source
+            var imgScr = this.imageElement;
+            this.imageElement = new HTMLImageElement();
+            this.imageElement.src = imgScr;
+        }
+    }
+    return DragImage;
+}());
+var DragDropConfig = (function () {
+    function DragDropConfig() {
+        this.onDragStartClass = "dnd-drag-start";
+        this.onDragEnterClass = "dnd-drag-enter";
+        this.onDragOverClass = "dnd-drag-over";
+        this.onSortableDragClass = "dnd-sortable-drag";
+        this.dragEffect = DataTransferEffect.MOVE;
+        this.dropEffect = DataTransferEffect.MOVE;
+        this.dragCursor = "move";
+        this.defaultCursor = "pointer";
+    }
+    return DragDropConfig;
+}());
+
+
+/***/ }),
+/* 326 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dnd_config__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dnd_utils__ = __webpack_require__(328);
+/* unused harmony export DragDropData */
+/* harmony export (immutable) */ __webpack_exports__["b"] = dragDropServiceFactory;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DragDropService; });
+/* harmony export (immutable) */ __webpack_exports__["d"] = dragDropSortableServiceFactory;
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return DragDropSortableService; });
+// Copyright (C) 2016 Sergey Akopkokhyants
+// This project is licensed under the terms of the MIT license.
+// https://github.com/akserg/ng2-dnd
+
+
+
+var DragDropData = (function () {
+    function DragDropData() {
+    }
+    return DragDropData;
+}());
+function dragDropServiceFactory() {
+    return new DragDropService();
+}
+var DragDropService = (function () {
+    function DragDropService() {
+        this.allowedDropZones = [];
+    }
+    DragDropService.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"] },
+    ];
+    /** @nocollapse */
+    DragDropService.ctorParameters = function () { return []; };
+    return DragDropService;
+}());
+function dragDropSortableServiceFactory(config) {
+    return new DragDropSortableService(config);
+}
+var DragDropSortableService = (function () {
+    function DragDropSortableService(_config) {
+        this._config = _config;
+    }
+    Object.defineProperty(DragDropSortableService.prototype, "elem", {
+        get: function () {
+            return this._elem;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    DragDropSortableService.prototype.markSortable = function (elem) {
+        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dnd_utils__["a" /* isPresent */])(this._elem)) {
+            this._elem.classList.remove(this._config.onSortableDragClass);
+        }
+        if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_2__dnd_utils__["a" /* isPresent */])(elem)) {
+            this._elem = elem;
+            this._elem.classList.add(this._config.onSortableDragClass);
+        }
+    };
+    DragDropSortableService.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"] },
+    ];
+    /** @nocollapse */
+    DragDropSortableService.ctorParameters = function () { return [
+        { type: __WEBPACK_IMPORTED_MODULE_1__dnd_config__["a" /* DragDropConfig */], },
+    ]; };
+    return DragDropSortableService;
+}());
+
+
+/***/ }),
+/* 327 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__dnd_config__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dnd_service__ = __webpack_require__(326);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dnd_utils__ = __webpack_require__(328);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AbstractComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return AbstractHandleComponent; });
+// Copyright (C) 2016 Sergey Akopkokhyants
+// This project is licensed under the terms of the MIT license.
+// https://github.com/akserg/ng2-dnd
+
+
+
+
+
+var AbstractComponent = (function () {
+    function AbstractComponent(elemRef, _dragDropService, _config, _cdr) {
+        var _this = this;
+        this._dragDropService = _dragDropService;
+        this._config = _config;
+        this._cdr = _cdr;
+        /**
+         * Whether the object is draggable. Default is true.
+         */
+        this._dragEnabled = false;
+        /**
+         * Allows drop on this element
+         */
+        this.dropEnabled = false;
+        this.dropZones = [];
+        this.cloneItem = false;
+        // Assign default cursor unless overridden
+        this._defaultCursor = _config.defaultCursor;
+        this._elem = elemRef.nativeElement;
+        this._elem.style.cursor = this._defaultCursor; // set default cursor on our element
+        //
+        // DROP events
+        //
+        this._elem.ondragenter = function (event) {
+            _this._onDragEnter(event);
+        };
+        this._elem.ondragover = function (event) {
+            _this._onDragOver(event);
+            //
+            if (event.dataTransfer != null) {
+                event.dataTransfer.dropEffect = _this._config.dropEffect.name;
+            }
+            return false;
+        };
+        this._elem.ondragleave = function (event) {
+            _this._onDragLeave(event);
+        };
+        this._elem.ondrop = function (event) {
+            _this._onDrop(event);
+        };
+        //
+        // Drag events
+        //
+        this._elem.onmousedown = function (event) {
+            _this._target = event.target;
+        };
+        this._elem.ondragstart = function (event) {
+            if (_this._dragHandle) {
+                if (!_this._dragHandle.contains(_this._target)) {
+                    event.preventDefault();
+                    return;
+                }
+            }
+            _this._onDragStart(event);
+            //
+            if (event.dataTransfer != null) {
+                event.dataTransfer.setData('text', '');
+                // Change drag effect
+                event.dataTransfer.effectAllowed = _this.effectAllowed || _this._config.dragEffect.name;
+                // Change drag image
+                if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__dnd_utils__["a" /* isPresent */])(_this.dragImage)) {
+                    if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__dnd_utils__["b" /* isString */])(_this.dragImage)) {
+                        event.dataTransfer.setDragImage(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__dnd_utils__["c" /* createImage */])(_this.dragImage));
+                    }
+                    else if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__dnd_utils__["d" /* isFunction */])(_this.dragImage)) {
+                        event.dataTransfer.setDragImage(__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__dnd_utils__["e" /* callFun */])(_this.dragImage));
+                    }
+                    else {
+                        var img = _this.dragImage;
+                        event.dataTransfer.setDragImage(img.imageElement, img.x_offset, img.y_offset);
+                    }
+                }
+                else if (__webpack_require__.i(__WEBPACK_IMPORTED_MODULE_3__dnd_utils__["a" /* isPresent */])(_this._config.dragImage)) {
+                    var dragImage = _this._config.dragImage;
+                    event.dataTransfer.setDragImage(dragImage.imageElement, dragImage.x_offset, dragImage.y_offset);
+                }
+                else if (_this.cloneItem) {
+                    _this._dragHelper = _this._elem.cloneNode(true);
+                    _this._dragHelper.classList.add('dnd-drag-item');
+                    _this._dragHelper.style.position = "absolute";
+                    _this._dragHelper.style.top = "0px";
+                    _this._dragHelper.style.left = "-1000px";
+                    _this._elem.parentElement.appendChild(_this._dragHelper);
+                    event.dataTransfer.setDragImage(_this._dragHelper, event.offsetX, event.offsetY);
+                }
+                // Change drag cursor
+                var cursorelem = (_this._dragHandle) ? _this._dragHandle : _this._elem;
+                if (_this._dragEnabled) {
+                    cursorelem.style.cursor = _this.effectCursor ? _this.effectCursor : _this._config.dragCursor;
+                }
+                else {
+                    cursorelem.style.cursor = _this._defaultCursor;
+                }
+            }
+        };
+        this._elem.ondragend = function (event) {
+            if (_this._elem.parentElement && _this._dragHelper) {
+                _this._elem.parentElement.removeChild(_this._dragHelper);
+            }
+            // console.log('ondragend', event.target);
+            _this._onDragEnd(event);
+            // Restore style of dragged element
+            var cursorelem = (_this._dragHandle) ? _this._dragHandle : _this._elem;
+            cursorelem.style.cursor = _this._defaultCursor;
+        };
+    }
+    Object.defineProperty(AbstractComponent.prototype, "dragEnabled", {
+        get: function () {
+            return this._dragEnabled;
+        },
+        set: function (enabled) {
+            this._dragEnabled = !!enabled;
+            this._elem.draggable = this._dragEnabled;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    AbstractComponent.prototype.setDragHandle = function (elem) {
+        this._dragHandle = elem;
+    };
+    /******* Change detection ******/
+    AbstractComponent.prototype.detectChanges = function () {
+        var _this = this;
+        // Programmatically run change detection to fix issue in Safari
+        setTimeout(function () {
+            _this._cdr.detectChanges();
+        }, 250);
+    };
+    //****** Droppable *******//
+    AbstractComponent.prototype._onDragEnter = function (event) {
+        // console.log('ondragenter._isDropAllowed', this._isDropAllowed);
+        if (this._isDropAllowed) {
+            // event.preventDefault();
+            this._onDragEnterCallback(event);
+        }
+    };
+    AbstractComponent.prototype._onDragOver = function (event) {
+        // // console.log('ondragover._isDropAllowed', this._isDropAllowed);
+        if (this._isDropAllowed) {
+            // The element is over the same source element - do nothing
+            if (event.preventDefault) {
+                // Necessary. Allows us to drop.
+                event.preventDefault();
+            }
+            this._onDragOverCallback(event);
+        }
+    };
+    AbstractComponent.prototype._onDragLeave = function (event) {
+        // console.log('ondragleave._isDropAllowed', this._isDropAllowed);
+        if (this._isDropAllowed) {
+            // event.preventDefault();
+            this._onDragLeaveCallback(event);
+        }
+    };
+    AbstractComponent.prototype._onDrop = function (event) {
+        // console.log('ondrop._isDropAllowed', this._isDropAllowed);
+        if (this._isDropAllowed) {
+            if (event.preventDefault) {
+                // Necessary. Allows us to drop.
+                event.preventDefault();
+            }
+            if (event.stopPropagation) {
+                // Necessary. Allows us to drop.
+                event.stopPropagation();
+            }
+            this._onDropCallback(event);
+            this.detectChanges();
+        }
+    };
+    Object.defineProperty(AbstractComponent.prototype, "_isDropAllowed", {
+        get: function () {
+            if (this._dragDropService.isDragged && this.dropEnabled) {
+                // First, if `allowDrop` is set, call it to determine whether the
+                // dragged element can be dropped here.
+                if (this.allowDrop) {
+                    return this.allowDrop(this._dragDropService.dragData);
+                }
+                // Otherwise, use dropZones if they are set.
+                if (this.dropZones.length === 0 && this._dragDropService.allowedDropZones.length === 0) {
+                    return true;
+                }
+                for (var i = 0; i < this._dragDropService.allowedDropZones.length; i++) {
+                    var dragZone = this._dragDropService.allowedDropZones[i];
+                    if (this.dropZones.indexOf(dragZone) !== -1) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    //*********** Draggable **********//
+    AbstractComponent.prototype._onDragStart = function (event) {
+        //console.log('ondragstart.dragEnabled', this._dragEnabled);
+        if (this._dragEnabled) {
+            this._dragDropService.allowedDropZones = this.dropZones;
+            // console.log('ondragstart.allowedDropZones', this._dragDropService.allowedDropZones);
+            this._onDragStartCallback(event);
+        }
+    };
+    AbstractComponent.prototype._onDragEnd = function (event) {
+        this._dragDropService.allowedDropZones = [];
+        // console.log('ondragend.allowedDropZones', this._dragDropService.allowedDropZones);
+        this._onDragEndCallback(event);
+    };
+    //**** Drop Callbacks ****//
+    AbstractComponent.prototype._onDragEnterCallback = function (event) { };
+    AbstractComponent.prototype._onDragOverCallback = function (event) { };
+    AbstractComponent.prototype._onDragLeaveCallback = function (event) { };
+    AbstractComponent.prototype._onDropCallback = function (event) { };
+    //**** Drag Callbacks ****//
+    AbstractComponent.prototype._onDragStartCallback = function (event) { };
+    AbstractComponent.prototype._onDragEndCallback = function (event) { };
+    AbstractComponent.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Injectable"] },
+    ];
+    /** @nocollapse */
+    AbstractComponent.ctorParameters = function () { return [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
+        { type: __WEBPACK_IMPORTED_MODULE_2__dnd_service__["a" /* DragDropService */], },
+        { type: __WEBPACK_IMPORTED_MODULE_1__dnd_config__["a" /* DragDropConfig */], },
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"], },
+    ]; };
+    return AbstractComponent;
+}());
+var AbstractHandleComponent = (function () {
+    function AbstractHandleComponent(elemRef, _dragDropService, _config, _Component, _cdr) {
+        this._dragDropService = _dragDropService;
+        this._config = _config;
+        this._Component = _Component;
+        this._cdr = _cdr;
+        this._elem = elemRef.nativeElement;
+        this._Component.setDragHandle(this._elem);
+    }
+    return AbstractHandleComponent;
+}());
+
+
+/***/ }),
+/* 328 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["b"] = isString;
+/* harmony export (immutable) */ __webpack_exports__["a"] = isPresent;
+/* harmony export (immutable) */ __webpack_exports__["d"] = isFunction;
+/* harmony export (immutable) */ __webpack_exports__["c"] = createImage;
+/* harmony export (immutable) */ __webpack_exports__["e"] = callFun;
+/**
+ * Check and return true if an object is type of string
+ */
+function isString(obj) {
+    return typeof obj === "string";
+}
+/**
+ * Check and return true if an object not undefined or null
+ */
+function isPresent(obj) {
+    return obj !== undefined && obj !== null;
+}
+/**
+ * Check and return true if an object is type of Function
+ */
+function isFunction(obj) {
+    return typeof obj === "function";
+}
+/**
+ * Create Image element with specified url string
+ */
+function createImage(src) {
+    var img = new HTMLImageElement();
+    img.src = src;
+    return img;
+}
+/**
+ * Call the function
+ */
+function callFun(fun) {
+    return fun();
+}
+
+
+/***/ }),
+/* 329 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__abstract_component__ = __webpack_require__(327);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dnd_config__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dnd_service__ = __webpack_require__(326);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DraggableComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return DraggableHandleComponent; });
+// Copyright (C) 2016 Sergey Akopkokhyants
+// This project is licensed under the terms of the MIT license.
+// https://github.com/akserg/ng2-dnd
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+
+
+
+
+
+var DraggableComponent = (function (_super) {
+    __extends(DraggableComponent, _super);
+    function DraggableComponent(elemRef, dragDropService, config, cdr) {
+        _super.call(this, elemRef, dragDropService, config, cdr);
+        /**
+         * Callback function called when the drag actions happened.
+         */
+        this.onDragStart = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.onDragEnd = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        /**
+         * Callback function called when the drag action ends with a valid drop action.
+         * It is activated after the on-drop-success callback
+         */
+        this.onDragSuccessCallback = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this._defaultCursor = this._elem.style.cursor;
+        this.dragEnabled = true;
+    }
+    Object.defineProperty(DraggableComponent.prototype, "draggable", {
+        set: function (value) {
+            this.dragEnabled = !!value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DraggableComponent.prototype, "dropzones", {
+        set: function (value) {
+            this.dropZones = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DraggableComponent.prototype, "effectallowed", {
+        /**
+         * Drag allowed effect
+         */
+        set: function (value) {
+            this.effectAllowed = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DraggableComponent.prototype, "effectcursor", {
+        /**
+         * Drag effect cursor
+         */
+        set: function (value) {
+            this.effectCursor = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    DraggableComponent.prototype._onDragStartCallback = function (event) {
+        this._dragDropService.isDragged = true;
+        this._dragDropService.dragData = this.dragData;
+        this._dragDropService.onDragSuccessCallback = this.onDragSuccessCallback;
+        this._elem.classList.add(this._config.onDragStartClass);
+        //
+        this.onDragStart.emit({ dragData: this.dragData, mouseEvent: event });
+    };
+    DraggableComponent.prototype._onDragEndCallback = function (event) {
+        this._dragDropService.isDragged = false;
+        this._dragDropService.dragData = null;
+        this._dragDropService.onDragSuccessCallback = null;
+        this._elem.classList.remove(this._config.onDragStartClass);
+        //
+        this.onDragEnd.emit({ dragData: this.dragData, mouseEvent: event });
+    };
+    DraggableComponent.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Directive"], args: [{ selector: '[dnd-draggable]' },] },
+    ];
+    /** @nocollapse */
+    DraggableComponent.ctorParameters = function () { return [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
+        { type: __WEBPACK_IMPORTED_MODULE_3__dnd_service__["a" /* DragDropService */], },
+        { type: __WEBPACK_IMPORTED_MODULE_2__dnd_config__["a" /* DragDropConfig */], },
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"], },
+    ]; };
+    DraggableComponent.propDecorators = {
+        'draggable': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["dragEnabled",] },],
+        'onDragStart': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
+        'onDragEnd': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
+        'dragData': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'onDragSuccessCallback': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"], args: ["onDragSuccess",] },],
+        'dropzones': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["dropZones",] },],
+        'effectallowed': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["effectAllowed",] },],
+        'effectcursor': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["effectCursor",] },],
+        'dragImage': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'cloneItem': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+    };
+    return DraggableComponent;
+}(__WEBPACK_IMPORTED_MODULE_1__abstract_component__["a" /* AbstractComponent */]));
+var DraggableHandleComponent = (function (_super) {
+    __extends(DraggableHandleComponent, _super);
+    function DraggableHandleComponent(elemRef, dragDropService, config, _Component, cdr) {
+        _super.call(this, elemRef, dragDropService, config, _Component, cdr);
+    }
+    DraggableHandleComponent.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Directive"], args: [{ selector: '[dnd-draggable-handle]' },] },
+    ];
+    /** @nocollapse */
+    DraggableHandleComponent.ctorParameters = function () { return [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
+        { type: __WEBPACK_IMPORTED_MODULE_3__dnd_service__["a" /* DragDropService */], },
+        { type: __WEBPACK_IMPORTED_MODULE_2__dnd_config__["a" /* DragDropConfig */], },
+        { type: DraggableComponent, },
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"], },
+    ]; };
+    return DraggableHandleComponent;
+}(__WEBPACK_IMPORTED_MODULE_1__abstract_component__["b" /* AbstractHandleComponent */]));
+
+
+/***/ }),
+/* 330 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__abstract_component__ = __webpack_require__(327);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dnd_config__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dnd_service__ = __webpack_require__(326);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DroppableComponent; });
+// Copyright (C) 2016 Sergey Akopkokhyants
+// This project is licensed under the terms of the MIT license.
+// https://github.com/akserg/ng2-dnd
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+
+
+
+
+
+var DroppableComponent = (function (_super) {
+    __extends(DroppableComponent, _super);
+    function DroppableComponent(elemRef, dragDropService, config, cdr) {
+        _super.call(this, elemRef, dragDropService, config, cdr);
+        /**
+         * Callback function called when the drop action completes correctly.
+         * It is activated before the on-drag-success callback.
+         */
+        this.onDropSuccess = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.onDragEnter = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.onDragOver = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.onDragLeave = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.dropEnabled = true;
+    }
+    Object.defineProperty(DroppableComponent.prototype, "droppable", {
+        set: function (value) {
+            this.dropEnabled = !!value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DroppableComponent.prototype, "allowdrop", {
+        set: function (value) {
+            this.allowDrop = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DroppableComponent.prototype, "dropzones", {
+        set: function (value) {
+            this.dropZones = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DroppableComponent.prototype, "effectallowed", {
+        /**
+         * Drag allowed effect
+         */
+        set: function (value) {
+            this.effectAllowed = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(DroppableComponent.prototype, "effectcursor", {
+        /**
+         * Drag effect cursor
+         */
+        set: function (value) {
+            this.effectCursor = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    DroppableComponent.prototype._onDragEnterCallback = function (event) {
+        if (this._dragDropService.isDragged) {
+            this._elem.classList.add(this._config.onDragEnterClass);
+            this.onDragEnter.emit({ dragData: this._dragDropService.dragData, mouseEvent: event });
+        }
+    };
+    DroppableComponent.prototype._onDragOverCallback = function (event) {
+        if (this._dragDropService.isDragged) {
+            this._elem.classList.add(this._config.onDragOverClass);
+            this.onDragOver.emit({ dragData: this._dragDropService.dragData, mouseEvent: event });
+        }
+    };
+    ;
+    DroppableComponent.prototype._onDragLeaveCallback = function (event) {
+        if (this._dragDropService.isDragged) {
+            this._elem.classList.remove(this._config.onDragOverClass);
+            this._elem.classList.remove(this._config.onDragEnterClass);
+            this.onDragLeave.emit({ dragData: this._dragDropService.dragData, mouseEvent: event });
+        }
+    };
+    ;
+    DroppableComponent.prototype._onDropCallback = function (event) {
+        if (this._dragDropService.isDragged) {
+            this.onDropSuccess.emit({ dragData: this._dragDropService.dragData, mouseEvent: event });
+            if (this._dragDropService.onDragSuccessCallback) {
+                this._dragDropService.onDragSuccessCallback.emit({ dragData: this._dragDropService.dragData, mouseEvent: event });
+            }
+            this._elem.classList.remove(this._config.onDragOverClass);
+            this._elem.classList.remove(this._config.onDragEnterClass);
+        }
+    };
+    DroppableComponent.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Directive"], args: [{ selector: '[dnd-droppable]' },] },
+    ];
+    /** @nocollapse */
+    DroppableComponent.ctorParameters = function () { return [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
+        { type: __WEBPACK_IMPORTED_MODULE_3__dnd_service__["a" /* DragDropService */], },
+        { type: __WEBPACK_IMPORTED_MODULE_2__dnd_config__["a" /* DragDropConfig */], },
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"], },
+    ]; };
+    DroppableComponent.propDecorators = {
+        'droppable': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["dropEnabled",] },],
+        'onDropSuccess': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
+        'onDragEnter': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
+        'onDragOver': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
+        'onDragLeave': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"] },],
+        'allowdrop': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["allowDrop",] },],
+        'dropzones': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["dropZones",] },],
+        'effectallowed': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["effectAllowed",] },],
+        'effectcursor': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["effectCursor",] },],
+    };
+    return DroppableComponent;
+}(__WEBPACK_IMPORTED_MODULE_1__abstract_component__["a" /* AbstractComponent */]));
+
+
+/***/ }),
+/* 331 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__abstract_component__ = __webpack_require__(327);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__dnd_config__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__dnd_service__ = __webpack_require__(326);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return SortableContainer; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "b", function() { return SortableComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return SortableHandleComponent; });
+// Copyright (C) 2016 Sergey Akopkokhyants
+// This project is licensed under the terms of the MIT license.
+// https://github.com/akserg/ng2-dnd
+var __extends = (this && this.__extends) || function (d, b) {
+    for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p];
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+};
+
+
+
+
+
+var SortableContainer = (function (_super) {
+    __extends(SortableContainer, _super);
+    function SortableContainer(elemRef, dragDropService, config, cdr, _sortableDataService) {
+        _super.call(this, elemRef, dragDropService, config, cdr);
+        this._sortableDataService = _sortableDataService;
+        this._sortableData = [];
+        this.dragEnabled = false;
+    }
+    Object.defineProperty(SortableContainer.prototype, "draggable", {
+        set: function (value) {
+            this.dragEnabled = !!value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SortableContainer.prototype, "sortableData", {
+        get: function () {
+            return this._sortableData;
+        },
+        set: function (sortableData) {
+            this._sortableData = sortableData;
+            //
+            this.dropEnabled = !!this._sortableData;
+            // console.log("collection is changed, drop enabled: " + this.dropEnabled);
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SortableContainer.prototype, "dropzones", {
+        set: function (value) {
+            this.dropZones = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    SortableContainer.prototype._onDragEnterCallback = function (event) {
+        if (this._sortableDataService.isDragged) {
+            var item = this._sortableDataService.sortableContainer._sortableData[this._sortableDataService.index];
+            // Check does element exist in sortableData of this Container
+            if (this._sortableData.indexOf(item) === -1) {
+                // Let's add it
+                // console.log('Container._onDragEnterCallback. drag node [' + this._sortableDataService.index.toString() + '] over parent node');
+                // Remove item from previouse list
+                this._sortableDataService.sortableContainer._sortableData.splice(this._sortableDataService.index, 1);
+                if (this._sortableDataService.sortableContainer._sortableData.length === 0) {
+                    this._sortableDataService.sortableContainer.dropEnabled = true;
+                }
+                // Add item to new list
+                this._sortableData.unshift(item);
+                this._sortableDataService.sortableContainer = this;
+                this._sortableDataService.index = 0;
+            }
+            // Refresh changes in properties of container component
+            this.detectChanges();
+        }
+    };
+    SortableContainer.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Directive"], args: [{ selector: '[dnd-sortable-container]' },] },
+    ];
+    /** @nocollapse */
+    SortableContainer.ctorParameters = function () { return [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
+        { type: __WEBPACK_IMPORTED_MODULE_3__dnd_service__["a" /* DragDropService */], },
+        { type: __WEBPACK_IMPORTED_MODULE_2__dnd_config__["a" /* DragDropConfig */], },
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"], },
+        { type: __WEBPACK_IMPORTED_MODULE_3__dnd_service__["c" /* DragDropSortableService */], },
+    ]; };
+    SortableContainer.propDecorators = {
+        'draggable': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["dragEnabled",] },],
+        'sortableData': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'dropzones': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["dropZones",] },],
+    };
+    return SortableContainer;
+}(__WEBPACK_IMPORTED_MODULE_1__abstract_component__["a" /* AbstractComponent */]));
+var SortableComponent = (function (_super) {
+    __extends(SortableComponent, _super);
+    function SortableComponent(elemRef, dragDropService, config, _sortableContainer, _sortableDataService, cdr) {
+        _super.call(this, elemRef, dragDropService, config, cdr);
+        this._sortableContainer = _sortableContainer;
+        this._sortableDataService = _sortableDataService;
+        /**
+         * Callback function called when the drag action ends with a valid drop action.
+         * It is activated after the on-drop-success callback
+         */
+        this.onDragSuccessCallback = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.onDragStartCallback = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.onDragOverCallback = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.onDragEndCallback = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.onDropSuccessCallback = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["EventEmitter"]();
+        this.dropZones = this._sortableContainer.dropZones;
+        this.dragEnabled = true;
+        this.dropEnabled = true;
+    }
+    Object.defineProperty(SortableComponent.prototype, "draggable", {
+        set: function (value) {
+            this.dragEnabled = !!value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SortableComponent.prototype, "droppable", {
+        set: function (value) {
+            this.dropEnabled = !!value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SortableComponent.prototype, "effectallowed", {
+        /**
+         * Drag allowed effect
+         */
+        set: function (value) {
+            this.effectAllowed = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    Object.defineProperty(SortableComponent.prototype, "effectcursor", {
+        /**
+         * Drag effect cursor
+         */
+        set: function (value) {
+            this.effectCursor = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    SortableComponent.prototype._onDragStartCallback = function (event) {
+        // console.log('_onDragStartCallback. dragging elem with index ' + this.index);
+        this._sortableDataService.isDragged = true;
+        this._sortableDataService.sortableContainer = this._sortableContainer;
+        this._sortableDataService.index = this.index;
+        this._sortableDataService.markSortable(this._elem);
+        // Add dragData
+        this._dragDropService.isDragged = true;
+        this._dragDropService.dragData = this.dragData;
+        this._dragDropService.onDragSuccessCallback = this.onDragSuccessCallback;
+        //
+        this.onDragStartCallback.emit(this._dragDropService.dragData);
+    };
+    SortableComponent.prototype._onDragOverCallback = function (event) {
+        if (this._sortableDataService.isDragged && this._elem !== this._sortableDataService.elem) {
+            // console.log('_onDragOverCallback. dragging elem with index ' + this.index);
+            this._sortableDataService.sortableContainer = this._sortableContainer;
+            this._sortableDataService.index = this.index;
+            this._sortableDataService.markSortable(this._elem);
+            this.onDragOverCallback.emit(this._dragDropService.dragData);
+        }
+    };
+    SortableComponent.prototype._onDragEndCallback = function (event) {
+        // console.log('_onDragEndCallback. end dragging elem with index ' + this.index);
+        this._sortableDataService.isDragged = false;
+        this._sortableDataService.sortableContainer = null;
+        this._sortableDataService.index = null;
+        this._sortableDataService.markSortable(null);
+        // Add dragGata
+        this._dragDropService.isDragged = false;
+        this._dragDropService.dragData = null;
+        this._dragDropService.onDragSuccessCallback = null;
+        //
+        this.onDragEndCallback.emit(this._dragDropService.dragData);
+    };
+    SortableComponent.prototype._onDragEnterCallback = function (event) {
+        if (this._sortableDataService.isDragged) {
+            this._sortableDataService.markSortable(this._elem);
+            if ((this.index !== this._sortableDataService.index) ||
+                (this._sortableDataService.sortableContainer.sortableData !== this._sortableContainer.sortableData)) {
+                // console.log('Component._onDragEnterCallback. drag node [' + this.index + '] over node [' + this._sortableDataService.index + ']');
+                // Get item
+                var item = this._sortableDataService.sortableContainer.sortableData[this._sortableDataService.index];
+                // Remove item from previouse list
+                this._sortableDataService.sortableContainer.sortableData.splice(this._sortableDataService.index, 1);
+                if (this._sortableDataService.sortableContainer.sortableData.length === 0) {
+                    this._sortableDataService.sortableContainer.dropEnabled = true;
+                }
+                // Add item to new list
+                this._sortableContainer.sortableData.splice(this.index, 0, item);
+                if (this._sortableContainer.dropEnabled) {
+                    this._sortableContainer.dropEnabled = false;
+                }
+                this._sortableDataService.sortableContainer = this._sortableContainer;
+                this._sortableDataService.index = this.index;
+            }
+        }
+    };
+    SortableComponent.prototype._onDropCallback = function (event) {
+        if (this._sortableDataService.isDragged) {
+            // console.log('onDropCallback.onDropSuccessCallback.dragData', this._dragDropService.dragData);
+            this.onDropSuccessCallback.emit(this._dragDropService.dragData);
+            if (this._dragDropService.onDragSuccessCallback) {
+                // console.log('onDropCallback.onDragSuccessCallback.dragData', this._dragDropService.dragData);
+                this._dragDropService.onDragSuccessCallback.emit(this._dragDropService.dragData);
+            }
+            // Refresh changes in properties of container component
+            this._sortableContainer.detectChanges();
+        }
+    };
+    SortableComponent.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Directive"], args: [{ selector: '[dnd-sortable]' },] },
+    ];
+    /** @nocollapse */
+    SortableComponent.ctorParameters = function () { return [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
+        { type: __WEBPACK_IMPORTED_MODULE_3__dnd_service__["a" /* DragDropService */], },
+        { type: __WEBPACK_IMPORTED_MODULE_2__dnd_config__["a" /* DragDropConfig */], },
+        { type: SortableContainer, },
+        { type: __WEBPACK_IMPORTED_MODULE_3__dnd_service__["c" /* DragDropSortableService */], },
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"], },
+    ]; };
+    SortableComponent.propDecorators = {
+        'index': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ['sortableIndex',] },],
+        'draggable': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["dragEnabled",] },],
+        'droppable': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["dropEnabled",] },],
+        'dragData': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"] },],
+        'effectallowed': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["effectAllowed",] },],
+        'effectcursor': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Input"], args: ["effectCursor",] },],
+        'onDragSuccessCallback': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"], args: ["onDragSuccess",] },],
+        'onDragStartCallback': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"], args: ["onDragStart",] },],
+        'onDragOverCallback': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"], args: ["onDragOver",] },],
+        'onDragEndCallback': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"], args: ["onDragEnd",] },],
+        'onDropSuccessCallback': [{ type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Output"], args: ["onDropSuccess",] },],
+    };
+    return SortableComponent;
+}(__WEBPACK_IMPORTED_MODULE_1__abstract_component__["a" /* AbstractComponent */]));
+var SortableHandleComponent = (function (_super) {
+    __extends(SortableHandleComponent, _super);
+    function SortableHandleComponent(elemRef, dragDropService, config, _Component, cdr) {
+        _super.call(this, elemRef, dragDropService, config, _Component, cdr);
+    }
+    SortableHandleComponent.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["Directive"], args: [{ selector: '[dnd-sortable-handle]' },] },
+    ];
+    /** @nocollapse */
+    SortableHandleComponent.ctorParameters = function () { return [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ElementRef"], },
+        { type: __WEBPACK_IMPORTED_MODULE_3__dnd_service__["a" /* DragDropService */], },
+        { type: __WEBPACK_IMPORTED_MODULE_2__dnd_config__["a" /* DragDropConfig */], },
+        { type: SortableComponent, },
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["ChangeDetectorRef"], },
+    ]; };
+    return SortableHandleComponent;
+}(__WEBPACK_IMPORTED_MODULE_1__abstract_component__["b" /* AbstractHandleComponent */]));
+
+
+/***/ }),
+/* 332 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__src_dnd_config__ = __webpack_require__(325);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__src_dnd_service__ = __webpack_require__(326);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__src_draggable_component__ = __webpack_require__(329);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__src_droppable_component__ = __webpack_require__(330);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__src_sortable_component__ = __webpack_require__(331);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__src_abstract_component__ = __webpack_require__(327);
+/* unused harmony namespace reexport */
+/* unused harmony namespace reexport */
+/* unused harmony namespace reexport */
+/* unused harmony namespace reexport */
+/* unused harmony namespace reexport */
+/* unused harmony namespace reexport */
+/* unused harmony export providers */
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DndModule; });
+// Copyright (C) 2016 Sergey Akopkokhyants
+// This project is licensed under the terms of the MIT license.
+// https://github.com/akserg/ng2-dnd
+
+
+
+
+
+
+
+
+
+
+
+
+var providers = [
+    __WEBPACK_IMPORTED_MODULE_1__src_dnd_config__["a" /* DragDropConfig */],
+    { provide: __WEBPACK_IMPORTED_MODULE_2__src_dnd_service__["a" /* DragDropService */], useFactory: __WEBPACK_IMPORTED_MODULE_2__src_dnd_service__["b" /* dragDropServiceFactory */] },
+    { provide: __WEBPACK_IMPORTED_MODULE_2__src_dnd_service__["c" /* DragDropSortableService */], useFactory: __WEBPACK_IMPORTED_MODULE_2__src_dnd_service__["d" /* dragDropSortableServiceFactory */], deps: [__WEBPACK_IMPORTED_MODULE_1__src_dnd_config__["a" /* DragDropConfig */]] }
+];
+var DndModule = (function () {
+    function DndModule() {
+    }
+    DndModule.forRoot = function () {
+        return {
+            ngModule: DndModule,
+            providers: providers
+        };
+    };
+    DndModule.decorators = [
+        { type: __WEBPACK_IMPORTED_MODULE_0__angular_core__["NgModule"], args: [{
+                    declarations: [__WEBPACK_IMPORTED_MODULE_3__src_draggable_component__["a" /* DraggableComponent */], __WEBPACK_IMPORTED_MODULE_3__src_draggable_component__["b" /* DraggableHandleComponent */], __WEBPACK_IMPORTED_MODULE_4__src_droppable_component__["a" /* DroppableComponent */], __WEBPACK_IMPORTED_MODULE_5__src_sortable_component__["a" /* SortableContainer */], __WEBPACK_IMPORTED_MODULE_5__src_sortable_component__["b" /* SortableComponent */], __WEBPACK_IMPORTED_MODULE_5__src_sortable_component__["c" /* SortableHandleComponent */]],
+                    exports: [__WEBPACK_IMPORTED_MODULE_3__src_draggable_component__["a" /* DraggableComponent */], __WEBPACK_IMPORTED_MODULE_3__src_draggable_component__["b" /* DraggableHandleComponent */], __WEBPACK_IMPORTED_MODULE_4__src_droppable_component__["a" /* DroppableComponent */], __WEBPACK_IMPORTED_MODULE_5__src_sortable_component__["a" /* SortableContainer */], __WEBPACK_IMPORTED_MODULE_5__src_sortable_component__["b" /* SortableComponent */], __WEBPACK_IMPORTED_MODULE_5__src_sortable_component__["c" /* SortableHandleComponent */]],
+                },] },
+    ];
+    /** @nocollapse */
+    DndModule.ctorParameters = function () { return []; };
+    return DndModule;
+}());
+
+
 /***/ })
 ]);
 //# sourceMappingURL=vendor.bundle.js.map

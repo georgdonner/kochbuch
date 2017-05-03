@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MarkdownModule } from 'angular2-markdown';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
+import { DndModule } from 'ng2-dnd';
 
 import { InlineHrefDirective } from 'ng-inline-href';
 
@@ -30,7 +31,8 @@ import { RoundPipe } from './pipes/round.pipe';
     RecipeRoutingModule,
     NgbModule,
     MarkdownModule,
-    NguiAutoCompleteModule
+    NguiAutoCompleteModule,
+    DndModule.forRoot()
   ],
   exports: [
     InlineHrefDirective
