@@ -41,10 +41,11 @@
     <div class="mb-2" *ngFor="let ingr of ingredients; let i = index">
       <div *ngIf="ingr.name != ''" class="d-inline-block">
         {{ ingr.name }} <span *ngIf="ingr.hint!=''">({{ ingr.hint }})</span>
+        <a class="pl-3 click" (click)="editIngredient(i)"><svg class="icon icon-edit"><use inlineHref="#icon-edit"></use></svg></a>
         <button *ngIf="ingredientAdded" type="button" class="close pl-3 click" (click)=removeIngredient(ingr)><span aria-hidden="true">&times;</span></button>
       </div>
     </div>
-    <div class="row form-group mt-3">
+    <div *ngIf="!editing" class="row form-group mt-3">
       <div class="col-sm-6">
         <div class="input-group">
           <span class="input-group-btn">
@@ -62,6 +63,24 @@
         </div>
       </div>
     </div>
+    <div *ngIf="editing" class="row form-group">
+      <div class="col-sm-6">
+        <div class="input-group">
+          <span class="input-group-btn">
+            <button class="btn btn-primary click hidden-lg-up" type="button" (click)="updateIngredient(editIngr)">Enter</button>
+          </span>
+          <input type="text" [(ngModel)]="newIngredient.name" name="newName" class="form-control" id="newName" 
+                (keyup.enter)="updateIngredient(editIngr)" placeholder="Enter drücken zum Bearbeiten" #ingredient>
+        </div>
+      </div>
+      <div class="col-sm-6">
+        <div class="input-group">
+          <div class="input-group-addon">Hinweis</div>
+          <input type="text" [(ngModel)]="newIngredient.hint" name="newHint" class="form-control" id="newHint" 
+                (keyup.enter)="updateIngredient(editIngr)" placeholder="Klammern werden automatisch gesetzt">
+        </div>
+      </div>
+    </div>
     
     <h2 class="mb-3 section-header">Info</h2>
     <textarea rows="8" [(ngModel)]="model.description" name="description" class="form-control" id="description" #description="ngModel" placeholder="Beschreibung..."></textarea>
@@ -73,12 +92,13 @@
       {{ ctg }}
       <button type="button" class="close px-2 click" (click)="removeCategory(ctg)"><span aria-hidden="true">&times;</span></button>  
     </div>
-    <div class="input-group">
+    <div class="input-group ctg-input">
       <span class="input-group-btn">
         <button class="btn btn-primary click hidden-lg-up" type="button" (click)="addCategory(category.value); category.value=''">Enter</button>
       </span>
-      <input #category type="text" name="category" class="form-control" id="category" 
-            (keyup.enter)="addCategory(category.value); category.value=''" placeholder="Enter drücken zum Hinzufügen">
+      <input *ngIf="recipes" #category auto-complete type="text" name="category" class="form-control w-100" id="category" 
+              (keyup.enter)="addCategory(category.value); category.value=''" placeholder="Enter drücken zum Hinzufügen" 
+              [source]="getCategories()" [min-chars]="1" [accept-user-input]="true" no-match-found-text="Kategorie ist neu">
     </div>
 
     <button type="button" (click)="addRecipe(); gotoRecipes()" class="btn btn-success my-3 click" [disabled]="!recipeForm.form.valid">Speichern</button>

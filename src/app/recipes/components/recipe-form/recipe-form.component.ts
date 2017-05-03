@@ -15,8 +15,10 @@ declare const filestack: {
   templateUrl: './recipe-form.component.html',
   styleUrls: ['./recipe-form.component.css']
 })
-export class RecipeFormComponent {
+export class RecipeFormComponent implements OnInit {
   filestackKey: string = environment.filestackKey;
+
+  recipes: Recipe[];
 
   ingredients = [new Ingredient( '', '' )];
   newIngredient = new Ingredient('', '');
@@ -28,14 +30,23 @@ export class RecipeFormComponent {
   heroFilename: string;
   descrFilename: string;
 
+  editing = false;
+  editIngr: number;
+
   constructor(
     private recipeService: RecipeService,
     private router: Router
   ) { }
 
+  ngOnInit() {
+    this.recipeService.getAllRecipes().subscribe(recipes => {
+      this.recipes = recipes;
+    });
+  }
+
   addRecipe() {
-    if(this.categories.length > 0) {
-      this.model.categories = this.categories
+    if (this.categories.length > 0) {
+      this.model.categories = this.categories;
     }
     this.recipeService.addRecipe(this.model)
       .subscribe();
@@ -54,6 +65,23 @@ export class RecipeFormComponent {
     }
   }
 
+  editIngredient(index) {
+    if (this.editing) {
+      this.newIngredient = new Ingredient('', '');
+      this.editing = false;
+    } else {
+      this.editing = true;
+      this.editIngr = index;
+      this.newIngredient = this.model.ingredients[index];
+    }
+  }
+
+  updateIngredient(index) {
+    this.model.ingredients[index] = this.newIngredient;
+    this.newIngredient = new Ingredient('', '');
+    this.editing = false;
+  }
+
   removeIngredient(ingredient) {
     this.ingredients.splice(this.ingredients.indexOf(ingredient), 1);
   }
@@ -66,6 +94,16 @@ export class RecipeFormComponent {
 
   removeCategory(category) {
     this.categories.splice(this.categories.indexOf(category),1);
+  }
+
+  getCategories() {
+    let categories = new Set<string>();
+    this.recipes.forEach(recipe => {
+      recipe.categories.forEach(ctg => {
+        categories.add(ctg);
+      });
+    });
+    return Array.from(categories);
   }
 
   async showHeroPicker() {
