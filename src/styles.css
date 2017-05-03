@@ -55,6 +55,9 @@
   height: 1em;
   width: 1em;
 }
+.icon-pencil {
+  width: 0.845703125em;
+}
 
 /* DRAG AND DROP STYLES */
 .dnd-drag-start {

@@ -40,9 +40,9 @@
     <h2 class="mb-3 section-header">Zutaten</h2>
     <div class="list-group" dnd-sortable-container [sortableData]="ingredients">
       <div class="mb-2" *ngFor="let ingr of ingredients; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">
-        <div *ngIf="ingr.name != ''" class="d-inline-block">
-          {{ ingr.name }} <span *ngIf="ingr.hint!=''">({{ ingr.hint }})</span>
-          <a class="pl-3 click" (click)="editIngredient(i)"><svg class="icon icon-edit"><use inlineHref="#icon-edit"></use></svg></a>
+        <div *ngIf="ingr.name != ''">
+          {{ ingr.name }} <span *ngIf="ingr.hint!=''"> ({{ ingr.hint }})</span>
+          <a class="pl-3 click" (click)="editIngredient(i)"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg></a>
           <button *ngIf="ingredientAdded" type="button" class="close pl-3 click" (click)=removeIngredient(ingr)><span aria-hidden="true">&times;</span></button>
         </div>
       </div>
@@ -66,7 +66,7 @@
         </div>
       </div>
     </div>
-    <div *ngIf="editing" class="row form-group">
+    <div *ngIf="editing" class="row form-group mt-3">
       <div class="col-sm-6">
         <div class="input-group">
           <span class="input-group-btn">

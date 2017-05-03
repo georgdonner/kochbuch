@@ -75,6 +75,10 @@ export class RecipeEditComponent implements OnInit {
   }
 
   removeIngredient(ingredient) {
+    if (this.editing) {
+      this.newIngredient = new Ingredient('', '');
+      this.editing = false;
+    }
     this.recipe.ingredients.splice(this.recipe.ingredients.indexOf(ingredient), 1);
   }
 

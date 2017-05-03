@@ -83,6 +83,10 @@ export class RecipeFormComponent implements OnInit {
   }
 
   removeIngredient(ingredient) {
+    if (this.editing) {
+      this.newIngredient = new Ingredient('', '');
+      this.editing = false;
+    }
     this.ingredients.splice(this.ingredients.indexOf(ingredient), 1);
   }
 
