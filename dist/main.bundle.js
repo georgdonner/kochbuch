@@ -877,6 +877,8 @@ var CalcServingsPipe = (function () {
         var quantity = getQuantity();
         if (origServings === newServings) {
             if (quantity !== -1) {
+                // check if String needs metric conversion
+                value = convertMetrics(value);
                 // there is a quantity to beautify
                 return value.replace(getQuantityString(), beautifulNumber(quantity));
             }
@@ -884,6 +886,10 @@ var CalcServingsPipe = (function () {
         }
         else {
             if (quantity !== -1) {
+                // check if String needs metric conversion
+                console.log('before' + quantity);
+                value = convertMetrics(value);
+                console.log('after' + quantity);
                 // only calculate a new value if ingredient has a quantity
                 var newQuantity = quantity * (newServings / origServings);
                 value = value.replace(getQuantityString(), beautifulNumber(newQuantity));
@@ -931,6 +937,39 @@ var CalcServingsPipe = (function () {
         }
         function getQuantityString() {
             return value.match(/\d+(\.|\,|\/|\-)?\d*/i)[0];
+        }
+        function convertMetrics(ingr) {
+            // check if the unit is metric
+            var validMetric = /\d+\s?(g|kg|ml|l)/i;
+            if (ingr.match(validMetric) == null) {
+                return ingr;
+            }
+            else {
+                var metricString = ingr.match(validMetric)[0];
+                // calculate new quantity, because var quantity is not re-calculated yet
+                var calculatedQuantity = quantity * (newServings / origServings);
+                // check which unit and if new quantity reaches breakpoint
+                if (metricString.match(/[^k][g]/i) && calculatedQuantity >= 1000) {
+                    quantity = quantity / 1000;
+                    return value.replace(/[g]/i, 'kg');
+                }
+                else if (metricString.match(/[k][g]/i) && calculatedQuantity < 1) {
+                    quantity = quantity * 1000;
+                    return value.replace(/[k][g]/i, 'g');
+                }
+                else if (metricString.match(/[m][l]/i) && calculatedQuantity >= 1000) {
+                    quantity = quantity / 1000;
+                    return value.replace(/[m][l]/i, 'l');
+                }
+                else if (metricString.match(/[^m][l]/i) && calculatedQuantity < 1) {
+                    quantity = quantity * 1000;
+                    return value.replace(/[l]/i, 'ml');
+                }
+                else {
+                    // quantity reaches no breakpoint
+                    return ingr;
+                }
+            }
         }
         function beautifulNumber(num) {
             // convert number to a string that uses fraction symbols
