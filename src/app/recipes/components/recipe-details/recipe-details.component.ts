@@ -34,16 +34,17 @@ export class RecipeDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.state = this.randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-    this.route.params
-      .switchMap((params: Params) => this.recipeService.getRecipe(params['id']))
-      .subscribe((recipe: Recipe) => {
-        this.recipe = recipe
-        this.desiredServings = recipe.servings
-    });
     this.route.params.subscribe(params => {
+      console.log(params['code']);
       if (params['code']) {
         this.code = params['code'];
       }
+    });
+    this.route.params
+      .switchMap((params: Params) => this.recipeService.getRecipe(params['id']))
+      .subscribe((recipe: Recipe) => {
+        this.recipe = recipe;
+        this.desiredServings = recipe.servings;
     });
   }
 

@@ -38,16 +38,17 @@ var RecipeDetailsComponent = (function () {
     RecipeDetailsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.state = this.randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
+        this.route.params.subscribe(function (params) {
+            console.log(params['code']);
+            if (params['code']) {
+                _this.code = params['code'];
+            }
+        });
         this.route.params
             .switchMap(function (params) { return _this.recipeService.getRecipe(params['id']); })
             .subscribe(function (recipe) {
             _this.recipe = recipe;
             _this.desiredServings = recipe.servings;
-        });
-        this.route.params.subscribe(function (params) {
-            if (params['code']) {
-                _this.code = params['code'];
-            }
         });
     };
     RecipeDetailsComponent.prototype.ngAfterContentInit = function () {
