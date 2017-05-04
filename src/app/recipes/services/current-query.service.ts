@@ -5,15 +5,17 @@ export class CurrentQueryService {
 
   query = {
     ingrQuery: '',
-    ctgQuery: ''
+    ctgQuery: '',
+    titleQuery: ''
   }
 
   constructor() { }
 
-  setQuery(ingr: string, ctg: string) {
+  setQuery(ingr: string, ctg: string, title: string) {
     this.query = {
       ingrQuery: ingr, 
-      ctgQuery: ctg
+      ctgQuery: ctg,
+      titleQuery: title
     };
   }
 

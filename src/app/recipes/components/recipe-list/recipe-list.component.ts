@@ -16,6 +16,7 @@ export class RecipeListComponent implements OnInit{
 
   ingrQuery: string = '';
   ctgQuery: string = '';
+  titleQuery: string = '';
 
   constructor(
     private router: Router,
@@ -34,10 +35,11 @@ export class RecipeListComponent implements OnInit{
   getQuery() {
     this.ingrQuery = this.queryService.getQuery().ingrQuery;
     this.ctgQuery = this.queryService.getQuery().ctgQuery;
+    this.titleQuery = this.queryService.getQuery().titleQuery;
   }
 
   onSelect(recipe: Recipe) {
-    this.queryService.setQuery(this.ingrQuery, this.ctgQuery);
+    this.queryService.setQuery(this.ingrQuery, this.ctgQuery, this.titleQuery);
     this.router.navigate(['/recipe', recipe._id]);
   }
 

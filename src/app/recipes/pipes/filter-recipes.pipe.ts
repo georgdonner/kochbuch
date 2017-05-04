@@ -6,13 +6,18 @@ import { Recipe, Ingredient } from '../recipe';
 })
 export class FilterRecipesPipe implements PipeTransform {
 
-  transform(recipes: any[], ingrQuery: string, ctgQuery: string): any[] {
-    if(ingrQuery == '' && ctgQuery == '') {
+  transform(recipes: any[], ingrQuery: string, ctgQuery: string, titleQuery: string): any[] {
+    if (ingrQuery == '' && ctgQuery == '' && titleQuery == '') {
+      return recipes;
+    }
+
+    recipes = filterTitle();
+
+    if (ingrQuery == '' && ctgQuery == '') {
       return recipes;
     }
 
     let filteredRecipes = new Array<Recipe>();
-
     const ingrArray = ingrQuery.trim().split(',');
     const ctgArray = ctgQuery.trim().split(',');
 
@@ -54,8 +59,9 @@ export class FilterRecipesPipe implements PipeTransform {
 
     recipes.forEach((recipe) => {
       let ingrMatch: boolean = false;
-      let ingrArrayTmp = ingrArray.slice(0);
+
       recipe.ingredients.forEach((ingredient) => {
+        let ingrArrayTmp = ingrArray.slice(0);
         ingrArrayTmp.forEach((ingr) => {
           if(ingredient.name.toLowerCase().indexOf(ingr.toLowerCase())!==-1) {
             ingrArrayTmp.splice(ingrArrayTmp.indexOf(ingr),1);
@@ -80,5 +86,18 @@ export class FilterRecipesPipe implements PipeTransform {
       }
     });
     return filteredRecipes;
+
+    function filterTitle(): Recipe[] {
+      let titleFiltered = new Array<Recipe>();
+      if (titleQuery === '') {
+        return recipes;
+      }
+      recipes.forEach((recipe) => {
+        if (recipe.title.toLowerCase().includes(titleQuery.toLowerCase())) {
+          titleFiltered.push(recipe);
+        }
+      })
+      return titleFiltered;
+    }
   } 
 }
