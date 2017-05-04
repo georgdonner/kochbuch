@@ -32,3 +32,21 @@
         height: 75px;
     }
 }
+
+.icon-sort-desc, .icon-sort-asc {
+    width: 2em;
+    height: 2em;
+    fill: #292b2c;
+    -webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+.icon-sort-desc:hover, .icon-sort-asc:hover {
+    fill: #0275d8;
+}
+
+.icon.sort-active {
+    fill: #0275d8;
+}
+

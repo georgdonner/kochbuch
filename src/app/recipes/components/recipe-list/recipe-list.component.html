@@ -22,8 +22,22 @@
 </div>
 
 <div class="container">
-  <div *ngIf="recipes" class="row">
-    <div *ngFor="let recipe of recipes | filterRecipes:ingrQuery:ctgQuery:titleQuery"
+  <div class="d-flex justify-content-center justify-content-md-end align-items-center mb-3">
+    <div class="mr-4">
+      <svg class="d-block icon icon-sort-asc" [ngClass]="{'sort-active': !sortDesc}" (click)="sort('asc')"><use inlineHref="#icon-sort-asc"></use></svg>
+      <svg class="d-block icon icon-sort-desc" [ngClass]="{'sort-active': sortDesc}" (click)="sort('desc')"><use inlineHref="#icon-sort-desc"></use></svg>
+    </div>
+    <div class="">
+      <select class="custom-select" (change)="sortBy($event.target.value)">
+        <option value="cook-counter" selected>Wie oft gekocht?</option>
+        <option value="duration">Dauer</option>
+        <option value="difficulty">Schwierigkeit</option>
+        <option value="ingredient-count">Anzahl der Zutaten</option>
+      </select>
+    </div>
+  </div>
+  <div *ngIf="recipes" class="row clearfix">
+    <div *ngFor="let recipe of recipes | filterRecipes:ingrQuery:ctgQuery:titleQuery | sortRecipes:sortQuery:sortDesc"
       (click)="onSelect(recipe)" class="col-lg-6 col-xl-4 click">
       <div class="card mb-4 hvr-float">
         <img *ngIf="recipe.heroImage" class="card-img-top thumb-img" src="{{recipe.heroImage}}" alt="{{recipe.title}}">

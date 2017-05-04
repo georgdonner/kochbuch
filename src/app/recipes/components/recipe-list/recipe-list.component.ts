@@ -18,6 +18,9 @@ export class RecipeListComponent implements OnInit{
   ctgQuery: string = '';
   titleQuery: string = '';
 
+  sortQuery = 'cook-counter';
+  sortDesc = true;
+
   constructor(
     private router: Router,
     private recipeService: RecipeService,
@@ -36,6 +39,18 @@ export class RecipeListComponent implements OnInit{
     this.ingrQuery = this.queryService.getQuery().ingrQuery;
     this.ctgQuery = this.queryService.getQuery().ctgQuery;
     this.titleQuery = this.queryService.getQuery().titleQuery;
+  }
+
+  sort(sort: string) {
+    if (sort == 'asc') {
+      this.sortDesc = false;
+    } else {
+      this.sortDesc = true;
+    }
+  }
+
+  sortBy(sortby: string) {
+    this.sortQuery = sortby;
   }
 
   onSelect(recipe: Recipe) {
