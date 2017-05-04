@@ -38,7 +38,7 @@
     </div>
     <div class="col-6">
       <h4 class="mb-2 section-header">Zubereitung</h4>
-      <p *ngIf="recipe.description">{{ recipe.description }}</p>
+      <markdown *ngIf="recipe.description">{{ recipe.description }}</markdown>
       <img #descrImage *ngIf="recipe.descrImage" src="{{recipe.descrImage}}"
           alt="Recipe description" class="img-fluid">
     </div>
