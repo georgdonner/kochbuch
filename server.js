@@ -22,17 +22,11 @@ var api = require('./server/routes/api');
 var app = express();
 
 // CORS middleware
-var whitelist = [
-    'http://georgs-recipes.herokuapp.com',
-];
-var corsOptions = {
-    origin: function(origin, callback){
-        var originIsWhitelisted = whitelist.indexOf(origin) !== -1;
-        callback(null, originIsWhitelisted);
-    },
-    credentials: true
-};
-app.use(cors(corsOptions));
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 
 // Parsers for POST data
 app.use(bodyParser.json());
