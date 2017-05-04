@@ -35,7 +35,7 @@ export class RecipeDetailsComponent implements OnInit {
   ngOnInit() {
     this.state = this.randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
     this.route.params.subscribe(params => {
-      console.log(params['code']);
+      console.log(params);
       if (params['code']) {
         this.code = params['code'];
       }
