@@ -22,7 +22,7 @@ var api = require('./server/routes/api');
 var app = express();
 
 // CORS middleware
-app.use(cors());
+app.use(cors({origin:true,credentials: true}));
 
 // Parsers for POST data
 app.use(bodyParser.json());
