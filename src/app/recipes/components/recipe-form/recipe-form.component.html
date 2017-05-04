@@ -1,6 +1,6 @@
 <div class="container">
   <form #recipeForm="ngForm">
-    <h1 class="display-3 text-center mt-4">{{ model.title }}</h1>
+    <h1 class="display-3 text-center mt-4 recipe-title">{{ model.title }}</h1>
     <hr class="my-4">
     <div class="input-group">
       <input type="text" [(ngModel)]="model.title" name="title" class="form-control " id="title" required #title="ngModel" placeholder="Titel">

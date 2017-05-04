@@ -40,7 +40,7 @@ export class RecipeDetailsComponent implements OnInit {
   }
 
   searchCtg(ctg: string) {
-    this.queryService.setQuery('', ctg);
+    this.queryService.setQuery('', ctg, '');
     this.gotoRecipes();
   }
 

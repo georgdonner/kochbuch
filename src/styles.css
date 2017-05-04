@@ -3,6 +3,10 @@
     cursor: pointer;
 }
 
+.recipe-title {
+    word-wrap: break-word;
+}
+
 .section-header {
   font-weight: 400;
 }

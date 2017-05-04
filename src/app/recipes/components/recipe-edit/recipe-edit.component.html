@@ -1,6 +1,6 @@
 <div *ngIf="recipe" class="container">
   <form #recipeForm="ngForm">
-    <h1 class="display-3 text-center mt-4">{{ recipe.title }}</h1>
+    <h1 class="display-3 text-center mt-4 recipe-title">{{ recipe.title }}</h1>
     <hr class="my-4">
     <img *ngIf="recipe.heroImage" class="img-fluid mb-3" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
     <div class="input-group">
