@@ -17,6 +17,10 @@
   </div>
 </div>
 
+<div class="new-recipe">
+  <a class="click" (click)="newRecipe()"><img class="plus-button" src="../../../assets/images/plus-button4.svg" alt=""></a>
+</div>
+
 <div class="container">
   <div *ngIf="recipes" class="row">
     <div *ngFor="let recipe of recipes | filterRecipes:ingrQuery:ctgQuery"

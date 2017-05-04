@@ -8,3 +8,27 @@
     height: 250px;
     object-fit: cover;
 }
+
+.new-recipe {
+    position: fixed;
+    right: 50px;
+    bottom: 50px;
+    z-index: 1000;
+}
+
+.plus-button {
+    width: 100px;
+    height: 100px;
+}
+
+@media only screen and (max-width: 767px) {
+    .new-recipe {
+        right: 20px;
+        bottom: 20px;
+    }
+
+    .plus-button {
+        width: 75px;
+        height: 75px;
+    }
+}
