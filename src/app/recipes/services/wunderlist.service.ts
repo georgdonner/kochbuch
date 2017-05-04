@@ -12,7 +12,7 @@ export class WunderlistService {
     console.log(JSON.stringify(code));
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
-    headers.append('Access-Control-Allow-Origin', 'http://georgs-recipes.herokuapp.com');
+    headers.append('Access-Control-Allow-Origin', '*');
     console.log(headers);
     return this.http.post('https://www.wunderlist.com/oauth/access_token', {
       "client_id": "b4ab80671b8df7024e4d",
