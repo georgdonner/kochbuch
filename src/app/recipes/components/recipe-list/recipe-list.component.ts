@@ -39,6 +39,8 @@ export class RecipeListComponent implements OnInit{
     this.ingrQuery = this.queryService.getQuery().ingrQuery;
     this.ctgQuery = this.queryService.getQuery().ctgQuery;
     this.titleQuery = this.queryService.getQuery().titleQuery;
+    this.sortDesc = this.queryService.getQuery().sortDesc;
+    this.sortQuery = this.queryService.getQuery().sortQuery;
   }
 
   sort(sort: string) {
@@ -54,7 +56,7 @@ export class RecipeListComponent implements OnInit{
   }
 
   onSelect(recipe: Recipe) {
-    this.queryService.setQuery(this.ingrQuery, this.ctgQuery, this.titleQuery);
+    this.queryService.setQuery(this.ingrQuery, this.ctgQuery, this.titleQuery, this.sortDesc, this.sortQuery);
     this.router.navigate(['/recipe', recipe._id]);
   }
 

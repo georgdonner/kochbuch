@@ -6,16 +6,20 @@ export class CurrentQueryService {
   query = {
     ingrQuery: '',
     ctgQuery: '',
-    titleQuery: ''
+    titleQuery: '',
+    sortDesc: true,
+    sortQuery: 'cook-counter'
   }
 
   constructor() { }
 
-  setQuery(ingr: string, ctg: string, title: string) {
+  setQuery(ingr: string, ctg: string, title: string, desc: boolean, sortby: string) {
     this.query = {
       ingrQuery: ingr, 
       ctgQuery: ctg,
-      titleQuery: title
+      titleQuery: title,
+      sortDesc: desc,
+      sortQuery: sortby
     };
   }
 
