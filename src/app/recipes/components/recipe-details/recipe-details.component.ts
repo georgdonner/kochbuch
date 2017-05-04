@@ -1,9 +1,10 @@
-import { Component, OnInit }  from '@angular/core';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
 
 import { Recipe } from '../../recipe';
 import { RecipeService } from '../../services/recipe.service';
+import { WunderlistService } from '../../services/wunderlist.service';
 import { CurrentQueryService } from '../../services/current-query.service';
 
 @Component({
@@ -19,20 +20,39 @@ export class RecipeDetailsComponent implements OnInit {
 
   descrImageRatio: number;
 
+  state: string;
+  code: string;
+  accessToken: string;
+
   constructor(
     private recipeService: RecipeService,
+    private wunderlistService: WunderlistService,
     private queryService: CurrentQueryService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
 
   ngOnInit() {
+    this.state = this.randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
     this.route.params
       .switchMap((params: Params) => this.recipeService.getRecipe(params['id']))
       .subscribe((recipe: Recipe) => {
         this.recipe = recipe
         this.desiredServings = recipe.servings
+    });
+    this.route.params.subscribe(params => {
+      if (params['code']) {
+        this.code = params['code'];
+      }
+    });
+  }
+
+  ngAfterContentInit() {
+    if (this.code) {
+      this.wunderlistService.getAccessToken(this.code).subscribe((token) => {
+        console.log(token);
       });
+    }
   }
 
   gotoRecipes() {
@@ -61,5 +81,13 @@ export class RecipeDetailsComponent implements OnInit {
 
   printView() {
     this.router.navigate(['/recipe', this.recipe._id, 'print']);
+  }
+
+  randomString (length, chars) {
+    let result = '';
+    for (let i = length; i > 0; --i) {
+      result += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return result;
   }
 }

@@ -15,6 +15,7 @@ import { RecipeEditComponent } from './components/recipe-edit/recipe-edit.compon
 import { RecipePrintComponent } from './components/recipe-print/recipe-print.component';
 
 import { RecipeService } from './services/recipe.service';
+import { WunderlistService } from './services/wunderlist.service';
 import { CurrentQueryService } from './services/current-query.service';
 
 import { RecipeRoutingModule } from './recipes-routing.module';
@@ -54,6 +55,7 @@ import { SortRecipesPipe } from './pipes/sort-recipes.pipe';
   ],
   providers: [ 
     RecipeService,
+    WunderlistService,
     CurrentQueryService
   ]
 })
