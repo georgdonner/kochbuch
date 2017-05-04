@@ -42,7 +42,7 @@
       <div class="mb-2" *ngFor="let ingr of ingredients; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">
         <div *ngIf="ingr.name != ''">
           {{ ingr.name }} <span *ngIf="ingr.hint!=''"> ({{ ingr.hint }})</span>
-          <a class="pl-3 click" (click)="editIngredient(i)"><svg class="icon icon-pencil"><use xlink:href="#icon-pencil"></use></svg></a>
+          <a class="pl-3 click" (click)="editIngredient(i)"><svg class="icon icon-pencil"><use inlineHref="#icon-pencil"></use></svg></a>
           <button *ngIf="ingredientAdded" type="button" class="close pl-3 click" (click)=removeIngredient(ingr)><span aria-hidden="true">&times;</span></button>
         </div>
       </div>
