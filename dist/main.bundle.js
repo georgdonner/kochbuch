@@ -51,11 +51,14 @@ var RecipeDetailsComponent = (function () {
         });
     };
     RecipeDetailsComponent.prototype.ngAfterContentInit = function () {
+        var _this = this;
         if (this.code) {
             this.wunderlistService.getAccessToken(this.code).subscribe(function (token) {
-                console.log(token);
+                _this.accessToken = token;
             });
         }
+        console.log(this.code);
+        console.log(this.accessToken);
     };
     RecipeDetailsComponent.prototype.gotoRecipes = function () {
         this.router.navigate(['/recipes']);
@@ -1834,6 +1837,7 @@ var WunderlistService = (function () {
         this.http = http;
     }
     WunderlistService.prototype.getAccessToken = function (code) {
+        console.log(JSON.stringify(code));
         var headers = new __WEBPACK_IMPORTED_MODULE_1__angular_http__["Headers"]();
         headers.append('Content-Type', 'application/json');
         return this.http.post('https://www.wunderlist.com/oauth/access_token', {

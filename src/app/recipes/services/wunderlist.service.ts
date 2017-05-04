@@ -9,6 +9,7 @@ export class WunderlistService {
   constructor(private http: Http) { }
 
   getAccessToken(code: string) {
+    console.log(JSON.stringify(code));
     var headers = new Headers();
     headers.append('Content-Type', 'application/json');
     return this.http.post('https://www.wunderlist.com/oauth/access_token', {

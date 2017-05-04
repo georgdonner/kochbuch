@@ -50,9 +50,11 @@ export class RecipeDetailsComponent implements OnInit {
   ngAfterContentInit() {
     if (this.code) {
       this.wunderlistService.getAccessToken(this.code).subscribe((token) => {
-        console.log(token);
+        this.accessToken = token;
       });
     }
+    console.log(this.code);
+    console.log(this.accessToken);
   }
 
   gotoRecipes() {
