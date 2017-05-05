@@ -228,19 +228,20 @@ var RecipeEditComponent = (function () {
     };
     RecipeEditComponent.prototype.showHeroPicker = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var client, result, url;
+            var client, result, handle;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         client = filestack.init(this.filestackKey);
                         return [4 /*yield*/, client.pick({
                                 accept: ['image/*'],
-                                maxFiles: 1
+                                maxFiles: 1,
+                                maxSize: 10485760
                             })];
                     case 1:
                         result = _a.sent();
-                        url = result.filesUploaded[0].url;
-                        this.recipe.heroImage = url;
+                        handle = result.filesUploaded[0].handle;
+                        this.recipe.heroImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/' + handle;
                         return [2 /*return*/];
                 }
             });
@@ -248,19 +249,20 @@ var RecipeEditComponent = (function () {
     };
     RecipeEditComponent.prototype.showDescPicker = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var client, result, url;
+            var client, result, handle;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
                         client = filestack.init(this.filestackKey);
                         return [4 /*yield*/, client.pick({
                                 accept: ['image/*'],
-                                maxFiles: 1
+                                maxFiles: 1,
+                                maxSize: 10485760
                             })];
                     case 1:
                         result = _a.sent();
-                        url = result.filesUploaded[0].url;
-                        this.recipe.descrImage = url;
+                        handle = result.filesUploaded[0].handle;
+                        this.recipe.descrImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/' + handle;
                         return [2 /*return*/];
                 }
             });
@@ -423,7 +425,7 @@ var RecipeFormComponent = (function () {
     };
     RecipeFormComponent.prototype.showHeroPicker = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var client, result, url;
+            var client, result, handle;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -434,9 +436,9 @@ var RecipeFormComponent = (function () {
                             })];
                     case 1:
                         result = _a.sent();
-                        url = result.filesUploaded[0].url;
+                        handle = result.filesUploaded[0].handle;
                         this.heroFilename = result.filesUploaded[0].filename;
-                        this.model.heroImage = url;
+                        this.model.heroImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/' + handle;
                         return [2 /*return*/];
                 }
             });
@@ -444,7 +446,7 @@ var RecipeFormComponent = (function () {
     };
     RecipeFormComponent.prototype.showDescPicker = function () {
         return __awaiter(this, void 0, void 0, function () {
-            var client, result, url;
+            var client, result, handle;
             return __generator(this, function (_a) {
                 switch (_a.label) {
                     case 0:
@@ -455,9 +457,9 @@ var RecipeFormComponent = (function () {
                             })];
                     case 1:
                         result = _a.sent();
-                        url = result.filesUploaded[0].url;
+                        handle = result.filesUploaded[0].handle;
                         this.descrFilename = result.filesUploaded[0].filename;
-                        this.model.descrImage = url;
+                        this.model.descrImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/' + handle;
                         return [2 /*return*/];
                 }
             });

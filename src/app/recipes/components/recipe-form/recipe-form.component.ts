@@ -7,7 +7,7 @@ import { RecipeService } from '../../services/recipe.service';
 
 declare const filestack: {
   init(apiKey: string): {
-    pick({ accept, maxFiles }: { accept: Array<string>, maxFiles: number}): Promise<{ filesUploaded: { url: string, filename: string }[] }> 
+    pick({ accept, maxFiles }: { accept: Array<string>, maxFiles: number}): Promise<{ filesUploaded: { handle: string, filename: string }[] }> 
   }
 };
 
@@ -116,9 +116,9 @@ export class RecipeFormComponent implements OnInit {
       accept: ['image/*'],
       maxFiles: 1
     });
-    const url = result.filesUploaded[0].url;
+    const handle = result.filesUploaded[0].handle;
     this.heroFilename = result.filesUploaded[0].filename;
-    this.model.heroImage = url;
+    this.model.heroImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/'+handle;
   }
 
   async showDescPicker() {
@@ -127,9 +127,9 @@ export class RecipeFormComponent implements OnInit {
       accept: ['image/*'],
       maxFiles: 1
     });
-    const url = result.filesUploaded[0].url;
+    const handle = result.filesUploaded[0].handle;
     this.descrFilename = result.filesUploaded[0].filename;
-    this.model.descrImage = url;
+    this.model.descrImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/'+handle;
   }
 
   gotoRecipes() {
