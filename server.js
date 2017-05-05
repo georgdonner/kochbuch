@@ -16,21 +16,18 @@ conn.on('connected', () => {
 });
 conn.on('error', console.error.bind(console, 'connection error:'));
 
-// Get our API routes
-var api = require('./server/routes/api');
-
 var app = express();
 
 // CORS middleware
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
-});
+app.options('*', cors());
+console.log('CORS enabled');
+
+// Get our API routes
+var api = require('./server/routes/api');
 
 // Parsers for POST data
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 
 // Point static path to dist
 app.use(express.static(path.join(__dirname, 'dist')));

@@ -21,8 +21,6 @@ export class RecipeDetailsComponent implements OnInit {
   descrImageRatio: number;
 
   state: string;
-  code: string;
-  accessToken: string;
 
   constructor(
     private recipeService: RecipeService,
@@ -34,28 +32,12 @@ export class RecipeDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.state = this.randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
-    this.route.queryParams.subscribe(params => {
-      console.log(params);
-      if (params['code']) {
-        this.code = params['code'];
-      }
-    });
     this.route.params
       .switchMap((params: Params) => this.recipeService.getRecipe(params['id']))
       .subscribe((recipe: Recipe) => {
         this.recipe = recipe;
         this.desiredServings = recipe.servings;
     });
-  }
-
-  ngAfterContentInit() {
-    if (this.code) {
-      this.wunderlistService.getAccessToken(this.code).subscribe((token) => {
-        this.accessToken = token;
-      });
-    }
-    console.log(this.code);
-    console.log(this.accessToken);
   }
 
   gotoRecipes() {

@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit, AfterContentInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { Recipe } from '../../recipe';
 import { RecipeService } from '../../services/recipe.service';
+import { WunderlistService } from '../../services/wunderlist.service';
 import { CurrentQueryService } from '../../services/current-query.service';
 
 @Component({
@@ -21,18 +22,39 @@ export class RecipeListComponent implements OnInit{
   sortQuery = 'cook-counter';
   sortDesc = true;
 
+  code: string;
+  accessToken: string;
+
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private recipeService: RecipeService,
+    private wunderlistService: WunderlistService,
     private queryService: CurrentQueryService
   ) { }
 
   ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      console.log(params);
+      if (params['code']) {
+        this.code = params['code'];
+      }
+    });
     // retrieve recipes from the API
     this.recipeService.getAllRecipes().subscribe(recipes => {
       this.recipes = recipes;
       this.getQuery();
     });
+  }
+  
+  ngAfterContentInit() {
+    if (this.code) {
+      this.wunderlistService.getAccessToken(this.code).subscribe((token) => {
+        this.accessToken = token;
+      });
+    }
+    console.log(this.code);
+    console.log(this.accessToken);
   }
 
   getQuery() {
