@@ -8,7 +8,7 @@ import { RecipeService } from '../../services/recipe.service';
 
 declare const filestack: {
   init(apiKey: string): {
-    pick({ accept, maxFiles, maxSize }: { accept: Array<string>, maxFiles: number, maxSize: number, transformations: { crop: { circle: boolean } } }): Promise<{ filesUploaded: { handle: string }[] }> 
+    pick({ accept, maxFiles, maxSize, transformations }: { accept: Array<string>, maxFiles: number, maxSize: number, transformations: { crop: { circle: boolean } } }): Promise<{ filesUploaded: { handle: string }[] }> 
   }
 };
 
