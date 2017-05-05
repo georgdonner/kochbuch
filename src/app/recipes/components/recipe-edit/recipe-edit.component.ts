@@ -8,7 +8,7 @@ import { RecipeService } from '../../services/recipe.service';
 
 declare const filestack: {
   init(apiKey: string): {
-    pick({ accept, maxFiles, maxSize }: { accept: Array<string>, maxFiles: number, maxSize: number }): Promise<{ filesUploaded: { handle: string }[] }> 
+    pick({ accept, maxFiles, maxSize }: { accept: Array<string>, maxFiles: number, maxSize: number, transformations: { crop: { circle: boolean } } }): Promise<{ filesUploaded: { handle: string }[] }> 
   }
 };
 
@@ -111,7 +111,12 @@ export class RecipeEditComponent implements OnInit {
     const result = await client.pick({ 
       accept: ['image/*'],
       maxFiles: 1,
-      maxSize: 10485760
+      maxSize: 10485760,
+      transformations: {
+        crop: {
+          circle: false
+        }
+      }
     });
     const handle = result.filesUploaded[0].handle;
     this.recipe.heroImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/'+handle;
@@ -122,7 +127,12 @@ export class RecipeEditComponent implements OnInit {
     const result = await client.pick({
       accept: ['image/*'],
       maxFiles: 1,
-      maxSize: 10485760
+      maxSize: 10485760,
+      transformations: {
+        crop: {
+          circle: false
+        }
+      }
     });
     const handle = result.filesUploaded[0].handle;
     this.recipe.descrImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/'+handle;

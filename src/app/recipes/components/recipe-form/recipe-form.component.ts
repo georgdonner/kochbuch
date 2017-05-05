@@ -7,7 +7,7 @@ import { RecipeService } from '../../services/recipe.service';
 
 declare const filestack: {
   init(apiKey: string): {
-    pick({ accept, maxFiles }: { accept: Array<string>, maxFiles: number}): Promise<{ filesUploaded: { handle: string, filename: string }[] }> 
+    pick({ accept, maxFiles }: { accept: Array<string>, maxFiles: number, transformations: { crop: { circle: boolean } } }): Promise<{ filesUploaded: { handle: string, filename: string }[] }> 
   }
 };
 
@@ -114,7 +114,12 @@ export class RecipeFormComponent implements OnInit {
     const client = filestack.init(this.filestackKey);
     const result = await client.pick({
       accept: ['image/*'],
-      maxFiles: 1
+      maxFiles: 1,
+      transformations: {
+        crop: {
+          circle: false
+        }
+      }
     });
     const handle = result.filesUploaded[0].handle;
     this.heroFilename = result.filesUploaded[0].filename;
@@ -125,7 +130,12 @@ export class RecipeFormComponent implements OnInit {
     const client = filestack.init(this.filestackKey);
     const result = await client.pick({
       accept: ['image/*'],
-      maxFiles: 1
+      maxFiles: 1,
+      transformations: {
+        crop: {
+          circle: false
+        }
+      }
     });
     const handle = result.filesUploaded[0].handle;
     this.descrFilename = result.filesUploaded[0].filename;

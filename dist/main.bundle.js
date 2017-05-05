@@ -236,7 +236,12 @@ var RecipeEditComponent = (function () {
                         return [4 /*yield*/, client.pick({
                                 accept: ['image/*'],
                                 maxFiles: 1,
-                                maxSize: 10485760
+                                maxSize: 10485760,
+                                transformations: {
+                                    crop: {
+                                        circle: false
+                                    }
+                                }
                             })];
                     case 1:
                         result = _a.sent();
@@ -257,7 +262,12 @@ var RecipeEditComponent = (function () {
                         return [4 /*yield*/, client.pick({
                                 accept: ['image/*'],
                                 maxFiles: 1,
-                                maxSize: 10485760
+                                maxSize: 10485760,
+                                transformations: {
+                                    crop: {
+                                        circle: false
+                                    }
+                                }
                             })];
                     case 1:
                         result = _a.sent();
@@ -432,7 +442,12 @@ var RecipeFormComponent = (function () {
                         client = filestack.init(this.filestackKey);
                         return [4 /*yield*/, client.pick({
                                 accept: ['image/*'],
-                                maxFiles: 1
+                                maxFiles: 1,
+                                transformations: {
+                                    crop: {
+                                        circle: false
+                                    }
+                                }
                             })];
                     case 1:
                         result = _a.sent();
@@ -453,7 +468,12 @@ var RecipeFormComponent = (function () {
                         client = filestack.init(this.filestackKey);
                         return [4 /*yield*/, client.pick({
                                 accept: ['image/*'],
-                                maxFiles: 1
+                                maxFiles: 1,
+                                transformations: {
+                                    crop: {
+                                        circle: false
+                                    }
+                                }
                             })];
                     case 1:
                         result = _a.sent();
