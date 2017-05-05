@@ -10,11 +10,13 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { RecipesModule } from './recipes/recipes.module';
 import { SvgIconComponent } from './svgicons/svg-icon/svg-icon.component';
+import { PageNotFoundComponent } from './components/not-found/not-found.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SvgIconComponent
+    SvgIconComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserModule,
