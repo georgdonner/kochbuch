@@ -15,9 +15,9 @@ export class RecipeListComponent implements OnInit{
   selectedRecipe: Recipe;
   recipes: Recipe[];
 
-  ingrQuery: string = '';
-  ctgQuery: string = '';
-  titleQuery: string = '';
+  ingrQuery = '';
+  ctgQuery = '';
+  titleQuery = '';
 
   sortQuery = 'cook-counter';
   sortDesc = true;
@@ -35,7 +35,6 @@ export class RecipeListComponent implements OnInit{
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      console.log(params);
       if (params['code']) {
         this.code = params['code'];
       }
@@ -53,8 +52,6 @@ export class RecipeListComponent implements OnInit{
         this.accessToken = token;
       });
     }
-    console.log(this.code);
-    console.log(this.accessToken);
   }
 
   getQuery() {

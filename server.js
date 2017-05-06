@@ -20,7 +20,6 @@ var app = express();
 
 // CORS middleware
 app.options('*', cors());
-console.log('CORS enabled');
 
 // Get our API routes
 var api = require('./server/routes/api');

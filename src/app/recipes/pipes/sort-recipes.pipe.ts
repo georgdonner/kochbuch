@@ -33,6 +33,12 @@ export class SortRecipesPipe implements PipeTransform {
         });
         break;
 
+      case 'date':
+        recipes.sort(function (a, b) {
+          return new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime();
+        });
+        break;
+
       default:
         break;
     }

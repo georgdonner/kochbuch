@@ -29,9 +29,7 @@ export class CalcServingsPipe implements PipeTransform {
     else {
       if (quantity !== -1) {
         // check if String needs metric conversion
-        console.log('before' + quantity);
         value = convertMetrics(value);
-        console.log('after' + quantity);
         // only calculate a new value if ingredient has a quantity
         var newQuantity: number = quantity * (newServings / origServings);
         value = value.replace(getQuantityString(), beautifulNumber(newQuantity));

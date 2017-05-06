@@ -146,9 +146,5 @@ export class RecipeFormComponent implements OnInit {
     this.router.navigate(['/recipes']);
   }
 
-  show() {
-    console.log(this.model);
-  }
-
 }
 

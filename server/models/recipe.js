@@ -20,7 +20,9 @@ const RecipeSchema = new Schema({
     description: String,
     descrImage: String,
     categories: [String]
-});
+},
+{ timestamps: true }
+);
 
 const Recipe = module.exports = mongoose.model('Recipe', RecipeSchema);
 

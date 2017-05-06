@@ -11,6 +11,7 @@ export class Recipe {
       public description?: string,
       public descrImage?: string,
       public categories?: Array<string>,
+      public createdAt?: Date,
       public _id?: string
     ) {  }
 }
