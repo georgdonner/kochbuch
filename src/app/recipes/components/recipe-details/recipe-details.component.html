@@ -1,6 +1,6 @@
 <div *ngIf="recipe">
-  <svg class="icon icon-chevron-left click" (click)="gotoRecipes()"><use inlineHref="#icon-chevron-left"></use></svg>
-  <svg class="icon icon-spoon-knife click" (click)="cooked()"><use inlineHref="#icon-spoon-knife"></use></svg>
+  <svg class="icon icon-chevron-left click hvr-backward" (click)="gotoRecipes()"><use inlineHref="#icon-chevron-left"></use></svg>
+  <svg class="icon icon-spoon-knife click hvr-float" (click)="cooked()"><use inlineHref="#icon-spoon-knife"></use></svg>
   <span class="badge cook-badge">{{ recipe.cookCount }}</span>
 </div>
 <div class="container mt-5 mt-sm-0" *ngIf="recipe">

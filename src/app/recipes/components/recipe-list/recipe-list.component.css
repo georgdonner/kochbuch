@@ -4,6 +4,16 @@
     }
 }
 
+.search-field {
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.search-field:hover {
+    border-color: #292b2c;
+}
+
 .thumb-img {
     height: 250px;
     object-fit: cover;
@@ -19,6 +29,13 @@
 .plus-button {
     width: 100px;
     height: 100px;
+    -webkit-transition: all 0.3s ease;
+    -moz-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+}
+
+.plus-button:hover {
+    transform: rotate(-180deg) scale(1.1);
 }
 
 @media only screen and (max-width: 767px) {
@@ -37,12 +54,13 @@
     width: 2em;
     height: 2em;
     fill: #292b2c;
-    -webkit-transition: all 1s ease;
-    -moz-transition: all 1s ease;
-    transition: all 1s ease;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    transition: all 0.5s ease;
 }
 
 .icon-sort-desc:hover, .icon-sort-asc:hover {
+    transform: scale(1.25);
     fill: #0275d8;
 }
 
