@@ -1,4 +1,4 @@
-<div class="jumbotron jumbotron-fluid">
+<div class="jumbotron jumbotron-fluid animated fadeIn">
   <div class="container">
     <h1 class="display-3">Maries und Georgs Rezeptbuch</h1>
     <p class="lead" >Durchsuche unser Kochbuch nach ausgewählten Rezepten, die wir hier mit Liebe zusammengestellt haben :)</p>
@@ -17,11 +17,11 @@
   </div>
 </div>
 
-<div class="new-recipe">
+<div class="new-recipe animated fadeIn">
   <a class="click" (click)="newRecipe()"><img class="plus-button hvr-grow" src="../../../assets/images/plus-button4.svg" alt=""></a>
 </div>
 
-<div class="container">
+<div class="container animated fadeIn">
   <div class="d-flex justify-content-center justify-content-md-end align-items-center mb-3">
     <div class="mr-4">
       <svg class="d-block icon icon-sort-asc click" [ngClass]="{'sort-active': !sortDesc}" (click)="sort('asc')"><use inlineHref="#icon-sort-asc"></use></svg>
