@@ -29,11 +29,11 @@
     </div>
     <div class="">
       <select class="custom-select click" (change)="sortBy($event.target.value)">
+        <option value="date" [selected]="sortQuery === 'date'">Datum</option>
         <option value="cook-counter" [selected]="sortQuery === 'cook-counter'">Wie oft gekocht?</option>
         <option value="duration" [selected]="sortQuery === 'duration'">Dauer</option>
         <option value="difficulty" [selected]="sortQuery === 'difficulty'">Schwierigkeit</option>
         <option value="ingredient-count" [selected]="sortQuery === 'ingredient-count'">Anzahl der Zutaten</option>
-        <option value="date" [selected]="sortQuery === 'date'">Datum</option>
       </select>
     </div>
   </div>

@@ -45,7 +45,7 @@ export class RecipeDetailsComponent implements OnInit {
   }
 
   searchCtg(ctg: string) {
-    this.queryService.setQuery('', ctg, '', true, 'cook-counter');
+    this.queryService.setQuery('', ctg, '', true, 'date');
     this.gotoRecipes();
   }
 

@@ -19,7 +19,7 @@ export class RecipeListComponent implements OnInit{
   ctgQuery = '';
   titleQuery = '';
 
-  sortQuery = 'cook-counter';
+  sortQuery = 'date';
   sortDesc = true;
 
   code: string;

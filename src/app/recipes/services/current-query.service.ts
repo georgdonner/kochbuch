@@ -8,8 +8,8 @@ export class CurrentQueryService {
     ctgQuery: '',
     titleQuery: '',
     sortDesc: true,
-    sortQuery: 'cook-counter'
-  }
+    sortQuery: 'date'
+  };
 
   constructor() { }
 
