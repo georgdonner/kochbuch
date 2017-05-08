@@ -83,17 +83,40 @@ export class RecipeEditComponent implements OnInit {
   }
 
   addCategory(category) {
-    if(!this.recipe.categories) {
-      this.recipe.categories = [category]
-    } else if(this.recipe.categories.includes(category)) {
+    if (!this.recipe.categories) {
+      if (category === 'Vegan') {
+        this.recipe.categories = ['Vegetarisch'];
+      }
+      this.recipe.categories.push(category);
+    } else if (this.recipe.categories.includes(category)) {
       // leave the categories as is
     } else {
+      if (category === 'Vegan') {
+        this.recipe.categories.push('Vegetarisch');
+      }
       this.recipe.categories.push(category);
     }
   }
 
   removeCategory(category) {
-    this.recipe.categories.splice(this.recipe.categories.indexOf(category),1);
+    if (category === 'Vegetarisch') {
+      if (this.recipe.categories.includes('Vegan')) {
+        this.recipe.categories.splice(this.recipe.categories.indexOf('Vegan'), 1);
+      }
+    }
+    this.recipe.categories.splice(this.recipe.categories.indexOf(category), 1);
+  }
+
+  hasCategory(category) {
+    return this.recipe.categories.includes(category);
+  }
+
+  toggleCategory(category) {
+    if (!this.recipe.categories.includes(category)) {
+      this.addCategory(category);
+    } else {
+      this.removeCategory(category);
+    }
   }
 
   getCategories() {
