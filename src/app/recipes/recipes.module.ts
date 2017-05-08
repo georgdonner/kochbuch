@@ -13,6 +13,7 @@ import { RecipeDetailsComponent } from './components/recipe-details/recipe-detai
 import { RecipeFormComponent } from './components/recipe-form/recipe-form.component';
 import { RecipeEditComponent } from './components/recipe-edit/recipe-edit.component';
 import { RecipePrintComponent } from './components/recipe-print/recipe-print.component';
+import { ConverterComponent } from './components/converter/converter.component';
 
 import { RecipeService } from './services/recipe.service';
 import { WunderlistService } from './services/wunderlist.service';
@@ -22,9 +23,9 @@ import { RecipeRoutingModule } from './recipes-routing.module';
 import { CalcServingsPipe } from './pipes/calc-servings.pipe';
 import { FilterRecipesPipe } from './pipes/filter-recipes.pipe';
 import { DifficultyStringPipe } from './pipes/difficulty-string.pipe';
-import { ConverterComponent } from './components/converter/converter.component';
 import { RoundPipe } from './pipes/round.pipe';
 import { SortRecipesPipe } from './pipes/sort-recipes.pipe';
+import { ThumbnailPipe } from './pipes/thumbnail.pipe';
 
 @NgModule({
   imports: [
@@ -51,7 +52,8 @@ import { SortRecipesPipe } from './pipes/sort-recipes.pipe';
     RecipePrintComponent,
     ConverterComponent,
     RoundPipe,
-    SortRecipesPipe
+    SortRecipesPipe,
+    ThumbnailPipe
   ],
   providers: [ 
     RecipeService,

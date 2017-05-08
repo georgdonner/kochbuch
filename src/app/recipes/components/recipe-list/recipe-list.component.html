@@ -41,7 +41,7 @@
     <div *ngFor="let recipe of recipes | filterRecipes:ingrQuery:ctgQuery:titleQuery | sortRecipes:sortQuery:sortDesc"
       (click)="onSelect(recipe)" class="col-lg-6 col-xl-4 click">
       <div class="card mb-4 hvr-float">
-        <img *ngIf="recipe.heroImage" class="card-img-top thumb-img" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
+        <img *ngIf="recipe.heroImage" class="card-img-top thumb-img" src="{{ recipe.heroImage | thumbnail:600:0 }}" alt="{{ recipe.title }}">
         <img *ngIf="!recipe.heroImage" class="card-img-top thumb-img" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">
         <div class="card-block recipe-block">
           <h3 class="card-title recipe-title">{{ recipe.title }}</h3>
