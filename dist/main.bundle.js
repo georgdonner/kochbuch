@@ -1256,89 +1256,71 @@ var FilterRecipesPipe = (function () {
     function FilterRecipesPipe() {
     }
     FilterRecipesPipe.prototype.transform = function (recipes, ingrQuery, ctgQuery, titleQuery) {
-        if (ingrQuery == '' && ctgQuery == '' && titleQuery == '') {
-            return recipes;
-        }
-        recipes = filterTitle();
-        if (ingrQuery == '' && ctgQuery == '') {
-            return recipes;
-        }
-        var filteredRecipes = new Array();
-        var ingrArray = ingrQuery.trim().split(',');
-        var ctgArray = ctgQuery.trim().split(',');
-        if (ctgQuery == '') {
-            recipes.forEach(function (recipe) {
-                var ingrArrayTmp = ingrArray.slice(0);
-                recipe.ingredients.forEach(function (ingredient) {
-                    ingrArrayTmp.forEach(function (ingr) {
-                        if (ingredient.name.toLowerCase().indexOf(ingr.toLowerCase()) !== -1) {
-                            ingrArrayTmp.splice(ingrArrayTmp.indexOf(ingr), 1);
-                        }
-                    });
-                });
-                if (ingrArrayTmp.length === 0) {
-                    filteredRecipes.push(recipe);
-                }
-            });
-            return filteredRecipes;
-        }
-        if (ingrQuery == '') {
-            recipes.forEach(function (recipe) {
-                var ctgArrayTmp = ctgArray.slice(0);
-                if (recipe.categories) {
-                    recipe.categories.forEach(function (category) {
-                        ctgArrayTmp.forEach(function (ctg) {
-                            if (category.toLowerCase().indexOf(ctg.toLowerCase()) !== -1) {
-                                ctgArrayTmp.splice(ctgArrayTmp.indexOf(ctg), 1);
-                            }
-                        });
-                    });
-                }
-                if (ctgArrayTmp.length === 0) {
-                    filteredRecipes.push(recipe);
-                }
-            });
-            return filteredRecipes;
-        }
-        recipes.forEach(function (recipe) {
-            var ingrMatch = false;
-            recipe.ingredients.forEach(function (ingredient) {
-                var ingrArrayTmp = ingrArray.slice(0);
-                ingrArrayTmp.forEach(function (ingr) {
-                    if (ingredient.name.toLowerCase().indexOf(ingr.toLowerCase()) !== -1) {
-                        ingrArrayTmp.splice(ingrArrayTmp.indexOf(ingr), 1);
-                    }
-                });
-                if (ingrArrayTmp.length === 0) {
-                    ingrMatch = true;
-                }
-            });
-            if (recipe.categories && ingrMatch) {
-                var ctgArrayTmp_1 = ctgArray.slice(0);
-                recipe.categories.forEach(function (category) {
-                    ctgArrayTmp_1.forEach(function (ctg) {
-                        if (category.toLowerCase().indexOf(ctg.toLowerCase()) !== -1) {
-                            ctgArrayTmp_1.splice(ctgArrayTmp_1.indexOf(ctg), 1);
-                        }
-                    });
-                });
-                if (ctgArrayTmp_1.length === 0) {
-                    filteredRecipes.push(recipe);
-                }
-            }
-        });
-        return filteredRecipes;
-        function filterTitle() {
+        var titleFilter = filterTitle(recipes, titleQuery);
+        var ingrFilter = filterIngredients(titleFilter, ingrQuery);
+        var ctgFilter = filterCategories(ingrFilter, ctgQuery);
+        return ctgFilter;
+        function filterTitle(toFilter, query) {
             var titleFiltered = new Array();
-            if (titleQuery === '') {
-                return recipes;
+            if (query === '') {
+                return toFilter;
             }
-            recipes.forEach(function (recipe) {
+            toFilter.forEach(function (recipe) {
                 if (recipe.title.toLowerCase().includes(titleQuery.toLowerCase())) {
                     titleFiltered.push(recipe);
                 }
             });
             return titleFiltered;
+        }
+        function filterIngredients(toFilter, query) {
+            var ingrFiltered = new Array();
+            if (query === '') {
+                return toFilter;
+            }
+            var ingrArray = query.split(',');
+            toFilter.forEach(function (recipe) {
+                // make a temp copy of the ingredient array
+                var ingrArrayTmp = ingrArray.slice(0);
+                recipe.ingredients.forEach(function (ingredient) {
+                    ingrArrayTmp.forEach(function (ingr) {
+                        if (ingredient.name.trim().toLowerCase().includes(ingr.trim().toLowerCase())) {
+                            // ingredient was found in the recipe
+                            ingrArrayTmp.splice(ingrArrayTmp.indexOf(ingr), 1);
+                        }
+                    });
+                });
+                if (ingrArrayTmp.length === 0) {
+                    // all ingredients in recipe
+                    ingrFiltered.push(recipe);
+                }
+            });
+            return ingrFiltered;
+        }
+        function filterCategories(toFilter, query) {
+            var ctgFiltered = new Array();
+            if (query === '') {
+                return toFilter;
+            }
+            var ctgArray = query.split(',');
+            toFilter.forEach(function (recipe) {
+                // make a temp copy of category array
+                var ctgArrayTmp = ctgArray.slice(0);
+                if (recipe.categories) {
+                    recipe.categories.forEach(function (category) {
+                        ctgArrayTmp.forEach(function (ctg) {
+                            if (category.trim().toLowerCase().includes(ctg.trim().toLowerCase())) {
+                                // recipe has category
+                                ctgArrayTmp.splice(ctgArrayTmp.indexOf(category), 1);
+                            }
+                        });
+                    });
+                }
+                if (ctgArrayTmp.length === 0) {
+                    // recipe has all categories
+                    ctgFiltered.push(recipe);
+                }
+            });
+            return ctgFiltered;
         }
     };
     return FilterRecipesPipe;
@@ -1473,17 +1455,13 @@ var ThumbnailPipe = (function () {
         if (width === 0) {
             var h = 'h:' + height;
             newUrl = url.replace(url.match(/(w:\d+)/g)[0], h);
-            console.log('height set' + newUrl);
         }
         else if (height === 0) {
             newUrl = url.replace(/(w:\d+)/g, 'w:' + width);
-            console.log('width set' + newUrl);
         }
         else {
             newUrl = url.replace(/(w:\d+)/g, 'w:' + width + 'h:' + height);
-            console.log('both set' + newUrl);
         }
-        console.log(newUrl);
         return newUrl;
     };
     return ThumbnailPipe;
@@ -1569,14 +1547,14 @@ RecipeRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_recipe_form_recipe_form_component__ = __webpack_require__(148);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_recipe_edit_recipe_edit_component__ = __webpack_require__(147);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_recipe_print_recipe_print_component__ = __webpack_require__(150);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__services_recipe_service__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_wunderlist_service__ = __webpack_require__(65);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_current_query_service__ = __webpack_require__(64);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__recipes_routing_module__ = __webpack_require__(204);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__pipes_calc_servings_pipe__ = __webpack_require__(198);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pipes_filter_recipes_pipe__ = __webpack_require__(200);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pipes_difficulty_string_pipe__ = __webpack_require__(199);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__components_converter_converter_component__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_converter_converter_component__ = __webpack_require__(197);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__services_recipe_service__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__services_wunderlist_service__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_current_query_service__ = __webpack_require__(64);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__recipes_routing_module__ = __webpack_require__(204);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__pipes_calc_servings_pipe__ = __webpack_require__(198);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__pipes_filter_recipes_pipe__ = __webpack_require__(200);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__pipes_difficulty_string_pipe__ = __webpack_require__(199);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pipes_round_pipe__ = __webpack_require__(201);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pipes_sort_recipes_pipe__ = __webpack_require__(202);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__pipes_thumbnail_pipe__ = __webpack_require__(203);
@@ -1621,7 +1599,7 @@ RecipesModule = __decorate([
         imports: [
             __WEBPACK_IMPORTED_MODULE_1__angular_common__["CommonModule"],
             __WEBPACK_IMPORTED_MODULE_2__angular_forms__["FormsModule"],
-            __WEBPACK_IMPORTED_MODULE_16__recipes_routing_module__["a" /* RecipeRoutingModule */],
+            __WEBPACK_IMPORTED_MODULE_17__recipes_routing_module__["a" /* RecipeRoutingModule */],
             __WEBPACK_IMPORTED_MODULE_4__ng_bootstrap_ng_bootstrap__["a" /* NgbModule */],
             __WEBPACK_IMPORTED_MODULE_3_angular2_markdown__["a" /* MarkdownModule */],
             __WEBPACK_IMPORTED_MODULE_5__ngui_auto_complete__["NguiAutoCompleteModule"],
@@ -1635,20 +1613,20 @@ RecipesModule = __decorate([
             __WEBPACK_IMPORTED_MODULE_10__components_recipe_form_recipe_form_component__["a" /* RecipeFormComponent */],
             __WEBPACK_IMPORTED_MODULE_8__components_recipe_list_recipe_list_component__["a" /* RecipeListComponent */],
             __WEBPACK_IMPORTED_MODULE_11__components_recipe_edit_recipe_edit_component__["a" /* RecipeEditComponent */],
-            __WEBPACK_IMPORTED_MODULE_17__pipes_calc_servings_pipe__["a" /* CalcServingsPipe */],
-            __WEBPACK_IMPORTED_MODULE_18__pipes_filter_recipes_pipe__["a" /* FilterRecipesPipe */],
-            __WEBPACK_IMPORTED_MODULE_19__pipes_difficulty_string_pipe__["a" /* DifficultyStringPipe */],
+            __WEBPACK_IMPORTED_MODULE_18__pipes_calc_servings_pipe__["a" /* CalcServingsPipe */],
+            __WEBPACK_IMPORTED_MODULE_19__pipes_filter_recipes_pipe__["a" /* FilterRecipesPipe */],
+            __WEBPACK_IMPORTED_MODULE_20__pipes_difficulty_string_pipe__["a" /* DifficultyStringPipe */],
             __WEBPACK_IMPORTED_MODULE_7_ng_inline_href__["InlineHrefDirective"],
             __WEBPACK_IMPORTED_MODULE_12__components_recipe_print_recipe_print_component__["a" /* RecipePrintComponent */],
-            __WEBPACK_IMPORTED_MODULE_20__components_converter_converter_component__["a" /* ConverterComponent */],
+            __WEBPACK_IMPORTED_MODULE_13__components_converter_converter_component__["a" /* ConverterComponent */],
             __WEBPACK_IMPORTED_MODULE_21__pipes_round_pipe__["a" /* RoundPipe */],
             __WEBPACK_IMPORTED_MODULE_22__pipes_sort_recipes_pipe__["a" /* SortRecipesPipe */],
             __WEBPACK_IMPORTED_MODULE_23__pipes_thumbnail_pipe__["a" /* ThumbnailPipe */]
         ],
         providers: [
-            __WEBPACK_IMPORTED_MODULE_13__services_recipe_service__["a" /* RecipeService */],
-            __WEBPACK_IMPORTED_MODULE_14__services_wunderlist_service__["a" /* WunderlistService */],
-            __WEBPACK_IMPORTED_MODULE_15__services_current_query_service__["a" /* CurrentQueryService */]
+            __WEBPACK_IMPORTED_MODULE_14__services_recipe_service__["a" /* RecipeService */],
+            __WEBPACK_IMPORTED_MODULE_15__services_wunderlist_service__["a" /* WunderlistService */],
+            __WEBPACK_IMPORTED_MODULE_16__services_current_query_service__["a" /* CurrentQueryService */]
         ]
     })
 ], RecipesModule);
@@ -2054,8 +2032,13 @@ var _a;
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return environment; });
+// The file contents for the current environment will overwrite these during build.
+// The build system defaults to the dev environment which uses `environment.ts`, but if you do
+// `ng build --env=prod` then `environment.prod.ts` will be used instead.
+// The list of which env maps to which file can be found in `.angular-cli.json`.
+// The file contents for the current environment will overwrite these during build.
 var environment = {
-    production: true,
+    production: false,
     filestackKey: 'AwD48ceQaWtGBs9plMog7z'
 };
 //# sourceMappingURL=environment.js.map

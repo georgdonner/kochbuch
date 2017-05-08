@@ -6,98 +6,76 @@ import { Recipe, Ingredient } from '../recipe';
 })
 export class FilterRecipesPipe implements PipeTransform {
 
-  transform(recipes: any[], ingrQuery: string, ctgQuery: string, titleQuery: string): any[] {
-    if (ingrQuery == '' && ctgQuery == '' && titleQuery == '') {
-      return recipes;
-    }
-
-    recipes = filterTitle();
-
-    if (ingrQuery == '' && ctgQuery == '') {
-      return recipes;
-    }
-
-    let filteredRecipes = new Array<Recipe>();
-    const ingrArray = ingrQuery.trim().split(',');
-    const ctgArray = ctgQuery.trim().split(',');
-
-    if (ctgQuery == '') {
-      recipes.forEach((recipe) => {
-        let ingrArrayTmp = ingrArray.slice(0);
-        recipe.ingredients.forEach((ingredient) => {
-          ingrArrayTmp.forEach((ingr) => {
-            if(ingredient.name.toLowerCase().indexOf(ingr.toLowerCase())!==-1) {
-              ingrArrayTmp.splice(ingrArrayTmp.indexOf(ingr),1);
-            }
-          })
-        });
-        if (ingrArrayTmp.length === 0) {
-          filteredRecipes.push(recipe);
-        }
-      });
-      return filteredRecipes
-    }
+  transform(recipes: Recipe[], ingrQuery: string, ctgQuery: string, titleQuery: string): Recipe[] {
     
-    if (ingrQuery == '') {
-      recipes.forEach((recipe) => {
-        let ctgArrayTmp = ctgArray.slice(0);
-        if (recipe.categories) {
-          recipe.categories.forEach((category) => {
-            ctgArrayTmp.forEach((ctg) => {
-              if(category.toLowerCase().indexOf(ctg.toLowerCase())!==-1) {
-                ctgArrayTmp.splice(ctgArrayTmp.indexOf(ctg),1);
-              }
-            })
-          });
-        }
-        if (ctgArrayTmp.length === 0) {
-          filteredRecipes.push(recipe);
-        }
-      });
-      return filteredRecipes;
-    }
+    let titleFilter = filterTitle(recipes, titleQuery);
+    let ingrFilter = filterIngredients(titleFilter, ingrQuery);
+    let ctgFilter = filterCategories(ingrFilter, ctgQuery);
+    return ctgFilter;
 
-    recipes.forEach((recipe) => {
-      let ingrMatch: boolean = false;
-
-      recipe.ingredients.forEach((ingredient) => {
-        let ingrArrayTmp = ingrArray.slice(0);
-        ingrArrayTmp.forEach((ingr) => {
-          if(ingredient.name.toLowerCase().indexOf(ingr.toLowerCase())!==-1) {
-            ingrArrayTmp.splice(ingrArrayTmp.indexOf(ingr),1);
-          }
-        })
-        if(ingrArrayTmp.length === 0) {
-          ingrMatch = true;
-        }
-      });
-      if (recipe.categories && ingrMatch) {
-        let ctgArrayTmp = ctgArray.slice(0);
-        recipe.categories.forEach((category) => {
-          ctgArrayTmp.forEach((ctg) => {
-            if(category.toLowerCase().indexOf(ctg.toLowerCase())!==-1) {
-              ctgArrayTmp.splice(ctgArrayTmp.indexOf(ctg),1);
-            }
-          })
-        });
-        if (ctgArrayTmp.length === 0) {
-          filteredRecipes.push(recipe);
-        }
-      }
-    });
-    return filteredRecipes;
-
-    function filterTitle(): Recipe[] {
+    function filterTitle(toFilter: Recipe[], query: string): Recipe[] {
       let titleFiltered = new Array<Recipe>();
-      if (titleQuery === '') {
-        return recipes;
+      if (query === '') {
+        return toFilter;
       }
-      recipes.forEach((recipe) => {
+      toFilter.forEach((recipe) => {
         if (recipe.title.toLowerCase().includes(titleQuery.toLowerCase())) {
           titleFiltered.push(recipe);
         }
       })
       return titleFiltered;
     }
-  } 
+
+    function filterIngredients(toFilter: Recipe[], query: string): Recipe[] {
+      let ingrFiltered = new Array<Recipe>();
+      if (query === '') {
+        return toFilter;
+      }
+      const ingrArray = query.split(',');
+      toFilter.forEach((recipe) => {
+        // make a temp copy of the ingredient array
+        let ingrArrayTmp = ingrArray.slice(0);
+        recipe.ingredients.forEach((ingredient) => {
+          ingrArrayTmp.forEach((ingr) => {
+            if(ingredient.name.trim().toLowerCase().includes(ingr.trim().toLowerCase())) {
+              // ingredient was found in the recipe
+              ingrArrayTmp.splice(ingrArrayTmp.indexOf(ingr), 1);
+            }
+          });
+        });
+        if (ingrArrayTmp.length === 0) {
+          // all ingredients in recipe
+          ingrFiltered.push(recipe);
+        }
+      });
+      return ingrFiltered;
+    }
+
+    function filterCategories(toFilter: Recipe[], query: string): Recipe[]  {
+      let ctgFiltered = new Array<Recipe>();
+      if (query === '') {
+        return toFilter;
+      }
+      const ctgArray = query.split(',');
+      toFilter.forEach((recipe) => {
+        // make a temp copy of category array
+        let ctgArrayTmp = ctgArray.slice(0);
+        if (recipe.categories) {
+          recipe.categories.forEach((category) => {
+            ctgArrayTmp.forEach((ctg) => {
+              if(category.trim().toLowerCase().includes(ctg.trim().toLowerCase())) {
+                // recipe has category
+                ctgArrayTmp.splice(ctgArrayTmp.indexOf(category), 1);
+              }
+            })
+          });
+        }
+        if (ctgArrayTmp.length === 0) {
+          // recipe has all categories
+          ctgFiltered.push(recipe);
+        }
+      });
+      return ctgFiltered;
+    }
+  }
 }
