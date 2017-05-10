@@ -126,73 +126,73 @@ export class CalcServingsPipe implements PipeTransform {
       const quotient: number = num - remainder;
       if (remainder === 0.25) {
         if (quotient !== 0) {
-          return quotient.toString() + " \xBC"
+          return quotient.toString() + ' \xBC';
         }
-        return "\xBC";
+        return '\xBC';
       }
       if (remainder === 0.5) {
         if (quotient !== 0) {
-          return quotient.toString() + " \xBD"
+          return quotient.toString() + ' \xBD';
         }
-        return "\xBD";
+        return ' \xBD';
       }
       if (remainder === 0.75) {
         if (quotient !== 0) {
-          return quotient.toString() + " \xBE"
+          return quotient.toString() + ' \xBE';
         }
-        return "\xBE";
+        return ' \xBE';
       }
-      return num.toString();
+      return num.toPrecision(3);
     }
 
     function adjustEnding(str: string) {
-      if (str.match(multUnit_n)!=null){
+      if (str.match(multUnit_n) != null) {
         // quantity unit that pluralizes to -n
-        var unit: string = str.match(multUnit_n)[1];
-        if(isNowSingle()) {
-          return str.replace(unit, unit.slice(0,-1));
+        let unit: string = str.match(multUnit_n)[1];
+        if (isNowSingle()) {
+          return str.replace(unit, unit.slice(0, -1));
         }
-        else if(isNowMultiple()) {
-          return str.replace(unit, unit+'n');
+        else if (isNowMultiple()) {
+          return str.replace(unit, unit + 'n');
         }
         return str;
       }
-      else if (str.match(multUnit_en)!=null){
+      else if (str.match(multUnit_en) != null) {
         // quantity unit that pluralizes to -en
-        var unit: string = str.match(multUnit_en)[1];
-        if(isNowSingle()) {
-          return str.replace(unit, unit.slice(0,-2));
+        let unit: string = str.match(multUnit_en)[1];
+        if (isNowSingle()) {
+          return str.replace(unit, unit.slice(0, -2));
         }
-        else if(isNowMultiple()) {
-          return str.replace(unit, unit+'en');
+        else if (isNowMultiple()) {
+          return str.replace(unit, unit + 'en');
         }
         return str;
       }
-      else if (str.match(glas)!=null){
+      else if (str.match(glas) != null) {
         // special quantity unit: Glas
-        var unit: string = str.match(glas)[1];
-        if(isNowSingle()) {
+        let unit: string = str.match(glas)[1];
+        if (isNowSingle()) {
           return str.replace(unit, 'Glas');
         }
-        else if(isNowMultiple()) {
+        else if (isNowMultiple()) {
           return str.replace(unit, 'Gläser');
         }
         return str;
       }
-      else if (str.match(name_e)!=null){
+      else if (str.match(name_e) != null) {
         // ingredient ending with -e (pluralize to -en)
-        var name: string = str.match(name_e)[0];
+        let name: string = str.match(name_e)[0];
         if (isNowMultiple()) {
-          return str.replace(name, name+'n');
+          return str.replace(name, name + 'n');
         } else {
           return str;
         }
       }
       else if (str.match(name_en)){
         // ingredient ending with -en (singularize to -e)
-        var name: string = str.match(name_en)[0];
+        let name: string = str.match(name_en)[0];
         if (isNowSingle()) {
-          return str.replace(name, name.slice(0,-1));
+          return str.replace(name, name.slice(0, -1));
         } else {
           return str;
         }
@@ -202,10 +202,9 @@ export class CalcServingsPipe implements PipeTransform {
         return str;
       }
     }
-    
 
     function isNowSingle() {
-      if (+quantity>1 && newQuantity<=1) {
+      if (+quantity > 1 && newQuantity <= 1) {
         return true;
       } else {
         return false;
@@ -213,7 +212,7 @@ export class CalcServingsPipe implements PipeTransform {
     }
 
     function isNowMultiple() {
-      if (+quantity<=1 && newQuantity>1) {
+      if (+quantity <= 1 && newQuantity > 1) {
         return true;
       } else {
         return false;

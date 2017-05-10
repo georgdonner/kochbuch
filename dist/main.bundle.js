@@ -1093,23 +1093,23 @@ var CalcServingsPipe = (function () {
             var quotient = num - remainder;
             if (remainder === 0.25) {
                 if (quotient !== 0) {
-                    return quotient.toString() + " \xBC";
+                    return quotient.toString() + ' \xBC';
                 }
-                return "\xBC";
+                return '\xBC';
             }
             if (remainder === 0.5) {
                 if (quotient !== 0) {
-                    return quotient.toString() + " \xBD";
+                    return quotient.toString() + ' \xBD';
                 }
-                return "\xBD";
+                return ' \xBD';
             }
             if (remainder === 0.75) {
                 if (quotient !== 0) {
-                    return quotient.toString() + " \xBE";
+                    return quotient.toString() + ' \xBE';
                 }
-                return "\xBE";
+                return ' \xBE';
             }
-            return num.toString();
+            return num.toPrecision(3);
         }
         function adjustEnding(str) {
             if (str.match(multUnit_n) != null) {
