@@ -91,13 +91,42 @@ export class RecipeFormComponent implements OnInit {
   }
 
   addCategory(category) {
-    if (!this.categories.includes(category)) {
-      this.categories.push(category);
+    if (!this.model.categories) {
+      if (category === 'Vegan') {
+        this.model.categories = ['Vegetarisch'];
+      }
+      this.model.categories.push(category);
+    } else if (this.model.categories.includes(category)) {
+      // leave the categories as is
+    } else {
+      if (category === 'Vegan') {
+        this.model.categories.push('Vegetarisch');
+      }
+      this.model.categories.push(category);
     }
   }
 
   removeCategory(category) {
-    this.categories.splice(this.categories.indexOf(category),1);
+    if (category === 'Vegetarisch') {
+      if (this.model.categories.includes('Vegan')) {
+        this.model.categories.splice(this.model.categories.indexOf('Vegan'), 1);
+      }
+    }
+    this.model.categories.splice(this.model.categories.indexOf(category), 1);
+  }
+
+  hasCategory(category) {
+    return this.model.categories.includes(category);
+  }
+
+  toggleCategory(category) {
+    if (!this.model.categories) {
+      this.addCategory(category);
+    } else if (!this.model.categories.includes(category)) {
+      this.addCategory(category);
+    } else {
+      this.removeCategory(category);
+    }
   }
 
   getCategories() {

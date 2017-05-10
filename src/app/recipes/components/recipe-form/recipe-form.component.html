@@ -35,6 +35,12 @@
           <button type="button" class="btn btn-secondary click" [ngClass]="{'active':model.difficulty==3}" (click)="model.difficulty=3">Schwer</button>
         </div>
       </div>
+      <div class="col-12 mt-4 text-center">
+        <div class="btn-group">
+          <button class="btn btn-secondary click" [ngClass]="{'active': hasCategory('Vegetarisch')}" (click)="toggleCategory('Vegetarisch')">Vegetarisch</button>
+          <button class="btn btn-secondary click" [ngClass]="{'active': hasCategory('Vegan')}" (click)="toggleCategory('Vegan')">Vegan</button>
+        </div>
+      </div>
     </div>
 
     <h2 class="mb-3 section-header">Zutaten</h2>
