@@ -657,8 +657,37 @@ var RecipeListComponent = (function () {
         this.sortDesc = this.queryService.getQuery().sortDesc;
         this.sortQuery = this.queryService.getQuery().sortQuery;
     };
+    RecipeListComponent.prototype.toggleCategory = function (ctg) {
+        if (!this.ctgQuery.includes(ctg)) {
+            // the category is not present in the query
+            if (this.ctgQuery === '') {
+                this.ctgQuery = ctg;
+            }
+            else {
+                this.ctgQuery = this.ctgQuery.concat(', ' + ctg);
+            }
+        }
+        else {
+            // category already present in query
+            if (this.ctgQuery.includes(',')) {
+                // there are multiple categories in query
+                if (this.ctgQuery.endsWith(ctg)) {
+                    this.ctgQuery = this.ctgQuery.replace((', ' + ctg), '');
+                }
+                else {
+                    this.ctgQuery = this.ctgQuery.replace((ctg + ', '), '');
+                }
+            }
+            else {
+                this.ctgQuery = '';
+            }
+        }
+    };
+    RecipeListComponent.prototype.hasCategory = function (ctg) {
+        return this.ctgQuery.includes(ctg);
+    };
     RecipeListComponent.prototype.sort = function (sort) {
-        if (sort == 'asc') {
+        if (sort === 'asc') {
             this.sortDesc = false;
         }
         else {
@@ -1957,7 +1986,7 @@ module.exports = "<div class=\"container animated fadeIn\">\r\n  <form #recipeFo
 /***/ 297:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"jumbotron jumbotron-fluid animated fadeIn\">\r\n  <div class=\"container\">\r\n    <h1 class=\"display-3\">Maries und Georgs Rezeptbuch</h1>\r\n    <p class=\"lead\" >Durchsuche unser Kochbuch nach ausgewählten Rezepten, die wir hier mit Liebe zusammengestellt haben :)</p>\r\n    <hr class=\"my-4\">\r\n    <div class=\"row\">\r\n      <div class=\"col-md-4 mb-2 mb-md-0\">\r\n        <input [(ngModel)]=\"ingrQuery\" type=\"text\" class=\"form-control search-field\" name=\"ingredient-search\" placeholder=\"Suche nach Zutaten z.B. Tomate, Kartoffel\">\r\n      </div>\r\n      <div class=\"col-md-4 mb-2 mb-md-0\">\r\n        <input [(ngModel)]=\"ctgQuery\" type=\"text\" class=\"form-control search-field\" name=\"category-search\" placeholder=\"Suche nach Kategorien z.B. Pasta, Vegan\">\r\n      </div>\r\n      <div class=\"col-md-4 mb-2 mb-md-0\">\r\n        <input [(ngModel)]=\"titleQuery\" type=\"text\" class=\"form-control search-field\" name=\"title-search\" placeholder=\"Suche nach Titel z.B. Pizza, Wrap\">\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"new-recipe animated fadeIn\">\r\n  <a class=\"click\" (click)=\"newRecipe()\"><img class=\"plus-button hvr-grow\" src=\"../../../assets/images/plus-button4.svg\" alt=\"\"></a>\r\n</div>\r\n\r\n<div class=\"container animated fadeIn\">\r\n  <div class=\"d-flex justify-content-center justify-content-md-end align-items-center mb-3\">\r\n    <div class=\"mr-4\">\r\n      <svg class=\"d-block icon icon-sort-asc click\" [ngClass]=\"{'sort-active': !sortDesc}\" (click)=\"sort('asc')\"><use inlineHref=\"#icon-sort-asc\"></use></svg>\r\n      <svg class=\"d-block icon icon-sort-desc click\" [ngClass]=\"{'sort-active': sortDesc}\" (click)=\"sort('desc')\"><use inlineHref=\"#icon-sort-desc\"></use></svg>\r\n    </div>\r\n    <div class=\"\">\r\n      <select class=\"custom-select click\" (change)=\"sortBy($event.target.value)\">\r\n        <option value=\"date\" [selected]=\"sortQuery === 'date'\">Datum</option>\r\n        <option value=\"cook-counter\" [selected]=\"sortQuery === 'cook-counter'\">Wie oft gekocht?</option>\r\n        <option value=\"duration\" [selected]=\"sortQuery === 'duration'\">Dauer</option>\r\n        <option value=\"difficulty\" [selected]=\"sortQuery === 'difficulty'\">Schwierigkeit</option>\r\n        <option value=\"ingredient-count\" [selected]=\"sortQuery === 'ingredient-count'\">Anzahl der Zutaten</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n  <div *ngIf=\"recipes\" class=\"row clearfix\">\r\n    <div *ngFor=\"let recipe of recipes | filterRecipes:ingrQuery:ctgQuery:titleQuery | sortRecipes:sortQuery:sortDesc\"\r\n      (click)=\"onSelect(recipe)\" class=\"col-lg-6 col-xl-4 click\">\r\n      <div class=\"card mb-4 hvr-float\">\r\n        <img *ngIf=\"recipe.heroImage\" class=\"card-img-top thumb-img\" src=\"{{ recipe.heroImage | thumbnail:600:0 }}\" alt=\"{{ recipe.title }}\">\r\n        <img *ngIf=\"!recipe.heroImage\" class=\"card-img-top thumb-img\" src=\"../../../assets/images/comingsoon.jpg\" alt=\"Coming soon\">\r\n        <div class=\"card-block recipe-block\">\r\n          <h3 class=\"card-title recipe-title\" [ngClass]=\"{'long-title': recipe.title.length > 50}\">{{ recipe.title }}</h3>\r\n        </div>\r\n        <div class=\"card-footer\">\r\n          <svg class=\"icon icon-clock-o\">\r\n            <use inlineHref=\"#icon-clock-o\"></use>\r\n          </svg>\r\n          <span>{{ recipe.duration }} Minuten</span>\r\n          <div *ngIf=\"recipe.categories\"><span *ngFor=\"let ctg of recipe.categories\" class=\"click\"> #<strong>{{ ctg }}</strong> </span></div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div class=\"jumbotron jumbotron-fluid animated fadeIn\">\r\n  <div class=\"container\">\r\n    <h1 class=\"display-3\">Maries und Georgs Rezeptbuch</h1>\r\n    <p class=\"lead\" >Durchsuche unser Kochbuch nach ausgewählten Rezepten, die wir hier mit Liebe zusammengestellt haben :)</p>\r\n    <hr class=\"my-4\">\r\n    <div class=\"row\">\r\n      <div class=\"col-md-4 mb-2 mb-md-0\">\r\n        <input [(ngModel)]=\"ingrQuery\" type=\"text\" class=\"form-control search-field\" name=\"ingredient-search\" placeholder=\"Suche nach Zutaten z.B. Tomate, Kartoffel\">\r\n      </div>\r\n      <div class=\"col-md-4 mb-2 mb-md-0\">\r\n        <input [(ngModel)]=\"ctgQuery\" type=\"text\" class=\"form-control search-field\" name=\"category-search\" placeholder=\"Suche nach Kategorien z.B. Pasta, Vegan\">\r\n      </div>\r\n      <div class=\"col-md-4 mb-2 mb-md-0\">\r\n        <input [(ngModel)]=\"titleQuery\" type=\"text\" class=\"form-control search-field\" name=\"title-search\" placeholder=\"Suche nach Titel z.B. Pizza, Wrap\">\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n<div class=\"new-recipe animated fadeIn\">\r\n  <a class=\"click\" (click)=\"newRecipe()\"><img class=\"plus-button hvr-grow\" src=\"../../../assets/images/plus-button4.svg\" alt=\"\"></a>\r\n</div>\r\n\r\n<div class=\"container animated fadeIn\">\r\n  <div class=\"d-flex flex-wrap justify-content-center justify-content-md-between align-items-center mb-3\">\r\n    <div class=\"btn-group mb-3 mb-md-0\">\r\n      <button class=\"btn btn-secondary click\" [ngClass]=\"{'active': hasCategory('Vegetarisch')}\" (click)=\"toggleCategory('Vegetarisch')\">Vegetarisch</button>\r\n      <button class=\"btn btn-secondary click\" [ngClass]=\"{'active': hasCategory('Vegan')}\" (click)=\"toggleCategory('Vegan')\">Vegan</button>\r\n    </div>\r\n    <div class=\"align-self-center\">\r\n      <div class=\"mr-4 align-middle d-inline-block\">\r\n        <svg class=\"icon icon-sort-asc click\" [ngClass]=\"{'sort-active': !sortDesc}\" (click)=\"sort('asc')\"><use inlineHref=\"#icon-sort-asc\"></use></svg>\r\n        <svg class=\"icon icon-sort-desc click\" [ngClass]=\"{'sort-active': sortDesc}\" (click)=\"sort('desc')\"><use inlineHref=\"#icon-sort-desc\"></use></svg>\r\n      </div>\r\n      <select class=\"custom-select click align-middle\" (change)=\"sortBy($event.target.value)\">\r\n        <option value=\"date\" [selected]=\"sortQuery === 'date'\">Datum</option>\r\n        <option value=\"cook-counter\" [selected]=\"sortQuery === 'cook-counter'\">Wie oft gekocht?</option>\r\n        <option value=\"duration\" [selected]=\"sortQuery === 'duration'\">Dauer</option>\r\n        <option value=\"difficulty\" [selected]=\"sortQuery === 'difficulty'\">Schwierigkeit</option>\r\n        <option value=\"ingredient-count\" [selected]=\"sortQuery === 'ingredient-count'\">Anzahl der Zutaten</option>\r\n      </select>\r\n    </div>\r\n  </div>\r\n  <div *ngIf=\"recipes\" class=\"row clearfix\">\r\n    <div *ngFor=\"let recipe of recipes | filterRecipes:ingrQuery:ctgQuery:titleQuery | sortRecipes:sortQuery:sortDesc\"\r\n      (click)=\"onSelect(recipe)\" class=\"col-lg-6 col-xl-4 click\">\r\n      <div class=\"card mb-4 hvr-float\">\r\n        <img *ngIf=\"recipe.heroImage\" class=\"card-img-top thumb-img\" src=\"{{ recipe.heroImage | thumbnail:600:0 }}\" alt=\"{{ recipe.title }}\">\r\n        <img *ngIf=\"!recipe.heroImage\" class=\"card-img-top thumb-img\" src=\"../../../assets/images/comingsoon.jpg\" alt=\"Coming soon\">\r\n        <div class=\"card-block recipe-block\">\r\n          <h3 class=\"card-title recipe-title\" [ngClass]=\"{'long-title': recipe.title.length > 50}\">{{ recipe.title }}</h3>\r\n        </div>\r\n        <div class=\"card-footer\">\r\n          <svg class=\"icon icon-clock-o\">\r\n            <use inlineHref=\"#icon-clock-o\"></use>\r\n          </svg>\r\n          <span>{{ recipe.duration }} Minuten</span>\r\n          <div *ngIf=\"recipe.categories\"><span *ngFor=\"let ctg of recipe.categories\" class=\"click\"> #<strong>{{ ctg }}</strong> </span></div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 

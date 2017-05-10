@@ -45,7 +45,7 @@ export class RecipeListComponent implements OnInit{
       this.getQuery();
     });
   }
-  
+
   ngAfterContentInit() {
     if (this.code) {
       this.wunderlistService.getAccessToken(this.code).subscribe((token) => {
@@ -62,8 +62,35 @@ export class RecipeListComponent implements OnInit{
     this.sortQuery = this.queryService.getQuery().sortQuery;
   }
 
+  toggleCategory(ctg: string) {
+    if (!this.ctgQuery.includes(ctg)) {
+      // the category is not present in the query
+      if (this.ctgQuery === '') {
+        this.ctgQuery = ctg;
+      } else {
+        this.ctgQuery = this.ctgQuery.concat(', ' + ctg);
+      }
+    } else {
+      // category already present in query
+      if (this.ctgQuery.includes(',')) {
+        // there are multiple categories in query
+        if (this.ctgQuery.endsWith(ctg)) {
+          this.ctgQuery = this.ctgQuery.replace((', ' + ctg), '');
+        } else {
+          this.ctgQuery = this.ctgQuery.replace((ctg + ', '), '');
+        }
+      } else {
+        this.ctgQuery = '';
+      }
+    }
+  }
+
+  hasCategory(ctg: string) {
+    return this.ctgQuery.includes(ctg);
+  }
+
   sort(sort: string) {
-    if (sort == 'asc') {
+    if (sort === 'asc') {
       this.sortDesc = false;
     } else {
       this.sortDesc = true;
