@@ -46,7 +46,7 @@ router.post('/recipe', function (req, res, next) {
     });
  });
 
-// Delete recipe
+/* Delete recipe
 router.delete('/recipe/:id', function (req, res, next) {
     Recipe.removeRecipe(req.params.id, function (err, recipe) { 
         if (err) {
@@ -55,6 +55,7 @@ router.delete('/recipe/:id', function (req, res, next) {
         res.json(recipe);
      });
  });
+ */
 
 // Update recipe
 router.put('/recipe/:id', function (req, res, next) {

@@ -475,38 +475,38 @@ var RecipeFormComponent = (function () {
         this.ingredients.splice(this.ingredients.indexOf(ingredient), 1);
     };
     RecipeFormComponent.prototype.addCategory = function (category) {
-        if (!this.model.categories) {
+        if (!this.categories) {
             if (category === 'Vegan') {
-                this.model.categories = ['Vegetarisch'];
+                this.categories = ['Vegetarisch'];
             }
-            this.model.categories.push(category);
+            this.categories.push(category);
         }
-        else if (this.model.categories.includes(category)) {
+        else if (this.categories.includes(category)) {
             // leave the categories as is
         }
         else {
             if (category === 'Vegan') {
-                this.model.categories.push('Vegetarisch');
+                this.categories.push('Vegetarisch');
             }
-            this.model.categories.push(category);
+            this.categories.push(category);
         }
     };
     RecipeFormComponent.prototype.removeCategory = function (category) {
         if (category === 'Vegetarisch') {
-            if (this.model.categories.includes('Vegan')) {
-                this.model.categories.splice(this.model.categories.indexOf('Vegan'), 1);
+            if (this.categories.includes('Vegan')) {
+                this.categories.splice(this.categories.indexOf('Vegan'), 1);
             }
         }
-        this.model.categories.splice(this.model.categories.indexOf(category), 1);
+        this.categories.splice(this.categories.indexOf(category), 1);
     };
     RecipeFormComponent.prototype.hasCategory = function (category) {
-        return this.model.categories.includes(category);
+        return this.categories.includes(category);
     };
     RecipeFormComponent.prototype.toggleCategory = function (category) {
-        if (!this.model.categories) {
+        if (!this.categories) {
             this.addCategory(category);
         }
-        else if (!this.model.categories.includes(category)) {
+        else if (!this.categories.includes(category)) {
             this.addCategory(category);
         }
         else {

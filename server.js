@@ -19,7 +19,7 @@ conn.on('error', console.error.bind(console, 'connection error:'));
 var app = express();
 
 // CORS middleware
-app.options('*', cors());
+app.use(cors());
 
 // Get our API routes
 var api = require('./server/routes/api');
