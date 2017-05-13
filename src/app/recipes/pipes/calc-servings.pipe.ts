@@ -84,7 +84,7 @@ export class CalcServingsPipe implements PipeTransform {
 
     function convertMetrics(ingr: string): string {
       // check if the unit is metric
-      const validMetric = /\d+\s?(g|kg|ml|l)/i;
+      const validMetric = /\d+\s?(g|kg|ml|l)\s+/i;
 
       if (ingr.match(validMetric) == null) {
         return ingr;
@@ -92,7 +92,7 @@ export class CalcServingsPipe implements PipeTransform {
       else {
         const metricString = ingr.match(validMetric)[0];
         // calculate new quantity, because var quantity is not re-calculated yet
-        const calculatedQuantity = quantity * (newServings / origServings)
+        const calculatedQuantity = quantity * (newServings / origServings);
         // check which unit and if new quantity reaches breakpoint
         if (metricString.match(/[^k][g]/i) && calculatedQuantity >= 1000) {
           quantity = quantity / 1000;
