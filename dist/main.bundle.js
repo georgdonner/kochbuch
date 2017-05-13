@@ -1135,7 +1135,7 @@ var CalcServingsPipe = (function () {
         }
         function convertMetrics(ingr) {
             // check if the unit is metric
-            var validMetric = /\d+\s?(g|kg|ml|l)/i;
+            var validMetric = /\d+\s?(g|kg|ml|l)\s+/i;
             if (ingr.match(validMetric) == null) {
                 return ingr;
             }
