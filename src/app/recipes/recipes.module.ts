@@ -5,6 +5,8 @@ import { MarkdownModule } from 'angular2-markdown';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NguiAutoCompleteModule } from '@ngui/auto-complete';
 import { DndModule } from 'ng2-dnd';
+import { Ng2PageScrollModule } from 'ng2-page-scroll';
+import { FocusModule } from 'angular2-focus';
 
 import { InlineHrefDirective } from 'ng-inline-href';
 
@@ -35,7 +37,9 @@ import { ThumbnailPipe } from './pipes/thumbnail.pipe';
     NgbModule,
     MarkdownModule,
     NguiAutoCompleteModule,
-    DndModule.forRoot()
+    DndModule.forRoot(),
+    Ng2PageScrollModule.forRoot(),
+    FocusModule.forRoot()
   ],
   exports: [
     InlineHrefDirective

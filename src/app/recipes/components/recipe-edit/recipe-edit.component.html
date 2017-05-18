@@ -47,10 +47,14 @@
     <div class="list-group" dnd-sortable-container [sortableData]="recipe.ingredients">
       <div *ngFor="let ingr of recipe.ingredients; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">
           {{ ingr.name }} <span *ngIf="ingr.hint!=''"> ({{ ingr.hint }})</span>
-          <a class="px-3 click" (click)="editIngredient(i)"><svg class="icon icon-pencil"><use inlineHref="#icon-pencil"></use></svg></a>
-          <button type="button" class="close click" (click)=removeIngredient(ingr)><span aria-hidden="true">&times;</span></button>
+          <a pageScroll href="#inputs" [pageScrollOffset]="200" [pageScrollDuration]="250" 
+          class="px-3 click" (click)="editIngredient(i)">
+            <svg class="icon icon-pencil"><use inlineHref="#icon-pencil"></use></svg>
+          </a>
+          <button type="button" class="close click" (click)="removeIngredient(ingr)"><span aria-hidden="true">&times;</span></button>
       </div>
     </div>
+    <span id="inputs"></span>
     <div *ngIf="!editing" class="row form-group mt-3">
       <div class="col-sm-6">
         <div class="input-group">
@@ -58,7 +62,7 @@
             <button class="btn btn-primary click hidden-lg-up" type="button" (click)="addIngredient()">Enter</button>
           </span>
           <input type="text" [(ngModel)]="newIngredient.name" name="name" class="form-control" id="name" 
-                (keyup.enter)="addIngredient()" placeholder="Enter drücken zum Hinzufügen" #ingredient>
+                (keyup.enter)="addIngredient(); ingredient.focus()" placeholder="Enter drücken zum Hinzufügen" #ingredient>
         </div>
       </div>
       <div class="col-sm-6">
@@ -75,8 +79,8 @@
           <span class="input-group-btn">
             <button class="btn btn-primary click hidden-lg-up" type="button" (click)="updateIngredient(editIngr)">Enter</button>
           </span>
-          <input type="text" [(ngModel)]="newIngredient.name" name="newName" class="form-control" id="newName" 
-                (keyup.enter)="updateIngredient(editIngr)" placeholder="Enter drücken zum Bearbeiten" #ingredient>
+          <input type="text" [(ngModel)]="newIngredient.name" focus="true" name="newName" class="form-control" id="newName" 
+                (keyup.enter)="updateIngredient(editIngr)" placeholder="Enter drücken zum Bearbeiten" #newingredient>
         </div>
       </div>
       <div class="col-sm-6">
