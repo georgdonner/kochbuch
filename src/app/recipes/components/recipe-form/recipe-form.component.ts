@@ -53,14 +53,14 @@ export class RecipeFormComponent implements OnInit {
   }
 
   addIngredient() {
-    if (this.newIngredient) {
+    if (this.newIngredient && this.newIngredient.name !== '') {
       const ingr = this.newIngredient;
       this.ingredients.push(ingr);
       this.newIngredient = new Ingredient('', '');
     }
     if (!this.ingredientAdded){
       // Remove initial empty ingredient on first addition
-      this.ingredients.splice(0,1);
+      this.ingredients.splice(0, 1);
       this.ingredientAdded = true;
     }
   }

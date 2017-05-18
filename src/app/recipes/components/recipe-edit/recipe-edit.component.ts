@@ -50,7 +50,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   addIngredient() {
-    if (this.newIngredient) {
+    if (this.newIngredient && this.newIngredient.name !== '') {
       const ingr = this.newIngredient;
       this.recipe.ingredients.push(ingr);
       this.newIngredient = new Ingredient('', '');

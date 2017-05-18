@@ -210,7 +210,7 @@ var RecipeEditComponent = (function () {
             .subscribe();
     };
     RecipeEditComponent.prototype.addIngredient = function () {
-        if (this.newIngredient) {
+        if (this.newIngredient && this.newIngredient.name !== '') {
             var ingr = this.newIngredient;
             this.recipe.ingredients.push(ingr);
             this.newIngredient = new __WEBPACK_IMPORTED_MODULE_4__recipe__["a" /* Ingredient */]('', '');
@@ -440,7 +440,7 @@ var RecipeFormComponent = (function () {
             .subscribe();
     };
     RecipeFormComponent.prototype.addIngredient = function () {
-        if (this.newIngredient) {
+        if (this.newIngredient && this.newIngredient.name !== '') {
             var ingr = this.newIngredient;
             this.ingredients.push(ingr);
             this.newIngredient = new __WEBPACK_IMPORTED_MODULE_3__recipe__["a" /* Ingredient */]('', '');
