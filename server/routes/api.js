@@ -1,7 +1,11 @@
 var express = require('express');
 var router = express.Router();
 
-var Recipe = require('../models/recipe');    
+var Recipe = require('../models/recipe');
+var Weekplan = require('../models/weekplan');
+var Shoppinglist = require('../models/shoppinglist');
+
+/************************RECIPES *********************/
 
 // Get all recipes
 router.get('/recipes', function (req, res, next) {
@@ -79,6 +83,94 @@ router.put('/recipe/:id', function (req, res, next) {
             res.send(err);
         }
         res.json(recipe);
+     });
+ });
+
+ /********************* WEEKPLANS *********************/
+
+ // Get weekplan
+ router.get('/plan/:name', function (req, res, next) {
+    Weekplan.getPlanByName(req.params.name, function (err, plan) { 
+        if(err){
+            res.send(err);
+        }
+        res.json(plan);
+     });
+ });
+
+ // New weekplan
+ router.post('/plans', function (req, res, next) {
+     var newPlan = new Weekplan({
+        name: req.body.name,
+        plan: req.body.plan
+     });
+     
+     Weekplan.addPlan(newPlan, function(err, plan) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(plan);
+     });
+ });
+
+ // Update weekplan
+ router.put('/plan/:name', function(req, res, next) {
+    var updPlan = new Weekplan({
+        name: req.params.name,
+        plan: req.body.plan
+    });
+
+    var newData = updPlan.toObject();
+    delete newData._id;
+    Weekplan.updatePlan(req.params.name, newData, function (err, plan) { 
+        if(err){
+            res.send(err);
+        }
+        res.json(plan);
+     });
+ });
+
+ /************************ SHOPPING LISTS **********************/
+
+ // Get Shopping List
+ router.get('/list/:name', function (req, res, next) {  
+    Shoppinglist.getListByName(req.params.name, function (err, list) {
+        if (err) {
+            res.send(err);
+        }
+        res.json(list);
+    });
+ });
+
+ // New Shopping List
+ router.post('/lists', function (req, res, next) {  
+    var newList = new Shoppinglist({
+        name: req.body.name,
+        list: req.body.list
+    });
+
+    Shoppinglist.addList(newList, function (err, list) {  
+        if (err) {
+            res.send(err);
+        }
+        res.json(list);
+    });
+ });
+
+ // Update Shopping List
+ router.put('/list/:name', function (req, res, next) {
+    var updList = new Shoppinglist({
+        name: req.params.name,
+        list: req.body.list
+    });
+
+    var newData = updList.toObject();
+    delete newData._id;
+    Shoppinglist.updateList(req.params.name, newData, function (err, list) { 
+        if(err){
+            res.send(err);
+        }
+        res.json(list);
      });
  });
 
