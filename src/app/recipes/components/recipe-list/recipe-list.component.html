@@ -29,8 +29,8 @@
     </div>
     <div class="align-self-center">
       <div class="mr-4 align-middle d-inline-block">
-        <svg class="icon icon-sort-asc click" [ngClass]="{'sort-active': !sortDesc}" (click)="sort('asc')"><use inlineHref="#icon-sort-asc"></use></svg>
-        <svg class="icon icon-sort-desc click" [ngClass]="{'sort-active': sortDesc}" (click)="sort('desc')"><use inlineHref="#icon-sort-desc"></use></svg>
+        <svg class="icon icon-sort-asc click" [ngClass]="{'sort-active': !sortDesc}" (click)="sort('asc')"><use href="#icon-sort-asc"></use></svg>
+        <svg class="icon icon-sort-desc click" [ngClass]="{'sort-active': sortDesc}" (click)="sort('desc')"><use href="#icon-sort-desc"></use></svg>
       </div>
       <select class="custom-select click align-middle" (change)="sortBy($event.target.value)">
         <option value="date" [selected]="sortQuery === 'date'">Datum</option>
@@ -52,7 +52,7 @@
         </div>
         <div class="card-footer">
           <svg class="icon icon-clock-o">
-            <use inlineHref="#icon-clock-o"></use>
+            <use href="#icon-clock-o"></use>
           </svg>
           <span>{{ recipe.duration }} Minuten</span>
           <div *ngIf="recipe.categories"><span *ngFor="let ctg of recipe.categories" class="click"> #<strong>{{ ctg }}</strong> </span></div>
