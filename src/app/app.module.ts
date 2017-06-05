@@ -11,12 +11,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { RecipesModule } from './recipes/recipes.module';
 import { SvgIconComponent } from './svgicons/svg-icon/svg-icon.component';
 import { PageNotFoundComponent } from './components/not-found/not-found.component';
+import { InlineHrefDirective } from './inline-href.directive';
 
 @NgModule({
   declarations: [
     AppComponent,
     SvgIconComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    InlineHrefDirective
   ],
   imports: [
     BrowserModule,

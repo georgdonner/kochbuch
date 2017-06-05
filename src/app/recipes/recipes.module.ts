@@ -8,8 +8,6 @@ import { DndModule } from 'ng2-dnd';
 import { Ng2PageScrollModule } from 'ng2-page-scroll';
 import { FocusModule } from 'angular2-focus';
 
-import { InlineHrefDirective } from 'ng-inline-href';
-
 import { RecipeListComponent } from './components/recipe-list/recipe-list.component';
 import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
 import { RecipeFormComponent } from './components/recipe-form/recipe-form.component';
@@ -41,9 +39,6 @@ import { ThumbnailPipe } from './pipes/thumbnail.pipe';
     Ng2PageScrollModule.forRoot(),
     FocusModule.forRoot()
   ],
-  exports: [
-    InlineHrefDirective
-  ],
   declarations: [
     RecipeDetailsComponent,
     RecipeFormComponent,
@@ -52,7 +47,6 @@ import { ThumbnailPipe } from './pipes/thumbnail.pipe';
     CalcServingsPipe,
     FilterRecipesPipe,
     DifficultyStringPipe,
-    InlineHrefDirective,
     RecipePrintComponent,
     ConverterComponent,
     RoundPipe,
