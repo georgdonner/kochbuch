@@ -1,6 +1,6 @@
 <div *ngIf="recipe" class="top-icons">
-  <svg class="icon icon-chevron-left click" (click)="back()"><use href="#icon-chevron-left"></use></svg>
-  <svg class="icon icon-spoon-knife click"><use href="#icon-spoon-knife"></use></svg>
+  <svg class="icon icon-chevron-left click" (click)="back()"><use inlineHref="#icon-chevron-left"></use></svg>
+  <svg class="icon icon-spoon-knife click"><use inlineHref="#icon-spoon-knife"></use></svg>
   <span class="badge cook-badge">{{ recipe.cookCount }}</span>
 </div>
 
@@ -9,19 +9,19 @@
   <div class="row my-4">
     <div class="col top-info">
         <svg class="icon icon-user">
-          <use href="#icon-user"></use>
+          <use inlineHref="#icon-user"></use>
         </svg>
         <span>{{ recipe.servings }}</span>
     </div>
     <div class="col top-info">
       <svg class="icon icon-clock-o">
-        <use href="#icon-clock-o"></use>
+        <use inlineHref="#icon-clock-o"></use>
       </svg>
       <span>{{ recipe.duration }} Minuten</span>
     </div>
     <div class="col top-info">
       <svg class="icon icon-star-o">
-        <use href="#icon-star-o"></use>
+        <use inlineHref="#icon-star-o"></use>
       </svg>
       <span>{{ recipe.difficulty | difficultyString }}</span>
     </div>

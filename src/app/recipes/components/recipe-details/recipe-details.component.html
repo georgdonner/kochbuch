@@ -1,6 +1,6 @@
 <div *ngIf="recipe">
-  <svg class="icon icon-chevron-left click hvr-backward" (click)="gotoRecipes()"><use href="#icon-chevron-left"></use></svg>
-  <svg class="icon icon-spoon-knife click hvr-float" (click)="cooked()"><use href="#icon-spoon-knife"></use></svg>
+  <svg class="icon icon-chevron-left click hvr-backward" (click)="gotoRecipes()"><use inlineHref="#icon-chevron-left"></use></svg>
+  <svg class="icon icon-spoon-knife click hvr-float" (click)="cooked()"><use inlineHref="#icon-spoon-knife"></use></svg>
   <span class="badge cook-badge">{{ recipe.cookCount }}</span>
 </div>
 <div class="container mt-5 mt-sm-0 animated fadeIn" *ngIf="recipe">
@@ -10,7 +10,7 @@
   <div class="row my-4">
     <div class="col-4 col-lg-2">
       <div class="input-group">
-        <div class="input-group-addon"><svg class="icon icon-user"><use href="#icon-user"></use></svg></div>
+        <div class="input-group-addon"><svg class="icon icon-user"><use inlineHref="#icon-user"></use></svg></div>
         <input type="number" [(ngModel)]="desiredServings" name="servings" id="servings" class="form-control">
       </div>
     </div>
@@ -19,13 +19,13 @@
     </div>
     <div class="col-6 col-lg-3 mt-3 mt-lg-0 top-info">
       <svg class="icon icon-clock-o">
-        <use href="#icon-clock-o"></use>
+        <use inlineHref="#icon-clock-o"></use>
       </svg>
       <span>{{ recipe.duration }} Minuten</span>
     </div>
     <div class="col-6 col-lg-2 mt-3 mt-lg-0 top-info">
       <svg class="icon icon-star-o">
-        <use href="#icon-star-o"></use>
+        <use inlineHref="#icon-star-o"></use>
       </svg>
       <span>{{ recipe.difficulty | difficultyString }}</span>
     </div>

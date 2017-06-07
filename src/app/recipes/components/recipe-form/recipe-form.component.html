@@ -17,13 +17,13 @@
     <div class="row form-group mt-3 w-100 justify-content-center">
       <div class="col-sm-4 col-lg-2">
         <div class="input-group">
-          <div class="input-group-addon"><svg class="icon icon-user"><use href="#icon-user"></use></svg></div>
+          <div class="input-group-addon"><svg class="icon icon-user"><use inlineHref="#icon-user"></use></svg></div>
           <input type="number" [(ngModel)]="model.servings" name="servings" id="servings" class="form-control">
         </div>
       </div>
       <div class="col-sm-6 offset-sm-2 offset-md-0 col-md-4 col-lg-4 offset-lg-1">
         <div class="input-group">
-          <div class="input-group-addon"><svg class="icon icon-clock-o"><use href="#icon-clock-o"></use></svg></div>
+          <div class="input-group-addon"><svg class="icon icon-clock-o"><use inlineHref="#icon-clock-o"></use></svg></div>
           <input type="number" [(ngModel)]="model.duration" name="duration" id="duration" class="form-control">
           <div class="input-group-addon">Minuten</div>
         </div>
@@ -50,7 +50,7 @@
           {{ ingr.name }} <span *ngIf="ingr.hint!=''"> ({{ ingr.hint }})</span>
           <a pageScroll href="#inputs" [pageScrollOffset]="200" [pageScrollDuration]="250" 
           class="px-3 click" (click)="editIngredient(i)">
-            <svg class="icon icon-pencil"><use href="#icon-pencil"></use></svg>
+            <svg class="icon icon-pencil"><use inlineHref="#icon-pencil"></use></svg>
           </a>
           <button *ngIf="ingredientAdded" type="button" class="close click" (click)=removeIngredient(ingr)><span aria-hidden="true">&times;</span></button>
         </div>

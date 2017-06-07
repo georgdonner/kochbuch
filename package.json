@@ -31,7 +31,7 @@
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
     "mongoose": "^4.9.5",
-    "ng-inline-href": "^2.0.4",
+    "ng-inline-href": "^2.0.6",
     "ng2-dnd": "^4.0.2",
     "ng2-file-upload": "^1.2.1",
     "ng2-page-scroll": "^4.0.0-beta.7",
