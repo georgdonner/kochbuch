@@ -29,6 +29,7 @@ import { DifficultyStringPipe } from './pipes/difficulty-string.pipe';
 import { RoundPipe } from './pipes/round.pipe';
 import { SortRecipesPipe } from './pipes/sort-recipes.pipe';
 import { ThumbnailPipe } from './pipes/thumbnail.pipe';
+import { NoVeggiesPipe } from './pipes/no-veggies.pipe';
 
 @NgModule({
   imports: [
@@ -58,7 +59,8 @@ import { ThumbnailPipe } from './pipes/thumbnail.pipe';
     RoundPipe,
     SortRecipesPipe,
     ThumbnailPipe,
-    InlineHrefDirective
+    InlineHrefDirective,
+    NoVeggiesPipe
   ],
   providers: [
     RecipeService,

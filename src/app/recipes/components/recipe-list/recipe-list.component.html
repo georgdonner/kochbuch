@@ -32,21 +32,31 @@
       </select>
     </div>
   </div>
-  <div *ngIf="recipes" class="row clearfix">
+  <div *ngIf="recipes" class="row">
     <div *ngFor="let recipe of recipes | filterRecipes:query | sortRecipes:sortQuery:sortDesc"
-      (click)="onSelect(recipe)" class="col-lg-6 col-xl-4 click">
-      <div class="card mb-4 hvr-float">
-        <img *ngIf="recipe.heroImage" class="card-img-top thumb-img" src="{{ recipe.heroImage | thumbnail:600:0 }}" alt="{{ recipe.title }}">
-        <img *ngIf="!recipe.heroImage" class="card-img-top thumb-img" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">
-        <div class="card-block recipe-block">
-          <h3 class="card-title recipe-title" [ngClass]="{'long-title': recipe.title.length > 50}">{{ recipe.title }}</h3>
+      (click)="onSelect(recipe)" class="col-lg-6 col-xl-4 click px-0">
+      <div class="recipe m-2">
+        <div class="img-container">
+          <img *ngIf="recipe.heroImage" class="thumb-img" src="{{ recipe.heroImage | thumbnail:600:0 }}" alt="{{ recipe.title }}">
+          <img *ngIf="!recipe.heroImage" class="thumb-img" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">
+          <div class="veggie">
+            <img *ngIf="recipe.categories.includes('Vegetarisch')" src="../../../assets/images/vegetarian.svg">
+            <img *ngIf="recipe.categories.includes('Vegan')" src="../../../assets/images/vegan.svg">
+          </div>
+          <div class="recipe-info text-right">
+            <span class="info-wrapper">
+              <svg class="icon icon-clock-o">
+                <use inlineHref="#icon-clock-o"></use>
+              </svg>
+              {{ recipe.duration }} min.
+            </span>
+          </div>
         </div>
-        <div class="card-footer">
-          <svg class="icon icon-clock-o">
-            <use inlineHref="#icon-clock-o"></use>
-          </svg>
-          <span>{{ recipe.duration }} Minuten</span>
-          <div *ngIf="recipe.categories"><span *ngFor="let ctg of recipe.categories" class="click"> #<strong>{{ ctg }}</strong> </span></div>
+        <div class="p-3">
+          <div class="recipe-block">
+            <h3 class="recipe-title" [ngClass]="{'long-title': recipe.title.length > 50}">{{ recipe.title }}</h3>
+          </div>
+          <div *ngIf="recipe.categories" class="categories"><div *ngFor="let ctg of recipe.categories | noVeggies" class="click pr-1 d-inline-block"># <strong>{{ ctg }}</strong> </div></div>
         </div>
       </div>
     </div>
