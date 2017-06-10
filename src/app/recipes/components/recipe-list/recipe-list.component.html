@@ -23,9 +23,11 @@
 
 <div class="container animated fadeIn">
   <div class="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center mb-3">
-    <div class="btn-group mb-3 mb-md-0">
-      <button class="btn btn-secondary click" [ngClass]="{'active': hasCategory('Vegetarisch')}" (click)="toggleCategory('Vegetarisch')">Vegetarisch</button>
-      <button class="btn btn-secondary click" [ngClass]="{'active': hasCategory('Vegan')}" (click)="toggleCategory('Vegan')">Vegan</button>
+    <div class="btn-group mb-3 mb-md-0 veggie-buttons">
+      <div class="mx-auto">
+        <button class="btn btn-secondary click" [ngClass]="{'active': hasCategory('Vegetarisch')}" (click)="toggleCategory('Vegetarisch')">Vegetarisch</button>
+        <button class="btn btn-secondary click" [ngClass]="{'active': hasCategory('Vegan')}" (click)="toggleCategory('Vegan')">Vegan</button>
+      </div>
     </div>
     <div class="align-self-center">
       <div class="mr-4 align-middle d-inline-block">

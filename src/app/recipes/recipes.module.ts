@@ -20,6 +20,7 @@ import { ConverterComponent } from './components/converter/converter.component';
 import { RecipeService } from './services/recipe.service';
 import { WunderlistService } from './services/wunderlist.service';
 import { CurrentQueryService } from './services/current-query.service';
+import { ScrollService } from './services/scroll.service';
 
 import { RecipeRoutingModule } from './recipes-routing.module';
 import { CalcServingsPipe } from './pipes/calc-servings.pipe';
@@ -59,10 +60,11 @@ import { ThumbnailPipe } from './pipes/thumbnail.pipe';
     ThumbnailPipe,
     InlineHrefDirective
   ],
-  providers: [ 
+  providers: [
     RecipeService,
     WunderlistService,
-    CurrentQueryService
+    CurrentQueryService,
+    ScrollService
   ]
 })
 

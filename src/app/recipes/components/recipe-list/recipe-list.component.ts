@@ -1,16 +1,17 @@
-import { Component, OnInit, AfterContentInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { Recipe } from '../../recipe';
 import { RecipeService } from '../../services/recipe.service';
 import { WunderlistService } from '../../services/wunderlist.service';
 import { CurrentQueryService } from '../../services/current-query.service';
+import { ScrollService } from '../../services/scroll.service';
 
 @Component({
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.css']
 })
-export class RecipeListComponent implements OnInit{
+export class RecipeListComponent implements OnInit, AfterViewChecked {
 
   selectedRecipe: Recipe;
   recipes: Recipe[];
@@ -25,12 +26,15 @@ export class RecipeListComponent implements OnInit{
   code: string;
   accessToken: string;
 
+  scrolled = true;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private recipeService: RecipeService,
     private wunderlistService: WunderlistService,
-    private queryService: CurrentQueryService
+    private queryService: CurrentQueryService,
+    private scrollService: ScrollService
   ) { }
 
   ngOnInit() {
@@ -43,14 +47,15 @@ export class RecipeListComponent implements OnInit{
     this.recipeService.getAllRecipes().subscribe(recipes => {
       this.recipes = recipes;
       this.getQuery();
+      this.scrolled = false;
     });
   }
 
-  ngAfterContentInit() {
-    if (this.code) {
-      this.wunderlistService.getAccessToken(this.code).subscribe((token) => {
-        this.accessToken = token;
-      });
+  ngAfterViewChecked() {
+    if (!this.scrolled) {
+      let yPos = this.scrollService.getScrollPos();
+      window.scrollTo(0, yPos);
+      this.scrolled = true;
     }
   }
 
@@ -102,6 +107,7 @@ export class RecipeListComponent implements OnInit{
   }
 
   onSelect(recipe: Recipe) {
+    this.scrollService.setScrollPos(window.pageYOffset);
     this.queryService.setQuery(this.ingrQuery, this.ctgQuery, this.titleQuery, this.sortDesc, this.sortQuery);
     this.router.navigate(['/recipe', recipe._id]);
   }

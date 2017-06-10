@@ -41,6 +41,7 @@ export class RecipeFormComponent implements OnInit {
   ngOnInit() {
     this.recipeService.getAllRecipes().subscribe(recipes => {
       this.recipes = recipes;
+      window.scrollTo(0, 0);
     });
   }
 
@@ -100,7 +101,9 @@ export class RecipeFormComponent implements OnInit {
       // leave the categories as is
     } else {
       if (category === 'Vegan') {
-        this.categories.push('Vegetarisch');
+        if (!this.categories.includes('Vegetarisch')) {
+          this.categories.push('Vegetarisch');
+        }
       }
       this.categories.push(category);
     }

@@ -41,6 +41,7 @@ export class RecipeEditComponent implements OnInit {
       .subscribe((recipe: Recipe) => this.recipe = recipe);
     this.recipeService.getAllRecipes().subscribe(recipes => {
       this.recipes = recipes;
+      window.scrollTo(0, 0);
     });
   }
 
@@ -92,7 +93,9 @@ export class RecipeEditComponent implements OnInit {
       // leave the categories as is
     } else {
       if (category === 'Vegan') {
-        this.recipe.categories.push('Vegetarisch');
+        if (!this.recipe.categories.includes('Vegetarisch')) {
+          this.recipe.categories.push('Vegetarisch');
+        }
       }
       this.recipe.categories.push(category);
     }
