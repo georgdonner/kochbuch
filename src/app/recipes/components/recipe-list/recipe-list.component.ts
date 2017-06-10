@@ -16,9 +16,7 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
   selectedRecipe: Recipe;
   recipes: Recipe[];
 
-  ingrQuery = '';
-  ctgQuery = '';
-  titleQuery = '';
+  query = '';
 
   sortQuery = 'date';
   sortDesc = true;
@@ -60,38 +58,36 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
   }
 
   getQuery() {
-    this.ingrQuery = this.queryService.getQuery().ingrQuery;
-    this.ctgQuery = this.queryService.getQuery().ctgQuery;
-    this.titleQuery = this.queryService.getQuery().titleQuery;
+    this.query = this.queryService.getQuery().filterQuery;
     this.sortDesc = this.queryService.getQuery().sortDesc;
     this.sortQuery = this.queryService.getQuery().sortQuery;
   }
 
   toggleCategory(ctg: string) {
-    if (!this.ctgQuery.includes(ctg)) {
+    if (!this.query.includes(ctg)) {
       // the category is not present in the query
-      if (this.ctgQuery === '') {
-        this.ctgQuery = ctg;
+      if (this.query === '') {
+        this.query = ctg;
       } else {
-        this.ctgQuery = this.ctgQuery.concat(', ' + ctg);
+        this.query = this.query.concat(', ' + ctg);
       }
     } else {
       // category already present in query
-      if (this.ctgQuery.includes(',')) {
+      if (this.query.includes(',')) {
         // there are multiple categories in query
-        if (this.ctgQuery.endsWith(ctg)) {
-          this.ctgQuery = this.ctgQuery.replace((', ' + ctg), '');
+        if (this.query.endsWith(ctg)) {
+          this.query = this.query.replace((', ' + ctg), '');
         } else {
-          this.ctgQuery = this.ctgQuery.replace((ctg + ', '), '');
+          this.query = this.query.replace((ctg + ', '), '');
         }
       } else {
-        this.ctgQuery = '';
+        this.query = '';
       }
     }
   }
 
   hasCategory(ctg: string) {
-    return this.ctgQuery.includes(ctg);
+    return this.query.includes(ctg);
   }
 
   sort(sort: string) {
@@ -108,7 +104,7 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
 
   onSelect(recipe: Recipe) {
     this.scrollService.setScrollPos(window.pageYOffset);
-    this.queryService.setQuery(this.ingrQuery, this.ctgQuery, this.titleQuery, this.sortDesc, this.sortQuery);
+    this.queryService.setQuery(this.query, this.sortDesc, this.sortQuery);
     this.router.navigate(['/recipe', recipe._id]);
   }
 

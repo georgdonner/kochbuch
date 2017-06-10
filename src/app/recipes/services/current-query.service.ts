@@ -4,20 +4,16 @@ import { Injectable } from '@angular/core';
 export class CurrentQueryService {
 
   query = {
-    ingrQuery: '',
-    ctgQuery: '',
-    titleQuery: '',
+    filterQuery: '',
     sortDesc: true,
     sortQuery: 'date'
   };
 
   constructor() { }
 
-  setQuery(ingr: string, ctg: string, title: string, desc: boolean, sortby: string) {
+  setQuery(filter: string, desc: boolean, sortby: string) {
     this.query = {
-      ingrQuery: ingr, 
-      ctgQuery: ctg,
-      titleQuery: title,
+      filterQuery: filter,
       sortDesc: desc,
       sortQuery: sortby
     };

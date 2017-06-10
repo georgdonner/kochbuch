@@ -2,6 +2,10 @@
     .recipe-block {
         height: 125px;
     }
+
+    .search-field {
+        width: 75%;
+    }
 }
 
 .search-field {

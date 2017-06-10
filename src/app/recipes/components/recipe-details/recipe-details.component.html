@@ -1,7 +1,5 @@
 <div *ngIf="recipe">
   <svg class="icon icon-chevron-left click hvr-backward" (click)="gotoRecipes()"><use inlineHref="#icon-chevron-left"></use></svg>
-  <svg class="icon icon-spoon-knife click hvr-float" (click)="cooked()"><use inlineHref="#icon-spoon-knife"></use></svg>
-  <span class="badge cook-badge">{{ recipe.cookCount }}</span>
 </div>
 <div class="container mt-5 mt-sm-0 animated fadeIn" *ngIf="recipe">
   <h1 class="display-3 text-center mt-4 px-1 recipe-title">{{ recipe.title }}</h1>

@@ -6,76 +6,48 @@ import { Recipe, Ingredient } from '../recipe';
 })
 export class FilterRecipesPipe implements PipeTransform {
 
-  transform(recipes: Recipe[], ingrQuery: string, ctgQuery: string, titleQuery: string): Recipe[] {
-    
-    let titleFilter = filterTitle(recipes, titleQuery);
-    let ingrFilter = filterIngredients(titleFilter, ingrQuery);
-    let ctgFilter = filterCategories(ingrFilter, ctgQuery);
-    return ctgFilter;
+  transform(recipes: Recipe[], query: string): Recipe[] {
 
-    function filterTitle(toFilter: Recipe[], query: string): Recipe[] {
-      let titleFiltered = new Array<Recipe>();
-      if (query === '') {
-        return toFilter;
-      }
-      toFilter.forEach((recipe) => {
-        if (recipe.title.toLowerCase().includes(titleQuery.toLowerCase())) {
-          titleFiltered.push(recipe);
-        }
-      })
-      return titleFiltered;
-    }
+    let filteredRecipes = filter(recipes, query);
+    return filteredRecipes;
 
-    function filterIngredients(toFilter: Recipe[], query: string): Recipe[] {
-      let ingrFiltered = new Array<Recipe>();
-      if (query === '') {
+    function filter(toFilter: any[], queryIn: string): any[] {
+      let queryArray = new Array<string>();
+      if (queryIn === '') {
         return toFilter;
+      } else {
+        queryArray = queryIn.split(',');
       }
-      const ingrArray = query.split(',');
-      toFilter.forEach((recipe) => {
-        // make a temp copy of the ingredient array
-        let ingrArrayTmp = ingrArray.slice(0);
-        recipe.ingredients.forEach((ingredient) => {
-          ingrArrayTmp.forEach((ingr) => {
-            if(ingredient.name.trim().toLowerCase().includes(ingr.trim().toLowerCase())) {
-              // ingredient was found in the recipe
-              ingrArrayTmp.splice(ingrArrayTmp.indexOf(ingr), 1);
+      let filtered = new Array();
+      toFilter.forEach(recipe => {
+        let queryArrayTmp = queryArray.slice(0);
+        queryArray.forEach(query => {
+          let hasIngredient = false;
+          recipe.ingredients.forEach(ingredient => {
+            if (ingredient.name.trim().toLowerCase().includes(query.trim().toLowerCase())) {
+              hasIngredient = true;
             }
           });
-        });
-        if (ingrArrayTmp.length === 0) {
-          // all ingredients in recipe
-          ingrFiltered.push(recipe);
-        }
-      });
-      return ingrFiltered;
-    }
-
-    function filterCategories(toFilter: Recipe[], query: string): Recipe[]  {
-      let ctgFiltered = new Array<Recipe>();
-      if (query === '') {
-        return toFilter;
-      }
-      const ctgArray = query.split(',');
-      toFilter.forEach((recipe) => {
-        // make a temp copy of category array
-        let ctgArrayTmp = ctgArray.slice(0);
-        if (recipe.categories) {
-          recipe.categories.forEach((category) => {
-            ctgArrayTmp.forEach((ctg) => {
-              if(category.trim().toLowerCase().includes(ctg.trim().toLowerCase())) {
-                // recipe has category
-                ctgArrayTmp.splice(ctgArrayTmp.indexOf(category), 1);
-              }
-            })
+          let hasCategory = false;
+          recipe.categories.forEach(category => {
+            if (category.trim().toLowerCase().includes(query.trim().toLowerCase())) {
+              hasCategory = true;
+            }
           });
-        }
-        if (ctgArrayTmp.length === 0) {
-          // recipe has all categories
-          ctgFiltered.push(recipe);
+          if (recipe.title.trim().toLowerCase().includes(query.trim().toLowerCase()) || hasIngredient || hasCategory) {
+            queryArrayTmp.splice(queryArrayTmp.indexOf(query), 1);
+          }
+          else if (query === '') {
+            queryArrayTmp.splice(queryArrayTmp.indexOf(''), 1);
+          } else if (query === ' ') {
+            queryArrayTmp.splice(queryArrayTmp.indexOf(' '), 1);
+          }
+        });
+        if (queryArrayTmp.length === 0) {
+          filtered.push(recipe);
         }
       });
-      return ctgFiltered;
+      return filtered;
     }
   }
 }
