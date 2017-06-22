@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
+import { MaterializeModule } from 'ng2-materialize';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MarkdownModule } from 'angular2-markdown';
 
@@ -24,6 +25,7 @@ import { PageNotFoundComponent } from './components/not-found/not-found.componen
     HttpModule,
     RecipesModule,
     AppRoutingModule,
+    MaterializeModule.forRoot(),
     NgbModule.forRoot(),
     MarkdownModule.forRoot()
   ],

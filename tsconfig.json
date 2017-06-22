@@ -9,6 +9,10 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "target": "es5",
+    "types": [
+      "jquery",
+      "materialize-css"
+    ],
     "typeRoots": [
       "node_modules/@types"
     ],
