@@ -1,62 +1,79 @@
-<div class="jumbotron jumbotron-fluid animated fadeIn">
-  <div class="container">
-    <h1 class="display-3">Maries und Georgs Rezeptbuch</h1>
-    <p class="lead" >Durchsuche unser Kochbuch nach ausgewählten Rezepten, die wir hier mit Liebe zusammengestellt haben :)</p>
-    <hr class="my-4">
-    <input [(ngModel)]="query" type="search" class="form-control search-field mx-lg-auto" name="search" placeholder="Suche nach Zutaten, Kategorien oder Titel...">
-  </div>
+<div class="navbar-fixed">
+  <nav class="indigo">
+    <div class="nav-wrapper">
+      <form>
+        <div class="input-field">
+          <input [(ngModel)]="query" id="search" type="search" name="search" placeholder="Suche nach Zutaten, Kategorien oder Titel...">
+          <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons">close</i>
+        </div>
+      </form>
+    </div>
+  </nav>
 </div>
 
 <div class="new-recipe animated fadeIn">
-  <a class="click" (click)="newRecipe()"><img class="plus-button hvr-grow" src="../../../assets/images/plus-button4.svg" alt=""></a>
+  <a class="btn-floating btn-large waves-effect waves-light indigo" (click)="newRecipe()">
+    <i class="material-icons">add</i>
+  </a>
 </div>
 
 <div class="container animated fadeIn">
-  <div class="d-flex flex-wrap justify-content-center justify-content-md-between align-items-center mb-3">
-    <div class="btn-group mb-3 mb-md-0 veggie-buttons">
-      <div class="mx-auto">
-        <button class="btn btn-secondary click" [ngClass]="{'active': hasCategory('Vegetarisch')}" (click)="toggleCategory('Vegetarisch')">Vegetarisch</button>
-        <button class="btn btn-secondary click" [ngClass]="{'active': hasCategory('Vegan')}" (click)="toggleCategory('Vegan')">Vegan</button>
+  <div class="row controls">
+    <div class="col s12 m5 veggie-options">
+      <div class="switch">
+        <label>
+          <input type="checkbox" [(ngModel)]="vegetarian" (click)="toggleCategory('Vegetarisch')">
+          <span class="lever"></span>
+          Vegetarisch
+        </label>
+      </div>
+      <div class="switch">
+        <label>
+          <input type="checkbox" [(ngModel)]="vegan" (click)="toggleCategory('Vegan')">
+          <span class="lever"></span>
+          Vegan
+        </label>
       </div>
     </div>
-    <div class="align-self-center">
-      <div class="mr-4 align-middle d-inline-block">
-        <svg class="icon icon-sort-asc click" [ngClass]="{'sort-active': !sortDesc}" (click)="sort('asc')"><use inlineHref="#icon-sort-asc"></use></svg>
-        <svg class="icon icon-sort-desc click" [ngClass]="{'sort-active': sortDesc}" (click)="sort('desc')"><use inlineHref="#icon-sort-desc"></use></svg>
-      </div>
-      <select class="custom-select click align-middle" (change)="sortBy($event.target.value)">
-        <option value="date" [selected]="sortQuery === 'date'">Datum</option>
-        <option value="duration" [selected]="sortQuery === 'duration'">Dauer</option>
-        <option value="difficulty" [selected]="sortQuery === 'difficulty'">Schwierigkeit</option>
-        <option value="ingredient-count" [selected]="sortQuery === 'ingredient-count'">Anzahl der Zutaten</option>
-      </select>
+    <div class="col s3 m2 sort">
+      <i class="material-icons sort-icon click" [ngClass]="{'sort-active': !sortDesc}" (click)="sort('asc')">keyboard_arrow_up</i>
+      <i class="material-icons sort-icon click" [ngClass]="{'sort-active': sortDesc}" (click)="sort('desc')">keyboard_arrow_down</i>
+    </div>
+    <div class="col s9 m5">
+      <mz-select-container>
+        <select mz-select [label]="'Sortieren nach'" (change)="sortBy($event.target.value)">
+          <option class="left" value="date" [selected]="sortQuery === 'date'">Datum</option>
+          <option class="left" value="duration" [selected]="sortQuery === 'duration'">Dauer</option>
+          <option class="left" value="difficulty" [selected]="sortQuery === 'difficulty'">Schwierigkeit</option>
+          <option class="left" value="ingredient-count" [selected]="sortQuery === 'ingredient-count'">Anzahl der Zutaten</option>
+        </select>
+      </mz-select-container>
     </div>
   </div>
   <div *ngIf="recipes" class="row">
     <div *ngFor="let recipe of recipes | filterRecipes:query | sortRecipes:sortQuery:sortDesc"
-      (click)="onSelect(recipe)" class="col-lg-6 col-xl-4 click px-0">
-      <div class="recipe m-2">
-        <div class="img-container">
-          <img *ngIf="recipe.heroImage" class="thumb-img" src="{{ recipe.heroImage | thumbnail:600:0 }}" alt="{{ recipe.title }}">
-          <img *ngIf="!recipe.heroImage" class="thumb-img" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">
-          <div class="veggie">
-            <img *ngIf="recipe.categories.includes('Vegetarisch')" src="../../../assets/images/vegetarian.svg">
-            <img *ngIf="recipe.categories.includes('Vegan')" src="../../../assets/images/vegan.svg">
-          </div>
-          <div class="recipe-info text-right">
-            <span class="info-wrapper">
-              <svg class="icon icon-clock-o">
-                <use inlineHref="#icon-clock-o"></use>
-              </svg>
+      (click)="onSelect(recipe)" class="col s12 l6 xl4 click">
+      <div class="card medium hoverable">
+        <div class="card-image">
+          <img *ngIf="recipe.heroImage" src="{{ recipe.heroImage | thumbnail:600:0 }}" alt="{{ recipe.title }}">
+          <img *ngIf="!recipe.heroImage" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">
+          <span class="card-title recipe-quickinfo">
+            <img class="veggie" *ngIf="recipe.categories.includes('Vegetarisch')" src="../../../assets/images/vegetarian.svg">
+            <img class="veggie" *ngIf="recipe.categories.includes('Vegan')" src="../../../assets/images/vegan.svg">
+            <span class="minutes right valign-wrapper">
+              <i class="material-icons timer-icon">timer</i>
               {{ recipe.duration }} min.
             </span>
-          </div>
+          </span>
         </div>
-        <div class="p-3">
-          <div class="recipe-block">
-            <h3 class="recipe-title" [ngClass]="{'long-title': recipe.title.length > 50}">{{ recipe.title }}</h3>
-          </div>
-          <div *ngIf="recipe.categories" class="categories"><div *ngFor="let ctg of recipe.categories | noVeggies" class="click pr-1 d-inline-block"># <strong>{{ ctg }}</strong> </div></div>
+        <div class="card-content valign-wrapper" style="padding-top: 0;">
+          <h5 class="recipe-title">
+            {{ recipe.title }}
+          </h5>
+        </div>
+        <div class="card-action" *ngIf="recipe.categories">
+          <div class="categories"><div *ngFor="let ctg of recipe.categories | noVeggies"># <strong>{{ ctg }}</strong> </div></div>
         </div>
       </div>
     </div>

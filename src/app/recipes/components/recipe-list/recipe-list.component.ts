@@ -17,12 +17,13 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
   recipes: Recipe[];
 
   query = '';
+  vegetarian = false;
+  vegan = false;
 
   sortQuery = 'date';
   sortDesc = true;
 
   code: string;
-  accessToken: string;
 
   scrolled = true;
 
