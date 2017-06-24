@@ -1,11 +1,86 @@
-<div *ngIf="recipe">
-  <svg class="icon icon-chevron-left click hvr-backward" (click)="gotoRecipes()"><use inlineHref="#icon-chevron-left"></use></svg>
+<div *ngIf="recipe" class="fullwidth">
+  <mz-parallax [height]="400">
+    <img src="{{recipe.heroImage}}" alt="{{recipe.title}}">
+  </mz-parallax>
 </div>
-<div class="container mt-5 mt-sm-0 animated fadeIn" *ngIf="recipe">
-  <h1 class="display-3 text-center mt-4 px-1 recipe-title">{{ recipe.title }}</h1>
-  <hr class="my-4">
-  <img *ngIf="recipe.heroImage" class="img-fullwidth" src="{{recipe.heroImage}}" alt="{{recipe.title}}">
-  <div class="row my-4">
+
+<i class="material-icons back grey-text text-darken-4 click" (click)="gotoRecipes()">close</i>
+
+<div *ngIf="recipe" class="difficulty-rating">
+  <i class="material-icons grey-text text-darken-4" *ngFor="let i of Arr(recipe.difficulty).fill(1)">star_border</i>
+</div>
+
+<div class="animated fadeIn" *ngIf="recipe">
+  <div class="quickinfo-wrapper grey lighten-4">
+    <div class="row quickinfo">
+      <div class="col s12 l12 xl6 title-wrapper top">
+        <h4 class="recipe-title">{{ recipe.title }}</h4>
+      </div>
+      <div class="col s12 l6 xl3">
+        <div class="right-align ingredient-count">
+            <span class="number indigo-text">{{ recipe.ingredients.length }}</span><span>Zutaten</span>
+        </div>
+        <div class="left-align minutes">
+          <span class="number indigo-text">{{ recipe.duration }}</span><span>Minuten</span>
+        </div>
+      </div>
+      <div class="col s12 l12 xl6 title-wrapper center">
+        <h4 class="recipe-title">{{ recipe.title }}</h4>
+      </div>
+      <div class="col s12 l6 xl3">
+        <div class="categories">
+          <div class="chip">Vegetarisch</div><div class="chip">Indisch</div><div class="chip">Vegan</div><div class="chip">Klassiker</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row main-content">
+      <div class="ingredients-wrapper col s12 m6">
+        <h4>
+          <span>Zutaten</span>
+          <span class="servings-input grey-text text-darken-4">
+            <i class="material-icons click" (click)="addServing()">add</i>
+            <span class="servings">{{ desiredServings }}</span>
+            <i class="material-icons click" (click)="removeServing()">remove</i>
+          </span>
+        </h4>
+        <div class="big-border"></div>
+        <ul class="ingredients">
+          <li class="ingredient" *ngFor="let ingredient of recipe.ingredients">
+            <span>
+              {{ ingredient.name | calcServings:recipe.servings:desiredServings }}
+              <span *ngIf="ingredient.hint">({{ ingredient.hint }})</span>
+            </span>
+            <div class="small-border"></div>
+          </li>
+        </ul>
+        <div class="center-align" style="margin: 3rem;">
+          <button mz-button class="indigo" (click)="converter()">Umrechner</button>
+        </div>
+      </div>
+      <div class="col s12 m6">
+        <h4>Zubereitung</h4>
+        <div class="big-border"></div>
+        <markdown *ngIf="recipe.description" class="description">{{ recipe.description }}</markdown>
+        <img #descrImage *ngIf="recipe.descrImage" src="{{recipe.descrImage}}"
+            alt="Recipe description" class="responsive-img">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s6">
+        <div class="right-align" style="margin: 3rem 1.5rem;">
+          <button mz-button class="indigo" (click)="edit()">Bearbeiten</button>
+        </div>
+      </div>
+      <div class="col s6">
+        <div class="left-align" style="margin: 3rem 1.5rem;">
+          <button mz-button class="indigo" (click)="printView()">Druckansicht</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--<div class="row my-4">
     <div class="col-4 col-lg-2">
       <div class="input-group">
         <div class="input-group-addon"><svg class="icon icon-user"><use inlineHref="#icon-user"></use></svg></div>
@@ -49,33 +124,6 @@
 
   <div class="my-3">
     <button class="btn btn-primary click" type="button" (click)="edit()">Bearbeiten</button>
-    <!--<button class="btn btn-danger click" type="button" data-toggle="modal" data-target="#deleteModal">Löschen</button>-->
     <button class="btn btn-secondary float-right hidden-sm-down click" type="button" (click)="printView()">Druckansicht</button>
-  </div>
-  <!--<a href="https://www.wunderlist.com/oauth/authorize?client_id=b4ab80671b8df7024e4d&redirect_uri=http://localhost:3000/recipes&state={{state}}">
-    Wunderlist
-  </a>-->
-
-  <div class="modal fade" tabindex="-1" role="dialog" id="deleteModal">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Rezept löschen</h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <p>Möchtest du <strong>"{{ recipe.title }}"</strong> wirklich löschen?</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default click" data-dismiss="modal">Abbrechen</button>
-          <button type="button" class="btn btn-danger click" (click)="deleteRecipe(); gotoRecipes()" data-dismiss="modal">Löschen</button>
-        </div>
-      </div>
-      <!-- /.modal-content -->
-    </div>
-    <!-- /.modal-dialog -->
-  </div>
-  <!-- /.modal -->
+  </div>-->
 </div> 

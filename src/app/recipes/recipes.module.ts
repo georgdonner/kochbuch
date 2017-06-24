@@ -62,6 +62,9 @@ import { NoVeggiesPipe } from './pipes/no-veggies.pipe';
     InlineHrefDirective,
     NoVeggiesPipe
   ],
+  entryComponents: [
+    ConverterComponent
+  ],
   providers: [
     RecipeService,
     WunderlistService,

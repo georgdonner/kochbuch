@@ -1,8 +1,10 @@
 import { Component, OnInit, AfterContentInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import 'rxjs/add/operator/switchMap';
+import { MzModalService } from 'ng2-materialize';
 
 import { Recipe } from '../../recipe';
+import { ConverterComponent } from '../converter/converter.component';
 import { RecipeService } from '../../services/recipe.service';
 import { WunderlistService } from '../../services/wunderlist.service';
 import { CurrentQueryService } from '../../services/current-query.service';
@@ -19,7 +21,7 @@ export class RecipeDetailsComponent implements OnInit {
   desiredServings: number;
 
   descrImageRatio: number;
-
+  Arr = Array;
   state: string;
 
   constructor(
@@ -27,7 +29,8 @@ export class RecipeDetailsComponent implements OnInit {
     private wunderlistService: WunderlistService,
     private queryService: CurrentQueryService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private modalService: MzModalService
   ) { }
 
   ngOnInit() {
@@ -62,6 +65,20 @@ export class RecipeDetailsComponent implements OnInit {
   deleteRecipe() {
     this.recipeService.deleteRecipe(this.recipe._id)
       .subscribe();
+  }
+
+  addServing() {
+    this.desiredServings++;
+  }
+
+  removeServing() {
+    if (this.desiredServings > 1) {
+      this.desiredServings--;
+    }
+  }
+
+  public converter() {
+    this.modalService.open(ConverterComponent);
   }
 
   printView() {
