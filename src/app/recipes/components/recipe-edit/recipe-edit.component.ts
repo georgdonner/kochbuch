@@ -25,9 +25,18 @@ export class RecipeEditComponent implements OnInit {
   recipe: Recipe;
   recipes: Recipe[];
   newIngredient = new Ingredient('', '');
+  autocomplete: { data: { [key: string]: string } };
+  description = '';
 
-  editing = false;
-  editIngr: number;
+  editIngr = new Ingredient('', '');
+  editIngrIndex: number;
+
+  public editModalOptions: Materialize.ModalOptions = {
+    dismissible: false,
+    complete: () => {
+      this.recipe.ingredients[this.editIngrIndex] = this.editIngr;
+    }
+  };
 
   constructor(
     private recipeService: RecipeService,
@@ -38,16 +47,38 @@ export class RecipeEditComponent implements OnInit {
   ngOnInit() {
     this.route.params
       .switchMap((params: Params) => this.recipeService.getRecipe(params['id']))
-      .subscribe((recipe: Recipe) => this.recipe = recipe);
+      .subscribe((recipe: Recipe) => {
+        this.recipe = recipe;
+        if (recipe.description) {
+          this.description = recipe.description;
+        }
+      });
     this.recipeService.getAllRecipes().subscribe(recipes => {
       this.recipes = recipes;
+      let categories = new Set<string>();
+      this.recipes.forEach(recipe => {
+        recipe.categories.forEach(ctg => {
+          categories.add(ctg);
+        });
+      });
+      const suggestions = Array.from(categories);
+      let data = {};
+      suggestions.forEach(ctg => {
+        data[ctg] = null;
+      });
+      this.autocomplete = {
+        data: data,
+      };
       window.scrollTo(0, 0);
     });
   }
 
   save() {
+    this.recipe.description = this.description;
     this.recipeService.updateRecipe(this.recipe)
-      .subscribe();
+      .subscribe(() => {
+        this.gotoRecipe();
+      });
   }
 
   addIngredient() {
@@ -59,27 +90,11 @@ export class RecipeEditComponent implements OnInit {
   }
 
   editIngredient(index) {
-    if (this.editing) {
-      this.newIngredient = new Ingredient('', '');
-      this.editing = false;
-    } else {
-      this.editing = true;
-      this.editIngr = index;
-      this.newIngredient = this.recipe.ingredients[index];
-    }
-  }
-
-  updateIngredient(index) {
-    this.recipe.ingredients[index] = this.newIngredient;
-    this.newIngredient = new Ingredient('', '');
-    this.editing = false;
+    this.editIngr = this.recipe.ingredients[index];
+    this.editIngrIndex = index;
   }
 
   removeIngredient(ingredient) {
-    if (this.editing) {
-      this.newIngredient = new Ingredient('', '');
-      this.editing = false;
-    }
     this.recipe.ingredients.splice(this.recipe.ingredients.indexOf(ingredient), 1);
   }
 
@@ -165,7 +180,7 @@ export class RecipeEditComponent implements OnInit {
   }
 
   gotoRecipe() {
-    this.router.navigate(['/recipe',this.recipe._id]);
+    this.router.navigate(['/recipe', this.recipe._id]);
   }
 
 }

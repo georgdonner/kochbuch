@@ -1,118 +1,201 @@
-<div class="container animated fadeIn">
+<div *ngIf="model" class="container animated fadeIn">
   <form #recipeForm="ngForm">
-    <h1 class="display-3 text-center mt-4 recipe-title">{{ model.title }}</h1>
-    <hr class="my-4">
-    <div class="input-group">
-      <input type="text" [(ngModel)]="model.title" name="title" class="form-control " id="title" required #title="ngModel" placeholder="Titel">
-      <span class="input-group-btn">
-        <button class="btn btn-secondary click" type="button" (click)="showHeroPicker()">Titelbild</button>
-      </span>
+    <h1 class="center-align">{{ model.title }}</h1>
+    <hr>
+    <div class="row">
+      <mz-input-container class="col s12 l9">
+        <input mz-input
+          required 
+          #title="ngModel"
+          [(ngModel)]="model.title"
+          [validate]="true"
+          id="title"
+          name="title"
+          placeholder="Titel"
+          type="text">
+      </mz-input-container>
+      <div class="col s12 l3 center-align">
+        <button class="waves-effect waves-light btn click indigo hero-image" type="button" (click)="showHeroPicker()">Titelbild</button>
+      </div>
+      <div [hidden]="title.valid || title.pristine" class="red-text col s6">Das Rezept muss einen Titel haben</div>
+      <div class="col s6 right-align red-text" *ngIf="model.heroImage"> "{{ heroFilename }}" wurde erfolgreich hochgeladen!</div>
     </div>
-    <div class="text-right py-2" *ngIf="model.heroImage"> "{{ heroFilename }}" wurde erfolgreich hochgeladen!</div>
-    <div [hidden]="title.valid || title.pristine"
-          class="alert alert-danger">
-      Das Rezept muss einen Titel haben
-    </div>
-
-    <div class="row form-group mt-3 w-100 justify-content-center">
-      <div class="col-sm-4 col-lg-2">
-        <div class="input-group">
-          <div class="input-group-addon"><svg class="icon icon-user"><use inlineHref="#icon-user"></use></svg></div>
-          <input type="number" [(ngModel)]="model.servings" name="servings" id="servings" class="form-control">
-        </div>
+    <div class="row">
+      <div class="col s6">
+        <mz-input-container>
+          <i mz-icon mz-input-prefix [icon]="'person'"></i>
+          <input mz-input [(ngModel)]="model.servings" [label]="'Portionen'" 
+            id="servings" name="servings"  type="number">
+        </mz-input-container>
       </div>
-      <div class="col-sm-6 offset-sm-2 offset-md-0 col-md-4 col-lg-4 offset-lg-1">
-        <div class="input-group">
-          <div class="input-group-addon"><svg class="icon icon-clock-o"><use inlineHref="#icon-clock-o"></use></svg></div>
-          <input type="number" [(ngModel)]="model.duration" name="duration" id="duration" class="form-control">
-          <div class="input-group-addon">Minuten</div>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-4 col-lg-4 offset-lg-1 mt-3 mt-md-0">
-        <div class="btn-group" role="group" aria-label="...">
-          <button type="button" class="btn btn-secondary click" [ngClass]="{'active':model.difficulty==1}" (click)="model.difficulty=1">Einfach</button>
-          <button type="button" class="btn btn-secondary click" [ngClass]="{'active':model.difficulty==2}" (click)="model.difficulty=2">Mittel</button>
-          <button type="button" class="btn btn-secondary click" [ngClass]="{'active':model.difficulty==3}" (click)="model.difficulty=3">Schwer</button>
-        </div>
-      </div>
-      <div class="col-12 mt-4 text-center">
-        <div class="btn-group">
-          <button type="button" class="btn btn-secondary click" [ngClass]="{'active': hasCategory('Vegetarisch')}" (click)="toggleCategory('Vegetarisch')">Vegetarisch</button>
-          <button type="button" class="btn btn-secondary click" [ngClass]="{'active': hasCategory('Vegan')}" (click)="toggleCategory('Vegan')">Vegan</button>
-        </div>
+      <div class="col s6">
+        <mz-input-container>
+          <i mz-icon mz-input-prefix [icon]="'timer'"></i>
+          <input mz-input [(ngModel)]="model.duration" [label]="'Minuten'" 
+            id="duration" name="duration"  type="number">
+        </mz-input-container>
       </div>
     </div>
 
-    <h2 class="mb-3 section-header">Zutaten</h2>
-    <div class="list-group" dnd-sortable-container [sortableData]="ingredients">
-      <div class="mb-2" *ngFor="let ingr of ingredients; let i = index" class="list-group-item" dnd-sortable [sortableIndex]="i">
-        <div *ngIf="ingr.name != ''">
-          {{ ingr.name }} <span *ngIf="ingr.hint!=''"> ({{ ingr.hint }})</span>
-          <a pageScroll href="#inputs" [pageScrollOffset]="200" [pageScrollDuration]="250" 
-          class="px-3 click" (click)="editIngredient(i)">
-            <svg class="icon icon-pencil"><use inlineHref="#icon-pencil"></use></svg>
-          </a>
-          <button *ngIf="ingredientAdded" type="button" class="close click" (click)=removeIngredient(ingr)><span aria-hidden="true">&times;</span></button>
+    <div class="row toggles">
+      <div class="col s12 m6 center-align" style="margin-top: 1.rem;">
+        <div role="group" aria-label="...">
+          <button type="button" class="waves-effect waves-light btn indigo lighten-3 click" 
+            [ngClass]="{'difficulty-active':model.difficulty==1}" (click)="model.difficulty=1">Einfach</button>
+          <button type="button" class="waves-effect waves-light btn indigo lighten-3 click" 
+            [ngClass]="{'difficulty-active':model.difficulty==2}" (click)="model.difficulty=2">Mittel</button>
+          <button type="button" class="waves-effect waves-light btn indigo lighten-3 click" 
+            [ngClass]="{'difficulty-active':model.difficulty==3}" (click)="model.difficulty=3">Schwer</button>
         </div>
       </div>
-    </div>
-    
-    <div *ngIf="!editing" class="row form-group mt-3">
-      <div class="col-sm-6">
-        <div class="input-group">
-          <span class="input-group-btn">
-            <button class="btn btn-primary click hidden-lg-up" type="button" (click)="addIngredient()">Enter</button>
-          </span>
-          <input type="text" [(ngModel)]="newIngredient.name" name="name" class="form-control" id="name" 
-                (keyup.enter)="addIngredient()" placeholder="Enter drücken zum Hinzufügen" #ingredient>
-        </div>
+      <div class="col s12 m6 veggies center-align">
+        <mz-checkbox-container class="veggie-option vegetarian">
+          <input mz-checkbox
+            [label]="'Vegetarisch'"
+            id="vegetarian"
+            type="checkbox"
+            (click)="toggleCategory('Vegetarisch')">
+        </mz-checkbox-container>
+        <mz-checkbox-container class="veggie-option vegan">
+          <input mz-checkbox
+            [label]="'Vegan'"
+            id="vegan"
+            type="checkbox"
+            (click)="toggleCategory('Vegan')">
+        </mz-checkbox-container>
       </div>
-      <div class="col-sm-6">
-        <div class="input-group">
-          <div class="input-group-addon">Hinweis</div>
-          <input type="text" [(ngModel)]="newIngredient.hint" name="hint" class="form-control" id="hint" 
-                (keyup.enter)="addIngredient(); ingredient.focus()" placeholder="Klammern werden automatisch gesetzt">
-        </div>
-      </div>
-    </div>
-    <div *ngIf="editing" class="row form-group mt-3">
-      <div class="col-sm-6">
-        <div class="input-group">
-          <span class="input-group-btn">
-            <button class="btn btn-primary click hidden-lg-up" type="button" (click)="updateIngredient(editIngr)">Enter</button>
-          </span>
-          <input type="text" focus="true" [(ngModel)]="newIngredient.name" name="newName" class="form-control" id="newName" 
-                (keyup.enter)="updateIngredient(editIngr)" placeholder="Enter drücken zum Bearbeiten" #ingredient>
-        </div>
-      </div>
-      <div class="col-sm-6">
-        <div class="input-group">
-          <div class="input-group-addon">Hinweis</div>
-          <input type="text" [(ngModel)]="newIngredient.hint" name="newHint" class="form-control" id="newHint" 
-                (keyup.enter)="updateIngredient(editIngr)" placeholder="Klammern werden automatisch gesetzt">
-        </div>
-      </div>
-    </div>
-    
-    <h2 class="mb-3 section-header">Info</h2>
-    <textarea rows="8" [(ngModel)]="model.description" name="description" class="form-control" id="description" #description="ngModel" placeholder="Beschreibung..."></textarea>
-    <button type="button" class="btn btn-default click mt-3" (click)=showDescPicker()>Anleitung Hochladen</button>
-    <span *ngIf="model.descrImage" class="pl-3"> "{{ descrFilename }}" wurde erfolgreich hochgeladen!</span>
-
-    <h2 class="my-3 section-header">Kategorien</h2>
-    <div class="mb-2 d-inline-block" *ngFor="let ctg of categories">
-      {{ ctg }}
-      <button type="button" class="close px-2 click" (click)="removeCategory(ctg)"><span aria-hidden="true">&times;</span></button>  
-    </div>
-    <div *ngIf="recipes" class="input-group ctg-input">
-      <span class="input-group-btn">
-        <button class="btn btn-primary click hidden-lg-up" type="button" (click)="addCategory(category.value); category.value=''">Enter</button>
-      </span>
-      <input #category auto-complete type="text" name="category" class="form-control w-100" id="category" 
-              (keyup.enter)="addCategory(category.value); category.value=''" placeholder="Enter drücken zum Hinzufügen" 
-              [source]="getCategories()" [min-chars]="1" [accept-user-input]="true" no-match-found-text="Kategorie ist neu">
     </div>
 
-    <button type="button" (click)="addRecipe(); gotoRecipes()" class="btn btn-success my-3 click" [disabled]="!recipeForm.form.valid">Speichern</button>
+    <div class="row">
+      <h4 class="section-title">Zutaten</h4>
+      <div class="ingredients col s12" dnd-sortable-container [sortableData]="ingredients">
+        <div class="ingredient" *ngFor="let ingr of ingredients; let i = index" dnd-sortable [sortableIndex]="i">
+          <div *ngIf="ingr.name != ''">
+            {{ ingr.name }} <span *ngIf="ingr.hint!=''"> ({{ ingr.hint }})</span>
+            <i class="material-icons click edit" (click)="editIngredient(i); editModal.open()">edit</i>
+            <i class="material-icons click" (click)="removeIngredient(ingr)">close</i>
+            <div class="small-border"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col s12 m6">
+        <mz-input-container class="col s12">
+          <input mz-input [(ngModel)]="newIngredient.name" [label]="'Name'" (keyup.enter)="addIngredient()"
+            id="ingrName" name="ingrName" type="text" placeholder="Enter drücken zum Hinzufügen" #ingredient>
+        </mz-input-container>
+      </div>
+      <div class="col s12 m6">
+        <mz-input-container class="col s12">
+          <input mz-input [(ngModel)]="newIngredient.hint" [label]="'Hinweis'" (keyup.enter)="addIngredient(); ingredient.focus()"
+            id="ingrHint" name="ingrHint" type="text" placeholder="Klammern werden automatisch gesetzt">
+        </mz-input-container>
+      </div>
+    </div>
+
+    <div class="row">  
+      <h4 class="section-title info">
+        <span>Info</span>
+        <i class="material-icons click" (click)="markdownModal.open()">help</i>
+      </h4>
+      <ul class="tabs" style="margin-bottom: 1rem; margin-top: -1rem;">
+        <li class="tab"><a class="active grey-text text-darken-4" href="#description">Text</a></li>
+        <li class="tab"><a class="grey-text text-darken-4" href="#preview">Vorschau</a></li>
+        <div class="indicator grey darken-3" style="z-index:1"></div>
+      </ul>
+      <div class="col s12" id="description">
+        <mz-textarea-container>
+          <textarea mz-textarea
+            [label]="'Beschreibung'" 
+            [(ngModel)]="model.description"
+            id="description" name="description"
+            placeholder="Markdown für Styling verfügbar, mehr Info auf dem Hilfe-Button">
+          </textarea>
+        </mz-textarea-container>
+      </div>
+      <div class="col s12 flow-text" id="preview" style="min-height: 124px;">
+        <markdown *ngIf="model.description" [data]="model.description"></markdown>
+      </div>
+      <div class="col s12 center-align">
+        <button type="button" class="waves-effect waves-light btn indigo click" (click)="showDescPicker()">Anleitung Hochladen</button>
+      </div>
+      <div class="center-align" *ngIf="model.descrImage" style="margin: .5rem;"> "{{ descrFilename }}" wurde erfolgreich hochgeladen!</div>
+    </div>
+    <div class="row">
+      <h4 class="section-title categories">Kategorien</h4>
+      <div class="chip" *ngFor="let ctg of categories" style="display: inline-block;">
+        {{ ctg }}
+        <i class="close material-icons" (click)="removeCategory(ctg)">close</i>
+      </div>
+      <mz-input-container class="col s12" *ngIf="recipes">
+        <input mz-input #category
+          [label]="'Neue Kategorie'"
+          placeholder="Enter drücken zum Hinzufügen"
+          [autocomplete]="autocomplete"
+          autocomplete="off"
+          id="category"
+          type="text"
+          (keyup.enter)="addCategory(category.value); category.value=''">
+      </mz-input-container>
+      <div class="col s12 center-align" style="margin-top: 2rem;">
+        <button type="button" (click)="addRecipe(); gotoRecipes()" class="waves-effect waves-light btn-large indigo" [disabled]="!recipeForm.form.valid">Rezept speichern</button>
+      </div>
+    </div>
   </form>
 </div>
+
+<mz-modal #editModal [options]="editModalOptions">
+  <mz-modal-header>
+    Bearbeiten
+  </mz-modal-header>
+  <mz-modal-content>
+    <br>
+    <mz-input-container class="col s12" *ngIf="editIngr.name">
+      <input mz-input [(ngModel)]="editIngr.name" [label]="'Name'" 
+        id="editName" name="editName" type="text">
+    </mz-input-container>
+    <mz-input-container class="col s12" *ngIf="editIngr.hint">
+      <input mz-input [(ngModel)]="editIngr.hint" [label]="'Hinweis'" 
+        id="editHint" name="editHint" type="text">
+    </mz-input-container>
+  </mz-modal-content>
+  <mz-modal-footer>
+    <button mz-button [flat]="true" mz-modal-close>Speichern</button>
+  </mz-modal-footer>
+</mz-modal>
+
+<mz-modal #markdownModal>
+  <mz-modal-header>
+    Was ist Markdown?
+  </mz-modal-header>
+  <mz-modal-content>
+    <p class="flow-text">
+      Mit Markdown kann man sehr einfach und schnell Text formatieren, hier einige Beispiele:
+      <br>
+      <br>
+      **Zwei Sterne** für <strong>fette</strong> Schrift
+      <br>
+      <br>
+      *Einen Stern* für <em>kursive</em> Schrift
+      <br>
+      <br>
+      Eine leere Zeile Platz
+      <br>
+      <br>
+      lassen für einen Absatz
+      <br>
+      <br>
+      [Ich bin ein Link Titel](http://www.google.com) wird zu <a href="http://www.google.com">Ich bin ein Link Titel</a>
+      <br>
+      <br>
+      Links werden jedoch auch automatisch erkannt: <a href="http://www.google.com">http://www.google.com</a>
+      <br>
+      <br>
+      Eine vollständige Übersicht über die Markdown-Syntax gibt es <a href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet">hier</a>.
+    </p>
+  </mz-modal-content>
+  <mz-modal-footer>
+    <button mz-button [flat]="true" mz-modal-close>Schließen</button>
+  </mz-modal-footer>
+</mz-modal>

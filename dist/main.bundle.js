@@ -1,6 +1,6 @@
 webpackJsonp([1,5],{
 
-/***/ 110:
+/***/ 112:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
@@ -8,7 +8,7 @@ exports = module.exports = __webpack_require__(5)();
 
 
 // module
-exports.push([module.i, ".img-fullwidth {\r\n    width: 100%;\r\n    height: 500px;\r\n    -o-object-fit: cover;\r\n       object-fit: cover;\r\n    margin-bottom: -20px;\r\n}\r\n\r\n@media only screen and (max-width: 767px) {\r\n    .img-fullwidth {\r\n        height: 300px;\r\n    }\r\n}\r\n\r\n.back {\r\n    z-index: 10000;\r\n    position: absolute;\r\n    right: 5px;\r\n    top: 5px;\r\n    padding: 0.5rem;\r\n    font-size: 2.5rem;\r\n    transition: all 200ms ease;\r\n    border-radius: 50%;\r\n    background: rgba(255, 255, 255, 0.2);\r\n}\r\n\r\n.difficulty-rating {\r\n    z-index: 10000;\r\n    position: absolute;\r\n    left: 5px;\r\n    top: 5px;\r\n    padding: 0.5rem;\r\n}\r\n\r\n.difficulty-rating i {\r\n    font-size: 2.5rem;\r\n    display: block;\r\n    margin-bottom: .5rem;\r\n}\r\n\r\n.quickinfo-wrapper {\r\n    width: 100%;\r\n}\r\n\r\n.quickinfo-wrapper .row {\r\n    margin-bottom: 0;\r\n}\r\n\r\n.quickinfo {\r\n    padding: 50px 20px;\r\n    max-width: 1600px;\r\n}\r\n\r\n@media only screen and (min-width: 1201px) {\r\n    .quickinfo {\r\n        display: -ms-flexbox;\r\n        display: -webkit-box;\r\n        display: flex;\r\n        -ms-flex-align: center;\r\n        -webkit-box-align: center;\r\n        align-items: center;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 992px) {\r\n    .quickinfo .col, .categories {\r\n        text-align: center !important;\r\n    }\r\n\r\n    .categories {\r\n        padding-top: 30px;\r\n    }\r\n}\r\n\r\n@media only screen and (min-width: 1201px) {\r\n    .title-wrapper.center {\r\n        display: block;\r\n    }\r\n    .title-wrapper.top {\r\n        display: none;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 1200px) {\r\n    .title-wrapper.center {\r\n        display: none;\r\n    }\r\n    .title-wrapper.top {\r\n        display: block;\r\n        padding-bottom: 30px;\r\n    }\r\n}\r\n\r\n.recipe-title {\r\n    font-weight: 300;\r\n    text-align: center;\r\n    margin: 0;\r\n}\r\n\r\n.ingredient-count, .minutes {\r\n    line-height: 32px;\r\n    font-size: 22px;\r\n    font-weight: 300;\r\n    display: inline;\r\n    width: 50%;\r\n}\r\n\r\n.ingredient-count {\r\n    border-right: 1px #777 solid;\r\n    padding-right: 19px;\r\n}\r\n\r\n.minutes {\r\n    padding-left: 20px;\r\n}\r\n\r\n.minutes .number, .ingredient-count .number {\r\n    padding-right: 12px;\r\n}\r\n\r\n.number {\r\n    font-size: 32px;\r\n    vertical-align: top;\r\n}\r\n\r\n.categories {\r\n    font-size: 22px;\r\n    text-align: right;\r\n    color: #333;\r\n}\r\n\r\n.main-content {\r\n    padding-top: 50px;\r\n    padding-bottom: 50px;\r\n}\r\n\r\n.big-border {\r\n    width: 66.66%;\r\n    border-bottom: 1px #ddd solid;\r\n}\r\n\r\n.small-border {\r\n    width: 33.33%;\r\n    margin-top: .75rem;\r\n    border-bottom: 1px #f2f2f2 solid;\r\n}\r\n\r\n.ingredient {\r\n    font-size: 18px;\r\n    margin-top: .75rem;\r\n}\r\n\r\n.ingredient > span {\r\n    padding-left: .5rem;\r\n}\r\n\r\n.servings-input {\r\n    float: right;\r\n    margin-right: 33.33%;\r\n}\r\n\r\n@media only screen and (max-width: 1200px) {\r\n    .big-border {\r\n        width: 100%\r\n    }\r\n    \r\n    .servings-input {\r\n        margin-right: 0;\r\n    }\r\n}\r\n\r\n.servings-input i {\r\n    transition: all 0.2s ease;\r\n    padding: .5rem;\r\n}\r\n\r\n.servings-input i:hover {\r\n    background: rgba(200,200,200,0.3);\r\n    border-radius: 50%;\r\n}\r\n\r\n.servings {\r\n    padding: 0 .75rem;\r\n    font-weight: 300;\r\n    font-size: 3rem;\r\n}\r\n\r\n.description {\r\n    font-size: 18px;\r\n}", ""]);
+exports.push([module.i, ".fullwidth {\r\n    width: 100%;\r\n}\r\n\r\n.back {\r\n    z-index: 10000;\r\n    position: absolute;\r\n    right: 5px;\r\n    top: 5px;\r\n    padding: 0.5rem;\r\n    font-size: 2.5rem;\r\n    transition: all 200ms ease;\r\n    border-radius: 50%;\r\n    background: rgba(255, 255, 255, 0.2);\r\n}\r\n\r\n.difficulty-rating {\r\n    z-index: 10000;\r\n    position: absolute;\r\n    left: 5px;\r\n    top: 5px;\r\n    padding: 0.5rem;\r\n}\r\n\r\n.difficulty-rating i {\r\n    font-size: 2.5rem;\r\n    display: block;\r\n    margin-bottom: .5rem;\r\n}\r\n\r\n.quickinfo-wrapper {\r\n    width: 100%;\r\n}\r\n\r\n.quickinfo-wrapper .row {\r\n    margin-bottom: 0;\r\n}\r\n\r\n.quickinfo {\r\n    padding: 50px 20px;\r\n    max-width: 1600px;\r\n}\r\n\r\n@media only screen and (min-width: 1201px) {\r\n    .quickinfo {\r\n        display: -ms-flexbox;\r\n        display: -webkit-box;\r\n        display: flex;\r\n        -ms-flex-align: center;\r\n        -webkit-box-align: center;\r\n        align-items: center;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 992px) {\r\n    .quickinfo .col, .categories {\r\n        text-align: center !important;\r\n    }\r\n\r\n    .categories {\r\n        padding-top: 30px;\r\n    }\r\n}\r\n\r\n@media only screen and (min-width: 1201px) {\r\n    .title-wrapper.center {\r\n        display: block;\r\n    }\r\n    .title-wrapper.top {\r\n        display: none;\r\n    }\r\n}\r\n\r\n@media only screen and (max-width: 1200px) {\r\n    .title-wrapper.center {\r\n        display: none;\r\n    }\r\n    .title-wrapper.top {\r\n        display: block;\r\n        padding-bottom: 30px;\r\n    }\r\n}\r\n\r\n.recipe-title {\r\n    font-weight: 300;\r\n    text-align: center;\r\n    margin: 0;\r\n}\r\n\r\n.ingredient-count, .minutes {\r\n    line-height: 32px;\r\n    font-size: 22px;\r\n    font-weight: 300;\r\n    display: inline;\r\n    width: 50%;\r\n}\r\n\r\n.ingredient-count {\r\n    border-right: 1px #777 solid;\r\n    padding-right: 19px;\r\n}\r\n\r\n.minutes {\r\n    padding-left: 20px;\r\n}\r\n\r\n.minutes .number, .ingredient-count .number {\r\n    padding-right: 12px;\r\n}\r\n\r\n.number {\r\n    font-size: 32px;\r\n    vertical-align: top;\r\n}\r\n\r\n.categories {\r\n    font-size: 22px;\r\n    text-align: right;\r\n    color: #333;\r\n}\r\n\r\n.main-content {\r\n    padding-top: 50px;\r\n    padding-bottom: 50px;\r\n}\r\n\r\n.big-border {\r\n    width: 66.66%;\r\n    border-bottom: 1px #ddd solid;\r\n}\r\n\r\n.small-border {\r\n    width: 33.33%;\r\n    margin-top: .75rem;\r\n    border-bottom: 1px #f2f2f2 solid;\r\n}\r\n\r\n.ingredient {\r\n    font-size: 18px;\r\n    margin-top: .75rem;\r\n}\r\n\r\n.ingredient > span {\r\n    padding-left: .5rem;\r\n}\r\n\r\n.servings-input {\r\n    float: right;\r\n    margin-right: 33.33%;\r\n}\r\n\r\n@media only screen and (max-width: 1200px) {\r\n    .big-border {\r\n        width: 100%\r\n    }\r\n    \r\n    .servings-input {\r\n        margin-right: 0;\r\n    }\r\n}\r\n\r\n.servings-input i {\r\n    transition: all 0.2s ease;\r\n    padding: .5rem;\r\n}\r\n\r\n.servings-input i:hover {\r\n    background: rgba(200,200,200,0.3);\r\n    border-radius: 50%;\r\n}\r\n\r\n.servings {\r\n    padding: 0 .75rem;\r\n    font-weight: 300;\r\n    font-size: 3rem;\r\n}\r\n\r\n.description {\r\n    font-size: 18px;\r\n}", ""]);
 
 // exports
 
@@ -18,7 +18,7 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 156:
+/***/ 157:
 /***/ (function(module, exports) {
 
 function webpackEmptyContext(req) {
@@ -27,19 +27,19 @@ function webpackEmptyContext(req) {
 webpackEmptyContext.keys = function() { return []; };
 webpackEmptyContext.resolve = webpackEmptyContext;
 module.exports = webpackEmptyContext;
-webpackEmptyContext.id = 156;
+webpackEmptyContext.id = 157;
 
 
 /***/ }),
 
-/***/ 157:
+/***/ 158:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(166);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__ = __webpack_require__(167);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__app_app_module__ = __webpack_require__(172);
 
 
 
@@ -49,13 +49,13 @@ __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dyna
 
 /***/ }),
 
-/***/ 169:
+/***/ 170:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_not_found_not_found_component__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_not_found_not_found_component__ = __webpack_require__(87);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppRoutingModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -94,7 +94,7 @@ AppRoutingModule = __decorate([
 
 /***/ }),
 
-/***/ 170:
+/***/ 171:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -124,7 +124,7 @@ AppComponent = __decorate([
 
 /***/ }),
 
-/***/ 171:
+/***/ 172:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -132,13 +132,13 @@ AppComponent = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__angular_http__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_materialize__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angular2_markdown__ = __webpack_require__(96);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(170);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_routing_module__ = __webpack_require__(169);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_ng2_materialize__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_angular2_markdown__ = __webpack_require__(98);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__app_component__ = __webpack_require__(171);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__app_routing_module__ = __webpack_require__(170);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__recipes_recipes_module__ = __webpack_require__(181);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__svgicons_svg_icon_svg_icon_component__ = __webpack_require__(182);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_not_found_not_found_component__ = __webpack_require__(86);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_not_found_not_found_component__ = __webpack_require__(87);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return AppModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -183,52 +183,6 @@ AppModule = __decorate([
 ], AppModule);
 
 //# sourceMappingURL=app.module.js.map
-
-/***/ }),
-
-/***/ 172:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_materialize__ = __webpack_require__(122);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConverterComponent; });
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = Object.setPrototypeOf ||
-        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-
-
-var ConverterComponent = (function (_super) {
-    __extends(ConverterComponent, _super);
-    function ConverterComponent() {
-        var _this = _super !== null && _super.apply(this, arguments) || this;
-        _this.quantity = 0;
-        return _this;
-    }
-    return ConverterComponent;
-}(__WEBPACK_IMPORTED_MODULE_1_ng2_materialize__["b" /* MzBaseModal */]));
-ConverterComponent = __decorate([
-    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
-        selector: 'converter',
-        template: __webpack_require__(345),
-        styles: [__webpack_require__(247)]
-    })
-], ConverterComponent);
-
-//# sourceMappingURL=converter.component.js.map
 
 /***/ }),
 
@@ -766,11 +720,11 @@ ThumbnailPipe = __decorate([
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_recipe_details_recipe_details_component__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_recipe_form_recipe_form_component__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_recipe_list_recipe_list_component__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_recipe_edit_recipe_edit_component__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_recipe_print_recipe_print_component__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_recipe_details_recipe_details_component__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_recipe_form_recipe_form_component__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_recipe_list_recipe_list_component__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_recipe_edit_recipe_edit_component__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_recipe_print_recipe_print_component__ = __webpack_require__(93);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecipeRoutingModule; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -819,26 +773,26 @@ RecipeRoutingModule = __decorate([
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_common__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__angular_forms__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_markdown__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_angular2_markdown__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ngui_auto_complete__ = __webpack_require__(184);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ngui_auto_complete___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__ngui_auto_complete__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_ng2_dnd__ = __webpack_require__(257);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_ng2_page_scroll__ = __webpack_require__(325);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ng2_materialize__ = __webpack_require__(122);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7_ng2_materialize__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_focus__ = __webpack_require__(185);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_angular2_focus___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_angular2_focus__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ng_inline_href__ = __webpack_require__(256);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_ng_inline_href___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_ng_inline_href__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_recipe_list_recipe_list_component__ = __webpack_require__(90);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_recipe_details_recipe_details_component__ = __webpack_require__(87);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_recipe_form_recipe_form_component__ = __webpack_require__(89);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_recipe_edit_recipe_edit_component__ = __webpack_require__(88);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_recipe_print_recipe_print_component__ = __webpack_require__(91);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_converter_converter_component__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_recipe_list_recipe_list_component__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__components_recipe_details_recipe_details_component__ = __webpack_require__(89);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__components_recipe_form_recipe_form_component__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_recipe_edit_recipe_edit_component__ = __webpack_require__(90);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__components_recipe_print_recipe_print_component__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__components_converter_converter_component__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__services_recipe_service__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_wunderlist_service__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_current_query_service__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_scroll_service__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__services_wunderlist_service__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__services_current_query_service__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__services_scroll_service__ = __webpack_require__(95);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__recipes_routing_module__ = __webpack_require__(180);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__pipes_calc_servings_pipe__ = __webpack_require__(173);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__pipes_filter_recipes_pipe__ = __webpack_require__(175);
@@ -1183,21 +1137,21 @@ module.exports = "<mz-modal [fixedFooter]=\"true\">\r\n  <mz-modal-header>\r\n  
 /***/ 346:
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"recipe\" class=\"fullwidth\">\r\n  <mz-parallax [height]=\"400\">\r\n    <img src=\"{{recipe.heroImage}}\" alt=\"{{recipe.title}}\">\r\n  </mz-parallax>\r\n</div>\r\n\r\n<i class=\"material-icons back grey-text text-darken-4 click\" (click)=\"gotoRecipes()\">close</i>\r\n\r\n<div *ngIf=\"recipe\" class=\"difficulty-rating\">\r\n  <i class=\"material-icons grey-text text-darken-4\" *ngFor=\"let i of Arr(recipe.difficulty).fill(1)\">star_border</i>\r\n</div>\r\n\r\n<div class=\"animated fadeIn\" *ngIf=\"recipe\">\r\n  <div class=\"quickinfo-wrapper grey lighten-4\">\r\n    <div class=\"row quickinfo\">\r\n      <div class=\"col s12 l12 xl6 title-wrapper top\">\r\n        <h4 class=\"recipe-title\">{{ recipe.title }}</h4>\r\n      </div>\r\n      <div class=\"col s12 l6 xl3\">\r\n        <div class=\"right-align ingredient-count\">\r\n            <span class=\"number indigo-text\">{{ recipe.ingredients.length }}</span><span>Zutaten</span>\r\n        </div>\r\n        <div class=\"left-align minutes\">\r\n          <span class=\"number indigo-text\">{{ recipe.duration }}</span><span>Minuten</span>\r\n        </div>\r\n      </div>\r\n      <div class=\"col s12 l12 xl6 title-wrapper center\">\r\n        <h4 class=\"recipe-title\">{{ recipe.title }}</h4>\r\n      </div>\r\n      <div class=\"col s12 l6 xl3\">\r\n        <div class=\"categories\">\r\n          <div class=\"chip\">Vegetarisch</div><div class=\"chip\">Indisch</div><div class=\"chip\">Vegan</div><div class=\"chip\">Klassiker</div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"container\">\r\n    <div class=\"row main-content\">\r\n      <div class=\"ingredients-wrapper col s12 m6\">\r\n        <h4>\r\n          <span>Zutaten</span>\r\n          <span class=\"servings-input grey-text text-darken-4\">\r\n            <i class=\"material-icons click\" (click)=\"addServing()\">add</i>\r\n            <span class=\"servings\">{{ desiredServings }}</span>\r\n            <i class=\"material-icons click\" (click)=\"removeServing()\">remove</i>\r\n          </span>\r\n        </h4>\r\n        <div class=\"big-border\"></div>\r\n        <ul class=\"ingredients\">\r\n          <li class=\"ingredient\" *ngFor=\"let ingredient of recipe.ingredients\">\r\n            <span>\r\n              {{ ingredient.name | calcServings:recipe.servings:desiredServings }}\r\n              <span *ngIf=\"ingredient.hint\">({{ ingredient.hint }})</span>\r\n            </span>\r\n            <div class=\"small-border\"></div>\r\n          </li>\r\n        </ul>\r\n        <div class=\"center-align\" style=\"margin: 3rem;\">\r\n          <button mz-button class=\"indigo\" (click)=\"converter()\">Umrechner</button>\r\n        </div>\r\n      </div>\r\n      <div class=\"col s12 m6\">\r\n        <h4>Zubereitung</h4>\r\n        <div class=\"big-border\"></div>\r\n        <markdown *ngIf=\"recipe.description\" class=\"description\">{{ recipe.description }}</markdown>\r\n        <img #descrImage *ngIf=\"recipe.descrImage\" src=\"{{recipe.descrImage}}\"\r\n            alt=\"Recipe description\" class=\"responsive-img\">\r\n      </div>\r\n    </div>\r\n    <div class=\"row\">\r\n      <div class=\"col s6\">\r\n        <div class=\"right-align\" style=\"margin: 3rem 1.5rem;\">\r\n          <button mz-button class=\"indigo\" (click)=\"edit()\">Bearbeiten</button>\r\n        </div>\r\n      </div>\r\n      <div class=\"col s6\">\r\n        <div class=\"left-align\" style=\"margin: 3rem 1.5rem;\">\r\n          <button mz-button class=\"indigo\" (click)=\"printView()\">Druckansicht</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <!--<div class=\"row my-4\">\r\n    <div class=\"col-4 col-lg-2\">\r\n      <div class=\"input-group\">\r\n        <div class=\"input-group-addon\"><svg class=\"icon icon-user\"><use inlineHref=\"#icon-user\"></use></svg></div>\r\n        <input type=\"number\" [(ngModel)]=\"desiredServings\" name=\"servings\" id=\"servings\" class=\"form-control\">\r\n      </div>\r\n    </div>\r\n    <div class=\"col-8 col-lg-5 top-info text-center\">\r\n      <div *ngIf=\"recipe.categories\"><span *ngFor=\"let ctg of recipe.categories\" class=\"click\" (click)=\"searchCtg(ctg)\"> #<strong>{{ ctg }}</strong> </span></div>\r\n    </div>\r\n    <div class=\"col-6 col-lg-3 mt-3 mt-lg-0 top-info\">\r\n      <svg class=\"icon icon-clock-o\">\r\n        <use inlineHref=\"#icon-clock-o\"></use>\r\n      </svg>\r\n      <span>{{ recipe.duration }} Minuten</span>\r\n    </div>\r\n    <div class=\"col-6 col-lg-2 mt-3 mt-lg-0 top-info\">\r\n      <svg class=\"icon icon-star-o\">\r\n        <use inlineHref=\"#icon-star-o\"></use>\r\n      </svg>\r\n      <span>{{ recipe.difficulty | difficultyString }}</span>\r\n    </div>\r\n  </div>\r\n  <div class=\"row\">\r\n    <div class=\"col-lg-6\">\r\n      <h2 class=\"mb-4 d-inline-block\">Zutaten</h2>\r\n      <converter class=\"float-right\"></converter>\r\n      <ul class=\"list-group\">\r\n        <li class=\"list-group-item\" *ngFor=\"let ingredient of recipe.ingredients\">\r\n          {{ ingredient.name | calcServings:recipe.servings:desiredServings }}\r\n          <span *ngIf=\"ingredient.hint\" class=\"ml-1\">({{ ingredient.hint }})</span>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n    <div class=\"col-lg-6\">\r\n      <h2 class=\"my-4 mb-lg-4\">Zubereitung</h2>\r\n      <markdown *ngIf=\"recipe.description\" class=\"description-text\">{{ recipe.description }}</markdown>\r\n      <img #descrImage *ngIf=\"recipe.descrImage\" src=\"{{recipe.descrImage}}\"\r\n          alt=\"Recipe description\" class=\"img-fluid\">\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"my-3\">\r\n    <button class=\"btn btn-primary click\" type=\"button\" (click)=\"edit()\">Bearbeiten</button>\r\n    <button class=\"btn btn-secondary float-right hidden-sm-down click\" type=\"button\" (click)=\"printView()\">Druckansicht</button>\r\n  </div>-->\r\n</div> "
+module.exports = "<div *ngIf=\"recipe\" class=\"fullwidth\">\r\n  <mz-parallax [height]=\"400\">\r\n    <img src=\"{{recipe.heroImage}}\" alt=\"{{recipe.title}}\">\r\n  </mz-parallax>\r\n</div>\r\n\r\n<i class=\"material-icons back grey-text text-darken-4 click\" (click)=\"gotoRecipes()\">close</i>\r\n\r\n<div *ngIf=\"recipe\" class=\"difficulty-rating\">\r\n  <i class=\"material-icons grey-text text-darken-4\" *ngFor=\"let i of Arr(recipe.difficulty).fill(1)\">star_border</i>\r\n</div>\r\n\r\n<div class=\"animated fadeIn\" *ngIf=\"recipe\">\r\n  <div class=\"quickinfo-wrapper grey lighten-4\">\r\n    <div class=\"row quickinfo\">\r\n      <div class=\"col s12 l12 xl6 title-wrapper top\">\r\n        <h4 class=\"recipe-title\">{{ recipe.title }}</h4>\r\n      </div>\r\n      <div class=\"col s12 l6 xl3\">\r\n        <div class=\"right-align ingredient-count\">\r\n            <span class=\"number indigo-text\">{{ recipe.ingredients.length }}</span><span>Zutaten</span>\r\n        </div>\r\n        <div class=\"left-align minutes\">\r\n          <span class=\"number indigo-text\">{{ recipe.duration }}</span><span>Minuten</span>\r\n        </div>\r\n      </div>\r\n      <div class=\"col s12 l12 xl6 title-wrapper center\">\r\n        <h4 class=\"recipe-title\">{{ recipe.title }}</h4>\r\n      </div>\r\n      <div class=\"col s12 l6 xl3\">\r\n        <div class=\"categories\">\r\n          <div class=\"chip\">Vegetarisch</div><div class=\"chip\">Indisch</div><div class=\"chip\">Vegan</div><div class=\"chip\">Klassiker</div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <div class=\"container\">\r\n    <div class=\"row main-content\">\r\n      <div class=\"ingredients-wrapper col s12 m6\">\r\n        <h4>\r\n          <span>Zutaten</span>\r\n          <span class=\"servings-input grey-text text-darken-4\">\r\n            <i class=\"material-icons click\" (click)=\"addServing()\">add</i>\r\n            <span class=\"servings\">{{ desiredServings }}</span>\r\n            <i class=\"material-icons click\" (click)=\"removeServing()\">remove</i>\r\n          </span>\r\n        </h4>\r\n        <div class=\"big-border\"></div>\r\n        <ul class=\"ingredients\">\r\n          <li class=\"ingredient\" *ngFor=\"let ingredient of recipe.ingredients\">\r\n            <span>\r\n              {{ ingredient.name | calcServings:recipe.servings:desiredServings }}\r\n              <span *ngIf=\"ingredient.hint\">({{ ingredient.hint }})</span>\r\n            </span>\r\n            <div class=\"small-border\"></div>\r\n          </li>\r\n        </ul>\r\n        <div class=\"center-align\" style=\"margin: 3rem;\">\r\n          <button mz-button class=\"indigo\" (click)=\"converter()\">Umrechner</button>\r\n        </div>\r\n      </div>\r\n      <div class=\"col s12 m6\">\r\n        <h4>Zubereitung</h4>\r\n        <div class=\"big-border\"></div>\r\n        <markdown *ngIf=\"recipe.description\" class=\"description\">{{ recipe.description }}</markdown>\r\n        <img #descrImage *ngIf=\"recipe.descrImage\" src=\"{{recipe.descrImage}}\"\r\n            alt=\"Recipe description\" class=\"responsive-img\">\r\n      </div>\r\n    </div>\r\n    <div class=\"row\">\r\n      <div class=\"col s12\">\r\n        <div class=\"center-align\" style=\"margin-top: 3rem;\">\r\n          <button mz-button class=\"indigo\" (click)=\"edit()\">Bearbeiten</button>\r\n        </div>\r\n      </div>\r\n      <div class=\"col s12\">\r\n        <div class=\"center-align\" style=\"margin: 1rem 0;\">\r\n          <button mz-button class=\"indigo\" (click)=\"printView()\">Druckansicht</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
 /***/ 347:
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"recipe\" class=\"container animated fadeIn\">\r\n  <form #recipeForm=\"ngForm\">\r\n    <h1 class=\"display-3 text-center mt-4 recipe-title\">{{ recipe.title }}</h1>\r\n    <hr class=\"my-4\">\r\n    <img *ngIf=\"recipe.heroImage\" class=\"img-fluid mb-3\" src=\"{{recipe.heroImage}}\" alt=\"{{recipe.title}}\">\r\n    <div class=\"input-group\">\r\n        <input type=\"text\" [(ngModel)]=\"recipe.title\" name=\"title\" class=\"form-control \" id=\"title\" required #title=\"ngModel\" placeholder=\"Titel\">\r\n        <span class=\"input-group-btn\">\r\n          <button type=\"button\" class=\"btn btn-secondary\" (click)=\"showHeroPicker()\">Neues Bild</button>\r\n        </span>\r\n    </div>\r\n    <div [hidden]=\"title.valid || title.pristine\"\r\n          class=\"alert alert-danger\">\r\n      Das Rezept muss einen Titel haben\r\n    </div>\r\n\r\n    <div class=\"row form-group mt-3 w-100 justify-content-center\">\r\n      <div class=\"col-sm-4 col-lg-2\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\"><svg class=\"icon icon-user\"><use inlineHref=\"#icon-user\"></use></svg></div>\r\n          <input type=\"number\" [(ngModel)]=\"recipe.servings\" name=\"servings\" id=\"servings\" class=\"form-control\">\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-6 offset-sm-2 offset-md-0 col-md-4 col-lg-4 offset-lg-1\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\"><svg class=\"icon icon-clock-o\"><use inlineHref=\"#icon-clock-o\"></use></svg></div>\r\n          <input type=\"number\" [(ngModel)]=\"recipe.duration\" name=\"duration\" id=\"duration\" class=\"form-control\">\r\n          <div class=\"input-group-addon\">Minuten</div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-12 col-md-4 col-lg-4 offset-lg-1 mt-3 mt-md-0\">\r\n        <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active':recipe.difficulty==1}\" (click)=\"recipe.difficulty=1\">Einfach</button>\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active':recipe.difficulty==2}\" (click)=\"recipe.difficulty=2\">Mittel</button>\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active':recipe.difficulty==3}\" (click)=\"recipe.difficulty=3\">Schwer</button>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-12 mt-4 text-center\">\r\n        <div class=\"btn-group\">\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active': hasCategory('Vegetarisch')}\" (click)=\"toggleCategory('Vegetarisch')\">Vegetarisch</button>\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active': hasCategory('Vegan')}\" (click)=\"toggleCategory('Vegan')\">Vegan</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <h2 class=\"mb-3 section-header\">Zutaten</h2>\r\n    <div class=\"list-group\" dnd-sortable-container [sortableData]=\"recipe.ingredients\">\r\n      <div *ngFor=\"let ingr of recipe.ingredients; let i = index\" class=\"list-group-item\" dnd-sortable [sortableIndex]=\"i\">\r\n          {{ ingr.name }} <span *ngIf=\"ingr.hint!=''\"> ({{ ingr.hint }})</span>\r\n          <a pageScroll href=\"#inputs\" [pageScrollOffset]=\"200\" [pageScrollDuration]=\"250\" \r\n          class=\"px-3 click\" (click)=\"editIngredient(i)\">\r\n            <svg class=\"icon icon-pencil\"><use inlineHref=\"#icon-pencil\"></use></svg>\r\n          </a>\r\n          <button type=\"button\" class=\"close click\" (click)=\"removeIngredient(ingr)\"><span aria-hidden=\"true\">&times;</span></button>\r\n      </div>\r\n    </div>\r\n    <span id=\"inputs\"></span>\r\n    <div *ngIf=\"!editing\" class=\"row form-group mt-3\">\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <span class=\"input-group-btn\">\r\n            <button class=\"btn btn-primary click hidden-lg-up\" type=\"button\" (click)=\"addIngredient()\">Enter</button>\r\n          </span>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.name\" name=\"name\" class=\"form-control\" id=\"name\" \r\n                (keyup.enter)=\"addIngredient(); ingredient.focus()\" placeholder=\"Enter drücken zum Hinzufügen\" #ingredient>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\">Hinweis</div>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.hint\" name=\"hint\" class=\"form-control\" id=\"hint\" \r\n                (keyup.enter)=\"addIngredient(); ingredient.focus()\" placeholder=\"Klammern werden automatisch gesetzt\">\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div *ngIf=\"editing\" class=\"row form-group mt-3\">\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <span class=\"input-group-btn\">\r\n            <button class=\"btn btn-primary click hidden-lg-up\" type=\"button\" (click)=\"updateIngredient(editIngr)\">Enter</button>\r\n          </span>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.name\" focus=\"true\" name=\"newName\" class=\"form-control\" id=\"newName\" \r\n                (keyup.enter)=\"updateIngredient(editIngr)\" placeholder=\"Enter drücken zum Bearbeiten\" #newingredient>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\">Hinweis</div>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.hint\" name=\"newHint\" class=\"form-control\" id=\"newHint\" \r\n                (keyup.enter)=\"updateIngredient(editIngr)\" placeholder=\"Klammern werden automatisch gesetzt\">\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <h2 class=\"mb-3 section-header\">Info</h2>\r\n    <textarea rows=\"8\" [(ngModel)]=\"recipe.description\" name=\"description\" class=\"form-control\" id=\"description\" #description=\"ngModel\" placeholder=\"Beschreibung...\"></textarea>\r\n    <img *ngIf=\"recipe.descrImage\" class=\"img-fluid my-3\" src=\"{{recipe.descrImage}}\" alt=\"Recipe description\">\r\n    <button type=\"button\" class=\"btn btn-default click mt-3\" (click)=showDescPicker()>Neue Anleitung</button>\r\n\r\n      <h2 class=\"my-3 section-header\">Kategorien</h2>\r\n      <div class=\"mb-2 d-inline-block\" *ngFor=\"let ctg of recipe.categories\">\r\n        {{ ctg }}\r\n        <button type=\"button\" class=\"close px-2 click\" (click)=\"removeCategory(ctg)\"><span aria-hidden=\"true\">&times;</span></button>  \r\n      </div>\r\n      <div class=\"input-group\">\r\n        <span class=\"input-group-btn\">\r\n          <button class=\"btn btn-primary click hidden-lg-up\" type=\"button\" (click)=\"addCategory(category.value); category.value=''\">Enter</button>\r\n        </span>\r\n        <input *ngIf=\"recipes\" #category auto-complete type=\"text\" name=\"category\" class=\"form-control w-100\" id=\"category\" \r\n              (keyup.enter)=\"addCategory(category.value); category.value=''\" placeholder=\"Enter drücken zum Hinzufügen\" \r\n              [source]=\"getCategories()\" [min-chars]=\"1\" [accept-user-input]=\"true\" no-match-found-text=\"Kategorie ist neu\">\r\n      </div>\r\n      \r\n    <button type=\"button\" (click)=\"save(); gotoRecipe(recipe)\" class=\"btn btn-success my-3 click\" [disabled]=\"!recipeForm.form.valid\">Speichern</button>\r\n  </form>\r\n</div>\r\n"
+module.exports = "<div class=\"container animated fadeIn\">\r\n  <form #recipeForm=\"ngForm\">\r\n    <div *ngIf=\"recipe\">\r\n    <h1 class=\"center-align\">{{ recipe.title }}</h1>\r\n    <hr>\r\n    <img *ngIf=\"recipe.heroImage\" class=\"responsive-img\" src=\"{{recipe.heroImage}}\" alt=\"{{recipe.title}}\">\r\n    <div class=\"row\">\r\n      <mz-input-container class=\"col s12 l9\">\r\n        <input mz-input\r\n          required \r\n          #title=\"ngModel\"\r\n          [(ngModel)]=\"recipe.title\"\r\n          [validate]=\"true\"\r\n          id=\"title\"\r\n          name=\"title\"\r\n          placeholder=\"Titel\"\r\n          type=\"text\">\r\n      </mz-input-container>\r\n      <div class=\"col s12 l3 center-align\">\r\n        <button class=\"waves-effect waves-light btn click indigo hero-image\" type=\"button\" (click)=\"showHeroPicker()\">Titelbild</button>\r\n      </div>\r\n      <div [hidden]=\"title.valid || title.pristine\" class=\"red-text col s6\">Das Rezept muss einen Titel haben</div>\r\n    </div>\r\n    <div class=\"row\">\r\n      <div class=\"col s6\">\r\n        <mz-input-container>\r\n          <i mz-icon mz-input-prefix [icon]=\"'person'\"></i>\r\n          <input mz-input [(ngModel)]=\"recipe.servings\" [label]=\"'Portionen'\" \r\n            id=\"servings\" name=\"servings\"  type=\"number\">\r\n        </mz-input-container>\r\n      </div>\r\n      <div class=\"col s6\">\r\n        <mz-input-container>\r\n          <i mz-icon mz-input-prefix [icon]=\"'timer'\"></i>\r\n          <input mz-input [(ngModel)]=\"recipe.duration\" [label]=\"'Minuten'\" \r\n            id=\"duration\" name=\"duration\"  type=\"number\">\r\n        </mz-input-container>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row toggles\">\r\n      <div class=\"col s12 m6 center-align\" style=\"margin-top: 1.rem;\">\r\n        <div role=\"group\" aria-label=\"...\">\r\n          <button type=\"button\" class=\"waves-effect waves-light btn indigo lighten-3 click\" \r\n            [ngClass]=\"{'difficulty-active':recipe.difficulty==1}\" (click)=\"recipe.difficulty=1\">Einfach</button>\r\n          <button type=\"button\" class=\"waves-effect waves-light btn indigo lighten-3 click\" \r\n            [ngClass]=\"{'difficulty-active':recipe.difficulty==2}\" (click)=\"recipe.difficulty=2\">Mittel</button>\r\n          <button type=\"button\" class=\"waves-effect waves-light btn indigo lighten-3 click\" \r\n            [ngClass]=\"{'difficulty-active':recipe.difficulty==3}\" (click)=\"recipe.difficulty=3\">Schwer</button>\r\n        </div>\r\n      </div>\r\n      <div class=\"col s12 m6 veggies center-align\">\r\n        <mz-checkbox-container class=\"veggie-option vegetarian\">\r\n          <input mz-checkbox\r\n            [label]=\"'Vegetarisch'\"\r\n            id=\"vegetarian\"\r\n            type=\"checkbox\"\r\n            (click)=\"toggleCategory('Vegetarisch')\">\r\n        </mz-checkbox-container>\r\n        <mz-checkbox-container class=\"veggie-option vegan\">\r\n          <input mz-checkbox\r\n            [label]=\"'Vegan'\"\r\n            id=\"vegan\"\r\n            type=\"checkbox\"\r\n            (click)=\"toggleCategory('Vegan')\">\r\n        </mz-checkbox-container>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row\">\r\n      <h4 class=\"section-title\">Zutaten</h4>\r\n      <div class=\"ingredients col s12\" dnd-sortable-container [sortableData]=\"ingredients\">\r\n        <div class=\"ingredient\" *ngFor=\"let ingr of recipe.ingredients; let i = index\" dnd-sortable [sortableIndex]=\"i\">\r\n          <div *ngIf=\"ingr.name != ''\">\r\n            {{ ingr.name }} <span *ngIf=\"ingr.hint!=''\"> ({{ ingr.hint }})</span>\r\n            <i class=\"material-icons click edit\" (click)=\"editIngredient(i); editModal.open()\">edit</i>\r\n            <i class=\"material-icons click\" (click)=\"removeIngredient(ingr)\">close</i>\r\n            <div class=\"small-border\"></div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\">\r\n      <div class=\"col s12 m6\">\r\n        <mz-input-container class=\"col s12\">\r\n          <input mz-input [(ngModel)]=\"newIngredient.name\" [label]=\"'Name'\" (keyup.enter)=\"addIngredient()\"\r\n            id=\"ingrName\" name=\"ingrName\" type=\"text\" placeholder=\"Enter drücken zum Hinzufügen\" #ingredient>\r\n        </mz-input-container>\r\n      </div>\r\n      <div class=\"col s12 m6\">\r\n        <mz-input-container class=\"col s12\">\r\n          <input mz-input [(ngModel)]=\"newIngredient.hint\" [label]=\"'Hinweis'\" (keyup.enter)=\"addIngredient(); ingredient.focus()\"\r\n            id=\"ingrHint\" name=\"ingrHint\" type=\"text\" placeholder=\"Klammern werden automatisch gesetzt\">\r\n        </mz-input-container>\r\n      </div>\r\n    </div>\r\n    </div><!-- close ngIf=\"recipe\", because tabs are buggy with later initialization -->\r\n    <div class=\"row\">\r\n      <h4 class=\"section-title info\">\r\n        <span>Info</span>\r\n        <i class=\"material-icons click\" (click)=\"markdownModal.open()\">help</i>\r\n      </h4>\r\n      <ul class=\"tabs\" style=\"margin-bottom: 1rem; margin-top: -1rem;\">\r\n        <li class=\"tab\"><a class=\"active grey-text text-darken-4\" href=\"#description\">Text</a></li>\r\n        <li class=\"tab\"><a class=\"grey-text text-darken-4\" href=\"#preview\">Vorschau</a></li>\r\n        <div class=\"indicator grey darken-3\" style=\"z-index:1\"></div>\r\n      </ul>\r\n      <div class=\"col s12\" id=\"description\">\r\n        <mz-textarea-container>\r\n          <textarea mz-textarea\r\n            [label]=\"'Beschreibung'\" \r\n            [(ngModel)]=\"description\"\r\n            id=\"description\" name=\"description\"\r\n            placeholder=\"Markdown für Styling verfügbar, mehr Info auf dem Hilfe-Button\">\r\n          </textarea>\r\n        </mz-textarea-container>\r\n      </div>\r\n      <div class=\"col s12 flow-text\" id=\"preview\" style=\"min-height: 124px;\">\r\n        <markdown [data]=\"description\"></markdown>\r\n      </div>\r\n      <div class=\"col s12 center-align\">\r\n        <button type=\"button\" class=\"waves-effect waves-light btn indigo click\" (click)=\"showDescPicker()\">Anleitung Hochladen</button>\r\n      </div>\r\n      <img *ngIf=\"recipe && recipe.descrImage\" class=\"responsive-img\" src=\"{{recipe.descrImage}}\" alt=\"Recipe description\">\r\n    </div>\r\n    <div class=\"row\" *ngIf=\"recipe\">\r\n      <h4 class=\"section-title categories\">Kategorien</h4>\r\n      <div class=\"chip\" *ngFor=\"let ctg of recipe.categories\" style=\"display: inline-block;\">\r\n        {{ ctg }}\r\n        <i class=\"close material-icons\" (click)=\"removeCategory(ctg)\">close</i>\r\n      </div>\r\n      <mz-input-container class=\"col s12\" *ngIf=\"recipes\">\r\n        <input mz-input #category\r\n          [label]=\"'Neue Kategorie'\"\r\n          placeholder=\"Enter drücken zum Hinzufügen\"\r\n          [autocomplete]=\"autocomplete\"\r\n          autocomplete=\"off\"\r\n          id=\"category\"\r\n          type=\"text\"\r\n          (keyup.enter)=\"addCategory(category.value); category.value=''\">\r\n      </mz-input-container>\r\n      <div class=\"col s12 center-align\" style=\"margin-top: 2rem;\">\r\n        <button type=\"button\" (click)=\"save();\" class=\"waves-effect waves-light btn-large indigo\" [disabled]=\"!recipeForm.form.valid\">Rezept speichern</button>\r\n      </div>\r\n    </div>\r\n  </form>\r\n</div>\r\n\r\n\r\n<mz-modal #editModal [options]=\"editModalOptions\">\r\n  <mz-modal-header>\r\n    Bearbeiten\r\n  </mz-modal-header>\r\n  <mz-modal-content>\r\n    <br>\r\n    <mz-input-container class=\"col s12\" *ngIf=\"editIngr.name\">\r\n      <input mz-input [(ngModel)]=\"editIngr.name\" [label]=\"'Name'\" \r\n        id=\"editName\" name=\"editName\" type=\"text\">\r\n    </mz-input-container>\r\n    <mz-input-container class=\"col s12\" *ngIf=\"editIngr.hint\">\r\n      <input mz-input [(ngModel)]=\"editIngr.hint\" [label]=\"'Hinweis'\" \r\n        id=\"editHint\" name=\"editHint\" type=\"text\">\r\n    </mz-input-container>\r\n  </mz-modal-content>\r\n  <mz-modal-footer>\r\n    <button mz-button [flat]=\"true\" mz-modal-close>Speichern</button>\r\n  </mz-modal-footer>\r\n</mz-modal>\r\n\r\n<mz-modal #markdownModal>\r\n  <mz-modal-header>\r\n    Was ist Markdown?\r\n  </mz-modal-header>\r\n  <mz-modal-content>\r\n    <p class=\"flow-text\">\r\n      Mit Markdown kann man sehr einfach und schnell Text formatieren, hier einige Beispiele:\r\n      <br>\r\n      <br>\r\n      **Zwei Sterne** für <strong>fette</strong> Schrift\r\n      <br>\r\n      <br>\r\n      *Einen Stern* für <em>kursive</em> Schrift\r\n      <br>\r\n      <br>\r\n      Eine leere Zeile Platz\r\n      <br>\r\n      <br>\r\n      lassen für einen Absatz\r\n      <br>\r\n      <br>\r\n      [Ich bin ein Link Titel](http://www.google.com) wird zu <a href=\"http://www.google.com\">Ich bin ein Link Titel</a>\r\n      <br>\r\n      <br>\r\n      Links werden jedoch auch automatisch erkannt: <a href=\"http://www.google.com\">http://www.google.com</a>\r\n      <br>\r\n      <br>\r\n      Eine vollständige Übersicht über die Markdown-Syntax gibt es <a href=\"https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet\">hier</a>.\r\n    </p>\r\n  </mz-modal-content>\r\n  <mz-modal-footer>\r\n    <button mz-button [flat]=\"true\" mz-modal-close>Schließen</button>\r\n  </mz-modal-footer>\r\n</mz-modal>"
 
 /***/ }),
 
 /***/ 348:
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container animated fadeIn\">\r\n  <form #recipeForm=\"ngForm\">\r\n    <h1 class=\"display-3 text-center mt-4 recipe-title\">{{ model.title }}</h1>\r\n    <hr class=\"my-4\">\r\n    <div class=\"input-group\">\r\n      <input type=\"text\" [(ngModel)]=\"model.title\" name=\"title\" class=\"form-control \" id=\"title\" required #title=\"ngModel\" placeholder=\"Titel\">\r\n      <span class=\"input-group-btn\">\r\n        <button class=\"btn btn-secondary click\" type=\"button\" (click)=\"showHeroPicker()\">Titelbild</button>\r\n      </span>\r\n    </div>\r\n    <div class=\"text-right py-2\" *ngIf=\"model.heroImage\"> \"{{ heroFilename }}\" wurde erfolgreich hochgeladen!</div>\r\n    <div [hidden]=\"title.valid || title.pristine\"\r\n          class=\"alert alert-danger\">\r\n      Das Rezept muss einen Titel haben\r\n    </div>\r\n\r\n    <div class=\"row form-group mt-3 w-100 justify-content-center\">\r\n      <div class=\"col-sm-4 col-lg-2\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\"><svg class=\"icon icon-user\"><use inlineHref=\"#icon-user\"></use></svg></div>\r\n          <input type=\"number\" [(ngModel)]=\"model.servings\" name=\"servings\" id=\"servings\" class=\"form-control\">\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-6 offset-sm-2 offset-md-0 col-md-4 col-lg-4 offset-lg-1\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\"><svg class=\"icon icon-clock-o\"><use inlineHref=\"#icon-clock-o\"></use></svg></div>\r\n          <input type=\"number\" [(ngModel)]=\"model.duration\" name=\"duration\" id=\"duration\" class=\"form-control\">\r\n          <div class=\"input-group-addon\">Minuten</div>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-12 col-md-4 col-lg-4 offset-lg-1 mt-3 mt-md-0\">\r\n        <div class=\"btn-group\" role=\"group\" aria-label=\"...\">\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active':model.difficulty==1}\" (click)=\"model.difficulty=1\">Einfach</button>\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active':model.difficulty==2}\" (click)=\"model.difficulty=2\">Mittel</button>\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active':model.difficulty==3}\" (click)=\"model.difficulty=3\">Schwer</button>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-12 mt-4 text-center\">\r\n        <div class=\"btn-group\">\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active': hasCategory('Vegetarisch')}\" (click)=\"toggleCategory('Vegetarisch')\">Vegetarisch</button>\r\n          <button type=\"button\" class=\"btn btn-secondary click\" [ngClass]=\"{'active': hasCategory('Vegan')}\" (click)=\"toggleCategory('Vegan')\">Vegan</button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <h2 class=\"mb-3 section-header\">Zutaten</h2>\r\n    <div class=\"list-group\" dnd-sortable-container [sortableData]=\"ingredients\">\r\n      <div class=\"mb-2\" *ngFor=\"let ingr of ingredients; let i = index\" class=\"list-group-item\" dnd-sortable [sortableIndex]=\"i\">\r\n        <div *ngIf=\"ingr.name != ''\">\r\n          {{ ingr.name }} <span *ngIf=\"ingr.hint!=''\"> ({{ ingr.hint }})</span>\r\n          <a pageScroll href=\"#inputs\" [pageScrollOffset]=\"200\" [pageScrollDuration]=\"250\" \r\n          class=\"px-3 click\" (click)=\"editIngredient(i)\">\r\n            <svg class=\"icon icon-pencil\"><use inlineHref=\"#icon-pencil\"></use></svg>\r\n          </a>\r\n          <button *ngIf=\"ingredientAdded\" type=\"button\" class=\"close click\" (click)=removeIngredient(ingr)><span aria-hidden=\"true\">&times;</span></button>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    \r\n    <div *ngIf=\"!editing\" class=\"row form-group mt-3\">\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <span class=\"input-group-btn\">\r\n            <button class=\"btn btn-primary click hidden-lg-up\" type=\"button\" (click)=\"addIngredient()\">Enter</button>\r\n          </span>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.name\" name=\"name\" class=\"form-control\" id=\"name\" \r\n                (keyup.enter)=\"addIngredient()\" placeholder=\"Enter drücken zum Hinzufügen\" #ingredient>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\">Hinweis</div>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.hint\" name=\"hint\" class=\"form-control\" id=\"hint\" \r\n                (keyup.enter)=\"addIngredient(); ingredient.focus()\" placeholder=\"Klammern werden automatisch gesetzt\">\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div *ngIf=\"editing\" class=\"row form-group mt-3\">\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <span class=\"input-group-btn\">\r\n            <button class=\"btn btn-primary click hidden-lg-up\" type=\"button\" (click)=\"updateIngredient(editIngr)\">Enter</button>\r\n          </span>\r\n          <input type=\"text\" focus=\"true\" [(ngModel)]=\"newIngredient.name\" name=\"newName\" class=\"form-control\" id=\"newName\" \r\n                (keyup.enter)=\"updateIngredient(editIngr)\" placeholder=\"Enter drücken zum Bearbeiten\" #ingredient>\r\n        </div>\r\n      </div>\r\n      <div class=\"col-sm-6\">\r\n        <div class=\"input-group\">\r\n          <div class=\"input-group-addon\">Hinweis</div>\r\n          <input type=\"text\" [(ngModel)]=\"newIngredient.hint\" name=\"newHint\" class=\"form-control\" id=\"newHint\" \r\n                (keyup.enter)=\"updateIngredient(editIngr)\" placeholder=\"Klammern werden automatisch gesetzt\">\r\n        </div>\r\n      </div>\r\n    </div>\r\n    \r\n    <h2 class=\"mb-3 section-header\">Info</h2>\r\n    <textarea rows=\"8\" [(ngModel)]=\"model.description\" name=\"description\" class=\"form-control\" id=\"description\" #description=\"ngModel\" placeholder=\"Beschreibung...\"></textarea>\r\n    <button type=\"button\" class=\"btn btn-default click mt-3\" (click)=showDescPicker()>Anleitung Hochladen</button>\r\n    <span *ngIf=\"model.descrImage\" class=\"pl-3\"> \"{{ descrFilename }}\" wurde erfolgreich hochgeladen!</span>\r\n\r\n    <h2 class=\"my-3 section-header\">Kategorien</h2>\r\n    <div class=\"mb-2 d-inline-block\" *ngFor=\"let ctg of categories\">\r\n      {{ ctg }}\r\n      <button type=\"button\" class=\"close px-2 click\" (click)=\"removeCategory(ctg)\"><span aria-hidden=\"true\">&times;</span></button>  \r\n    </div>\r\n    <div *ngIf=\"recipes\" class=\"input-group ctg-input\">\r\n      <span class=\"input-group-btn\">\r\n        <button class=\"btn btn-primary click hidden-lg-up\" type=\"button\" (click)=\"addCategory(category.value); category.value=''\">Enter</button>\r\n      </span>\r\n      <input #category auto-complete type=\"text\" name=\"category\" class=\"form-control w-100\" id=\"category\" \r\n              (keyup.enter)=\"addCategory(category.value); category.value=''\" placeholder=\"Enter drücken zum Hinzufügen\" \r\n              [source]=\"getCategories()\" [min-chars]=\"1\" [accept-user-input]=\"true\" no-match-found-text=\"Kategorie ist neu\">\r\n    </div>\r\n\r\n    <button type=\"button\" (click)=\"addRecipe(); gotoRecipes()\" class=\"btn btn-success my-3 click\" [disabled]=\"!recipeForm.form.valid\">Speichern</button>\r\n  </form>\r\n</div>"
+module.exports = "<div *ngIf=\"model\" class=\"container animated fadeIn\">\r\n  <form #recipeForm=\"ngForm\">\r\n    <h1 class=\"center-align\">{{ model.title }}</h1>\r\n    <hr>\r\n    <div class=\"row\">\r\n      <mz-input-container class=\"col s12 l9\">\r\n        <input mz-input\r\n          required \r\n          #title=\"ngModel\"\r\n          [(ngModel)]=\"model.title\"\r\n          [validate]=\"true\"\r\n          id=\"title\"\r\n          name=\"title\"\r\n          placeholder=\"Titel\"\r\n          type=\"text\">\r\n      </mz-input-container>\r\n      <div class=\"col s12 l3 center-align\">\r\n        <button class=\"waves-effect waves-light btn click indigo hero-image\" type=\"button\" (click)=\"showHeroPicker()\">Titelbild</button>\r\n      </div>\r\n      <div [hidden]=\"title.valid || title.pristine\" class=\"red-text col s6\">Das Rezept muss einen Titel haben</div>\r\n      <div class=\"col s6 right-align red-text\" *ngIf=\"model.heroImage\"> \"{{ heroFilename }}\" wurde erfolgreich hochgeladen!</div>\r\n    </div>\r\n    <div class=\"row\">\r\n      <div class=\"col s6\">\r\n        <mz-input-container>\r\n          <i mz-icon mz-input-prefix [icon]=\"'person'\"></i>\r\n          <input mz-input [(ngModel)]=\"model.servings\" [label]=\"'Portionen'\" \r\n            id=\"servings\" name=\"servings\"  type=\"number\">\r\n        </mz-input-container>\r\n      </div>\r\n      <div class=\"col s6\">\r\n        <mz-input-container>\r\n          <i mz-icon mz-input-prefix [icon]=\"'timer'\"></i>\r\n          <input mz-input [(ngModel)]=\"model.duration\" [label]=\"'Minuten'\" \r\n            id=\"duration\" name=\"duration\"  type=\"number\">\r\n        </mz-input-container>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row toggles\">\r\n      <div class=\"col s12 m6 center-align\" style=\"margin-top: 1.rem;\">\r\n        <div role=\"group\" aria-label=\"...\">\r\n          <button type=\"button\" class=\"waves-effect waves-light btn indigo lighten-3 click\" \r\n            [ngClass]=\"{'difficulty-active':model.difficulty==1}\" (click)=\"model.difficulty=1\">Einfach</button>\r\n          <button type=\"button\" class=\"waves-effect waves-light btn indigo lighten-3 click\" \r\n            [ngClass]=\"{'difficulty-active':model.difficulty==2}\" (click)=\"model.difficulty=2\">Mittel</button>\r\n          <button type=\"button\" class=\"waves-effect waves-light btn indigo lighten-3 click\" \r\n            [ngClass]=\"{'difficulty-active':model.difficulty==3}\" (click)=\"model.difficulty=3\">Schwer</button>\r\n        </div>\r\n      </div>\r\n      <div class=\"col s12 m6 veggies center-align\">\r\n        <mz-checkbox-container class=\"veggie-option vegetarian\">\r\n          <input mz-checkbox\r\n            [label]=\"'Vegetarisch'\"\r\n            id=\"vegetarian\"\r\n            type=\"checkbox\"\r\n            (click)=\"toggleCategory('Vegetarisch')\">\r\n        </mz-checkbox-container>\r\n        <mz-checkbox-container class=\"veggie-option vegan\">\r\n          <input mz-checkbox\r\n            [label]=\"'Vegan'\"\r\n            id=\"vegan\"\r\n            type=\"checkbox\"\r\n            (click)=\"toggleCategory('Vegan')\">\r\n        </mz-checkbox-container>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row\">\r\n      <h4 class=\"section-title\">Zutaten</h4>\r\n      <div class=\"ingredients col s12\" dnd-sortable-container [sortableData]=\"ingredients\">\r\n        <div class=\"ingredient\" *ngFor=\"let ingr of ingredients; let i = index\" dnd-sortable [sortableIndex]=\"i\">\r\n          <div *ngIf=\"ingr.name != ''\">\r\n            {{ ingr.name }} <span *ngIf=\"ingr.hint!=''\"> ({{ ingr.hint }})</span>\r\n            <i class=\"material-icons click edit\" (click)=\"editIngredient(i); editModal.open()\">edit</i>\r\n            <i class=\"material-icons click\" (click)=\"removeIngredient(ingr)\">close</i>\r\n            <div class=\"small-border\"></div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\">\r\n      <div class=\"col s12 m6\">\r\n        <mz-input-container class=\"col s12\">\r\n          <input mz-input [(ngModel)]=\"newIngredient.name\" [label]=\"'Name'\" (keyup.enter)=\"addIngredient()\"\r\n            id=\"ingrName\" name=\"ingrName\" type=\"text\" placeholder=\"Enter drücken zum Hinzufügen\" #ingredient>\r\n        </mz-input-container>\r\n      </div>\r\n      <div class=\"col s12 m6\">\r\n        <mz-input-container class=\"col s12\">\r\n          <input mz-input [(ngModel)]=\"newIngredient.hint\" [label]=\"'Hinweis'\" (keyup.enter)=\"addIngredient(); ingredient.focus()\"\r\n            id=\"ingrHint\" name=\"ingrHint\" type=\"text\" placeholder=\"Klammern werden automatisch gesetzt\">\r\n        </mz-input-container>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row\">  \r\n      <h4 class=\"section-title info\">\r\n        <span>Info</span>\r\n        <i class=\"material-icons click\" (click)=\"markdownModal.open()\">help</i>\r\n      </h4>\r\n      <ul class=\"tabs\" style=\"margin-bottom: 1rem; margin-top: -1rem;\">\r\n        <li class=\"tab\"><a class=\"active grey-text text-darken-4\" href=\"#description\">Text</a></li>\r\n        <li class=\"tab\"><a class=\"grey-text text-darken-4\" href=\"#preview\">Vorschau</a></li>\r\n        <div class=\"indicator grey darken-3\" style=\"z-index:1\"></div>\r\n      </ul>\r\n      <div class=\"col s12\" id=\"description\">\r\n        <mz-textarea-container>\r\n          <textarea mz-textarea\r\n            [label]=\"'Beschreibung'\" \r\n            [(ngModel)]=\"model.description\"\r\n            id=\"description\" name=\"description\"\r\n            placeholder=\"Markdown für Styling verfügbar, mehr Info auf dem Hilfe-Button\">\r\n          </textarea>\r\n        </mz-textarea-container>\r\n      </div>\r\n      <div class=\"col s12 flow-text\" id=\"preview\" style=\"min-height: 124px;\">\r\n        <markdown *ngIf=\"model.description\" [data]=\"model.description\"></markdown>\r\n      </div>\r\n      <div class=\"col s12 center-align\">\r\n        <button type=\"button\" class=\"waves-effect waves-light btn indigo click\" (click)=\"showDescPicker()\">Anleitung Hochladen</button>\r\n      </div>\r\n      <div class=\"center-align\" *ngIf=\"model.descrImage\" style=\"margin: .5rem;\"> \"{{ descrFilename }}\" wurde erfolgreich hochgeladen!</div>\r\n    </div>\r\n    <div class=\"row\">\r\n      <h4 class=\"section-title categories\">Kategorien</h4>\r\n      <div class=\"chip\" *ngFor=\"let ctg of categories\" style=\"display: inline-block;\">\r\n        {{ ctg }}\r\n        <i class=\"close material-icons\" (click)=\"removeCategory(ctg)\">close</i>\r\n      </div>\r\n      <mz-input-container class=\"col s12\" *ngIf=\"recipes\">\r\n        <input mz-input #category\r\n          [label]=\"'Neue Kategorie'\"\r\n          placeholder=\"Enter drücken zum Hinzufügen\"\r\n          [autocomplete]=\"autocomplete\"\r\n          autocomplete=\"off\"\r\n          id=\"category\"\r\n          type=\"text\"\r\n          (keyup.enter)=\"addCategory(category.value); category.value=''\">\r\n      </mz-input-container>\r\n      <div class=\"col s12 center-align\" style=\"margin-top: 2rem;\">\r\n        <button type=\"button\" (click)=\"addRecipe(); gotoRecipes()\" class=\"waves-effect waves-light btn-large indigo\" [disabled]=\"!recipeForm.form.valid\">Rezept speichern</button>\r\n      </div>\r\n    </div>\r\n  </form>\r\n</div>\r\n\r\n<mz-modal #editModal [options]=\"editModalOptions\">\r\n  <mz-modal-header>\r\n    Bearbeiten\r\n  </mz-modal-header>\r\n  <mz-modal-content>\r\n    <br>\r\n    <mz-input-container class=\"col s12\" *ngIf=\"editIngr.name\">\r\n      <input mz-input [(ngModel)]=\"editIngr.name\" [label]=\"'Name'\" \r\n        id=\"editName\" name=\"editName\" type=\"text\">\r\n    </mz-input-container>\r\n    <mz-input-container class=\"col s12\" *ngIf=\"editIngr.hint\">\r\n      <input mz-input [(ngModel)]=\"editIngr.hint\" [label]=\"'Hinweis'\" \r\n        id=\"editHint\" name=\"editHint\" type=\"text\">\r\n    </mz-input-container>\r\n  </mz-modal-content>\r\n  <mz-modal-footer>\r\n    <button mz-button [flat]=\"true\" mz-modal-close>Speichern</button>\r\n  </mz-modal-footer>\r\n</mz-modal>\r\n\r\n<mz-modal #markdownModal>\r\n  <mz-modal-header>\r\n    Was ist Markdown?\r\n  </mz-modal-header>\r\n  <mz-modal-content>\r\n    <p class=\"flow-text\">\r\n      Mit Markdown kann man sehr einfach und schnell Text formatieren, hier einige Beispiele:\r\n      <br>\r\n      <br>\r\n      **Zwei Sterne** für <strong>fette</strong> Schrift\r\n      <br>\r\n      <br>\r\n      *Einen Stern* für <em>kursive</em> Schrift\r\n      <br>\r\n      <br>\r\n      Eine leere Zeile Platz\r\n      <br>\r\n      <br>\r\n      lassen für einen Absatz\r\n      <br>\r\n      <br>\r\n      [Ich bin ein Link Titel](http://www.google.com) wird zu <a href=\"http://www.google.com\">Ich bin ein Link Titel</a>\r\n      <br>\r\n      <br>\r\n      Links werden jedoch auch automatisch erkannt: <a href=\"http://www.google.com\">http://www.google.com</a>\r\n      <br>\r\n      <br>\r\n      Eine vollständige Übersicht über die Markdown-Syntax gibt es <a href=\"https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet\">hier</a>.\r\n    </p>\r\n  </mz-modal-content>\r\n  <mz-modal-footer>\r\n    <button mz-button [flat]=\"true\" mz-modal-close>Schließen</button>\r\n  </mz-modal-footer>\r\n</mz-modal>"
 
 /***/ }),
 
@@ -1225,12 +1179,12 @@ module.exports = "<svg style=\"position: absolute; width: 0; height: 0; overflow
 /***/ 410:
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(157);
+module.exports = __webpack_require__(158);
 
 
 /***/ }),
 
-/***/ 49:
+/***/ 50:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1275,7 +1229,7 @@ CurrentQueryService = __decorate([
 
 /***/ }),
 
-/***/ 50:
+/***/ 51:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1323,7 +1277,7 @@ var _a;
 
 /***/ }),
 
-/***/ 70:
+/***/ 71:
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(5)();
@@ -1331,7 +1285,7 @@ exports = module.exports = __webpack_require__(5)();
 
 
 // module
-exports.push([module.i, ".ctg-input > div {\r\n  width: 100% !important;\r\n}\r\n\r\n.ng-valid[required], .ng-valid.required  {\r\n  border-left: 5px solid #42A948; /* green */\r\n}\r\n.ng-invalid:not(form)  {\r\n  border-left: 5px solid #a94442; /* red */\r\n}\r\n\r\n.active {\r\n  background: lightblue;\r\n}\r\n\r\n.top-margin {\r\n  margin-top: 20px;\r\n}\r\n\r\n.close {\r\n  transition: all 0.5s ease;\r\n}\r\n\r\n.close:hover {\r\n  -webkit-transform: rotate(180deg);\r\n          transform: rotate(180deg);\r\n}\r\n\r\n.icon-pencil {\r\n  transition: all 0.5s ease;\r\n}\r\n\r\n.icon-pencil:hover {\r\n  -webkit-transform: rotate(360deg);\r\n          transform: rotate(360deg);\r\n}\r\n\r\n.icon-user {\r\n  height: 1em;\r\n  width: 1em;\r\n}\r\n.icon-clock-o {\r\n  height: 1em;\r\n  width: 1em;\r\n}", ""]);
+exports.push([module.i, ".difficulty-active {\r\n  background-color: #3f51b5 !important;\r\n}\r\n\r\n.hero-image {\r\n  margin-top: 1rem;\r\n}\r\n\r\n.toggles {\r\n  margin-top: 1.5rem;\r\n  margin-bottom: 1.5rem;\r\n}\r\n\r\n.toggles button {\r\n  margin: .5rem;\r\n}\r\n\r\n.veggie-option {\r\n  display: inline-block;\r\n  margin-right: 1.5rem;\r\n}\r\n\r\n@media only screen and (max-width: 600px) {\r\n  .veggies {\r\n    margin-top: 1.5rem;\r\n  }\r\n}\r\n\r\n.section-title {\r\n  padding-left: 0.75rem;\r\n  margin-bottom: 2rem;\r\n  margin-top: 2rem;\r\n}\r\n\r\n@media only screen and (max-width: 767px) {\r\n  .section-title {\r\n    text-align: center;\r\n  }\r\n\r\n  .tab {\r\n    width: 50%;\r\n    margin-left: auto;\r\n    left: auto;\r\n    right: auto;\r\n    float: left;\r\n    box-sizing: border-box;\r\n    padding: 0 0.75rem;\r\n    min-height: 1px;\r\n  }\r\n}\r\n\r\n.section-title.info {\r\n  position: relative;\r\n}\r\n\r\n.section-title.info i {\r\n  position: absolute;\r\n  right: 2rem;\r\n  top: 7px;\r\n}\r\n\r\n.small-border {\r\n    width: 33.33%;\r\n    margin-top: .75rem;\r\n    border-bottom: 1px #f2f2f2 solid;\r\n}\r\n\r\n.ingredient {\r\n    font-size: 18px;\r\n    padding-top: 0.5rem;\r\n}\r\n\r\n.ingredient > span, .ingredient i {\r\n    padding-left: .5rem;\r\n}\r\n\r\n.ingredient i.edit {\r\n  padding-left: 1.5rem;\r\n}\r\n\r\nmz-modal-header {\r\n  border-bottom: 1px #f2f2f2 solid;\r\n  padding-bottom: .5rem;\r\n}", ""]);
 
 // exports
 
@@ -1341,7 +1295,7 @@ module.exports = module.exports.toString();
 
 /***/ }),
 
-/***/ 86:
+/***/ 87:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1377,19 +1331,65 @@ PageNotFoundComponent = __decorate([
 
 /***/ }),
 
-/***/ 87:
+/***/ 88:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ng2_materialize__ = __webpack_require__(43);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ConverterComponent; });
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+
+
+var ConverterComponent = (function (_super) {
+    __extends(ConverterComponent, _super);
+    function ConverterComponent() {
+        var _this = _super !== null && _super.apply(this, arguments) || this;
+        _this.quantity = 0;
+        return _this;
+    }
+    return ConverterComponent;
+}(__WEBPACK_IMPORTED_MODULE_1_ng2_materialize__["b" /* MzBaseModal */]));
+ConverterComponent = __decorate([
+    __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
+        selector: 'converter',
+        template: __webpack_require__(345),
+        styles: [__webpack_require__(247)]
+    })
+], ConverterComponent);
+
+//# sourceMappingURL=converter.component.js.map
+
+/***/ }),
+
+/***/ 89:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_materialize__ = __webpack_require__(122);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__converter_converter_component__ = __webpack_require__(172);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_ng2_materialize__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__converter_converter_component__ = __webpack_require__(88);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_recipe_service__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_wunderlist_service__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_current_query_service__ = __webpack_require__(49);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__services_wunderlist_service__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_current_query_service__ = __webpack_require__(50);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecipeDetailsComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1473,7 +1473,7 @@ var RecipeDetailsComponent = (function () {
 RecipeDetailsComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         template: __webpack_require__(346),
-        styles: [__webpack_require__(110), __webpack_require__(70)]
+        styles: [__webpack_require__(112), __webpack_require__(71)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__services_recipe_service__["a" /* RecipeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_recipe_service__["a" /* RecipeService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_6__services_wunderlist_service__["a" /* WunderlistService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__services_wunderlist_service__["a" /* WunderlistService */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_7__services_current_query_service__["a" /* CurrentQueryService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__services_current_query_service__["a" /* CurrentQueryService */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3_ng2_materialize__["c" /* MzModalService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3_ng2_materialize__["c" /* MzModalService */]) === "function" && _f || Object])
 ], RecipeDetailsComponent);
@@ -1483,16 +1483,16 @@ var _a, _b, _c, _d, _e, _f;
 
 /***/ }),
 
-/***/ 88:
+/***/ 90:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(94);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__recipe__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__environments_environment__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__recipe__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_recipe_service__ = __webpack_require__(23);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecipeEditComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1547,26 +1547,57 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 var RecipeEditComponent = (function () {
     function RecipeEditComponent(recipeService, route, router) {
+        var _this = this;
         this.recipeService = recipeService;
         this.route = route;
         this.router = router;
         this.filestackKey = __WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].filestackKey;
         this.newIngredient = new __WEBPACK_IMPORTED_MODULE_4__recipe__["a" /* Ingredient */]('', '');
-        this.editing = false;
+        this.description = '';
+        this.editIngr = new __WEBPACK_IMPORTED_MODULE_4__recipe__["a" /* Ingredient */]('', '');
+        this.editModalOptions = {
+            dismissible: false,
+            complete: function () {
+                _this.recipe.ingredients[_this.editIngrIndex] = _this.editIngr;
+            }
+        };
     }
     RecipeEditComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.params
             .switchMap(function (params) { return _this.recipeService.getRecipe(params['id']); })
-            .subscribe(function (recipe) { return _this.recipe = recipe; });
+            .subscribe(function (recipe) {
+            _this.recipe = recipe;
+            if (recipe.description) {
+                _this.description = recipe.description;
+            }
+        });
         this.recipeService.getAllRecipes().subscribe(function (recipes) {
             _this.recipes = recipes;
+            var categories = new Set();
+            _this.recipes.forEach(function (recipe) {
+                recipe.categories.forEach(function (ctg) {
+                    categories.add(ctg);
+                });
+            });
+            var suggestions = Array.from(categories);
+            var data = {};
+            suggestions.forEach(function (ctg) {
+                data[ctg] = null;
+            });
+            _this.autocomplete = {
+                data: data,
+            };
             window.scrollTo(0, 0);
         });
     };
     RecipeEditComponent.prototype.save = function () {
+        var _this = this;
+        this.recipe.description = this.description;
         this.recipeService.updateRecipe(this.recipe)
-            .subscribe();
+            .subscribe(function () {
+            _this.gotoRecipe();
+        });
     };
     RecipeEditComponent.prototype.addIngredient = function () {
         if (this.newIngredient && this.newIngredient.name !== '') {
@@ -1576,26 +1607,10 @@ var RecipeEditComponent = (function () {
         }
     };
     RecipeEditComponent.prototype.editIngredient = function (index) {
-        if (this.editing) {
-            this.newIngredient = new __WEBPACK_IMPORTED_MODULE_4__recipe__["a" /* Ingredient */]('', '');
-            this.editing = false;
-        }
-        else {
-            this.editing = true;
-            this.editIngr = index;
-            this.newIngredient = this.recipe.ingredients[index];
-        }
-    };
-    RecipeEditComponent.prototype.updateIngredient = function (index) {
-        this.recipe.ingredients[index] = this.newIngredient;
-        this.newIngredient = new __WEBPACK_IMPORTED_MODULE_4__recipe__["a" /* Ingredient */]('', '');
-        this.editing = false;
+        this.editIngr = this.recipe.ingredients[index];
+        this.editIngrIndex = index;
     };
     RecipeEditComponent.prototype.removeIngredient = function (ingredient) {
-        if (this.editing) {
-            this.newIngredient = new __WEBPACK_IMPORTED_MODULE_4__recipe__["a" /* Ingredient */]('', '');
-            this.editing = false;
-        }
         this.recipe.ingredients.splice(this.recipe.ingredients.indexOf(ingredient), 1);
     };
     RecipeEditComponent.prototype.addCategory = function (category) {
@@ -1705,7 +1720,7 @@ var RecipeEditComponent = (function () {
 RecipeEditComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         template: __webpack_require__(347),
-        styles: [__webpack_require__(248), __webpack_require__(70)]
+        styles: [__webpack_require__(248), __webpack_require__(71)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_5__services_recipe_service__["a" /* RecipeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__services_recipe_service__["a" /* RecipeService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === "function" && _c || Object])
 ], RecipeEditComponent);
@@ -1715,14 +1730,14 @@ var _a, _b, _c;
 
 /***/ }),
 
-/***/ 89:
+/***/ 91:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__(94);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__recipe__ = __webpack_require__(92);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__environments_environment__ = __webpack_require__(96);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__recipe__ = __webpack_require__(94);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_recipe_service__ = __webpack_require__(23);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecipeFormComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1776,23 +1791,45 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 
 var RecipeFormComponent = (function () {
     function RecipeFormComponent(recipeService, router) {
+        var _this = this;
         this.recipeService = recipeService;
         this.router = router;
         this.filestackKey = __WEBPACK_IMPORTED_MODULE_2__environments_environment__["a" /* environment */].filestackKey;
-        this.ingredients = [new __WEBPACK_IMPORTED_MODULE_3__recipe__["a" /* Ingredient */]('', '')];
+        this.ingredients = [new __WEBPACK_IMPORTED_MODULE_3__recipe__["a" /* Ingredient */]('Test', 'Hint')];
         this.newIngredient = new __WEBPACK_IMPORTED_MODULE_3__recipe__["a" /* Ingredient */]('', '');
         this.categories = [];
         this.model = new __WEBPACK_IMPORTED_MODULE_3__recipe__["b" /* Recipe */]('', 2, 0, 1, 0, this.ingredients, '');
         // helper variables
         this.ingredientAdded = false;
-        this.editing = false;
+        this.editIngr = new __WEBPACK_IMPORTED_MODULE_3__recipe__["a" /* Ingredient */]('', '');
+        this.editModalOptions = {
+            dismissible: false,
+            complete: function () {
+                _this.model.ingredients[_this.editIngrIndex] = _this.editIngr;
+            }
+        };
     }
     RecipeFormComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.recipeService.getAllRecipes().subscribe(function (recipes) {
             _this.recipes = recipes;
+            var categories = new Set();
+            _this.recipes.forEach(function (recipe) {
+                recipe.categories.forEach(function (ctg) {
+                    categories.add(ctg);
+                });
+            });
+            var suggestions = Array.from(categories);
+            var data = {};
+            suggestions.forEach(function (ctg) {
+                data[ctg] = null;
+            });
+            _this.autocomplete = {
+                data: data,
+            };
             window.scrollTo(0, 0);
         });
+        this.model.description = '';
     };
     RecipeFormComponent.prototype.addRecipe = function () {
         if (this.categories.length > 0) {
@@ -1814,26 +1851,10 @@ var RecipeFormComponent = (function () {
         }
     };
     RecipeFormComponent.prototype.editIngredient = function (index) {
-        if (this.editing) {
-            this.newIngredient = new __WEBPACK_IMPORTED_MODULE_3__recipe__["a" /* Ingredient */]('', '');
-            this.editing = false;
-        }
-        else {
-            this.editing = true;
-            this.editIngr = index;
-            this.newIngredient = this.model.ingredients[index];
-        }
-    };
-    RecipeFormComponent.prototype.updateIngredient = function (index) {
-        this.model.ingredients[index] = this.newIngredient;
-        this.newIngredient = new __WEBPACK_IMPORTED_MODULE_3__recipe__["a" /* Ingredient */]('', '');
-        this.editing = false;
+        this.editIngr = this.model.ingredients[index];
+        this.editIngrIndex = index;
     };
     RecipeFormComponent.prototype.removeIngredient = function (ingredient) {
-        if (this.editing) {
-            this.newIngredient = new __WEBPACK_IMPORTED_MODULE_3__recipe__["a" /* Ingredient */]('', '');
-            this.editing = false;
-        }
         this.ingredients.splice(this.ingredients.indexOf(ingredient), 1);
     };
     RecipeFormComponent.prototype.addCategory = function (category) {
@@ -1946,7 +1967,7 @@ var RecipeFormComponent = (function () {
 RecipeFormComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         template: __webpack_require__(348),
-        styles: [__webpack_require__(70)]
+        styles: [__webpack_require__(71)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_4__services_recipe_service__["a" /* RecipeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__services_recipe_service__["a" /* RecipeService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === "function" && _b || Object])
 ], RecipeFormComponent);
@@ -1956,16 +1977,16 @@ var _a, _b;
 
 /***/ }),
 
-/***/ 90:
+/***/ 92:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_recipe_service__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_wunderlist_service__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_current_query_service__ = __webpack_require__(49);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_scroll_service__ = __webpack_require__(93);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_wunderlist_service__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__services_current_query_service__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__services_scroll_service__ = __webpack_require__(95);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecipeListComponent; });
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -2086,13 +2107,13 @@ var _a, _b, _c, _d, _e, _f;
 
 /***/ }),
 
-/***/ 91:
+/***/ 93:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_router__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap__ = __webpack_require__(75);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap__ = __webpack_require__(76);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2_rxjs_add_operator_switchMap__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__services_recipe_service__ = __webpack_require__(23);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return RecipePrintComponent; });
@@ -2130,7 +2151,7 @@ RecipePrintComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-recipe-print',
         template: __webpack_require__(350),
-        styles: [__webpack_require__(250), __webpack_require__(110)]
+        styles: [__webpack_require__(250), __webpack_require__(112)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__services_recipe_service__["a" /* RecipeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_recipe_service__["a" /* RecipeService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === "function" && _c || Object])
 ], RecipePrintComponent);
@@ -2140,7 +2161,7 @@ var _a, _b, _c;
 
 /***/ }),
 
-/***/ 92:
+/***/ 94:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2176,7 +2197,7 @@ var Ingredient = (function () {
 
 /***/ }),
 
-/***/ 93:
+/***/ 95:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2213,7 +2234,7 @@ ScrollService = __decorate([
 
 /***/ }),
 
-/***/ 94:
+/***/ 96:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

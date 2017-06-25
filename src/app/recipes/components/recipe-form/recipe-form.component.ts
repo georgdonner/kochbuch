@@ -20,9 +20,10 @@ export class RecipeFormComponent implements OnInit {
 
   recipes: Recipe[];
 
-  ingredients = [new Ingredient( '', '' )];
+  ingredients = [new Ingredient( 'Test', 'Hint' )];
   newIngredient = new Ingredient('', '');
   categories = [];
+  autocomplete: { data: { [key: string]: string } };
   model = new Recipe('', 2, 0, 1, 0, this.ingredients, '');
 
   // helper variables
@@ -30,8 +31,15 @@ export class RecipeFormComponent implements OnInit {
   heroFilename: string;
   descrFilename: string;
 
-  editing = false;
-  editIngr: number;
+  editIngr = new Ingredient('', '');
+  editIngrIndex: number;
+
+  public editModalOptions: Materialize.ModalOptions = {
+    dismissible: false,
+    complete: () => {
+      this.model.ingredients[this.editIngrIndex] = this.editIngr;
+    }
+  };
 
   constructor(
     private recipeService: RecipeService,
@@ -41,8 +49,23 @@ export class RecipeFormComponent implements OnInit {
   ngOnInit() {
     this.recipeService.getAllRecipes().subscribe(recipes => {
       this.recipes = recipes;
+      let categories = new Set<string>();
+      this.recipes.forEach(recipe => {
+        recipe.categories.forEach(ctg => {
+          categories.add(ctg);
+        });
+      });
+      const suggestions = Array.from(categories);
+      let data = {};
+      suggestions.forEach(ctg => {
+        data[ctg] = null;
+      });
+      this.autocomplete = {
+        data: data,
+      };
       window.scrollTo(0, 0);
     });
+    this.model.description = '';
   }
 
   addRecipe() {
@@ -67,27 +90,11 @@ export class RecipeFormComponent implements OnInit {
   }
 
   editIngredient(index) {
-    if (this.editing) {
-      this.newIngredient = new Ingredient('', '');
-      this.editing = false;
-    } else {
-      this.editing = true;
-      this.editIngr = index;
-      this.newIngredient = this.model.ingredients[index];
-    }
-  }
-
-  updateIngredient(index) {
-    this.model.ingredients[index] = this.newIngredient;
-    this.newIngredient = new Ingredient('', '');
-    this.editing = false;
+    this.editIngr = this.model.ingredients[index];
+    this.editIngrIndex = index;
   }
 
   removeIngredient(ingredient) {
-    if (this.editing) {
-      this.newIngredient = new Ingredient('', '');
-      this.editing = false;
-    }
     this.ingredients.splice(this.ingredients.indexOf(ingredient), 1);
   }
 

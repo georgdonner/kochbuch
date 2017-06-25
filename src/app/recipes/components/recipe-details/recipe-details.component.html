@@ -68,62 +68,16 @@
       </div>
     </div>
     <div class="row">
-      <div class="col s6">
-        <div class="right-align" style="margin: 3rem 1.5rem;">
+      <div class="col s12">
+        <div class="center-align" style="margin-top: 3rem;">
           <button mz-button class="indigo" (click)="edit()">Bearbeiten</button>
         </div>
       </div>
-      <div class="col s6">
-        <div class="left-align" style="margin: 3rem 1.5rem;">
+      <div class="col s12">
+        <div class="center-align" style="margin: 1rem 0;">
           <button mz-button class="indigo" (click)="printView()">Druckansicht</button>
         </div>
       </div>
     </div>
   </div>
-  <!--<div class="row my-4">
-    <div class="col-4 col-lg-2">
-      <div class="input-group">
-        <div class="input-group-addon"><svg class="icon icon-user"><use inlineHref="#icon-user"></use></svg></div>
-        <input type="number" [(ngModel)]="desiredServings" name="servings" id="servings" class="form-control">
-      </div>
-    </div>
-    <div class="col-8 col-lg-5 top-info text-center">
-      <div *ngIf="recipe.categories"><span *ngFor="let ctg of recipe.categories" class="click" (click)="searchCtg(ctg)"> #<strong>{{ ctg }}</strong> </span></div>
-    </div>
-    <div class="col-6 col-lg-3 mt-3 mt-lg-0 top-info">
-      <svg class="icon icon-clock-o">
-        <use inlineHref="#icon-clock-o"></use>
-      </svg>
-      <span>{{ recipe.duration }} Minuten</span>
-    </div>
-    <div class="col-6 col-lg-2 mt-3 mt-lg-0 top-info">
-      <svg class="icon icon-star-o">
-        <use inlineHref="#icon-star-o"></use>
-      </svg>
-      <span>{{ recipe.difficulty | difficultyString }}</span>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-lg-6">
-      <h2 class="mb-4 d-inline-block">Zutaten</h2>
-      <converter class="float-right"></converter>
-      <ul class="list-group">
-        <li class="list-group-item" *ngFor="let ingredient of recipe.ingredients">
-          {{ ingredient.name | calcServings:recipe.servings:desiredServings }}
-          <span *ngIf="ingredient.hint" class="ml-1">({{ ingredient.hint }})</span>
-        </li>
-      </ul>
-    </div>
-    <div class="col-lg-6">
-      <h2 class="my-4 mb-lg-4">Zubereitung</h2>
-      <markdown *ngIf="recipe.description" class="description-text">{{ recipe.description }}</markdown>
-      <img #descrImage *ngIf="recipe.descrImage" src="{{recipe.descrImage}}"
-          alt="Recipe description" class="img-fluid">
-    </div>
-  </div>
-
-  <div class="my-3">
-    <button class="btn btn-primary click" type="button" (click)="edit()">Bearbeiten</button>
-    <button class="btn btn-secondary float-right hidden-sm-down click" type="button" (click)="printView()">Druckansicht</button>
-  </div>-->
-</div> 
+</div>

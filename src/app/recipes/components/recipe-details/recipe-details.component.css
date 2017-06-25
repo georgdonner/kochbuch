@@ -1,14 +1,5 @@
-.img-fullwidth {
+.fullwidth {
     width: 100%;
-    height: 500px;
-    object-fit: cover;
-    margin-bottom: -20px;
-}
-
-@media only screen and (max-width: 767px) {
-    .img-fullwidth {
-        height: 300px;
-    }
 }
 
 .back {
