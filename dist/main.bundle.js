@@ -1085,7 +1085,7 @@ exports = module.exports = __webpack_require__(5)();
 
 
 // module
-exports.push([module.i, "@media print {\r\n    .top-icons {\r\n        display: none;\r\n    }\r\n\r\n    h1::first-letter, h4::first-letter {\r\n        margin-top: 0;\r\n    }\r\n}", ""]);
+exports.push([module.i, "", ""]);
 
 // exports
 
@@ -1165,7 +1165,7 @@ module.exports = "<div class=\"navbar-fixed\">\r\n  <nav class=\"indigo\">\r\n  
 /***/ 350:
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"recipe\" class=\"top-icons\">\r\n  <svg class=\"icon icon-chevron-left click\" (click)=\"back()\"><use inlineHref=\"#icon-chevron-left\"></use></svg>\r\n  <svg class=\"icon icon-spoon-knife click\"><use inlineHref=\"#icon-spoon-knife\"></use></svg>\r\n  <span class=\"badge cook-badge\">{{ recipe.cookCount }}</span>\r\n</div>\r\n\r\n<div class=\"container\" *ngIf=\"recipe\">\r\n  <h1 class=\"text-center mt-4 px-1 recipe-title\">{{ recipe.title }}</h1>\r\n  <div class=\"row my-4\">\r\n    <div class=\"col top-info\">\r\n        <svg class=\"icon icon-user\">\r\n          <use inlineHref=\"#icon-user\"></use>\r\n        </svg>\r\n        <span>{{ recipe.servings }}</span>\r\n    </div>\r\n    <div class=\"col top-info\">\r\n      <svg class=\"icon icon-clock-o\">\r\n        <use inlineHref=\"#icon-clock-o\"></use>\r\n      </svg>\r\n      <span>{{ recipe.duration }} Minuten</span>\r\n    </div>\r\n    <div class=\"col top-info\">\r\n      <svg class=\"icon icon-star-o\">\r\n        <use inlineHref=\"#icon-star-o\"></use>\r\n      </svg>\r\n      <span>{{ recipe.difficulty | difficultyString }}</span>\r\n    </div>\r\n  </div>\r\n  <div class=\"row\">\r\n    <div class=\"col-6\">\r\n      <h4 class=\"mb-2 section-header\">Zutaten</h4>\r\n      <ul class=\"list-unstyled\">\r\n        <li class=\"mb-1\"*ngFor=\"let ingredient of recipe.ingredients\">\r\n          - {{ ingredient.name }}\r\n          <span *ngIf=\"ingredient.hint\" class=\"ml-1\">({{ ingredient.hint }})</span>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n    <div class=\"col-6\">\r\n      <h4 class=\"mb-2 section-header\">Zubereitung</h4>\r\n      <markdown *ngIf=\"recipe.description\">{{ recipe.description }}</markdown>\r\n      <img #descrImage *ngIf=\"recipe.descrImage\" src=\"{{recipe.descrImage}}\"\r\n          alt=\"Recipe description\" class=\"img-fluid\">\r\n    </div>\r\n  </div>\r\n"
+module.exports = "<div class=\"container\" *ngIf=\"recipe\">\r\n  <h3 class=\"center-align\" style=\"margin-bottom: 2rem;\">{{ recipe.title }}</h3>\r\n  <div class=\"row\">\r\n    <div class=\"col s4 center-align\">\r\n      <span>{{ recipe.servings }} Portionen</span>\r\n    </div>\r\n    <div class=\"col s4 center-align\">\r\n      <span>{{ recipe.duration }} Minuten</span>\r\n    </div>\r\n    <div class=\"col s4 center-align\">\r\n      <span>{{ recipe.difficulty | difficultyString }}</span>\r\n    </div>\r\n  </div>\r\n  <div class=\"row\">\r\n    <div class=\"col s6\">\r\n      <h5 style=\"border-bottom: 1px #333 solid; display: inline-block; padding-bottom: .5rem;\">Zutaten</h5>\r\n      <ul>\r\n        <li *ngFor=\"let ingredient of recipe.ingredients\">\r\n          - {{ ingredient.name }}\r\n          <span *ngIf=\"ingredient.hint\"> ({{ ingredient.hint }})</span>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n    <div class=\"col s6\">\r\n      <h5 style=\"border-bottom: 1px #333 solid; display: inline-block; padding-bottom: .5rem;\">Zubereitung</h5>\r\n      <markdown *ngIf=\"recipe.description\">{{ recipe.description }}</markdown>\r\n      <img #descrImage *ngIf=\"recipe.descrImage\" src=\"{{recipe.descrImage}}\"\r\n          alt=\"Recipe description\" class=\"responsive-img\">\r\n    </div>\r\n  </div>\r\n"
 
 /***/ }),
 
@@ -2151,7 +2151,7 @@ RecipePrintComponent = __decorate([
     __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_0__angular_core__["Component"])({
         selector: 'app-recipe-print',
         template: __webpack_require__(350),
-        styles: [__webpack_require__(250), __webpack_require__(112)]
+        styles: [__webpack_require__(250)]
     }),
     __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_3__services_recipe_service__["a" /* RecipeService */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__services_recipe_service__["a" /* RecipeService */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["b" /* ActivatedRoute */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1__angular_router__["c" /* Router */]) === "function" && _c || Object])
 ], RecipePrintComponent);

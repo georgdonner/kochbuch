@@ -9,8 +9,7 @@ import { RecipeService } from '../../services/recipe.service';
   selector: 'app-recipe-print',
   templateUrl: './recipe-print.component.html',
   styleUrls: [
-    './recipe-print.component.css',
-    '../recipe-details/recipe-details.component.css'
+    './recipe-print.component.css'
   ]
 })
 export class RecipePrintComponent implements OnInit {
