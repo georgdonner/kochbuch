@@ -16,6 +16,12 @@
     padding-top: 1.5rem;
 }
 
+@media only screen and (max-width: 387px) {
+    .sort {
+        padding-top: 0;
+    }
+}
+
 .switch {display: inline-block;}
 .switch label {font-size: 18px;color: #333;}
 .switch .lever {margin-top: -4px;}

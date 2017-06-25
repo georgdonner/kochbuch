@@ -29,7 +29,7 @@
       </div>
       <div class="col s12 l6 xl3">
         <div class="categories">
-          <div class="chip">Vegetarisch</div><div class="chip">Indisch</div><div class="chip">Vegan</div><div class="chip">Klassiker</div>
+          <div class="chip" *ngFor="let ctg of recipe.categories">{{ ctg }}</div>
         </div>
       </div>
     </div>
@@ -40,9 +40,9 @@
         <h4>
           <span>Zutaten</span>
           <span class="servings-input grey-text text-darken-4">
-            <i class="material-icons click" (click)="addServing()">add</i>
-            <span class="servings">{{ desiredServings }}</span>
             <i class="material-icons click" (click)="removeServing()">remove</i>
+            <span class="servings">{{ desiredServings }}</span>
+            <i class="material-icons click" (click)="addServing()">add</i>
           </span>
         </h4>
         <div class="big-border"></div>
