@@ -28,6 +28,7 @@ export class RecipeFormComponent implements OnInit {
 
   // helper variables
   ingredientAdded = false;
+  mdPreview = false;
   heroFilename: string;
   descrFilename: string;
 
@@ -96,6 +97,10 @@ export class RecipeFormComponent implements OnInit {
 
   removeIngredient(ingredient) {
     this.ingredients.splice(this.ingredients.indexOf(ingredient), 1);
+  }
+
+  setPreview(preview: boolean) {
+    this.mdPreview = preview;
   }
 
   addCategory(category) {

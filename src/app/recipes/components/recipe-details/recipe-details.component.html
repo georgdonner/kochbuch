@@ -1,7 +1,8 @@
-<div *ngIf="recipe" class="fullwidth">
-  <mz-parallax [height]="400">
-    <img src="{{recipe.heroImage}}" alt="{{recipe.title}}">
-  </mz-parallax>
+<div class="container top-section" *ngIf="recipe && recipe.heroImage">
+  <div class="center-align">
+    <img class="responsive-img" src="{{recipe.heroImage}}" alt="{{recipe.title}}" style="border-radius: 2.5%; max-height: 400px;">
+    <h3 class="recipe-title">{{ recipe.title }}</h3>
+  </div>
 </div>
 
 <i class="material-icons back grey-text text-darken-4 click" (click)="gotoRecipes()">close</i>
@@ -12,24 +13,20 @@
 
 <div class="animated fadeIn" *ngIf="recipe">
   <div class="quickinfo-wrapper grey lighten-4">
-    <div class="row quickinfo">
-      <div class="col s12 l12 xl6 title-wrapper top">
-        <h4 class="recipe-title">{{ recipe.title }}</h4>
-      </div>
-      <div class="col s12 l6 xl3">
-        <div class="right-align ingredient-count">
-            <span class="number indigo-text">{{ recipe.ingredients.length }}</span><span>Zutaten</span>
+    <div class="container">
+      <div class="row quickinfo">
+        <div class="col s12 l6 center-align">
+          <div class="center-align ingredient-count">
+              <span class="number indigo-text">{{ recipe.ingredients.length }}</span><span class="number-caption">Zutaten</span>
+          </div>
+          <div class="center-align minutes">
+            <span class="number indigo-text">{{ recipe.duration }}</span><span class="number-caption">Minuten</span>
+          </div>
         </div>
-        <div class="left-align minutes">
-          <span class="number indigo-text">{{ recipe.duration }}</span><span>Minuten</span>
-        </div>
-      </div>
-      <div class="col s12 l12 xl6 title-wrapper center">
-        <h4 class="recipe-title">{{ recipe.title }}</h4>
-      </div>
-      <div class="col s12 l6 xl3">
-        <div class="categories">
-          <div class="chip" *ngFor="let ctg of recipe.categories">{{ ctg }}</div>
+        <div class="col s12 l6">
+          <div class="categories">
+            <div class="chip" *ngFor="let ctg of recipe.categories">{{ ctg }}</div>
+          </div>
         </div>
       </div>
     </div>

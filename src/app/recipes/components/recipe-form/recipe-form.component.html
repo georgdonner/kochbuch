@@ -99,12 +99,11 @@
         <span>Info</span>
         <i class="material-icons click" (click)="markdownModal.open()">help</i>
       </h4>
-      <ul class="tabs" style="margin-bottom: 1rem; margin-top: -1rem;">
-        <li class="tab"><a class="active grey-text text-darken-4" href="#description">Text</a></li>
-        <li class="tab"><a class="grey-text text-darken-4" href="#preview">Vorschau</a></li>
-        <div class="indicator grey darken-3" style="z-index:1"></div>
+      <ul class="preview-toggle">
+        <li class="toggle-control click grey-text text-darken-4" (click)="setPreview(false)" [ngClass]="{'active':!mdPreview}">Text</li>
+        <li class="toggle-control click grey-text text-darken-4" (click)="setPreview(true)" [ngClass]="{'active':mdPreview}">Vorschau</li>
       </ul>
-      <div class="col s12" id="description">
+      <div class="col s12" id="description" *ngIf="!mdPreview">
         <mz-textarea-container>
           <textarea mz-textarea
             [label]="'Beschreibung'" 
@@ -114,7 +113,7 @@
           </textarea>
         </mz-textarea-container>
       </div>
-      <div class="col s12 flow-text" id="preview" style="min-height: 124px;">
+      <div class="col s12" id="preview" style="min-height: 124px;" *ngIf="mdPreview">
         <markdown *ngIf="model.description" [data]="model.description"></markdown>
       </div>
       <div class="col s12 center-align">

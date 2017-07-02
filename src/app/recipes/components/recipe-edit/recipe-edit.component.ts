@@ -26,7 +26,7 @@ export class RecipeEditComponent implements OnInit {
   recipes: Recipe[];
   newIngredient = new Ingredient('', '');
   autocomplete: { data: { [key: string]: string } };
-  description = '';
+  mdPreview = false;
 
   editIngr = new Ingredient('', '');
   editIngrIndex: number;
@@ -49,9 +49,6 @@ export class RecipeEditComponent implements OnInit {
       .switchMap((params: Params) => this.recipeService.getRecipe(params['id']))
       .subscribe((recipe: Recipe) => {
         this.recipe = recipe;
-        if (recipe.description) {
-          this.description = recipe.description;
-        }
       });
     this.recipeService.getAllRecipes().subscribe(recipes => {
       this.recipes = recipes;
@@ -74,7 +71,6 @@ export class RecipeEditComponent implements OnInit {
   }
 
   save() {
-    this.recipe.description = this.description;
     this.recipeService.updateRecipe(this.recipe)
       .subscribe(() => {
         this.gotoRecipe();
@@ -96,6 +92,10 @@ export class RecipeEditComponent implements OnInit {
 
   removeIngredient(ingredient) {
     this.recipe.ingredients.splice(this.recipe.ingredients.indexOf(ingredient), 1);
+  }
+
+  setPreview(preview: boolean) {
+    this.mdPreview = preview;
   }
 
   addCategory(category) {
