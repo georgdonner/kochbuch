@@ -24,9 +24,12 @@ export class RecipeEditComponent implements OnInit {
 
   recipe: Recipe;
   recipes: Recipe[];
+  categories = [];
   newIngredient = new Ingredient('', '');
   autocomplete: { data: { [key: string]: string } };
   mdPreview = false;
+  vegetarian = false;
+  vegan = false;
 
   editIngr = new Ingredient('', '');
   editIngrIndex: number;
@@ -49,6 +52,15 @@ export class RecipeEditComponent implements OnInit {
       .switchMap((params: Params) => this.recipeService.getRecipe(params['id']))
       .subscribe((recipe: Recipe) => {
         this.recipe = recipe;
+        this.categories = JSON.parse(JSON.stringify(this.recipe.categories));
+        if (recipe.categories.includes('Vegetarisch')) {
+          this.vegetarian = true;
+          this.categories.splice(this.categories.indexOf('Vegetarisch'), 1);
+        }
+        if (recipe.categories.includes('Vegan')) {
+          this.vegan = true;
+          this.categories.splice(this.categories.indexOf('Vegan'), 1);
+        }
       });
     this.recipeService.getAllRecipes().subscribe(recipes => {
       this.recipes = recipes;
@@ -71,6 +83,11 @@ export class RecipeEditComponent implements OnInit {
   }
 
   save() {
+    if (this.vegetarian) { this.categories.push('Vegetarisch'); }
+    if (this.vegan) { this.categories.push('Vegan'); }
+    if (this.categories.length > 0) {
+      this.recipe.categories = this.categories;
+    }
     this.recipeService.updateRecipe(this.recipe)
       .subscribe(() => {
         this.gotoRecipe();
@@ -99,30 +116,21 @@ export class RecipeEditComponent implements OnInit {
   }
 
   addCategory(category) {
-    if (!this.recipe.categories) {
-      if (category === 'Vegan') {
-        this.recipe.categories = ['Vegetarisch'];
-      }
-      this.recipe.categories.push(category);
-    } else if (this.recipe.categories.includes(category)) {
+    if (category === 'Vegetarisch') { this.vegetarian = true; }
+    else if (category === 'Vegan') { this.vegan = true; }
+    else if (!this.categories) {
+      this.categories = [category];
+    } else if (this.categories.includes(category)) {
       // leave the categories as is
     } else {
-      if (category === 'Vegan') {
-        if (!this.recipe.categories.includes('Vegetarisch')) {
-          this.recipe.categories.push('Vegetarisch');
-        }
-      }
-      this.recipe.categories.push(category);
+      this.categories.push(category);
     }
   }
 
   removeCategory(category) {
-    if (category === 'Vegetarisch') {
-      if (this.recipe.categories.includes('Vegan')) {
-        this.recipe.categories.splice(this.recipe.categories.indexOf('Vegan'), 1);
-      }
-    }
-    this.recipe.categories.splice(this.recipe.categories.indexOf(category), 1);
+    if (category === 'Vegetarisch') { this.vegetarian = false; }
+    else if (category === 'Vegan') { this.vegan = false; }
+    else { this.categories.splice(this.categories.indexOf(category), 1); }
   }
 
   hasCategory(category) {
@@ -149,7 +157,7 @@ export class RecipeEditComponent implements OnInit {
 
   async showHeroPicker() {
     const client = filestack.init(this.filestackKey);
-    const result = await client.pick({ 
+    const result = await client.pick({
       accept: ['image/*'],
       maxFiles: 1,
       maxSize: 10485760,
@@ -160,7 +168,7 @@ export class RecipeEditComponent implements OnInit {
       }
     });
     const handle = result.filesUploaded[0].handle;
-    this.recipe.heroImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/'+handle;
+    this.recipe.heroImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/' + handle;
   }
 
   async showDescPicker() {
@@ -176,7 +184,7 @@ export class RecipeEditComponent implements OnInit {
       }
     });
     const handle = result.filesUploaded[0].handle;
-    this.recipe.descrImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/'+handle;
+    this.recipe.descrImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/' + handle;
   }
 
   gotoRecipe() {

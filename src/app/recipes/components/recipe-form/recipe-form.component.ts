@@ -25,6 +25,8 @@ export class RecipeFormComponent implements OnInit {
   categories = [];
   autocomplete: { data: { [key: string]: string } };
   model = new Recipe('', 2, 0, 1, 0, this.ingredients, '');
+  vegan = false;
+  vegetarian = false;
 
   // helper variables
   ingredientAdded = false;
@@ -70,6 +72,8 @@ export class RecipeFormComponent implements OnInit {
   }
 
   addRecipe() {
+    if (this.vegetarian) { this.categories.push('Vegetarisch'); }
+    if (this.vegan) { this.categories.push('Vegan'); }
     if (this.categories.length > 0) {
       this.model.categories = this.categories;
     }
@@ -83,7 +87,7 @@ export class RecipeFormComponent implements OnInit {
       this.ingredients.push(ingr);
       this.newIngredient = new Ingredient('', '');
     }
-    if (!this.ingredientAdded){
+    if (!this.ingredientAdded) {
       // Remove initial empty ingredient on first addition
       this.ingredients.splice(0, 1);
       this.ingredientAdded = true;
@@ -104,44 +108,25 @@ export class RecipeFormComponent implements OnInit {
   }
 
   addCategory(category) {
-    if (!this.categories) {
-      if (category === 'Vegan') {
-        this.categories = ['Vegetarisch'];
-      }
-      this.categories.push(category);
+    if (category === 'Vegetarisch') { this.vegetarian = true; }
+    else if (category === 'Vegan') { this.vegan = true; }
+    else if (!this.categories) {
+      this.categories = [category];
     } else if (this.categories.includes(category)) {
       // leave the categories as is
     } else {
-      if (category === 'Vegan') {
-        if (!this.categories.includes('Vegetarisch')) {
-          this.categories.push('Vegetarisch');
-        }
-      }
       this.categories.push(category);
     }
   }
 
   removeCategory(category) {
-    if (category === 'Vegetarisch') {
-      if (this.categories.includes('Vegan')) {
-        this.categories.splice(this.categories.indexOf('Vegan'), 1);
-      }
-    }
-    this.categories.splice(this.categories.indexOf(category), 1);
+    if (category === 'Vegetarisch') { this.vegetarian = false; }
+    else if (category === 'Vegan') { this.vegan = false; }
+    else { this.categories.splice(this.categories.indexOf(category), 1); }
   }
 
   hasCategory(category) {
     return this.categories.includes(category);
-  }
-
-  toggleCategory(category) {
-    if (!this.categories) {
-      this.addCategory(category);
-    } else if (!this.categories.includes(category)) {
-      this.addCategory(category);
-    } else {
-      this.removeCategory(category);
-    }
   }
 
   getCategories() {
@@ -167,7 +152,7 @@ export class RecipeFormComponent implements OnInit {
     });
     const handle = result.filesUploaded[0].handle;
     this.heroFilename = result.filesUploaded[0].filename;
-    this.model.heroImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/'+handle;
+    this.model.heroImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/' + handle;
   }
 
   async showDescPicker() {
@@ -183,7 +168,7 @@ export class RecipeFormComponent implements OnInit {
     });
     const handle = result.filesUploaded[0].handle;
     this.descrFilename = result.filesUploaded[0].filename;
-    this.model.descrImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/'+handle;
+    this.model.descrImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/' + handle;
   }
 
   gotoRecipes() {

@@ -52,16 +52,18 @@
         <mz-checkbox-container class="veggie-option vegetarian">
           <input mz-checkbox
             [label]="'Vegetarisch'"
+            name="vegetarian"
             id="vegetarian"
-            type="checkbox"
-            (click)="toggleCategory('Vegetarisch')">
+            [(ngModel)]="vegetarian"
+            type="checkbox">
         </mz-checkbox-container>
         <mz-checkbox-container class="veggie-option vegan">
           <input mz-checkbox
             [label]="'Vegan'"
+            name="vegan"
             id="vegan"
-            type="checkbox"
-            (click)="toggleCategory('Vegan')">
+            [(ngModel)]="vegan"
+            type="checkbox">
         </mz-checkbox-container>
       </div>
     </div>
@@ -123,6 +125,14 @@
     </div>
     <div class="row">
       <h4 class="section-title categories">Kategorien</h4>
+      <div class="chip" style="display: inline-block;" *ngIf="vegetarian">
+        Vegetarisch
+        <i class="close material-icons" (click)="vegetarian=false;">close</i>
+      </div>
+      <div class="chip" style="display: inline-block;" *ngIf="vegan">
+        Vegan
+        <i class="close material-icons" (click)="vegan=false;">close</i>
+      </div>
       <div class="chip" *ngFor="let ctg of categories" style="display: inline-block;">
         {{ ctg }}
         <i class="close material-icons" (click)="removeCategory(ctg)">close</i>
