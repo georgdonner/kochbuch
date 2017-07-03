@@ -1,9 +1,10 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MzToastService } from 'ng2-materialize';
 
 import { Recipe } from '../../recipe';
+import { ZauberwortService } from '../../services/zauberwort.service';
 import { RecipeService } from '../../services/recipe.service';
-import { WunderlistService } from '../../services/wunderlist.service';
 import { CurrentQueryService } from '../../services/current-query.service';
 import { ScrollService } from '../../services/scroll.service';
 
@@ -31,9 +32,10 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
     private router: Router,
     private route: ActivatedRoute,
     private recipeService: RecipeService,
-    private wunderlistService: WunderlistService,
     private queryService: CurrentQueryService,
-    private scrollService: ScrollService
+    private scrollService: ScrollService,
+    private zauberwortService: ZauberwortService,
+    private toastService: MzToastService
   ) { }
 
   ngOnInit() {
@@ -111,6 +113,17 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
 
   newRecipe() {
     this.router.navigate(['/recipes/new']);
+  }
+
+  async login(zauberwort: string) {
+    const successful = await this.zauberwortService.requestPermissions(zauberwort.trim().toLowerCase());
+    if (successful) {
+      this.toastService.show('Du hast das Zauberwort gesprochen!', 4000, 'green rounded');
+    }
+  }
+
+  isLoggedIn() {
+    return this.zauberwortService.canModify();
   }
 
 }

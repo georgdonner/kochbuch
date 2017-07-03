@@ -34,6 +34,19 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // Set our api routes
 app.use('/api', api);
 
+// Check if the zauberwort is right
+app.post('/zauberwort', function (req, res, next) {
+  if (req.body.zauberwort) {
+    if (req.body.zauberwort == process.env.ZAUBERWORT) {
+      res.sendStatus(200);
+    } else {
+      res.sendStatus(401);
+    }
+  } else {
+    res.status(400).send('Es ist ein Fehler aufgetreten :(');
+  }
+});
+
 // Catch all other routes and return the index file
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'dist/index.html'));

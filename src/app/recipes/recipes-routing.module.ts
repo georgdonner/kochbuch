@@ -1,4 +1,4 @@
-import { NgModule }             from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { RecipeDetailsComponent } from './components/recipe-details/recipe-details.component';
@@ -7,11 +7,13 @@ import { RecipeListComponent } from './components/recipe-list/recipe-list.compon
 import { RecipeEditComponent } from './components/recipe-edit/recipe-edit.component';
 import { RecipePrintComponent } from './components/recipe-print/recipe-print.component';
 
+import { ModifyRecipesGuard } from './guards/modify-recipes.guard';
+
 const recipeRoutes: Routes = [
   { path: 'recipes',  component: RecipeListComponent },
-  { path: 'recipes/new', component: RecipeFormComponent },
+  { path: 'recipes/new', component: RecipeFormComponent, canActivate: [ModifyRecipesGuard] },
   { path: 'recipe/:id', component: RecipeDetailsComponent },
-  { path: 'recipe/:id/edit', component: RecipeEditComponent},
+  { path: 'recipe/:id/edit', component: RecipeEditComponent, canActivate: [ModifyRecipesGuard]},
   { path: 'recipe/:id/print', component: RecipePrintComponent }
 ];
 

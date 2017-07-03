@@ -18,9 +18,11 @@ import { RecipePrintComponent } from './components/recipe-print/recipe-print.com
 import { ConverterComponent } from './components/converter/converter.component';
 
 import { RecipeService } from './services/recipe.service';
-import { WunderlistService } from './services/wunderlist.service';
 import { CurrentQueryService } from './services/current-query.service';
 import { ScrollService } from './services/scroll.service';
+import { ZauberwortService } from './services/zauberwort.service';
+
+import { ModifyRecipesGuard } from './guards/modify-recipes.guard';
 
 import { RecipeRoutingModule } from './recipes-routing.module';
 import { CalcServingsPipe } from './pipes/calc-servings.pipe';
@@ -67,10 +69,11 @@ import { NoVeggiesPipe } from './pipes/no-veggies.pipe';
   ],
   providers: [
     RecipeService,
-    WunderlistService,
     CurrentQueryService,
-    ScrollService
+    ScrollService,
+    ZauberwortService,
+    ModifyRecipesGuard
   ]
 })
 
-export class RecipesModule {}
+export class RecipesModule { }

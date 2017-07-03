@@ -6,8 +6,8 @@ import { MzModalService } from 'ng2-materialize';
 import { Recipe } from '../../recipe';
 import { ConverterComponent } from '../converter/converter.component';
 import { RecipeService } from '../../services/recipe.service';
-import { WunderlistService } from '../../services/wunderlist.service';
 import { CurrentQueryService } from '../../services/current-query.service';
+import { ZauberwortService } from '../../services/zauberwort.service';
 
 @Component({
   templateUrl: './recipe-details.component.html',
@@ -26,8 +26,8 @@ export class RecipeDetailsComponent implements OnInit {
 
   constructor(
     private recipeService: RecipeService,
-    private wunderlistService: WunderlistService,
     private queryService: CurrentQueryService,
+    private zauberwortService: ZauberwortService,
     private route: ActivatedRoute,
     private router: Router,
     private modalService: MzModalService
@@ -92,4 +92,9 @@ export class RecipeDetailsComponent implements OnInit {
     }
     return result;
   }
+
+  isLoggedIn() {
+    return this.zauberwortService.canModify();
+  }
+
 }
