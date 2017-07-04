@@ -57,8 +57,11 @@
       (click)="onSelect(recipe)" class="col s12 l6 xl4 click">
       <div class="card medium hoverable">
         <div class="card-image">
-          <img *ngIf="recipe.heroImage" src="{{ recipe.heroImage | thumbnail:600:0 }}" alt="{{ recipe.title }}">
-          <img *ngIf="!recipe.heroImage" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">
+          <div class="image-wrapper">
+            <img *ngIf="recipe.heroImage" class="loading-image" src="{{ recipe.heroImage | previewimg }}">
+            <img *ngIf="!recipe.heroImage" class="loading-image" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">
+            <div *ngIf="recipe.heroImage" class="main-image" [lazyLoad]="recipe.heroImage | thumbnail:600:0" [offset]="500"></div>
+          </div>
           <span class="card-title recipe-quickinfo">
             <img class="veggie" *ngIf="recipe.categories.includes('Vegetarisch')" src="../../../assets/images/vegetarian.svg">
             <img class="veggie" *ngIf="recipe.categories.includes('Vegan')" src="../../../assets/images/vegan.svg">

@@ -1,8 +1,9 @@
 <div class="container top-section" *ngIf="recipe && recipe.heroImage">
-  <div class="center-align">
-    <img class="responsive-img" src="{{recipe.heroImage}}" alt="{{recipe.title}}" style="border-radius: 2.5%; max-height: 400px;">
-    <h3 class="recipe-title">{{ recipe.title }}</h3>
+  <div class="hero-wrapper">
+    <img class="loading-img" src="{{ recipe.heroImage | previewimg }}">
+    <div class="main-image" [lazyLoad]="recipe.heroImage | thumbnail:600:0"></div>
   </div>
+  <h3 class="recipe-title center-align">{{ recipe.title }}</h3>
 </div>
 
 <i class="material-icons back grey-text text-darken-4 click" (click)="gotoRecipes()">close</i>

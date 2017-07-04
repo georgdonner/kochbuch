@@ -24,6 +24,8 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
   sortQuery = 'date';
   sortDesc = true;
 
+  image = 'https://process.filestackapi.com/blur=a:15/resize=w:20/oxnwJOaSTXujSgoWZKXt';
+
   code: string;
 
   scrolled = true;

@@ -6,6 +6,41 @@
     padding: 2.5rem .5rem;
 }
 
+.hero-wrapper {
+    position: relative;
+    height: 50vh;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.loading-img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 2.5%;
+}
+
+.main-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 2.5%;
+    opacity: 0;
+    transition: opacity 1s ease;
+}
+
+.main-image.ng-lazyloaded {
+    opacity: 1;
+}
+
 .back {
     z-index: 10000;
     position: absolute;
@@ -167,6 +202,9 @@
 }
 
 @media only screen and (max-width: 767px) {
+    .hero-wrapper {
+        height: 33vh;
+    }
     .top-section {
         padding-top: 3.33rem;
     }
