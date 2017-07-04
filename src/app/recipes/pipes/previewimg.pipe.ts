@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class PreviewimgPipe implements PipeTransform {
 
   transform(url: string): string {
-    return url.replace('resize=w:2000,fit:max/quality=value:80/compress/', 'blur=a:15/resize=w:20/');
+    return url.replace('resize=w:2000,fit:max/', 'blur=a:15/resize=w:20/');
   }
 
 }
