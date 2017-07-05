@@ -11,58 +11,6 @@
   font-weight: 400;
 }
 
-@media only screen and (max-width: 767px) {
-    .display-3 {
-        font-size: 3rem;
-    }
-}
-
-/* ICONS */
-
-.icon {
-    width: 1em;
-    height: 1em;
-}
-
-.icon.icon-spoon-knife {
-    fill: #222;
-    position: absolute;
-    top: 30px;
-    right: 50px;
-    width: 20px;
-    height: 20px;
-}
-
-.icon.icon-chevron-left {
-    fill: #222;
-    position: absolute;
-    top: 30px;
-    left: 20px;
-    width: 2em;
-    height: 2em;
-}
-
-.icon.icon-star-o {
-    width: 0.9285714285714285em;
-    height: 0.9285714285714285em;
-}
-
-.icon-refresh {
-  width: 0.8571428571428571em;
-}
-
-.icon-user {
-  height: 1em;
-  width: 1em;
-}
-.icon-clock-o {
-  height: 1em;
-  width: 1em;
-}
-.icon-pencil {
-  width: 0.845703125em;
-}
-
 /* DRAG AND DROP STYLES */
 .dnd-drag-start {
     -moz-transform:scale(0.8);
