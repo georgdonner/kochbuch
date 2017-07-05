@@ -92,7 +92,7 @@
     background-position: center;
     background-size: cover;
     opacity: 0;
-    transition: opacity 1s ease;
+    transition: opacity .5s ease;
 }
 
 .image-wrapper > .main-image.ng-lazyloaded {

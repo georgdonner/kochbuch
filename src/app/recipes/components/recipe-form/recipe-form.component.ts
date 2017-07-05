@@ -20,7 +20,7 @@ export class RecipeFormComponent implements OnInit {
 
   recipes: Recipe[];
 
-  ingredients = [new Ingredient( 'Test', 'Hint' )];
+  ingredients = [new Ingredient('', '')];
   newIngredient = new Ingredient('', '');
   categories = [];
   autocomplete: { data: { [key: string]: string } };
