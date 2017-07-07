@@ -18,7 +18,6 @@
         <button class="waves-effect waves-light btn click indigo hero-image" type="button" (click)="showHeroPicker()">Titelbild</button>
       </div>
       <div [hidden]="title.valid || title.pristine" class="red-text col s6">Das Rezept muss einen Titel haben</div>
-      <div class="col s6 right-align red-text" *ngIf="model.heroImage"> "{{ heroFilename }}" wurde erfolgreich hochgeladen!</div>
     </div>
     <div class="row">
       <div class="col s6">
@@ -111,7 +110,8 @@
             [label]="'Beschreibung'" 
             [(ngModel)]="model.description"
             id="description" name="description"
-            placeholder="Markdown für Styling verfügbar, mehr Info auf dem Hilfe-Button">
+            placeholder="Markdown für Styling verfügbar, mehr Info auf dem Hilfe-Button"
+            data-original-height="0">
           </textarea>
         </mz-textarea-container>
       </div>
@@ -121,7 +121,6 @@
       <div class="col s12 center-align">
         <button type="button" class="waves-effect waves-light btn indigo click" (click)="showDescPicker()">Anleitung Hochladen</button>
       </div>
-      <div class="center-align" *ngIf="model.descrImage" style="margin: .5rem;"> "{{ descrFilename }}" wurde erfolgreich hochgeladen!</div>
     </div>
     <div class="row">
       <h4 class="section-title categories">Kategorien</h4>

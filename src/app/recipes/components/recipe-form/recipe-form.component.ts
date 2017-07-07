@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MzToastService } from 'ng2-materialize';
 import { environment } from '../../../../environments/environment';
 
 import { Recipe, Ingredient } from '../../recipe';
@@ -7,7 +8,22 @@ import { RecipeService } from '../../services/recipe.service';
 
 declare const filestack: {
   init(apiKey: string): {
-    pick({ accept, maxFiles }: { accept: Array<string>, maxFiles: number, transformations: { crop: { circle: boolean } } }): Promise<{ filesUploaded: { handle: string, filename: string }[] }> 
+    pick({
+      accept, maxFiles
+    }: {
+      accept: Array<string>,
+      maxFiles: number,
+      transformations: {
+        crop: {
+          circle: boolean
+        }
+      }
+    }): Promise<{
+      filesUploaded: {
+        handle: string,
+        filename: string
+      }[]
+    }>
   }
 };
 
@@ -46,7 +62,8 @@ export class RecipeFormComponent implements OnInit {
 
   constructor(
     private recipeService: RecipeService,
-    private router: Router
+    private router: Router,
+    private toastService: MzToastService
   ) { }
 
   ngOnInit() {
@@ -152,6 +169,7 @@ export class RecipeFormComponent implements OnInit {
     });
     const handle = result.filesUploaded[0].handle;
     this.heroFilename = result.filesUploaded[0].filename;
+    this.uploadToast(this.descrFilename);
     this.model.heroImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/' + handle;
   }
 
@@ -168,7 +186,12 @@ export class RecipeFormComponent implements OnInit {
     });
     const handle = result.filesUploaded[0].handle;
     this.descrFilename = result.filesUploaded[0].filename;
+    this.uploadToast(this.descrFilename);
     this.model.descrImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/' + handle;
+  }
+
+  uploadToast(filename: string) {
+    this.toastService.show('"' + filename + '" wurde erfolgreich hochgeladen!', 3000, 'green rounded');
   }
 
   gotoRecipes() {
@@ -176,4 +199,3 @@ export class RecipeFormComponent implements OnInit {
   }
 
 }
-

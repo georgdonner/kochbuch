@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { MzToastService } from 'ng2-materialize';
 import 'rxjs/add/operator/switchMap';
 import { environment } from '../../../../environments/environment';
 
@@ -8,7 +9,21 @@ import { RecipeService } from '../../services/recipe.service';
 
 declare const filestack: {
   init(apiKey: string): {
-    pick({ accept, maxFiles, maxSize, transformations }: { accept: Array<string>, maxFiles: number, maxSize: number, transformations: { crop: { circle: boolean } } }): Promise<{ filesUploaded: { handle: string }[] }> 
+    pick({
+      accept, maxFiles, maxSize, transformations
+    }: {
+      accept: Array<string>,
+      maxFiles: number, maxSize: number,
+      transformations: {
+        crop: {
+          circle: boolean
+      }
+    } }): Promise<{
+      filesUploaded: {
+        handle: string,
+        filename: string
+      }[]
+    }>
   }
 };
 
@@ -44,7 +59,8 @@ export class RecipeEditComponent implements OnInit {
   constructor(
     private recipeService: RecipeService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private toastService: MzToastService
   ) { }
 
   ngOnInit() {
@@ -184,7 +200,12 @@ export class RecipeEditComponent implements OnInit {
       }
     });
     const handle = result.filesUploaded[0].handle;
+    this.uploadToast(result.filesUploaded[0].filename);
     this.recipe.descrImage = 'https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/' + handle;
+  }
+
+  uploadToast(filename: string) {
+    this.toastService.show('"' + filename + '" wurde erfolgreich hochgeladen!', 3000, 'green rounded');
   }
 
   gotoRecipe() {
