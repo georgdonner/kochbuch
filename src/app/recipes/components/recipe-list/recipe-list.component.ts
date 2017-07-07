@@ -24,8 +24,6 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
   sortQuery = 'date';
   sortDesc = true;
 
-  image = 'https://process.filestackapi.com/blur=a:15/resize=w:20/oxnwJOaSTXujSgoWZKXt';
-
   code: string;
 
   scrolled = true;
@@ -47,10 +45,10 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
       }
     });
     // retrieve recipes from the API
+    this.getQuery();
     this.recipeService.getAllRecipes().subscribe(recipes => {
-      this.recipes = recipes;
-      this.getQuery();
       this.scrolled = false;
+      this.recipes = recipes;
     });
   }
 
