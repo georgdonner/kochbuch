@@ -4,7 +4,8 @@
       <form>
         <div class="input-field container" style="margin: 0 auto;">
           <input [(ngModel)]="query" class="grey-text text-darken-4" id="search" type="search" name="search" 
-            placeholder="Suche nach Zutaten, Kategorien oder Titel..." (keyup.enter)="login(query)">
+            placeholder="Suche nach Zutaten, Kategorien oder Titel..." 
+            (keyup.enter)="login(query)" (keyup)="changed()">
           <label class="label-icon" for="search"><i class="material-icons grey-text">search</i></label>
           <i class="material-icons" (click)="query=''">close</i>
         </div>
@@ -24,14 +25,14 @@
     <div class="col s12 m5 veggie-options">
       <div class="switch">
         <label>
-          <input type="checkbox" [(ngModel)]="vegetarian" (click)="toggleCategory('Vegetarisch')">
+          <input type="checkbox" [(ngModel)]="vegetarian" (click)="toggleCategory('Vegetarisch'); scrollDown(true)">
           <span class="lever"></span>
           Vegetarisch
         </label>
       </div>
       <div class="switch">
         <label>
-          <input type="checkbox" [(ngModel)]="vegan" (click)="toggleCategory('Vegan')">
+          <input type="checkbox" [(ngModel)]="vegan" (click)="toggleCategory('Vegan'); scrollDown(true)">
           <span class="lever"></span>
           Vegan
         </label>
@@ -43,7 +44,7 @@
     </div>
     <div class="col s9 m5">
       <mz-select-container>
-        <select mz-select [label]="'Sortieren nach'" (change)="sortBy($event.target.value)">
+        <select mz-select [label]="'Sortieren nach'" (change)="sortBy($event.target.value); scrollDown(true);">
           <option class="left" value="date" [selected]="sortQuery === 'date'">Datum</option>
           <option class="left" value="duration" [selected]="sortQuery === 'duration'">Dauer</option>
           <option class="left" value="difficulty" [selected]="sortQuery === 'difficulty'">Schwierigkeit</option>

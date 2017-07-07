@@ -8,6 +8,10 @@ import { RecipeService } from '../../services/recipe.service';
 import { CurrentQueryService } from '../../services/current-query.service';
 import { ScrollService } from '../../services/scroll.service';
 
+import { Subject } from 'rxjs/Subject';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+
 @Component({
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.css']
@@ -24,8 +28,7 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
   sortQuery = 'date';
   sortDesc = true;
 
-  code: string;
-
+  searching: Subject<string> = new Subject<string>();
   scrolled = true;
 
   constructor(
@@ -36,14 +39,14 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
     private scrollService: ScrollService,
     private zauberwortService: ZauberwortService,
     private toastService: MzToastService
-  ) { }
+  ) {
+    this.searching
+      .debounceTime(2000) // wait 2000ms after the last event before emitting last event
+      .distinctUntilChanged() // only emit if value is different from previous value
+      .subscribe(() => this.scrollDown());
+  }
 
   ngOnInit() {
-    this.route.queryParams.subscribe(params => {
-      if (params['code']) {
-        this.code = params['code'];
-      }
-    });
     // retrieve recipes from the API
     this.getQuery();
     this.recipeService.getAllRecipes().subscribe(recipes => {
@@ -64,6 +67,30 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
     this.query = this.queryService.getQuery().filterQuery;
     this.sortDesc = this.queryService.getQuery().sortDesc;
     this.sortQuery = this.queryService.getQuery().sortQuery;
+  }
+
+  changed() {
+    this.searching.next(); // starts subject observing
+  }
+
+  scrollDown(delay = false) {
+    if (delay) {
+      setTimeout(function() {
+        const yPos = window.pageYOffset;
+        if (yPos === 0) {
+          window.scrollTo(0, 100);
+        } else {
+          window.scrollTo(0, yPos + 1);
+        }
+      }, 3000);
+    } else {
+      const yPos = window.pageYOffset;
+      if (yPos === 0) {
+        window.scrollTo(0, 100);
+      } else {
+        window.scrollTo(0, yPos + 1);
+      }
+    }
   }
 
   toggleCategory(ctg: string) {
