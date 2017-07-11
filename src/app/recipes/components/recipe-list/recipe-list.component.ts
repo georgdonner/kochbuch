@@ -146,6 +146,7 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
     const successful = await this.zauberwortService.requestPermissions(zauberwort.trim().toLowerCase());
     if (successful) {
       this.toastService.show('Du hast das Zauberwort gesprochen!', 4000, 'green rounded');
+      this.query = '';
     }
   }
 
