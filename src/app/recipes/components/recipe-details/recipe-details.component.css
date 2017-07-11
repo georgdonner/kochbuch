@@ -41,6 +41,15 @@
     opacity: 1;
 }
 
+.ctg {
+    transition: all 1s ease;
+}
+
+.ctg:hover {
+    background-color: #ededed !important;
+    color: #333 !important;
+}
+
 .back {
     z-index: 10000;
     position: absolute;

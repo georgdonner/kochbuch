@@ -26,7 +26,7 @@
         </div>
         <div class="col s12 l6">
           <div class="categories">
-            <div class="chip" *ngFor="let ctg of recipe.categories">{{ ctg }}</div>
+            <div class="chip ctg click" *ngFor="let ctg of recipe.categories" (click)="searchCtg(ctg)">{{ ctg }}</div>
           </div>
         </div>
       </div>
