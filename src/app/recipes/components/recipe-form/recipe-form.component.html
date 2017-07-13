@@ -157,15 +157,17 @@
   <mz-modal-header>
     Bearbeiten
   </mz-modal-header>
-  <mz-modal-content>
+  <mz-modal-content *ngIf="editIngr">
     <br>
-    <mz-input-container class="col s12" *ngIf="editIngr.name">
-      <input mz-input [(ngModel)]="editIngr.name" [label]="'Name'" 
-        id="editName" name="editName" type="text">
+    <span class="modal-label teal-text">Name</span>
+    <mz-input-container class="col s12">
+      <input mz-input [(ngModel)]="editIngr.name" 
+        id="editName" name="editName" type="text" style="margin-top: -1rem;">
     </mz-input-container>
-    <mz-input-container class="col s12" *ngIf="editIngr.hint">
-      <input mz-input [(ngModel)]="editIngr.hint" [label]="'Hinweis'" 
-        id="editHint" name="editHint" type="text">
+    <span class="modal-label teal-text">Hinweis</span>
+    <mz-input-container class="col s12">
+      <input mz-input [(ngModel)]="editIngr.hint" 
+        id="editHint" name="editHint" type="text" style="margin-top: -1rem;">
     </mz-input-container>
   </mz-modal-content>
   <mz-modal-footer>
