@@ -34,6 +34,9 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // Set our api routes
 app.use('/api', api);
 
+// Recipes backup to dropbox
+app.use(require('./server/routes/backup'));
+
 // Check if the zauberwort is right
 app.post('/zauberwort', function (req, res, next) {
   if (req.body.zauberwort) {
