@@ -50,10 +50,9 @@
               {{ ingredient.name | calcServings:recipe.servings:desiredServings }}
               <span *ngIf="ingredient.hint">({{ ingredient.hint }})</span>
             </span>
-            <div class="small-border"></div>
           </li>
         </ul>
-        <div class="center-align" style="margin: 3rem;">
+        <div class="left-align" style="margin: 3rem 0;">
           <button mz-button class="indigo" (click)="converter()">Umrechner</button>
         </div>
       </div>
@@ -66,14 +65,10 @@
       </div>
     </div>
     <div class="row">
-      <div class="col s12" *ngIf="isLoggedIn()">
-        <div class="center-align" style="margin-top: 3rem;">
-          <button mz-button class="indigo" (click)="edit()">Bearbeiten</button>
-        </div>
-      </div>
-      <div class="col s12">
-        <div class="center-align" style="margin: 1rem 0;">
+      <div class="col s12" style="padding-left: 0;">
+        <div class="left-align" style="margin-top: 3rem;">
           <button mz-button class="indigo" (click)="printView()">Druckansicht</button>
+          <button mz-button class="indigo" (click)="edit()" *ngIf="isLoggedIn()" style="margin-left: 1.5rem;">Bearbeiten</button>
         </div>
       </div>
     </div>

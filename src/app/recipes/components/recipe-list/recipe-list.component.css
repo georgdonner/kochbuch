@@ -44,10 +44,13 @@
 
 .categories > div {
     display: inline-block;
-    padding-right: .5rem;
+    padding-right: 1rem;
+    font-weight: 900;
 }
 
 .recipe-title {
+    font-size: 1.5rem;
+    line-height: 1.15;
     font-weight: 300;
     color: black;
     padding-bottom: 1rem;

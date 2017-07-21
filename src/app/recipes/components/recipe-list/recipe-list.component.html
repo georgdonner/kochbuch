@@ -55,9 +55,9 @@
   </div>
   <div *ngIf="recipes" class="row">
     <div *ngFor="let recipe of recipes | filterRecipes:query | sortRecipes:sortQuery:sortDesc"
-      (click)="onSelect(recipe)" class="col s12 m6 xl4 click">
-      <div class="card medium hoverable">
-        <div class="card-image">
+         class="col s12 m6 xl4">
+      <div class="card medium">
+        <div class="card-image click" (click)="onSelect(recipe)">
           <div class="image-wrapper">
             <img *ngIf="recipe.heroImage" class="loading-image" src="{{ recipe.heroImage | previewimg }}">
             <img *ngIf="!recipe.heroImage" class="loading-image" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">
@@ -72,13 +72,13 @@
             </span>
           </span>
         </div>
-        <div class="card-content valign-wrapper" style="padding-top: 0;">
+        <div class="card-content valign-wrapper click" (click)="onSelect(recipe)" style="padding-top: 0;">
           <h5 class="recipe-title">
             {{ recipe.title }}
           </h5>
         </div>
         <div class="card-action" *ngIf="recipe.categories">
-          <div class="categories"><div *ngFor="let ctg of recipe.categories | noVeggies"># <strong>{{ ctg }}</strong> </div></div>
+          <div class="categories"><div *ngFor="let ctg of recipe.categories | noVeggies" class="ctg click" (click)="query=ctg" >{{ ctg }}</div></div>
         </div>
       </div>
     </div>

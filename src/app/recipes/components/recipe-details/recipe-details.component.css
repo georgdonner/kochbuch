@@ -43,6 +43,7 @@
 
 .ctg {
     transition: all 1s ease;
+    font-size: 12px;
 }
 
 .ctg:hover {
@@ -87,20 +88,19 @@
 }
 
 .quickinfo {
-    padding: 50px 20px;
+    padding: 40px 20px;
     max-width: 1600px;
 }
 
 .recipe-title {
-    font-weight: 300;
     text-align: center;
     margin: 0;
     margin-top: 2rem;
+    font-weight: 300;
 }
 
 .ingredient-count, .minutes {
-    line-height: 32px;
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 300;
     display: inline;
     width: 50%;
@@ -120,8 +120,7 @@
 }
 
 .number {
-    font-size: 32px;
-    vertical-align: top;
+    font-size: 24px;
 }
 
 .categories {
@@ -135,24 +134,27 @@
     padding-bottom: 50px;
 }
 
+.main-content h4 {
+    font-size: 1.8rem;
+}
+
 .big-border {
     width: 66.66%;
     border-bottom: 1px #ddd solid;
 }
 
-.small-border {
-    width: 33.33%;
-    margin-top: .75rem;
-    border-bottom: 1px #f2f2f2 solid;
+.ingredients {
+    margin-top: .5rem;
 }
 
-.ingredient {
-    font-size: 18px;
-    margin-top: .75rem;
+.ingredients .ingredient {
+    font-size: 1.1rem;
+    line-height: 1.8;
 }
 
-.ingredient > span {
-    padding-left: .5rem;
+.ingredients .ingredient span {
+    padding-left: 0;
+    font-family: 'Open Sans', sans-serif;
 }
 
 .servings-input {
@@ -160,12 +162,12 @@
     margin-right: 33.33%;
 }
 
-
 .servings-input i {
     -webkit-transition: all 0.2s ease;
     -moz-transition: all 0.2s ease;
     transition: all 0.2s ease;
     padding: .5rem;
+    font-size: 18px;
 }
 
 .servings-input i:hover {
@@ -176,11 +178,28 @@
 .servings {
     padding: 0 .75rem;
     font-weight: 300;
-    font-size: 3rem;
+    font-size: 2rem;
 }
 
 .description {
-    font-size: 18px;
+    font-size: 1.1rem;
+}
+
+button {
+    font-family: 'Open Sans', sans-serif;
+}
+
+:host /deep/ p {
+    font-family: 'Open Sans', sans-serif;
+}
+
+:host /deep/ p strong {
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 700;
+}
+
+:host /deep/ p em {
+    font-family: 'Open Sans', sans-serif;
 }
 
 @media only screen and (max-width: 1200px) {
@@ -262,5 +281,11 @@
     }
     .title-wrapper.top {
         display: none;
+    }
+}
+
+@media only screen and (min-width: 601px) {
+    .ingredients-wrapper {
+        padding-left: 0;
     }
 }
