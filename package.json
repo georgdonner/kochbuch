@@ -1,16 +1,21 @@
 {
-  "name": "georgs-recipes",
-  "version": "0.0.0",
-  "license": "MIT",
+  "name": "kochbuch",
+  "version": "1.0.0",
+  "description": "This project uses a MEAN stack (MongoDB, Express, Angular, Node.js) and the front-end was generated using the [Angular CLI](https://cli.angular.io/).",
+  "main": "server.js",
   "scripts": {
-    "ng": "ng",
-    "start": "node server",
-    "build": "ng build",
-    "test": "ng test",
-    "lint": "ng lint",
-    "e2e": "ng e2e"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
   },
-  "engines" : { "node" : "8.1.4" },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LinkinGeorge/georgs-recipes.git"
+  },
+  "engines": {
+    "node": "8.1.4",
+    "npm": "5.2.0"
+  },
+  "author": "",
   "private": true,
   "dependencies": {
     "@angular/common": "^4.0.0",
@@ -44,21 +49,18 @@
   "devDependencies": {
     "@angular/cli": "1.0.0",
     "@angular/compiler-cli": "^4.0.0",
-    "@types/jasmine": "2.5.38",
     "@types/jquery": "^2.0.47",
     "@types/node": "~6.0.60",
     "codelyzer": "~2.0.0",
-    "jasmine-core": "~2.5.2",
-    "jasmine-spec-reporter": "~3.2.0",
-    "karma": "~1.4.1",
-    "karma-chrome-launcher": "~2.0.0",
-    "karma-cli": "~1.0.1",
-    "karma-coverage-istanbul-reporter": "^0.2.0",
-    "karma-jasmine": "~1.1.0",
-    "karma-jasmine-html-reporter": "^0.2.2",
-    "protractor": "~5.1.0",
     "ts-node": "~2.0.0",
     "tslint": "~4.5.0",
     "typescript": "~2.2.0"
-  }
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LinkinGeorge/georgs-recipes/issues"
+  },
+  "homepage": "https://github.com/LinkinGeorge/georgs-recipes#readme"
 }
+
+
