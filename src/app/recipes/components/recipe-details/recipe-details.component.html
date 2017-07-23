@@ -1,18 +1,18 @@
-<div class="container top-section" *ngIf="recipe && recipe.heroImage">
+<div class="container top-section" *ngIf="recipe && recipe.heroImage && !lightbox">
   <div class="hero-wrapper">
     <img class="loading-img" src="{{ recipe.heroImage | previewimg }}">
-    <div class="main-image" [lazyLoad]="recipe.heroImage | thumbnail:600:0"></div>
+    <div class="main-image click" [lazyLoad]="recipe.heroImage | thumbnail:600:0" (click)="lightboxOn()"></div>
   </div>
   <h3 class="recipe-title center-align">{{ recipe.title }}</h3>
 </div>
 
-<i class="material-icons back grey-text text-darken-4 click" (click)="gotoRecipes()">close</i>
+<i *ngIf="!lightbox" class="material-icons back grey-text text-darken-4 click" (click)="gotoRecipes()">close</i>
 
-<div *ngIf="recipe" class="difficulty-rating">
+<div *ngIf="recipe && !lightbox" class="difficulty-rating">
   <i class="material-icons grey-text text-darken-4" *ngFor="let i of Arr(recipe.difficulty).fill(1)">star_border</i>
 </div>
 
-<div class="animated fadeIn" *ngIf="recipe">
+<div class="animated fadeIn" *ngIf="recipe && !lightbox">
   <div class="quickinfo-wrapper grey lighten-4">
     <div class="container">
       <div class="row quickinfo">
@@ -73,4 +73,9 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="lightbox" *ngIf="recipe && lightbox" (click)="lightboxOff()">
+  <i class="material-icons grey-text text-darken-4 click" (click)="lightboxOff()">close</i>
+  <img src="{{ recipe.heroImage }}" alt="{{ recipe.title }}">
 </div>

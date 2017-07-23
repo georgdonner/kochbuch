@@ -20,6 +20,7 @@ export class RecipeDetailsComponent implements OnInit {
   recipe: Recipe;
   desiredServings: number;
 
+  lightbox = false;
   descrImageRatio: number;
   Arr = Array;
   state: string;
@@ -95,6 +96,14 @@ export class RecipeDetailsComponent implements OnInit {
 
   isLoggedIn() {
     return this.zauberwortService.canModify();
+  }
+
+  lightboxOn() {
+    this.lightbox = true;
+  }
+
+  lightboxOff() {
+    this.lightbox = false;
   }
 
 }

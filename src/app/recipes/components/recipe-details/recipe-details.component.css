@@ -202,6 +202,34 @@ button {
     font-family: 'Open Sans', sans-serif;
 }
 
+.lightbox {
+    position: relative;
+    height: 100vh;
+    width: 100%;
+    overflow: hidden;
+    background: #fff;
+}
+
+.lightbox i {
+    z-index: 10000;
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    padding: 0.5rem;
+    font-size: 2.5rem;
+}
+
+.lightbox img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    max-height: 90%;
+    max-width: 90%;
+}
+
 @media only screen and (max-width: 1200px) {
     .big-border {
         width: 100%
