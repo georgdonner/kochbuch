@@ -45,7 +45,7 @@ export class RecipeDetailsComponent implements OnInit {
   }
 
   gotoRecipes() {
-    this.router.navigate(['/recipes']);
+    this.router.navigate(['/recipes'], {fragment: this.recipe._id});
   }
 
   searchCtg(ctg: string) {

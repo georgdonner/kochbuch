@@ -6,7 +6,7 @@
           <input [(ngModel)]="query" class="grey-text text-darken-4" id="search" type="search" name="search" 
             placeholder="Suche nach Zutaten, Kategorien oder Titel..." 
             (keyup.enter)="login(query); search.blur();" (keyup)="changed()" #search>
-          <label class="label-icon" for="search"><i class="material-icons grey-text">search</i></label>
+          <label class="label-icon" for="search" style="margin-top: -12px;"><i class="material-icons grey-text">search</i></label>
           <i class="material-icons" (click)="query=''">close</i>
         </div>
       </form>
@@ -25,26 +25,26 @@
     <div class="col s12 m5 veggie-options">
       <div class="switch">
         <label>
-          <input type="checkbox" [(ngModel)]="vegetarian" (click)="toggleCategory('Vegetarisch'); scrollDown(true)">
+          <input type="checkbox" [(ngModel)]="vegetarian" (click)="toggleCategory('Vegetarisch'); changed()">
           <span class="lever"></span>
           Vegetarisch
         </label>
       </div>
       <div class="switch">
         <label>
-          <input type="checkbox" [(ngModel)]="vegan" (click)="toggleCategory('Vegan'); scrollDown(true)">
+          <input type="checkbox" [(ngModel)]="vegan" (click)="toggleCategory('Vegan'); changed()">
           <span class="lever"></span>
           Vegan
         </label>
       </div>
     </div>
     <div class="col s3 m2 sort">
-      <i class="material-icons sort-icon click" [ngClass]="{'sort-active': !sortDesc}" (click)="sort('asc')">keyboard_arrow_up</i>
-      <i class="material-icons sort-icon click" [ngClass]="{'sort-active': sortDesc}" (click)="sort('desc')">keyboard_arrow_down</i>
+      <i class="material-icons sort-icon click" [ngClass]="{'sort-active': !sortDesc}" (click)="sort('asc'); changed()">keyboard_arrow_up</i>
+      <i class="material-icons sort-icon click" [ngClass]="{'sort-active': sortDesc}" (click)="sort('desc'); changed()">keyboard_arrow_down</i>
     </div>
     <div class="col s9 m5">
       <mz-select-container>
-        <select mz-select [label]="'Sortieren nach'" (change)="sortBy($event.target.value); scrollDown(true);">
+        <select mz-select [label]="'Sortieren nach'" (change)="sortBy($event.target.value); changed()">
           <option class="left" value="date" [selected]="sortQuery === 'date'">Datum</option>
           <option class="left" value="duration" [selected]="sortQuery === 'duration'">Dauer</option>
           <option class="left" value="difficulty" [selected]="sortQuery === 'difficulty'">Schwierigkeit</option>
@@ -55,13 +55,13 @@
   </div>
   <div *ngIf="recipes" class="row">
     <div *ngFor="let recipe of recipes | filterRecipes:query | sortRecipes:sortQuery:sortDesc"
-         class="col s12 m6 xl4">
+         class="col s12 m6 xl4" id="{{recipe._id}}">
       <div class="card medium">
         <div class="card-image click" (click)="onSelect(recipe)">
           <div class="image-wrapper">
             <img *ngIf="recipe.heroImage" class="loading-image" src="{{ recipe.heroImage | previewimg }}">
             <img *ngIf="!recipe.heroImage" class="loading-image" src="../../../assets/images/comingsoon.jpg" alt="Coming soon">
-            <div *ngIf="recipe.heroImage" class="main-image" [lazyLoad]="recipe.heroImage | thumbnail:600:0"></div>
+            <div *ngIf="recipe.heroImage" class="main-image" [lazyLoad]="recipe.heroImage | thumbnail:600:0" [offset]="500" [scrollObservable]="searchObservable"></div>
           </div>
           <span class="card-title recipe-quickinfo">
             <img class="veggie" *ngIf="recipe.categories.includes('Vegetarisch')" src="../../../assets/images/vegetarian.svg">
@@ -82,5 +82,6 @@
         </div>
       </div>
     </div>
+    <div class="no-recipe" *ngIf="(recipes | filterRecipes:query | sortRecipes:sortQuery:sortDesc)?.length === 0">Kein Rezept gefunden :(</div>
   </div>
 </div>

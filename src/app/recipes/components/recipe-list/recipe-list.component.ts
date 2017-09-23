@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MzToastService } from 'ng2-materialize';
 
@@ -9,6 +9,8 @@ import { CurrentQueryService } from '../../services/current-query.service';
 import { ScrollService } from '../../services/scroll.service';
 
 import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/observable/merge';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
@@ -16,7 +18,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
   templateUrl: './recipe-list.component.html',
   styleUrls: ['./recipe-list.component.css']
 })
-export class RecipeListComponent implements OnInit, AfterViewChecked {
+export class RecipeListComponent implements OnInit, AfterViewChecked, OnDestroy {
 
   selectedRecipe: Recipe;
   recipes: Recipe[];
@@ -29,7 +31,9 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
   sortDesc = true;
 
   searching: Subject<string> = new Subject<string>();
-  scrolled = true;
+  searchObservable;
+
+  routeFragmentSubscription;
 
   constructor(
     private router: Router,
@@ -40,27 +44,31 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
     private zauberwortService: ZauberwortService,
     private toastService: MzToastService
   ) {
-    this.searching
-      .debounceTime(2000) // wait 2000ms after the last event before emitting last event
-      .distinctUntilChanged() // only emit if value is different from previous value
-      .subscribe(() => this.scrollDown());
+    this.searchObservable = Observable.merge(Observable.fromEvent(window, 'scroll'), this.searching);
   }
 
   ngOnInit() {
     // retrieve recipes from the API
     this.getQuery();
     this.recipeService.getAllRecipes().subscribe(recipes => {
-      this.scrolled = false;
       this.recipes = recipes;
     });
   }
 
   ngAfterViewChecked() {
-    if (!this.scrolled) {
-      let yPos = this.scrollService.getScrollPos();
-      window.scrollTo(0, yPos);
-      this.scrolled = true;
-    }
+    this.routeFragmentSubscription = this.route.fragment
+    .subscribe(fragment => {
+      if (fragment) {
+        let element = document.getElementById(fragment);
+        if (element) {
+          element.scrollIntoView();
+        }
+      }
+    });
+  }
+
+  ngOnDestroy() {
+    this.routeFragmentSubscription.unsubscribe();
   }
 
   getQuery() {
@@ -70,27 +78,9 @@ export class RecipeListComponent implements OnInit, AfterViewChecked {
   }
 
   changed() {
-    this.searching.next(); // starts subject observing
-  }
-
-  scrollDown(delay = false) {
-    if (delay) {
-      setTimeout(function() {
-        const yPos = window.pageYOffset;
-        if (yPos === 0) {
-          window.scrollTo(0, 100);
-        } else {
-          window.scrollTo(0, yPos + 1);
-        }
-      }, 3000);
-    } else {
-      const yPos = window.pageYOffset;
-      if (yPos === 0) {
-        window.scrollTo(0, 100);
-      } else {
-        window.scrollTo(0, yPos + 1);
-      }
-    }
+    setTimeout(() => {
+      this.searching.next(); // starts subject observing
+    }, 200);
   }
 
   toggleCategory(ctg: string) {

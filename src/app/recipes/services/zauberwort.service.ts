@@ -10,12 +10,16 @@ export class ZauberwortService {
   constructor(public http: Http) { }
 
   async requestPermissions(zauberwort: string): Promise<boolean> {
+    if (this.hasPermission) {
+      return true;
+    }
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
     await this.http.post('zauberwort', JSON.stringify({zauberwort: zauberwort}), {headers: headers}).toPromise()
       .then(res => {
         if (res.status === 200) {
           this.hasPermission = true;
+          localStorage.setItem('loggedIn', JSON.stringify({timestamp: Date.now()}));
         } else {
           this.hasPermission = false;
         }
@@ -27,6 +31,9 @@ export class ZauberwortService {
   }
 
   canModify() {
+    if (localStorage.getItem('loggedIn')) {
+      this.hasPermission = true;
+    }
     return this.hasPermission;
   }
 
