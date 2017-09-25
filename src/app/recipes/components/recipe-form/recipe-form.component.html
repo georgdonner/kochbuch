@@ -147,7 +147,7 @@
           (keyup.enter)="addCategory(category.value); category.value=''">
       </mz-input-container>
       <div class="col s12 center-align" style="margin-top: 2rem;">
-        <button type="button" (click)="addRecipe(); gotoRecipes()" class="waves-effect waves-light btn-large indigo" [disabled]="!recipeForm.form.valid">Rezept speichern</button>
+        <button type="button" (click)="addRecipe()" class="waves-effect waves-light btn-large indigo" [disabled]="!recipeForm.form.valid">Rezept speichern</button>
       </div>
     </div>
   </form>

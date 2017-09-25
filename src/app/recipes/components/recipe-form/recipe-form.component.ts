@@ -95,7 +95,9 @@ export class RecipeFormComponent implements OnInit {
       this.model.categories = this.categories;
     }
     this.recipeService.addRecipe(this.model)
-      .subscribe();
+      .subscribe((data) => {
+        this.gotoRecipes();
+      });
   }
 
   addIngredient() {
