@@ -23,7 +23,6 @@ export class RecipeDetailsComponent implements OnInit {
   lightbox = false;
   descrImageRatio: number;
   Arr = Array;
-  state: string;
 
   constructor(
     private recipeService: RecipeService,
@@ -35,7 +34,6 @@ export class RecipeDetailsComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.state = this.randomString(32, '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ');
     this.route.params
       .switchMap((params: Params) => this.recipeService.getRecipe(params['id']))
       .subscribe((recipe: Recipe) => {

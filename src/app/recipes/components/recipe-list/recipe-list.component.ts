@@ -32,6 +32,7 @@ export class RecipeListComponent implements OnInit, AfterViewChecked, OnDestroy 
 
   searching: Subject<string> = new Subject<string>();
   searchObservable;
+  scrolled = false;
 
   routeFragmentSubscription;
 
@@ -53,6 +54,9 @@ export class RecipeListComponent implements OnInit, AfterViewChecked, OnDestroy 
     this.recipeService.getAllRecipes().subscribe(recipes => {
       this.recipes = recipes;
     });
+    setTimeout(function () {
+      history.replaceState(null, null, '/recipes');
+  }, 2000);
   }
 
   ngAfterViewChecked() {
@@ -60,8 +64,9 @@ export class RecipeListComponent implements OnInit, AfterViewChecked, OnDestroy 
     .subscribe(fragment => {
       if (fragment) {
         let element = document.getElementById(fragment);
-        if (element) {
+        if (fragment !== '' && element && !this.scrolled) {
           element.scrollIntoView();
+          this.scrolled = true;
         }
       }
     });
@@ -133,14 +138,16 @@ export class RecipeListComponent implements OnInit, AfterViewChecked, OnDestroy 
   }
 
   async login(zauberwort: string) {
-    const successful = await this.zauberwortService.requestPermissions(zauberwort.trim().toLowerCase());
-    if (successful) {
-      this.toastService.show('Du hast das Zauberwort gesprochen!', 4000, 'green rounded');
-      this.query = '';
+    if (!this.isLoggedIn()) {
+      const successful = await this.zauberwortService.requestPermissions(zauberwort.trim().toLowerCase());
+      if (successful) {
+        this.toastService.show('Du hast das Zauberwort gesprochen!', 4000, 'green rounded');
+        this.query = '';
+      }
     }
   }
 
-  isLoggedIn() {
+  isLoggedIn(): boolean {
     return this.zauberwortService.canModify();
   }
 

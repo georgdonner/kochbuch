@@ -5,7 +5,7 @@
         <div class="input-field container" style="margin: 0 auto;">
           <input [(ngModel)]="query" class="grey-text text-darken-4" id="search" type="search" name="search" 
             placeholder="Suche nach Zutaten, Kategorien oder Titel..." 
-            (keyup.enter)="login(query); search.blur();" (keyup)="changed()" #search>
+            (keyup.enter)="login(query); search.blur();" #search>
           <label class="label-icon" for="search" style="margin-top: -12px;"><i class="material-icons grey-text">search</i></label>
           <i class="material-icons" (click)="query=''">close</i>
         </div>
