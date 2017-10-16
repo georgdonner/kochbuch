@@ -16,12 +16,13 @@ export class FilterRecipesPipe implements PipeTransform {
       if (queryIn === '') {
         return toFilter;
       } else {
-        queryArray = queryIn.split(',');
+        const formatted = queryIn.replace(/,\s*/g, ' ');
+        queryArray = formatted.split(' ');
       }
       let filtered = new Array();
       toFilter.forEach(recipe => {
         let queryArrayTmp = queryArray.slice(0);
-        queryArray.forEach(query => {
+        queryArray.forEach((query) => {
           let hasIngredient = false;
           recipe.ingredients.forEach(ingredient => {
             if (ingredient.name.trim().toLowerCase().includes(query.trim().toLowerCase())) {
