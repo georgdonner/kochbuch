@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewChecked, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, OnDestroy, HostListener } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MzToastService } from 'ng2-materialize';
 
@@ -33,6 +33,7 @@ export class RecipeListComponent implements OnInit, AfterViewChecked, OnDestroy 
   searching: Subject<string> = new Subject<string>();
   searchObservable;
   scrolled = false;
+  showScrollUp = false;
 
   routeFragmentSubscription;
 
@@ -76,6 +77,11 @@ export class RecipeListComponent implements OnInit, AfterViewChecked, OnDestroy 
     this.routeFragmentSubscription.unsubscribe();
   }
 
+  @HostListener('window:scroll', [])
+  onWindowScroll() {
+    window.pageYOffset > 300 ? this.showScrollUp = true : this.showScrollUp = false;
+  }
+
   getQuery() {
     this.query = this.queryService.getQuery().filterQuery;
     this.sortDesc = this.queryService.getQuery().sortDesc;
@@ -83,6 +89,7 @@ export class RecipeListComponent implements OnInit, AfterViewChecked, OnDestroy 
   }
 
   changed() {
+    window.scrollTo(0, 0);
     setTimeout(() => {
       this.searching.next(); // starts subject observing
     }, 200);

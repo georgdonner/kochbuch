@@ -126,6 +126,19 @@
     z-index: 1000;
 }
 
+.scroll-up {
+    opacity: 0;
+    position: fixed;
+    left: 50px;
+    bottom: 50px;
+    z-index: 1000;
+    transition: all .5s ease;
+}
+
+.scroll-up.show-scroll {
+    opacity: 1;
+}
+
 .filter {
     position: fixed;
     right: 50px;
@@ -141,6 +154,11 @@
 @media only screen and (max-width: 767px) {
     .new-recipe {
         right: 20px;
+        bottom: 20px;
+    }
+
+    .scroll-up {
+        left: 20px;
         bottom: 20px;
     }
 

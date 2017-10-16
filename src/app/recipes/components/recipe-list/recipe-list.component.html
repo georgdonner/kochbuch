@@ -5,7 +5,7 @@
         <div class="input-field container" style="margin: 0 auto;">
           <input [(ngModel)]="query" class="grey-text text-darken-4" id="search" type="search" name="search" 
             placeholder="Suche nach Zutaten, Kategorien oder Titel..." 
-            (keyup.enter)="login(query); search.blur();" #search>
+            (keyup.enter)="login(query); search.blur();" (keyup)="changed()" #search>
           <label class="label-icon" for="search" style="margin-top: -12px;"><i class="material-icons grey-text">search</i></label>
           <i class="material-icons" (click)="query=''">close</i>
         </div>
@@ -17,6 +17,12 @@
 <div class="new-recipe animated fadeIn" *ngIf="isLoggedIn()">
   <a class="btn-floating btn-large waves-effect waves-light indigo" (click)="newRecipe()">
     <i class="material-icons">add</i>
+  </a>
+</div>
+
+<div class="scroll-up" [ngClass]="{'show-scroll': showScrollUp}" >
+  <a class="btn-floating btn-large waves-effect waves-light white" (click)="changed()">
+    <i class="material-icons" style="color: #333">keyboard_arrow_up</i>
   </a>
 </div>
 
