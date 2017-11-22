@@ -3,7 +3,7 @@
 This project uses a MEAN stack (MongoDB, Express, Angular, Node.js) and the front-end was generated using the [Angular CLI](https://cli.angular.io/).
 
 ## API Documentation
-All calls to the api go to https://georgs-recipes.herokuapp.com/api and return data in JSON format.
+All calls to the api go to `/api` and return data in JSON format.
 
 ### GET /recipes
 Returns all recipes with all its fields. Most notably the `_id` to identify it.
