@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MarkdownModule } from 'angular2-markdown';
+import { MarkdownModule } from 'ngx-md';
 import { DndModule } from 'ng2-dnd';
 import { MaterializeModule } from 'ng2-materialize';
-import { FocusModule } from 'angular2-focus';
 import { LazyLoadImageModule } from 'ng-lazyload-image';
 
 import { InlineHrefDirective } from 'ng-inline-href';
@@ -42,7 +41,6 @@ import { PreviewimgPipe } from './pipes/previewimg.pipe';
     MaterializeModule,
     LazyLoadImageModule,
     DndModule.forRoot(),
-    FocusModule.forRoot()
   ],
   exports: [
     InlineHrefDirective
