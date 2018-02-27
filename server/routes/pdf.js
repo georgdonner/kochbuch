@@ -87,16 +87,24 @@ const getDoc = recipe => ({
   },
 });
 
+const getImageWidth = (recipe) => {
+  const { description, ingredients } = recipe;
+  const basedOnDescr = Math.min(240 + (((2000 / description.length) - 1) * 150), 500);
+  const basedOnIngr = Math.min(500 - (((ingredients.length / 18) - 1) * 400), 500);
+  return Math.min(basedOnDescr, basedOnIngr);
+};
+
 const getPdf = async (recipe) => {
   const pdf = getDoc(recipe);
-  if (recipe.heroImage) {
+  const imageWidth = getImageWidth(recipe);
+  if (recipe.heroImage && imageWidth > 200) {
     try {
       const imageRes = await request.get(recipe.heroImage, {
         encoding: null,
         resolveWithFullResponse: true,
       });
       const imageData = `data:${imageRes.headers['content-type']};base64,${Buffer.from(imageRes.body).toString('base64')}`;
-      const image = { image: imageData, width: 250, alignment: 'center', margin: [0, 0, 0, 16] };
+      const image = { image: imageData, width: imageWidth, alignment: 'center', margin: [0, 0, 0, 16] };
       pdf.content.splice(1, 0, image);
     } catch (error) {
       console.error(error);
