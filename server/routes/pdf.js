@@ -81,7 +81,7 @@ const getDoc = recipe => ({
       margin: [0, 0, 0, 12],
     },
   },
-  pageMargins: [40, 25],
+  pageMargins: [55, 30, 40, 25],
   info: {
     title: recipe.title,
   },
