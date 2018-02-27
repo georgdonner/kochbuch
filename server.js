@@ -34,6 +34,9 @@ app.use(express.static(path.join(__dirname, 'dist')));
 // Set our api routes
 app.use('/api', api);
 
+// Pdf routes
+app.use('/pdf', require('./server/routes/pdf'));
+
 // Recipes backup to dropbox
 app.use(require('./server/routes/backup'));
 

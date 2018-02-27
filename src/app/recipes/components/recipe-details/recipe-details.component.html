@@ -67,7 +67,7 @@
     <div class="row">
       <div class="col s12" style="padding-left: 0;">
         <div class="left-align" style="margin-top: 3rem;">
-          <button mz-button class="indigo" (click)="printView()">Druckansicht</button>
+          <a mz-button class="indigo" href="/pdf/recipe/{{ recipe._id }}" download>PDF</a>
           <button mz-button class="indigo" (click)="edit()" *ngIf="isLoggedIn()" style="margin-left: 1.5rem;">Bearbeiten</button>
         </div>
       </div>
