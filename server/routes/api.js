@@ -52,9 +52,7 @@ router.delete('/recipe/:id', function (req, res) {
 
 // Update recipe
 router.put('/recipe/:id', (req, res) => {
-  const updRecipe = new Recipe({ ...req.body });
-  const newData = updRecipe.toObject();
-  delete newData._id;
+  const { _id, __v, createdAt, updatedAt, ...newData } = req.body;
   Recipe.updateRecipe(req.params.id, newData, (err, recipe) => {
     if (err) {
       res.send(err);

@@ -44,5 +44,5 @@ module.exports.removeRecipe = (id, callback) => {
 };
 
 module.exports.updateRecipe = (id, newData, callback) => {
-  Recipe.findOneAndUpdate({ _id: id }, newData, { upsert: true, new: true }, callback);
+  Recipe.findByIdAndUpdate(id, { $set: newData }, { upsert: true, new: true }, callback);
 };
