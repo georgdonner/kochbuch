@@ -1,28 +1,29 @@
-var express = require('express');
-var dropbox = require('dropbox');
-var router = express.Router();
-var Recipe = require('../models/recipe');
+const express = require('express');
+const Dropbox = require('dropbox');
 
-router.get('/backup', function(req, res, next) {
+const router = express.Router();
+const Recipe = require('../models/recipe');
+
+router.get('/backup', (req, res) => {
   Recipe.getAllRecipes((err, recipes) => {
     if (err) {
       res.status(500).json(err);
     } else {
-      var dbx = new dropbox({accessToken: process.env.DROPBOX_TOKEN});
+      const dbx = new Dropbox({ accessToken: process.env.DROPBOX_TOKEN });
       const backup = JSON.stringify(recipes);
       const timestamp = new Date(Date.now()).toISOString();
       dbx.filesUpload({
         contents: backup,
-        path: '/recipes_'+timestamp+'.json',
+        path: `/recipes_${timestamp}.json`,
         mode: {
-          ".tag": 'add'
+          '.tag': 'add',
         },
         autorename: true,
-        mute: true
-      }).then((resp) => {
+        mute: true,
+      }).then(() => {
         res.sendStatus(200);
-      }).catch((err) => {
-        console.log(err);
+      }).catch((uploadErr) => {
+        console.error(uploadErr);
         res.sendStatus(500);
       });
     }
