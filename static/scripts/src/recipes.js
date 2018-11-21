@@ -3,10 +3,14 @@ const state = {
   pagesFetched: 0,
   fetching: false,
   total: null,
+  search: null,
 };
 
 const fetchRecipes = () => {
-  const url = `./api/recipes?condensed=true&limit=${FETCH_AMOUNT}&page=${state.pagesFetched + 1}`;
+  let url = `./api/recipes?condensed=true&limit=${FETCH_AMOUNT}&page=${state.pagesFetched + 1}`;
+  if (state.search) {
+    url += `&search=${encodeURIComponent(state.search.replace(/,\s+/, ','))}`;
+  }
   return fetch(url)
     .then(res => res.json())
     .then((body) => {
@@ -42,10 +46,14 @@ const fetchAndRenderRecipes = () => {
     .then((recipes) => {
       state.pagesFetched += 1;
       state.fetching = false;
-      recipes.forEach((recipe) => {
-        const card = createRecipeCard(recipe);
-        listNode.appendChild(card);
-      });
+      if (recipes.length > 0) {
+        recipes.forEach((recipe) => {
+          const card = createRecipeCard(recipe);
+          listNode.appendChild(card);
+        });
+      } else {
+        listNode.innerText = `Keine Ergebnisse für ${state.search} gefunden.`;
+      }
     })
     .catch((error) => {
       console.error(error);
@@ -65,6 +73,16 @@ const onScroll = () => {
 
 const init = () => {
   fetchAndRenderRecipes();
+  const searchbar = document.querySelector('#searchbar input');
+  searchbar.addEventListener('keypress', ({ key, target }) => {
+    if (key === 'Enter') {
+      state.pagesFetched = 0;
+      state.search = target.value;
+      const listNode = document.getElementById('recipe-list');
+      listNode.innerHTML = '';
+      fetchAndRenderRecipes();
+    }
+  });
   window.addEventListener('scroll', onScroll);
 };
 
