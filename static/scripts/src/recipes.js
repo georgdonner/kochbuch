@@ -20,9 +20,10 @@ const fetchRecipes = () => {
 };
 
 const createRecipeCard = (recipe) => {
-  const card = document.createElement('div');
+  const card = document.createElement('a');
   card.className = 'recipe-card';
   card.id = recipe._id;
+  card.href = `/recipe/${recipe._id}`;
   const imgUrl = recipe.heroImage ? recipe.heroImage.replace('w:2000', 'w:600') : 'img/comingsoon.jpg';
   const content = `
     <img src="${imgUrl}" />
