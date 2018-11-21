@@ -4,7 +4,9 @@
   "description": "This project uses a MEAN stack (MongoDB, Express, Angular, Node.js) and the front-end was generated using the [Angular CLI](https://cli.angular.io/).",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "babel static/scripts/src -d static/scripts/lib",
+    "build:watch": "babel -w static/scripts/src -d static/scripts/lib"
   },
   "repository": {
     "type": "git",
@@ -30,6 +32,9 @@
     "request-promise-native": "^1.0.5"
   },
   "devDependencies": {
+    "@babel/cli": "^7.1.5",
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.9.0",
     "eslint-plugin-import": "^2.14.0",
