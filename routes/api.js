@@ -10,11 +10,13 @@ const Shoppinglist = require('../models/shoppinglist');
 
 // Get all recipes
 router.get('/recipes', async (req, res) => {
-  const { condensed, page = 1, limit = 15 } = req.query;
+  const {
+    condensed, page = 1, limit = 15, search,
+  } = req.query;
   try {
     if (condensed) {
-      const total = await Recipe.getCount();
-      const recipes = await Recipe.getPage(Number(page), Number(limit));
+      const total = await Recipe.getCount(search);
+      const recipes = await Recipe.getPage(Number(page), Number(limit), search);
       return res.json({ recipes, total });
     }
     const recipes = await Recipe.getAllRecipes();

@@ -23,6 +23,10 @@ const RecipeSchema = new Schema({
 },
 { timestamps: true },
 );
+RecipeSchema.index(
+  { title: 'text', categories: 'text', 'ingredients.name': 'text' },
+  { default_language: 'german' },
+);
 
 const Recipe = mongoose.model('Recipe', RecipeSchema);
 module.exports = Recipe;
@@ -31,16 +35,32 @@ module.exports.getRecipeById = id => Recipe.findById(id);
 
 module.exports.getAllRecipes = () => Recipe.find({});
 
-module.exports.getCount = () => Recipe.countDocuments({});
+const convertSearch = (searchString) => {
+  const terms = searchString.split(',');
+  const mapped = terms.map(term => `"${term}"`);
+  return mapped.join(' ');
+};
 
-module.exports.getPage = (page, limit) => (
-  Recipe
-    .find({})
+module.exports.getCount = (search) => {
+  const query = search
+    ? { $text: { $search: convertSearch(search) } }
+    : {};
+  return Recipe.countDocuments(query);
+};
+
+module.exports.getPage = async (page, limit, search) => {
+  const query = search
+    ? { $text: { $search: convertSearch(search) } }
+    : {};
+  const recipes = await Recipe
+    .find(query, { score: { $meta: 'textScore' } })
     .limit(limit)
     .skip((page - 1) * limit)
-    .sort('-createdAt')
+    .sort(search ? { score: { $meta: 'textScore' } } : '-createdAt')
     .select('_id title heroImage categories')
-);
+    .lean();
+  return recipes.map(({ score, ...recipe }) => recipe);
+};
 
 module.exports.addRecipe = newRecipe => newRecipe.save();
 
