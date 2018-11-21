@@ -36,7 +36,7 @@ app.post('/zauberwort', (req, res) => {
 });
 
 app.get('/', async (req, res) => {
-  res.render('index');
+  res.render('recipes');
 });
 
 const port = process.env.PORT || 3000;
