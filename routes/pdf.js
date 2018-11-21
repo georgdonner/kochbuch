@@ -47,8 +47,8 @@ const formatDescription = (description) => {
 const getDoc = recipe => ({
   content: [
     {
- text: recipe.title, fontSize: 20, bold: true, alignment: 'center', margin: [0, 0, 0, 16] 
-},
+      text: recipe.title, fontSize: 20, bold: true, alignment: 'center', margin: [0, 0, 0, 16],
+    },
     {
       columns: [
         { width: '33%', text: 'Zutaten', style: 'subheading' },
@@ -107,8 +107,8 @@ const getPdf = async (recipe) => {
       });
       const imageData = `data:${imageRes.headers['content-type']};base64,${Buffer.from(imageRes.body).toString('base64')}`;
       const image = {
- image: imageData, width: imageWidth, alignment: 'center', margin: [0, 0, 0, 16] 
-};
+        image: imageData, width: imageWidth, alignment: 'center', margin: [0, 0, 0, 16],
+      };
       pdf.content.splice(1, 0, image);
     } catch (error) {
       console.error(error);
@@ -117,10 +117,10 @@ const getPdf = async (recipe) => {
   return printer.createPdfKitDocument(pdf);
 };
 
-router.get('/recipe/:id', (req, res) => {
-  Recipe.getRecipeById(req.params.id, async (err, recipe) => {
-    if (err) res.status(500).send(err.message);
-    else if (!recipe) res.status(400).send('Recipe not found');
+router.get('/recipe/:id', async (req, res) => {
+  try {
+    const recipe = await Recipe.getRecipeById(req.params.id);
+    if (!recipe) res.status(400).send('Recipe not found');
     else {
       const pdf = await getPdf(recipe);
       res.setHeader('Content-disposition', `attachment; filename=${pdf.info.Title.replace(/\s/g, '-')}.pdf`);
@@ -128,7 +128,9 @@ router.get('/recipe/:id', (req, res) => {
       pdf.pipe(res);
       pdf.end();
     }
-  });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 });
 
 module.exports = router;

@@ -9,52 +9,40 @@ const Shoppinglist = require('../models/shoppinglist');
 // RECIPES
 
 // Get all recipes
-router.get('/recipes', (req, res) => {
+router.get('/recipes', async (req, res) => {
   const { condensed, page = 1, limit = 15 } = req.query;
-  if (condensed) {
-    Recipe.getCount((err, count) => {
-      if (err) {
-        res.send(err);
-      } else {
-        Recipe.getPage(Number(page), Number(limit), (error, recipes) => {
-          if (error) {
-            res.send(error);
-          } else {
-            res.json({ recipes, total: count });
-          }
-        });
-      }
-    });
-  } else {
-    Recipe.getAllRecipes((err, recipes) => {
-      if (err) {
-        res.send(err);
-      } else {
-        res.json(recipes);
-      }
-    });
+  try {
+    if (condensed) {
+      const total = await Recipe.getCount();
+      const recipes = await Recipe.getPage(Number(page), Number(limit));
+      return res.json({ recipes, total });
+    }
+    const recipes = await Recipe.getAllRecipes();
+    return res.json(recipes);
+  } catch (error) {
+    return res.send(error);
   }
 });
 
 // Get single recipe
-router.get('/recipe/:id', (req, res) => {
-  Recipe.getRecipeById(req.params.id, (err, recipe) => {
-    if (err) {
-      res.send(err);
-    }
+router.get('/recipe/:id', async (req, res) => {
+  try {
+    const recipe = await Recipe.getRecipeById(req.params.id);
     res.json(recipe);
-  });
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 // Save recipe
-router.post('/recipe', (req, res) => {
-  const newRecipe = new Recipe({ ...req.body });
-  Recipe.addRecipe(newRecipe, (err, recipe) => {
-    if (err) {
-      res.send(err);
-    }
-    res.json(recipe);
-  });
+router.post('/recipe', async (req, res) => {
+  try {
+    const newRecipe = new Recipe({ ...req.body });
+    const saved = await Recipe.addRecipe(newRecipe);
+    res.json(saved);
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 /* Delete recipe
@@ -69,16 +57,16 @@ router.delete('/recipe/:id', function (req, res) {
  */
 
 // Update recipe
-router.put('/recipe/:id', (req, res) => {
-  const {
-    _id, __v, createdAt, updatedAt, ...newData
-  } = req.body;
-  Recipe.updateRecipe(req.params.id, newData, (err, recipe) => {
-    if (err) {
-      res.send(err);
-    }
+router.put('/recipe/:id', async (req, res) => {
+  try {
+    const {
+      _id, __v, createdAt, updatedAt, ...newData
+    } = req.body;
+    const recipe = await Recipe.updateRecipe(req.params.id, newData);
     res.json(recipe);
-  });
+  } catch (error) {
+    res.send(error);
+  }
 });
 
 // WEEKPLAN

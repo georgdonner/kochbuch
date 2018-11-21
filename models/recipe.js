@@ -27,36 +27,25 @@ const RecipeSchema = new Schema({
 const Recipe = mongoose.model('Recipe', RecipeSchema);
 module.exports = Recipe;
 
-module.exports.getRecipeById = (id, callback) => {
-  Recipe.findById(id, callback);
-};
+module.exports.getRecipeById = id => Recipe.findById(id);
 
-module.exports.getAllRecipes = (callback) => {
-  Recipe.find({}, callback);
-};
+module.exports.getAllRecipes = () => Recipe.find({});
 
-module.exports.getCount = (callback) => {
-  Recipe.countDocuments({}, callback);
-};
+module.exports.getCount = () => Recipe.countDocuments({});
 
-module.exports.getPage = (page, limit, callback) => {
+module.exports.getPage = (page, limit) => (
   Recipe
     .find({})
     .limit(limit)
     .skip((page - 1) * limit)
     .sort('-createdAt')
     .select('_id title heroImage categories')
-    .exec(callback);
-};
+);
 
-module.exports.addRecipe = (newRecipe, callback) => {
-  newRecipe.save(callback);
-};
+module.exports.addRecipe = newRecipe => newRecipe.save();
 
-module.exports.removeRecipe = (id, callback) => {
-  Recipe.findOneAndRemove({ _id: id }, callback);
-};
+module.exports.removeRecipe = id => Recipe.findOneAndRemove({ _id: id });
 
-module.exports.updateRecipe = (id, newData, callback) => {
-  Recipe.findByIdAndUpdate(id, { $set: newData }, { upsert: true, new: true }, callback);
-};
+module.exports.updateRecipe = (id, newData) => (
+  Recipe.findByIdAndUpdate(id, { $set: newData }, { upsert: true, new: true })
+);

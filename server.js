@@ -4,7 +4,6 @@ const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
-const Recipe = require('./models/recipe');
 
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 
