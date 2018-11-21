@@ -35,6 +35,20 @@ module.exports.getAllRecipes = (callback) => {
   Recipe.find({}, callback);
 };
 
+module.exports.getCount = (callback) => {
+  Recipe.countDocuments({}, callback);
+};
+
+module.exports.getPage = (page, limit, callback) => {
+  Recipe
+    .find({})
+    .limit(limit)
+    .skip((page - 1) * limit)
+    .sort('-createdAt')
+    .select('_id title heroImage categories')
+    .exec(callback);
+};
+
 module.exports.addRecipe = (newRecipe, callback) => {
   newRecipe.save(callback);
 };

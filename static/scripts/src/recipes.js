@@ -1,10 +1,18 @@
 const FETCH_AMOUNT = window.matchMedia('min-width: 1200px') ? 15 : 10;
-let pagesFetched = 0;
+const state = {
+  pagesFetched: 0,
+  fetching: false,
+  total: null,
+};
 
 const fetchRecipes = () => {
-  const url = `./api/recipes?condensed=true&limit=${FETCH_AMOUNT}&page=${pagesFetched + 1}`;
+  const url = `./api/recipes?condensed=true&limit=${FETCH_AMOUNT}&page=${state.pagesFetched + 1}`;
   return fetch(url)
-    .then(res => res.json());
+    .then(res => res.json())
+    .then((body) => {
+      state.total = body.total;
+      return body.recipes;
+    });
 };
 
 const createRecipeCard = (recipe) => {
@@ -27,12 +35,13 @@ const createRecipeCard = (recipe) => {
   return card;
 };
 
-
-const init = () => {
+const fetchAndRenderRecipes = () => {
   const listNode = document.getElementById('recipe-list');
+  state.fetching = true;
   fetchRecipes()
     .then((recipes) => {
-      pagesFetched += 1;
+      state.pagesFetched += 1;
+      state.fetching = false;
       recipes.forEach((recipe) => {
         const card = createRecipeCard(recipe);
         listNode.appendChild(card);
@@ -40,9 +49,23 @@ const init = () => {
     })
     .catch((error) => {
       console.error(error);
-      pagesFetched = 0;
-      listNode.innerText = 'Konnte Rezepte nicht laden.';
+      if (state.pagesFetched === 0) {
+        listNode.innerText = 'Konnte Rezepte nicht laden.';
+      }
     });
+};
+
+const onScroll = () => {
+  const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
+  const hasNext = state.total > FETCH_AMOUNT * state.pagesFetched;
+  if (hasNext && !state.fetching && nearBottom) {
+    fetchAndRenderRecipes();
+  }
+};
+
+const init = () => {
+  fetchAndRenderRecipes();
+  window.addEventListener('scroll', onScroll);
 };
 
 init();

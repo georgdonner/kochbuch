@@ -10,25 +10,30 @@ const Shoppinglist = require('../models/shoppinglist');
 
 // Get all recipes
 router.get('/recipes', (req, res) => {
-  const { condensed } = req.query;
-  Recipe.getAllRecipes((err, recipes) => {
-    if (err) {
-      res.send(err);
-    } else if (condensed) {
-      const mapped = recipes.map(({
-        _id, title, heroImage, categories, ingredients,
-      }) => ({
-        _id,
-        title,
-        heroImage,
-        categories,
-        ingredients: ingredients.map(({ name }) => name),
-      }));
-      res.json(mapped);
-    } else {
-      res.json(recipes);
-    }
-  });
+  const { condensed, page = 1, limit = 15 } = req.query;
+  if (condensed) {
+    Recipe.getCount((err, count) => {
+      if (err) {
+        res.send(err);
+      } else {
+        Recipe.getPage(Number(page), Number(limit), (error, recipes) => {
+          if (error) {
+            res.send(error);
+          } else {
+            res.json({ recipes, total: count });
+          }
+        });
+      }
+    });
+  } else {
+    Recipe.getAllRecipes((err, recipes) => {
+      if (err) {
+        res.send(err);
+      } else {
+        res.json(recipes);
+      }
+    });
+  }
 });
 
 // Get single recipe
