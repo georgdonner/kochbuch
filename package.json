@@ -25,6 +25,7 @@
     "eslint-config-airbnb-base": "^13.1.0",
     "express": "^4.16.4",
     "mark-twain": "^2.0.3",
+    "markdown": "^0.5.0",
     "mongoose": "^5.3.13",
     "pdfmake": "^0.1.39",
     "pug": "^2.0.3",

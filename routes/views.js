@@ -1,4 +1,5 @@
 const express = require('express');
+const { markdown } = require('markdown');
 
 const router = express.Router();
 
@@ -8,7 +9,8 @@ router.get('/recipe/:id', async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
     if (!recipe) throw new Error('Recipe not found.');
-    res.render('recipe', { recipe });
+    const descriptionHtml = markdown.toHTML(recipe.description);
+    res.render('recipe', { recipe, descriptionHtml });
   } catch (error) {
     res.send(error);
   }
