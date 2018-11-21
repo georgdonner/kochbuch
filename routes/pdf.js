@@ -6,10 +6,10 @@ const Recipe = require('../models/recipe');
 
 const fonts = {
   Roboto: {
-    normal: 'server/fonts/Roboto-Regular.ttf',
-    bold: 'server/fonts/Roboto-Medium.ttf',
-    italics: 'server/fonts/Roboto-Italic.ttf',
-    bolditalics: 'server/fonts/Roboto-MediumItalic.ttf',
+    normal: 'fonts/Roboto-Regular.ttf',
+    bold: 'fonts/Roboto-Medium.ttf',
+    italics: 'fonts/Roboto-Italic.ttf',
+    bolditalics: 'fonts/Roboto-MediumItalic.ttf',
   },
 };
 
@@ -46,7 +46,9 @@ const formatDescription = (description) => {
 
 const getDoc = recipe => ({
   content: [
-    { text: recipe.title, fontSize: 20, bold: true, alignment: 'center', margin: [0, 0, 0, 16] },
+    {
+ text: recipe.title, fontSize: 20, bold: true, alignment: 'center', margin: [0, 0, 0, 16] 
+},
     {
       columns: [
         { width: '33%', text: 'Zutaten', style: 'subheading' },
@@ -104,7 +106,9 @@ const getPdf = async (recipe) => {
         resolveWithFullResponse: true,
       });
       const imageData = `data:${imageRes.headers['content-type']};base64,${Buffer.from(imageRes.body).toString('base64')}`;
-      const image = { image: imageData, width: imageWidth, alignment: 'center', margin: [0, 0, 0, 16] };
+      const image = {
+ image: imageData, width: imageWidth, alignment: 'center', margin: [0, 0, 0, 16] 
+};
       pdf.content.splice(1, 0, image);
     } catch (error) {
       console.error(error);

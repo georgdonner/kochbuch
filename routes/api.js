@@ -10,11 +10,24 @@ const Shoppinglist = require('../models/shoppinglist');
 
 // Get all recipes
 router.get('/recipes', (req, res) => {
+  const { condensed } = req.query;
   Recipe.getAllRecipes((err, recipes) => {
     if (err) {
       res.send(err);
+    } else if (condensed) {
+      const mapped = recipes.map(({
+        _id, title, heroImage, categories, ingredients,
+      }) => ({
+        _id,
+        title,
+        heroImage,
+        categories,
+        ingredients: ingredients.map(({ name }) => name),
+      }));
+      res.json(mapped);
+    } else {
+      res.json(recipes);
     }
-    res.json(recipes);
   });
 });
 
@@ -52,7 +65,9 @@ router.delete('/recipe/:id', function (req, res) {
 
 // Update recipe
 router.put('/recipe/:id', (req, res) => {
-  const { _id, __v, createdAt, updatedAt, ...newData } = req.body;
+  const {
+    _id, __v, createdAt, updatedAt, ...newData
+  } = req.body;
   Recipe.updateRecipe(req.params.id, newData, (err, recipe) => {
     if (err) {
       res.send(err);
