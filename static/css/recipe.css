@@ -1,0 +1,88 @@
+html, body {
+  margin: 0;
+  font-family: 'Merriweather', serif;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.recipe-title {
+  margin: 2rem 0;
+  font-size: 2rem;
+  font-weight: 400;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+.recipe-img {
+  max-height: 500px;
+  object-fit: cover;
+}
+
+.recipe-info {
+  margin: 1.5rem 0;
+  margin-top: 2.5rem;
+  font-size: 1.2rem;
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+}
+
+.categories {
+  margin-top: .2rem;
+}
+
+.categories span {
+  font-family: 'Open Sans', sans-serif;
+  line-height: 1.2;
+  font-size: 1rem;
+  background: #f2f2f2;
+  padding: .5rem 1rem;
+  margin-right: 1rem;
+  border-radius: 10px;
+}
+
+.recipe-main {
+  display: grid;
+  grid-template-columns: 2fr 3fr;
+}
+
+.recipe-main h2 {
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+
+.border-bottom {
+  width: 66.66%;
+  border-bottom: 1px solid #f2f2f2;
+}
+
+ul {
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+}
+
+ul li {
+  list-style-type: none;
+  padding: .5rem 0;
+}
+
+.description {
+  padding: 1.5rem 0;
+  line-height: 1.6;
+  font-family: 'Open Sans', sans-serif;
+}
+
+@media only screen and (max-width: 1200px) {
+  .recipe-main {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .recipe-main {
+    grid-template-columns: 1fr;
+  }
+}

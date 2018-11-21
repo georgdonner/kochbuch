@@ -34,9 +34,7 @@ app.post('/zauberwort', (req, res) => {
   }
 });
 
-app.get('/', async (req, res) => {
-  res.render('recipes');
-});
+app.use(require('./routes/views'));
 
 const port = process.env.PORT || 3000;
 // eslint-disable-next-line no-console

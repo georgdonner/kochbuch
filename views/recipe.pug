@@ -1,0 +1,25 @@
+html
+  head
+    title= recipe.title
+    link(rel="stylesheet", href="../css/recipe.css")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700|Open+Sans:400,400i,600i,700")
+  body
+    .container
+      h1.recipe-title= recipe.title
+      img.recipe-img(src=recipe.heroImage, alt=recipe.title)
+      .recipe-info
+        div.duration #{recipe.duration} Minuten
+        .categories
+          each ctg in recipe.categories
+            span= ctg
+      .recipe-main
+        div
+          h2 Zutaten
+          .border-bottom
+          ul
+            each ingr in recipe.ingredients
+              li= ingr.name
+        div
+          h2 Zubereitung
+          .border-bottom
+          div.description= recipe.description
