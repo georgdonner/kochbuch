@@ -31,7 +31,7 @@ html(lang="de")
             each ingr in recipe.ingredients
               li
                 span.name(data-name=ingr.name)= ingr.name
-                span.hint= ` ${ingr.hint}`
+                span.hint= ingr.hint ? ` (${ingr.hint})` : ''
         div
           h2 Zubereitung
           .border-bottom
