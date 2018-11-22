@@ -1,9 +1,16 @@
 const FETCH_AMOUNT = window.matchMedia('min-width: 1200px') ? 15 : 10;
-const state = {
+const stateStr = window.sessionStorage.getItem('state');
+const oldState = stateStr ? JSON.parse(stateStr) : {};
+let state = Object.assign({
   pagesFetched: 0,
   fetching: false,
   total: null,
   search: null,
+}, oldState);
+
+const setState = (obj) => {
+  state = Object.assign(state, obj);
+  window.sessionStorage.setItem('state', JSON.stringify(state));
 };
 
 const fetchRecipes = () => {
@@ -14,7 +21,7 @@ const fetchRecipes = () => {
   return fetch(url)
     .then(res => res.json())
     .then((body) => {
-      state.total = body.total;
+      setState({ total: body.total });
       return body.recipes;
     });
 };
@@ -40,18 +47,32 @@ const createRecipeCard = (recipe) => {
   return card;
 };
 
+const updateSessionStorage = (recipes) => {
+  let saved = [];
+  const savedStr = window.sessionStorage.getItem('recipes');
+  if (savedStr) {
+    saved = JSON.parse(savedStr);
+  }
+  window.sessionStorage.setItem('recipes', JSON.stringify(saved.concat(recipes)));
+};
+
+const renderRecipes = (recipes) => {
+  const listNode = document.getElementById('recipe-list');
+  recipes.forEach((recipe) => {
+    const card = createRecipeCard(recipe);
+    listNode.appendChild(card);
+  });
+};
+
 const fetchAndRenderRecipes = () => {
   const listNode = document.getElementById('recipe-list');
-  state.fetching = true;
+  setState({ fetching: true });
   fetchRecipes()
     .then((recipes) => {
-      state.pagesFetched += 1;
-      state.fetching = false;
+      setState({ pagesFetched: state.pagesFetched + 1, fetching: false });
       if (recipes.length > 0) {
-        recipes.forEach((recipe) => {
-          const card = createRecipeCard(recipe);
-          listNode.appendChild(card);
-        });
+        updateSessionStorage(recipes);
+        renderRecipes(recipes);
       } else {
         listNode.innerText = `Keine Ergebnisse für ${state.search} gefunden.`;
       }
@@ -73,12 +94,17 @@ const onScroll = () => {
 };
 
 const init = () => {
-  fetchAndRenderRecipes();
+  const recipesStr = window.sessionStorage.getItem('recipes');
+  if (recipesStr) {
+    renderRecipes(JSON.parse(recipesStr));
+  } else {
+    fetchAndRenderRecipes();
+  }
   const searchbar = document.querySelector('#searchbar input');
   searchbar.addEventListener('keypress', ({ key, target }) => {
     if (key === 'Enter') {
-      state.pagesFetched = 0;
-      state.search = target.value;
+      setState({ pagesFetched: 0, search: target.value });
+      window.sessionStorage.removeItem('recipes');
       const listNode = document.getElementById('recipe-list');
       listNode.innerHTML = '';
       fetchAndRenderRecipes();

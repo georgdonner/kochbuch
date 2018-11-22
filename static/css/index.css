@@ -21,7 +21,7 @@ html, body {
 #searchbar input {
   width: 100%;
   max-width: 1200px;
-  padding: 1.5rem .5rem;
+  padding: 1.5rem 1rem;
   font-size: 1.25rem;
   border: none;
 }
