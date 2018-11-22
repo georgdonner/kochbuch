@@ -6,7 +6,12 @@ html
   body
     .container
       h1.recipe-title= recipe.title
-      img.recipe-img(src=recipe.heroImage, alt=recipe.title)
+      img.recipe-img(
+        src=recipe.heroImage,
+        srcset=`${recipe.heroImage.replace('w:2000', 'w:600')} 600w, ${recipe.heroImage} 2000w`,
+        sizes="(max-width: 650px) 600px, 2000px"
+        alt=recipe.title
+      )
       .recipe-info
         div.duration #{recipe.duration} Minuten
         .categories
@@ -20,7 +25,6 @@ html
               button.down -
               span#servings= recipe.servings
               button.up +
-          .border-bottom
           ul#ingredients
             each ingr in recipe.ingredients
               li

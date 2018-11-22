@@ -21,7 +21,7 @@ html, body {
 #searchbar input {
   width: 100%;
   max-width: 1200px;
-  padding: 1.5rem 1rem;
+  padding: 1.5rem 0;
   font-size: 1.25rem;
   border: none;
 }
@@ -89,6 +89,10 @@ html, body {
 @media only screen and (max-width: 1200px) {
   #recipe-list {
     grid-template-columns: 1fr 1fr;
+  }
+  #searchbar input {
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
 }
 @media only screen and (max-width: 600px) {
