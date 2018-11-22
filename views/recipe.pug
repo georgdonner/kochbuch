@@ -14,12 +14,20 @@ html
             span= ctg
       .recipe-main
         div
-          h2 Zutaten
+          h2.servings-header
+            span Zutaten
+            .servings-control
+              button.down -
+              span#servings= recipe.servings
+              button.up +
           .border-bottom
-          ul
+          ul#ingredients
             each ingr in recipe.ingredients
-              li= ingr.name
+              li
+                span.name(data-name=ingr.name)= ingr.name
+                span.hint= ` ${ingr.hint}`
         div
           h2 Zubereitung
           .border-bottom
           div.description !{descriptionHtml}
+    script(src="../scripts/lib/recipe.js")

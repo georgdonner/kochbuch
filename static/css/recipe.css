@@ -60,6 +60,28 @@ html, body {
   border-bottom: 1px solid #f2f2f2;
 }
 
+.servings-header {
+  display: flex;
+  justify-content: space-between;
+  width: 66.66%;
+}
+
+.servings-control button {
+  border: none;
+  border-radius: 100%;
+  font-size: 1rem;
+  width: 2rem;
+  height: 2rem;
+  padding: .25rem;
+  margin: 0 .75rem;
+  background: #fff;
+  cursor: pointer;
+}
+
+.servings-control button:hover {
+  background: #f2f2f2;
+}
+
 ul {
   padding: 0;
   font-family: 'Open Sans', sans-serif;
