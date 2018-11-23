@@ -3,6 +3,32 @@ html, body {
   font-family: 'Merriweather', serif;
 }
 
+#all-recipes {
+  width: 100%;
+  position: fixed;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  padding: 1rem 0;
+  color: #777;
+  font-family: 'Open Sans', sans-serif;
+  font-size: .75rem;
+  font-weight: 600;
+  text-decoration: none;
+  text-transform: uppercase;
+  z-index: 10;
+}
+
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: .25rem;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
 .container {
   max-width: 1000px;
   margin: 0 auto;
@@ -12,7 +38,8 @@ html, body {
 }
 
 .recipe-title {
-  margin: 2rem 0;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
   font-size: 2rem;
   font-weight: 400;
   letter-spacing: .5px;
