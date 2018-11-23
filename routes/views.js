@@ -5,6 +5,20 @@ const router = express.Router();
 
 const Recipe = require('../models/recipe');
 
+const defaultRecipe = {
+  title: '',
+  servings: 2,
+  duration: 30,
+  difficulty: 1,
+  ingredients: [],
+  description: '',
+  categories: [],
+};
+
+router.get('/recipes/new', (req, res) => {
+  res.render('recipe-form', { recipe: defaultRecipe });
+});
+
 router.get('/recipe/:id/edit', async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
