@@ -7,10 +7,11 @@ html(lang="de")
     link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700|Open+Sans:400,400i,600i,700")
   body
     .container
-      a#all-recipes(href="/")
-        svg.icon.icon-arrow-left2
-          use(xlink:href='#icon-arrow-left2')
-        | Alle Rezepte
+      #all-recipes
+        a(href="/")
+          svg.icon.icon-arrow-left2
+            use(xlink:href='#icon-arrow-left2')
+          | Alle Rezepte
       h1.recipe-title= recipe.title
       if recipe.heroImage
         img.recipe-img(
