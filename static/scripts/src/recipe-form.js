@@ -52,7 +52,7 @@ const getRecipe = () => {
   const servings = +document.getElementById('servings').value;
   const duration = +document.getElementById('duration').value;
   const difficulty = +document.querySelector('#difficulty input:checked').value;
-  const ingredients = Array.from(document.querySelectorAll('.ingredient'))
+  const ingredients = Array.from(document.querySelectorAll('#ingredients .ingredient'))
     .map(node => ({
       name: node.children.name.value,
       hint: node.children.hint.value,
@@ -79,6 +79,27 @@ const getRecipe = () => {
     recipe.heroImage = uploadedImgSrc;
   }
   return recipe;
+};
+
+const saveRecipe = () => {
+  const recipe = getRecipe();
+  let url = '/api/recipe';
+  const { pathname } = window.location;
+  const recipeId = pathname.includes('edit') ? pathname.split('/')[2] : null;
+  if (recipeId) {
+    url += `/${recipeId}`;
+  }
+  fetch(url, {
+    method: recipeId ? 'PUT' : 'POST',
+    headers: {
+      'Content-Type': 'application/json; charset=utf-8',
+    },
+    body: JSON.stringify(recipe),
+  })
+    .then(res => res.json())
+    .then((saved) => {
+      window.location = `/recipe/${saved._id}`;
+    });
 };
 
 const init = () => {
@@ -124,6 +145,8 @@ const init = () => {
         target.parentNode.remove();
       });
     });
+  // save recipe on button click
+  document.getElementById('save').addEventListener('click', saveRecipe);
 };
 
 init();
