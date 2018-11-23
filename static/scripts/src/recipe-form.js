@@ -1,4 +1,20 @@
-const uploadedImgSrc = null;
+let uploadedImgSrc = null;
+
+const showImgPicker = () => {
+  // eslint-disable-next-line no-undef
+  const client = filestack.init('AwD48ceQaWtGBs9plMog7z');
+  client.picker({
+    accept: ['image/*'],
+    maxFiles: 1,
+    maxSize: 10485760,
+    onUploadDone: (res) => {
+      if (res.filesUploaded.length > 0) {
+        const { handle } = res.filesUploaded[0];
+        uploadedImgSrc = `https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/${handle}`;
+      }
+    },
+  }).open();
+};
 
 const getRecipe = () => {
   const title = document.getElementById('title').value;
@@ -33,3 +49,10 @@ const getRecipe = () => {
   }
   return recipe;
 };
+
+const init = () => {
+  const newImgButton = document.getElementById('new-image');
+  newImgButton.addEventListener('click', showImgPicker);
+};
+
+init();

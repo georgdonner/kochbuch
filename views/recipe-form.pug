@@ -5,6 +5,7 @@ html(lang="de")
     include includes/meta.pug
     link(rel="stylesheet", href="/css/recipe-form.css")
     link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600i,700")
+    script(src="//static.filestackapi.com/filestack-js/1.x.x/filestack.min.js", async)
   body
     .container
       if recipe.heroImage
@@ -16,7 +17,7 @@ html(lang="de")
         )
       #title-wrapper
         input#title(type="text", name="title", value=recipe.title, placeholder="Titel")
-        button Neues Bild
+        button#new-image Neues Bild
       #number-inputs
         div
           label(for="servings") Portionen
