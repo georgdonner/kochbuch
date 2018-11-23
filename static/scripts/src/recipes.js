@@ -1,12 +1,13 @@
 const FETCH_AMOUNT = window.matchMedia('min-width: 1200px') ? 15 : 10;
 const stateStr = window.sessionStorage.getItem('state');
 const oldState = stateStr ? JSON.parse(stateStr) : {};
-let state = Object.assign({
+const defaultState = {
   pagesFetched: 0,
   fetching: false,
   total: null,
   search: null,
-}, oldState);
+};
+let state = Object.assign(defaultState, oldState);
 
 const setState = (obj) => {
   state = Object.assign(state, obj);
@@ -21,8 +22,15 @@ const fetchRecipes = () => {
   return fetch(url)
     .then(res => res.json())
     .then((body) => {
-      setState({ total: body.total });
-      return body.recipes;
+      if (body.authenticated) {
+        document.querySelector('#searchbar input').value = '';
+        setState(defaultState);
+        window.sessionStorage.clear();
+        throw new Error('auth-only');
+      } else {
+        setState({ total: body.total });
+        return body.recipes;
+      }
     });
 };
 
@@ -78,9 +86,13 @@ const fetchAndRenderRecipes = () => {
       }
     })
     .catch((error) => {
-      console.error(error);
-      if (state.pagesFetched === 0) {
-        listNode.innerText = 'Konnte Rezepte nicht laden.';
+      if (error.message === 'auth-only') {
+        window.location.reload(true);
+      } else {
+        console.error(error);
+        if (state.pagesFetched === 0) {
+          listNode.innerText = 'Konnte Rezepte nicht laden.';
+        }
       }
     });
 };

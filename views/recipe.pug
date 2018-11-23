@@ -41,6 +41,10 @@ html(lang="de")
           h2 Zubereitung
           .border-bottom
           div.description !{descriptionHtml}
+      #buttons
+        if session.authenticated
+          a.button(href=`/recipe/${recipe._id}/edit`) Bearbeiten
+        a.button(href=`/pdf/recipe/${recipe._id}` download) PDF
     script(src="/scripts/lib/recipe.js")
     svg(aria-hidden='true' style='position: absolute; width: 0; height: 0; overflow: hidden;' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink')
       defs

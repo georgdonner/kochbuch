@@ -6,6 +6,8 @@ html(lang="de")
     link(rel="stylesheet", href="css/index.css")
     link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700")
   body
+    if session.authenticated
+      a#new-recipe(href="/recipes/new") +
     div#list-wrapper
       div#searchbar
         input(type="search", name="search", placeholder="Suche nach Zutaten, Kategorien oder Titel...")
