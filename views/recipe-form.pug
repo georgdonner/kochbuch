@@ -50,16 +50,17 @@ html(lang="de")
             input(type="checkbox", name="Vegan", checked=recipe.categories.indexOf('Vegan') !== -1)
             span.checkmark.box
       h2 Zutaten
-      #ingredients
-        each ingr in recipe.ingredients
-          .ingredient
-            input(type="text", name="name", value=ingr.name, placeholder="Zutat")
-            input(type="text", name="hint", value=ingr.hint, placeholder="Hinweis")
-            button.remove x
+      #ingredients-container
+        #ingredients
+          each ingr in recipe.ingredients
+            .ingredient
+              input(type="text", name="name", value=ingr.name, placeholder="Zutat")
+              input(type="text", name="hint", value=ingr.hint, placeholder="Hinweis")
+              button.remove x
         label(for="new-ingredient") Neue Zutat
-        #new-ingredient
-          input(type="text", name="name", placeholder="Zutat")
-          input(type="text", name="hint", placeholder="Hinweis")
+        #new-ingredient.ingredient
+          input.name(type="text", name="name", placeholder="Zutat")
+          input.hint(type="text", name="hint", placeholder="Hinweis")
       h2 Beschreibung
       textarea#description(rows="6", placeholder="Markdown verfügbar")= recipe.description
       h2 Kategorien

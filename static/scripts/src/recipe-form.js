@@ -16,6 +16,24 @@ const showImgPicker = () => {
   }).open();
 };
 
+const addIngredient = () => {
+  const name = document.querySelector('#new-ingredient .name').value;
+  const hint = document.querySelector('#new-ingredient .hint').value;
+  if (name.length > 0) {
+    const list = document.getElementById('ingredients');
+    const ingredient = document.createElement('div');
+    ingredient.className = 'ingredient';
+    ingredient.innerHTML = `
+      <input type="text" name="name" value="${name}" placeholder="Zutat">
+      <input type="text" name="hint" value="${hint}" placeholder="Hinweis">
+      <button class="remove">x</button>
+    `;
+    list.appendChild(ingredient);
+  }
+  document.querySelector('#new-ingredient .name').value = '';
+  document.querySelector('#new-ingredient .hint').value = '';
+};
+
 const getRecipe = () => {
   const title = document.getElementById('title').value;
   const servings = +document.getElementById('servings').value;
@@ -53,6 +71,20 @@ const getRecipe = () => {
 const init = () => {
   const newImgButton = document.getElementById('new-image');
   newImgButton.addEventListener('click', showImgPicker);
+  document.querySelectorAll('#new-ingredient input')
+    .forEach((input) => {
+      input.addEventListener('keypress', ({ key }) => {
+        if (key === 'Enter') {
+          addIngredient();
+        }
+      });
+    });
+  document.querySelectorAll('.ingredient .remove')
+    .forEach((button) => {
+      button.addEventListener('click', ({ target }) => {
+        target.parentNode.remove();
+      });
+    });
 };
 
 init();
