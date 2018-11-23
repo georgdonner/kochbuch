@@ -40,9 +40,15 @@ const createRecipeCard = (recipe) => {
   card.id = recipe._id;
   card.href = `/recipe/${recipe._id}`;
   const imgUrl = recipe.heroImage ? recipe.heroImage.replace('w:2000', 'w:600') : 'img/comingsoon.jpg';
+  let title = `<h2>${recipe.title}</h2>`;
+  const vegetarian = recipe.categories.includes('Vegetarisch');
+  const vegan = recipe.categories.includes('Vegan');
+  if (vegetarian || vegan) {
+    title = `<h2><span class="${vegan ? 'vegan' : 'vegetarian'}">${recipe.title}</span></h2>`;
+  }
   const content = `
     <img src="${imgUrl}" />
-    <h2>${recipe.title}</h2>
+    ${title}
   `;
   card.innerHTML = content;
   // filter out vegan/vegeterian categories and check if footer is needed

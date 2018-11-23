@@ -86,6 +86,34 @@ html, body {
   word-wrap: break-word;
 }
 
+.recipe-card h2 span {
+  padding-right: 2rem;
+}
+
+.recipe-card h2 span::after {
+  content: "v";
+  color: #fff;
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  width: 1rem;
+  height: 1rem;
+  margin-top: .15rem;
+  margin-left: .5rem;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-transform: uppercase;
+}
+
+.vegetarian::after {
+  background: #333;
+}
+
+.vegan::after {
+  background: #4dbf40;
+}
+
 .recipe-card footer {
   position: absolute;
   bottom: 0;
