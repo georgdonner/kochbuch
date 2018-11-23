@@ -64,11 +64,12 @@ html(lang="de")
       h2 Beschreibung
       textarea#description(rows="6", placeholder="Markdown verfügbar")= recipe.description
       h2 Kategorien
-      #categories
-        each ctg in recipe.categories.filter(ctg => ctg !== 'Vegetarisch' && ctg !== 'Vegan')
-          div
-            span.ctg= ctg
-            button.remove x
+      #categories-container
+        #categories
+          each ctg in recipe.categories.filter(ctg => ctg !== 'Vegetarisch' && ctg !== 'Vegan')
+            div
+              span.ctg= ctg
+              button.remove x
         label(for="category") Neue Kategorie
         input(type="text", name="category", placeholder="Enter drücken zum Hinzufügen")
       button#save.inverted Rezept speichern

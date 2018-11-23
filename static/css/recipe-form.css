@@ -131,7 +131,7 @@ h2 {
   font-weight: 700;
 }
 
-#ingredients input {
+#ingredients-container input {
   font-size: 1rem;
 }
 
@@ -158,11 +158,11 @@ h2 {
   color: inherit;
 }
 
-#categories label {
+#categories-container label {
   margin-top: .5rem;
 }
 
-#categories input {
+#categories-container input {
   width: 400px;
   max-width: 100%;
   font-size: 1rem;

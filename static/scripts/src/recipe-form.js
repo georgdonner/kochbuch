@@ -34,6 +34,19 @@ const addIngredient = () => {
   document.querySelector('#new-ingredient .hint').value = '';
 };
 
+const addCategory = (category) => {
+  const disallowed = ['vegetarisch', 'vegan'];
+  if (category.length > 0 && !disallowed.includes(category.toLowerCase())) {
+    const categories = document.getElementById('categories');
+    const categoryDiv = document.createElement('div');
+    categoryDiv.innerHTML = `
+      <span class="ctg">${category}</span>
+      <button class="remove">x</button>
+    `;
+    categories.appendChild(categoryDiv);
+  }
+};
+
 const getRecipe = () => {
   const title = document.getElementById('title').value;
   const servings = +document.getElementById('servings').value;
@@ -95,6 +108,22 @@ const init = () => {
     this.style.height = 'auto';
     this.style.height = `${this.scrollHeight}px`;
   }, false);
+  // add category on enter
+  const ctgInput = document.querySelector('#categories-container input');
+  ctgInput.addEventListener('keypress', ({ key, target }) => {
+    if (key === 'Enter') {
+      addCategory(target.value);
+      // eslint-disable-next-line no-param-reassign
+      target.value = '';
+    }
+  });
+  // remove category on button click
+  document.querySelectorAll('#categories .remove')
+    .forEach((button) => {
+      button.addEventListener('click', ({ target }) => {
+        target.parentNode.remove();
+      });
+    });
 };
 
 init();
