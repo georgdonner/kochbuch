@@ -69,8 +69,10 @@ const getRecipe = () => {
 };
 
 const init = () => {
+  // show image picker on button click
   const newImgButton = document.getElementById('new-image');
   newImgButton.addEventListener('click', showImgPicker);
+  // add new ingredient on enter
   document.querySelectorAll('#new-ingredient input')
     .forEach((input) => {
       input.addEventListener('keypress', ({ key }) => {
@@ -79,12 +81,20 @@ const init = () => {
         }
       });
     });
+  // remove ingredient on button click
   document.querySelectorAll('.ingredient .remove')
     .forEach((button) => {
       button.addEventListener('click', ({ target }) => {
         target.parentNode.remove();
       });
     });
+  // auto-scale textarea
+  const textarea = document.getElementById('description');
+  textarea.setAttribute('style', `height:${textarea.scrollHeight}px;overflow-y:hidden;`);
+  textarea.addEventListener('input', function onInput() {
+    this.style.height = 'auto';
+    this.style.height = `${this.scrollHeight}px`;
+  }, false);
 };
 
 init();
