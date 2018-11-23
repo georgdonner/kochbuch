@@ -1,0 +1,73 @@
+doctype html
+html(lang="de")
+  head
+    title= recipe.title || 'Neues Rezept'
+    include includes/meta.pug
+    link(rel="stylesheet", href="/css/recipe-form.css")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,600i,700")
+  body
+    .container
+      if recipe.heroImage
+        img.recipe-img(
+          src=recipe.heroImage,
+          srcset=`${recipe.heroImage.replace('w:2000', 'w:600')} 600w, ${recipe.heroImage} 2000w`,
+          sizes="(max-width: 650px) 600px, 2000px"
+          alt=recipe.title
+        )
+      #title-wrapper
+        input#title(type="text", name="title", value=recipe.title)
+        button Neues Bild
+      #number-inputs
+        div
+          label(for="servings") Portionen
+          input#servings(type="number", name="servings", value=recipe.servings, min="1")
+        div
+          label(for="duration") Minuten
+          input#duration(type="number", name="duration", value=recipe.duration, min="1")
+      #misc-inputs
+        div
+          form
+            label.input-container
+              span.content Einfach
+              input(type="radio", name="difficulty", value="1", checked=recipe.difficulty == 1)
+              span.checkmark.radio
+            label.input-container
+              span.content Mittel
+              input(type="radio", name="difficulty", value="2", checked=recipe.difficulty == 2)
+              span.checkmark.radio
+            label.input-container
+              span.content Schwer
+              input(type="radio", name="difficulty", value="3", checked=recipe.difficulty == 3)
+              span.checkmark.radio
+        div
+          label.input-container
+            | Vegetarisch
+            input(type="checkbox", name="Vegetarisch", checked=recipe.categories.indexOf('Vegetarisch') !== -1)
+            span.checkmark.box
+          label.input-container
+            | Vegan
+            input(type="checkbox", name="Vegan", checked=recipe.categories.indexOf('Vegan') !== -1)
+            span.checkmark.box
+      h2 Zutaten
+      #ingredients
+        each ingr in recipe.ingredients
+          .ingredient
+            input(type="text", name="name", value=ingr.name, placeholder="Zutat")
+            input(type="text", name="hint", value=ingr.hint, placeholder="Hinweis")
+            button.remove x
+        label(for="new-ingredient") Neue Zutat
+        #new-ingredient
+          input(type="text", name="name", placeholder="Zutat")
+          input(type="text", name="hint", placeholder="Hinweis")
+      h2 Beschreibung
+      textarea#description(rows="6", placeholder="Markdown verfügbar")= recipe.description
+      h2 Kategorien
+      #categories
+        each ctg in recipe.categories.filter(ctg => ctg !== 'Vegetarisch' && ctg !== 'Vegan')
+          div
+            span= ctg
+            button.remove x
+        label(for="category") Neue Kategorie
+        input(type="text", name="category", placeholder="Enter drücken zum Hinzufügen")
+      button#save.inverted Rezept speichern
+

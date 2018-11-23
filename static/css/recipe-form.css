@@ -1,0 +1,266 @@
+* {
+  font-family: 'Open Sans', sans-serif;
+}
+
+html, body {
+  margin: 0;
+  margin-bottom: 2rem;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.container > * {
+  margin-top: .75rem;
+  margin-bottom: .75rem;
+}
+
+label {
+  color: #333;
+  display: block;
+  padding-left: .25rem;
+  font-size: .8rem;
+  font-weight: 600;
+}
+
+input, textarea {
+  color: #333;
+  border: none;
+  border-bottom: 2px #d9d9d9 solid;
+  padding: .5rem .25rem;
+  font-size: 1.25rem;
+}
+
+textarea {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+
+button {
+  color: #333;
+  background: #fff;
+  border: 2px #333 solid;
+  border-radius: 10px;
+  padding: .5rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all ease .5s;
+  cursor: pointer;
+}
+
+button:hover {
+  color: #fff;
+  background: #333;
+}
+
+.inverted {
+  color: #fff;
+  background: #333;
+}
+
+.inverted:hover {
+  color: #333;
+  background: #fff;
+}
+
+h2 {
+  padding-top: .5rem;
+  font-size: 2rem;
+}
+
+.recipe-img, #title-wrapper {
+  width: 100%;
+}
+
+#title-wrapper {
+  display: flex;
+}
+
+#title-wrapper input {
+  flex-grow: 1;
+  margin-right: 2rem;
+}
+
+#number-inputs {
+  display: flex;
+}
+
+#number-inputs > div {
+  width: 50%;
+  padding-right: 1rem;
+}
+
+#number-inputs input {
+  max-width: 100%;
+}
+
+#misc-inputs {
+  display: flex;
+  padding-top: .5rem;
+}
+
+#misc-inputs > div {
+  width: 50%;
+  padding-right: 1rem;
+}
+
+#ingredients {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0;
+}
+
+#ingredients > div {
+  display: grid;
+  grid-template-columns: 1fr 1fr 30px;
+  grid-column-gap: 1rem;
+}
+
+.remove {
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  text-transform: lowercase;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+#ingredients input {
+  font-size: 1rem;
+}
+
+#ingredients label {
+  margin-top: 1.5rem;
+}
+
+#categories div {
+  display: inline-block;
+  margin-right: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  padding: .5rem 1rem;
+  background: #f2f2f2;
+  line-height: 1.2;
+  font-size: 1rem;
+}
+
+#categories .remove, #categories .remove:hover {
+  margin-top: -.25rem;
+  margin-left: .75rem;
+  font-size: inherit;
+  background: inherit;
+  color: inherit;
+}
+
+#categories label {
+  margin-top: .5rem;
+}
+
+#categories input {
+  width: 400px;
+  max-width: 100%;
+  font-size: 1rem;
+}
+
+#save {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media only screen and (max-width: 600px) {
+  #title-wrapper, #misc-inputs {
+    flex-direction: column;
+  }
+  #title-wrapper input {
+    margin-bottom: 1.5rem;
+    margin-right: 0;
+  }
+  #misc-inputs > div {
+    width: 100%;
+    margin-bottom: 1.5rem;
+    padding-right: 0;
+  }
+}
+
+/* custom checkbox and radio button styles */
+
+.input-container {
+  display: inline-block;
+  position: relative;
+  padding-left: 2.2rem;
+  margin-bottom: .75rem;
+  margin-right: 1rem;
+  font-size: 1rem;
+  font-weight: 400;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.input-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  background-color: #f2f2f2;
+}
+
+.checkmark.radio {
+  border-radius: 50%;
+}
+
+.input-container:hover input ~ .checkmark {
+  background-color: #d9d9d9;
+}
+
+.input-container input:checked ~ .checkmark {
+  background-color: #333;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.input-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.input-container .checkmark.box:after {
+  left: 9px;
+  top: 5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.input-container .checkmark.radio:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: white;
+}
