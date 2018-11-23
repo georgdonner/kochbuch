@@ -1,5 +1,16 @@
 let uploadedImgSrc = null;
 
+const updateImg = () => {
+  const currentImg = document.querySelector('.recipe-img');
+  if (currentImg) {
+    currentImg.remove();
+  }
+  const newImg = document.createElement('img');
+  newImg.className = 'recipe-img';
+  newImg.src = uploadedImgSrc;
+  document.querySelector('.container').prepend(newImg);
+};
+
 const showImgPicker = () => {
   // eslint-disable-next-line no-undef
   const client = filestack.init('AwD48ceQaWtGBs9plMog7z');
@@ -11,6 +22,7 @@ const showImgPicker = () => {
       if (res.filesUploaded.length > 0) {
         const { handle } = res.filesUploaded[0];
         uploadedImgSrc = `https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/${handle}`;
+        updateImg();
       }
     },
   }).open();
@@ -98,6 +110,8 @@ const saveRecipe = () => {
   })
     .then(res => res.json())
     .then((saved) => {
+      window.sessionStorage.removeItem('recipes');
+      window.sessionStorage.removeItem('state');
       window.location = `/recipe/${saved._id}`;
     });
 };
