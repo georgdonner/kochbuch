@@ -26,7 +26,7 @@ html(lang="de")
           input#duration(type="number", name="duration", value=recipe.duration, min="1")
       #misc-inputs
         div
-          form
+          form#difficulty
             label.input-container
               span.content Einfach
               input(type="radio", name="difficulty", value="1", checked=recipe.difficulty == 1)
@@ -39,7 +39,7 @@ html(lang="de")
               span.content Schwer
               input(type="radio", name="difficulty", value="3", checked=recipe.difficulty == 3)
               span.checkmark.radio
-        div
+        div#veggie-options
           label.input-container
             | Vegetarisch
             input(type="checkbox", name="Vegetarisch", checked=recipe.categories.indexOf('Vegetarisch') !== -1)
@@ -65,9 +65,9 @@ html(lang="de")
       #categories
         each ctg in recipe.categories.filter(ctg => ctg !== 'Vegetarisch' && ctg !== 'Vegan')
           div
-            span= ctg
+            span.ctg= ctg
             button.remove x
         label(for="category") Neue Kategorie
         input(type="text", name="category", placeholder="Enter drücken zum Hinzufügen")
       button#save.inverted Rezept speichern
-
+    script(src="/scripts/lib/recipe-form.js")  
