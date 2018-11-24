@@ -5,7 +5,7 @@ const defaultState = {
   pagesFetched: 0,
   fetching: false,
   total: null,
-  search: null,
+  search: '',
 };
 let state = Object.assign(defaultState, oldState);
 
@@ -109,6 +109,7 @@ const init = () => {
     fetchAndRenderRecipes();
   }
   const searchbar = document.querySelector('#searchbar input');
+  searchbar.value = state.search;
   searchbar.addEventListener('keypress', ({ key, target }) => {
     if (key === 'Enter') {
       setState({ pagesFetched: 0, search: target.value });
