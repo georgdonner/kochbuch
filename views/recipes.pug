@@ -5,6 +5,15 @@ html(lang="de")
     include includes/meta.pug
     link(rel="stylesheet", href="css/index.css")
     link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700")
+    script.
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker
+            .register('./service-worker.js')
+            .then(reg => console.log('Service Worker: Registered'))
+            .catch(err => console.log(`Service Worker: Error: ${err}`));
+        });
+      }
   body
     if session.authenticated
       a#new-recipe(href="/recipes/new") +
