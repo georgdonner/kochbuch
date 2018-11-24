@@ -22,15 +22,8 @@ const fetchRecipes = () => {
   return fetch(url)
     .then(res => res.json())
     .then((body) => {
-      if (body.authenticated) {
-        document.querySelector('#searchbar input').value = '';
-        setState(defaultState);
-        window.sessionStorage.clear();
-        throw new Error('auth-only');
-      } else {
-        setState({ total: body.total });
-        return body.recipes;
-      }
+      setState({ total: body.total });
+      return body.recipes;
     });
 };
 
@@ -92,13 +85,9 @@ const fetchAndRenderRecipes = () => {
       }
     })
     .catch((error) => {
-      if (error.message === 'auth-only') {
-        window.location.reload(true);
-      } else {
-        console.error(error);
-        if (state.pagesFetched === 0) {
-          listNode.innerText = 'Konnte Rezepte nicht laden.';
-        }
+      console.error(error);
+      if (state.pagesFetched === 0) {
+        listNode.innerText = 'Konnte Rezepte nicht laden.';
       }
     });
 };

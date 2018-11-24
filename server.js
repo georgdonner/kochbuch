@@ -31,16 +31,6 @@ app.use('/api', require('./routes/api'));
 app.use('/pdf', require('./routes/pdf'));
 app.use(require('./routes/backup'));
 
-// Check if the zauberwort is right
-app.post('/zauberwort', (req, res) => {
-  const { zauberwort } = req.body;
-  if (zauberwort) {
-    res.sendStatus(zauberwort === process.env.ZAUBERWORT ? 200 : 401);
-  } else {
-    res.status(400).send('Please provide a zauberwort in the request body.');
-  }
-});
-
 app.use(require('./routes/views'));
 
 const port = process.env.PORT || 3000;

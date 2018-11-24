@@ -22,6 +22,24 @@ const checkAuth = (req, res, next) => {
   return res.sendStatus(401);
 };
 
+router.get('/login', (req, res) => {
+  if (req.session.authenticated) {
+    return res.redirect('/');
+  }
+  return res.render('login', { error: req.query.error });
+});
+
+router.post('/zauberwort', (req, res) => {
+  const { zauberwort } = req.body;
+  if (!zauberwort) {
+    return res.status(400).send('Please provide a zauberwort in the request body.');
+  } if (zauberwort === process.env.ZAUBERWORT) {
+    req.session.authenticated = true;
+    return res.redirect('/');
+  }
+  return res.redirect('/login?error=true');
+});
+
 router.get('/recipes/new', checkAuth, (req, res) => {
   res.render('recipe-form', { recipe: defaultRecipe });
 });
