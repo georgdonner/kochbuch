@@ -22,7 +22,9 @@ const fetchRecipes = () => {
   return fetch(url)
     .then(res => res.json())
     .then((body) => {
-      navigator.serviceWorker.controller.postMessage(body);
+      if (navigator.serviceWorker.controller) {
+        navigator.serviceWorker.controller.postMessage(body);
+      }
       setState({ total: body.total });
       return body.recipes;
     });
