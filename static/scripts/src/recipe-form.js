@@ -112,7 +112,7 @@ const saveRecipe = () => {
     .then((saved) => {
       window.sessionStorage.removeItem('recipes');
       window.sessionStorage.removeItem('state');
-      window.location = `/recipe/${saved._id}`;
+      window.location.replace(`/recipe/${saved._id}`);
     });
 };
 

@@ -114,11 +114,15 @@ const init = () => {
   searchbar.value = state.search;
   searchbar.addEventListener('keypress', ({ key, target }) => {
     if (key === 'Enter') {
-      setState({ pagesFetched: 0, search: target.value });
-      window.sessionStorage.removeItem('recipes');
-      const listNode = document.getElementById('recipe-list');
-      listNode.innerHTML = '';
-      fetchAndRenderRecipes();
+      if (target.value.toLowerCase() === 'login') {
+        window.location.assign('/login');
+      } else {
+        setState({ pagesFetched: 0, search: target.value });
+        window.sessionStorage.removeItem('recipes');
+        const listNode = document.getElementById('recipe-list');
+        listNode.innerHTML = '';
+        fetchAndRenderRecipes();
+      }
     }
   });
   window.addEventListener('scroll', onScroll);
