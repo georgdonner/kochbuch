@@ -33,6 +33,6 @@ html(lang="de")
               if entry.custom
                 .title= entry.custom
               else
-                a.title(href=`/recipe/${entry.recipe.id}`)= entry.recipe.title
+                a.title(href=`/recipe/${entry.recipe.id}?servings=${entry.servings}`)= entry.recipe.title
     script(src="/scripts/lib/list.js")
     include includes/arrow-icon.pug

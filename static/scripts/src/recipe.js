@@ -1,9 +1,9 @@
 /* eslint-disable camelcase, no-use-before-define */
 const getCurrentServings = () => Number(document.getElementById('servings').innerText);
 
-const ORIG_SERVINGS = getCurrentServings();
+const ORIG_SERVINGS = Number(document.getElementById('servings').dataset.original);
 
-const updateServings = (change) => {
+const updateServings = (change = 0) => {
   const newServings = getCurrentServings() + change;
   if (newServings > 0) {
     document.getElementById('servings').innerText = newServings;
@@ -21,6 +21,9 @@ const updateIngredients = (newServings) => {
 };
 
 const init = () => {
+  if (getCurrentServings() !== ORIG_SERVINGS) {
+    updateServings();
+  }
   const downButton = document.querySelector('.servings-control .down');
   const upButton = document.querySelector('.servings-control .up');
   downButton.addEventListener('click', () => updateServings(-1));

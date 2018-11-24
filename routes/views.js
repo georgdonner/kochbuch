@@ -60,10 +60,13 @@ router.get('/recipe/:id/edit', checkAuth, async (req, res) => {
 
 router.get('/recipe/:id', async (req, res) => {
   try {
+    const { servings } = req.query;
     const recipe = await Recipe.findById(req.params.id);
     if (!recipe) throw new Error('Recipe not found.');
     const descriptionHtml = recipe.description ? markdown.toHTML(recipe.description) : '';
-    res.render('recipe', { recipe, descriptionHtml, session: req.session });
+    res.render('recipe', {
+      recipe, descriptionHtml, session: req.session, servings: servings || recipe.servings,
+    });
   } catch (error) {
     res.send(error);
   }

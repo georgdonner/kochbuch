@@ -30,7 +30,7 @@ html(lang="de")
             span Zutaten
             .servings-control
               button.down -
-              span#servings= recipe.servings
+              span#servings(data-original=recipe.servings)= servings
               button.up +
           ul#ingredients
             each ingr in recipe.ingredients
