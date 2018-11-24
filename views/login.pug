@@ -8,6 +8,6 @@ html(lang="de")
   body
     form(action="zauberwort", method="post")
       label(for="zauberwort", class=error ? 'error' : '')= error ? 'Falsches Zauberwort, versuchen Sie es nochmal' : 'Bitte geben Sie das Zauberwort ein'
-      input(type="text", name="zauberwort", placeholder="Zauberwort")
+      input(type="text", name="zauberwort", placeholder="Zauberwort", autofocus)
       button(type="submit") Login
       
