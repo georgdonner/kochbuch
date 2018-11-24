@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server.js",
     "build": "babel static/scripts/src -d static/scripts/lib",
-    "build:watch": "babel -w static/scripts/src -d static/scripts/lib"
+    "build:watch": "babel -w static/scripts/src -d static/scripts/lib",
+    "heroku-postbuild": "npm run build"
   },
   "repository": {
     "type": "git",
