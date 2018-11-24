@@ -30,6 +30,15 @@ router.get('/recipes', async (req, res) => {
   }
 });
 
+router.get('/recipes/categories', async (req, res) => {
+  try {
+    const categories = await Recipe.distinct('categories');
+    return res.json(categories);
+  } catch (error) {
+    return res.send(error);
+  }
+});
+
 // Get single recipe
 router.get('/recipe/:id', async (req, res) => {
   try {
