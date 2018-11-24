@@ -5,7 +5,7 @@ html(lang="de")
     include includes/meta.pug
     link(rel="manifest", href="/manifest.json")
     link(rel="stylesheet", href="/css/index.css")
-    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700")
+    link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700|Open+Sans:400,700")
     script.
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', () => {
@@ -16,6 +16,9 @@ html(lang="de")
         });
       }
   body
+    if session.authenticated
+      - var page = 'index'
+      include includes/nav.pug
     if session.authenticated
       a#new-recipe(href="/recipes/new") +
     div#list-wrapper
