@@ -4,6 +4,7 @@ const { markdown } = require('markdown');
 const router = express.Router();
 
 const Recipe = require('../models/recipe');
+const Shoppinglist = require('../models/shoppinglist');
 
 const defaultRecipe = {
   title: '',
@@ -60,6 +61,25 @@ router.get('/recipe/:id', async (req, res) => {
     if (!recipe) throw new Error('Recipe not found.');
     const descriptionHtml = recipe.description ? markdown.toHTML(recipe.description) : '';
     res.render('recipe', { recipe, descriptionHtml, session: req.session });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+router.get('/list', checkAuth, async (req, res) => {
+  try {
+    const { code } = req.query;
+    if (code) {
+      req.session.listCode = code;
+    }
+    let list = null;
+    if (req.session.listCode) {
+      list = await Shoppinglist.getByName(req.session.listCode);
+    }
+    res.render('list', {
+      list: list ? list.list : null,
+      code: req.session.listCode,
+    });
   } catch (error) {
     res.send(error);
   }

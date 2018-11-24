@@ -120,39 +120,37 @@ router.put('/plan/:name', (req, res) => {
 // SHOPPING LIST
 
 // Get Shopping List
-router.get('/list/:name', (req, res) => {
-  Shoppinglist.getListByName(req.params.name, (err, list) => {
-    if (err) {
-      res.send(err);
-    }
-    res.json(list);
-  });
+router.get('/list/:name', async (req, res) => {
+  try {
+    const list = await Shoppinglist.getByName(req.params.name);
+    return res.json(list);
+  } catch (error) {
+    return res.send(error);
+  }
 });
 
 // New Shopping List
-router.post('/lists', (req, res) => {
-  const newList = new Shoppinglist({ ...req.body });
-
-  Shoppinglist.addList(newList, (err, list) => {
-    if (err) {
-      res.send(err);
-    }
-    res.json(list);
-  });
+router.post('/lists', async (req, res) => {
+  try {
+    const newList = new Shoppinglist({ ...req.body });
+    const list = await Shoppinglist.addList(newList);
+    return res.json(list);
+  } catch (error) {
+    return res.send(error);
+  }
 });
 
 // Update Shopping List
-router.put('/list/:name', (req, res) => {
-  const updList = new Shoppinglist({ ...req.body });
-
-  const newData = updList.toObject();
-  delete newData._id;
-  Shoppinglist.updateList(req.params.name, newData, (err, list) => {
-    if (err) {
-      res.send(err);
-    }
-    res.json(list);
-  });
+router.put('/list/:name', async (req, res) => {
+  try {
+    const updList = new Shoppinglist({ ...req.body });
+    const newData = updList.toObject();
+    delete newData._id;
+    const list = await Shoppinglist.updateList(req.params.name, newData);
+    return res.json(list);
+  } catch (error) {
+    return res.send(error);
+  }
 });
 
 module.exports = router;

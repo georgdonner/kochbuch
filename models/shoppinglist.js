@@ -14,14 +14,10 @@ const ShoppinglistSchema = new Schema({
 const Shoppinglist = mongoose.model('Shoppinglist', ShoppinglistSchema);
 module.exports = Shoppinglist;
 
-module.exports.getListByName = (name, callback) => {
-  Shoppinglist.findOne({ name }, callback);
-};
+module.exports.getByName = name => Shoppinglist.findOne({ name });
 
-module.exports.addList = (newList, callback) => {
-  newList.save(callback);
-};
+module.exports.addList = list => list.save();
 
-module.exports.updateList = (name, newList, callback) => {
-  Shoppinglist.findOneAndUpdate({ name }, newList, { upsert: true, new: true }, callback);
-};
+module.exports.updateList = (name, list) => (
+  Shoppinglist.findOneAndUpdate({ name }, list, { upsert: true, new: true })
+);

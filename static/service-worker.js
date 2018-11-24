@@ -2,6 +2,18 @@
 const cacheName = 'v1';
 
 self.addEventListener('activate', (e) => {
+  const assets = [
+    '/css/recipe.css', '/scripts/lib/recipe.js',
+    '/list', '/css/list.css', '/scripts/lib/list.js',
+  ];
+  e.waitUntil(
+    caches
+      .open(cacheName)
+      .then((cache) => {
+        cache.addAll(assets);
+      })
+      .then(() => self.skipWaiting()),
+  );
   e.waitUntil(
     caches.keys().then(cacheNames => Promise.all(
       cacheNames.map((cache) => {
@@ -15,23 +27,25 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  e.respondWith(
-    fetch(e.request)
-      .then((res) => {
-        const resClone = res.clone();
-        caches.open(cacheName).then((cache) => {
-          cache.put(e.request, resClone);
-        });
-        return res;
-      })
-      .catch(() => caches.match(e.request).then((res) => {
-        const url = new URL(e.request.url);
-        if (!res && url.origin === 'https://process.filestackapi.com' && url.pathname.includes('w:2000')) {
-          return caches.match(new Request(url.href.replace('w:2000', 'w:600'))).then(r => r);
-        }
-        return res;
-      })),
-  );
+  if (e.request.method !== 'PUT') {
+    e.respondWith(
+      fetch(e.request)
+        .then((res) => {
+          const resClone = res.clone();
+          caches.open(cacheName).then((cache) => {
+            cache.put(e.request, resClone);
+          });
+          return res;
+        })
+        .catch(() => caches.match(e.request).then((res) => {
+          const url = new URL(e.request.url);
+          if (!res && url.origin === 'https://process.filestackapi.com' && url.pathname.includes('w:2000')) {
+            return caches.match(new Request(url.href.replace('w:2000', 'w:600'))).then(r => r);
+          }
+          return res;
+        })),
+    );
+  }
 });
 
 self.addEventListener('message', (e) => {

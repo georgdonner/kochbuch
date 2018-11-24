@@ -1,0 +1,30 @@
+doctype html
+html(lang="de")
+  head
+    title Einkaufsliste
+    include includes/meta.pug
+    link(rel="stylesheet", href="/css/list.css")
+  body
+    - var page = 'list'
+    include includes/nav.pug
+    if !list
+      .container
+        .form-wrapper
+          form(action="/list", method="get")
+            label(for="code", ) Um die Einkaufsliste nutzen zu können, geben Sie bitte hier den Code ein.
+            input(type="text", name="code", placeholder="Einkaufslisten Code")
+            button(type="submit") Bestätigen
+    else
+      #list-wrapper
+        #new-item
+          input(type="text", name="newitem" placeholder="Hinzufügen")
+        .container
+          .list(data-code=code)
+            each item in list
+              .item-wrapper
+                label.input-container
+                  span.item= item
+                  input(type="checkbox")
+                  span.checkmark.box
+          
+    script(src="/scripts/lib/list.js")
