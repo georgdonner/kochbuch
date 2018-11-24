@@ -3,7 +3,8 @@ html(lang="de")
   head
     title Kochbuch
     include includes/meta.pug
-    link(rel="stylesheet", href="css/index.css")
+    link(rel="manifest", href="/manifest.json")
+    link(rel="stylesheet", href="/css/index.css")
     link(rel="stylesheet", href="https://fonts.googleapis.com/css?family=Merriweather:300,400,700")
     script.
       if ('serviceWorker' in navigator) {
@@ -21,4 +22,5 @@ html(lang="de")
       div#searchbar
         input(type="search", name="search", placeholder="Suche nach Zutaten, Kategorien oder Titel...")
       div#recipe-list
+        noscript Kann Rezepte ohne Javascript nicht darstellen
     script(src="scripts/lib/recipes.js")

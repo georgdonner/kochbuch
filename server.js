@@ -15,7 +15,9 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
 const app = express();
 
 // middleware
-app.use(enforce.HTTPS({ trustProtoHeader: true }));
+app.use(enforce.HTTPS({
+  trustProtoHeader: process.env.NODE_ENV !== 'development',
+}));
 app.use(cookieSession({
   name: 'session',
   keys: [process.env.SECRET_KEY || 'yeet'],
