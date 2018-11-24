@@ -29,6 +29,7 @@
     "express-sslify": "^1.2.0",
     "mark-twain": "^2.0.3",
     "markdown": "^0.5.0",
+    "moment": "^2.22.2",
     "mongoose": "^5.3.13",
     "pdfmake": "^0.1.39",
     "pug": "^2.0.3",

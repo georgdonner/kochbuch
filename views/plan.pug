@@ -1,0 +1,38 @@
+doctype html
+html(lang="de")
+  head
+    title Wochenplan
+    include includes/meta.pug
+    link(rel="stylesheet", href="/css/plan.css")
+  body
+    - var page = 'plan'
+    include includes/nav.pug
+    if !week
+      .container
+        .form-wrapper
+          form(action="/plan", method="get")
+            label(for="code", ) Um den Wochenplan nutzen zu können, geben Sie bitte hier den Code ein.
+            input(type="text", name="code", placeholder="Wochenplan Code")
+            button(type="submit") Bestätigen
+    else
+      #plan-nav-wrapper
+        #plan-nav.container
+          a(href=`/plan?week=${offset - 1}`)
+            svg.icon
+              use(xlink:href='#icon-arrow-left2')
+          span= offset === 0 ? 'Diese Woche' : `Woche ${offset}`
+          a(href=`/plan?week=${offset + 1}`)
+            svg.icon.flipped
+              use(xlink:href='#icon-arrow-left2')
+      #plan
+        each day in week
+          .day
+            .date= day.dateString
+            each entry in day.entries
+              .meta #{entry.time} | #{entry.servings} Personen
+              if entry.custom
+                .title= entry.custom
+              else
+                a.title(href=`/recipe/${entry.recipe.id}`)= entry.recipe.title
+    script(src="/scripts/lib/list.js")
+    include includes/arrow-icon.pug

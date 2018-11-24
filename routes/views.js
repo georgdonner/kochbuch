@@ -1,10 +1,13 @@
 const express = require('express');
+const moment = require('moment');
+require('moment/locale/de');
 const { markdown } = require('markdown');
 
 const router = express.Router();
 
 const Recipe = require('../models/recipe');
 const Shoppinglist = require('../models/shoppinglist');
+const Weekplan = require('../models/weekplan');
 
 const defaultRecipe = {
   title: '',
@@ -79,6 +82,50 @@ router.get('/list', checkAuth, async (req, res) => {
     res.render('list', {
       list: list ? list.list : null,
       code: req.session.listCode,
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+const getEntries = (plan, date) => plan.filter(entry => moment(entry.date).isSame(moment(date), 'day'));
+const weekday = (date) => {
+  moment.locale('de');
+  if (moment(date).isSame(moment(), 'day')) {
+    return 'Heute';
+  } if (moment(date).isSame(moment().add(1, 'd'), 'day')) {
+    return 'Morgen';
+  }
+  return moment(date).format('dddd');
+};
+const getWeek = (plan, offset = 0) => {
+  const start = moment().startOf('isoWeek').add(offset, 'w');
+  const week = [];
+  for (let i = 0; i < 7; i += 1) {
+    const date = moment(start).add(i, 'd').hours(12);
+    week.push({
+      date,
+      dateString: offset === 0 ? weekday(date) : moment(date).format('DD.MM.YY'),
+      entries: getEntries(plan, date),
+    });
+  }
+  return week;
+};
+
+router.get('/plan', checkAuth, async (req, res) => {
+  try {
+    const { code, week = 0 } = req.query;
+    if (code) {
+      req.session.planCode = code;
+    }
+    let entries = null;
+    if (req.session.planCode) {
+      entries = await Weekplan.getWeek(req.session.planCode, +week);
+    }
+    res.render('plan', {
+      week: getWeek(entries, +week),
+      offset: +week,
+      code: req.session.planCode,
     });
   } catch (error) {
     res.send(error);

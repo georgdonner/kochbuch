@@ -9,8 +9,8 @@ nav {
 
 .nav-wrapper {
   max-width: 1200px;
-  display: flex;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   margin: 0 auto;
   padding: 1rem 0;
 }
@@ -20,6 +20,7 @@ nav {
   font-family: 'Open Sans', sans-serif;
   font-size: 1rem;
   font-weight: 700;
+  text-align: center;
   text-decoration: none;
   text-transform: uppercase;
   transition: all .5s ease;
