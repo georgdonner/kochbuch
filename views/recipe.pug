@@ -15,7 +15,7 @@ html(lang="de")
       h1.recipe-title= recipe.title
       if recipe.heroImage
         img.recipe-img(
-          src=recipe.heroImage,
+          src=recipe.heroImage.replace('w:2000', 'w:600'),
           srcset=`${recipe.heroImage.replace('w:2000', 'w:600')} 600w, ${recipe.heroImage} 2000w`,
           sizes="(max-width: 650px) 600px, 2000px"
           alt=recipe.title
