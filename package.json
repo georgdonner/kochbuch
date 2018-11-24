@@ -25,6 +25,7 @@
     "dropbox": "^2.5.13",
     "eslint-config-airbnb-base": "^13.1.0",
     "express": "^4.16.4",
+    "express-sslify": "^1.2.0",
     "mark-twain": "^2.0.3",
     "markdown": "^0.5.0",
     "mongoose": "^5.3.13",
