@@ -29,10 +29,17 @@ html(lang="de")
           .day
             a.date(href=`/plan/new/?date=${+day.date}`)= day.dateString
             each entry in day.entries
-              .meta #{entry.time} | #{entry.servings} Personen
-              if entry.custom
-                .title= entry.custom
-              else
-                a.title(href=`/recipe/${entry.recipe.id}?servings=${entry.servings}`)= entry.recipe.title
+              .entry
+                .data
+                  .meta #{entry.time} | #{entry.servings} Personen
+                  if entry.custom
+                    .title= entry.custom
+                  else
+                    a.title(href=`/recipe/${entry.recipe.id}?servings=${entry.servings}`)= entry.recipe.title
+                .controls
+                  a(href=`/plan/edit?id=${entry._id}`)
+                    svg.icon
+                      use(xlink:href='#icon-pencil')
     script(src="/scripts/lib/list.js")
     include includes/arrow-icon.pug
+    include includes/plan-controls.pug

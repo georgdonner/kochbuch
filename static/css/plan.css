@@ -69,6 +69,17 @@ html, body {
   text-transform: uppercase;
 }
 
+.entry {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.controls {
+  color: #aaa;
+  font-size: 1.3rem;
+}
+
 .day .meta {
   color: #333;
   padding-top: .5rem;
@@ -85,6 +96,7 @@ html, body {
 
 a {
   text-decoration: none;
+  color: inherit;
 }
 
 a.title:hover {
