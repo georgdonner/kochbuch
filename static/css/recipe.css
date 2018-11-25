@@ -4,15 +4,18 @@ html, body {
   font-family: 'Merriweather', serif;
 }
 
-#all-recipes {
-  width: 100%;
-  position: fixed;
+#top-bar {
   background: #fff;
+  position: fixed;
+  width: 100%;
+  max-width: inherit;
+  display: flex;
+  justify-content: space-between;
   padding: 1rem 0;
   z-index: 10;
 }
 
-#all-recipes a {
+#top-bar a {
   display: inline-flex;
   align-items: center;
   color: #777;
@@ -25,7 +28,7 @@ html, body {
   transition: all .5s ease;
 }
 
-#all-recipes a:hover .icon {
+#top-bar a:hover .icon {
   animation: .75s infinite alternate hovericon;
 }
 
@@ -47,7 +50,7 @@ html, body {
   fill: currentColor;
 }
 
-#all-recipes .icon {
+#top-bar .icon {
   position: absolute;
   left: 0;
   margin-right: .25rem;

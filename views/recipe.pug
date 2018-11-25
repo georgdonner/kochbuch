@@ -6,11 +6,13 @@ html(lang="de")
     link(rel="stylesheet", href="/css/recipe.css")
   body
     .container
-      #all-recipes
+      #top-bar
         a(href="/")
           svg.icon.icon-arrow-left2
             use(xlink:href='#icon-arrow-left2')
           | Alle Rezepte
+        if session.planCode
+          a(href=`/plan/new?recipe=${recipe._id}`) Zum Wochenplan hinzufügen
       h1.recipe-title= recipe.title
       if recipe.heroImage
         img.recipe-img(

@@ -141,16 +141,26 @@ router.get('/plan/new', checkAuth, async (req, res) => {
     if (!req.session.planCode) {
       res.redirect('/plan');
     }
-    const { date } = req.query;
+    const { date, recipe } = req.query;
     const dateObj = date ? moment(+date) : moment().add(1, 'd');
-    res.render('plan-form', {
+    const options = {
       mode: 'new',
       date: dateObj.format('YYYY-MM-DD'),
       time: '19:30',
       servings: 2,
       custom: '',
       code: req.session.planCode,
-    });
+    };
+    if (recipe) {
+      const recipeObj = await Recipe.findById(recipe);
+      if (recipeObj) {
+        options.recipe = {
+          id: recipe,
+          title: recipeObj.title,
+        };
+      }
+    }
+    res.render('plan-form', options);
   } catch (error) {
     res.send(error);
   }
