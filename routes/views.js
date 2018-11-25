@@ -126,7 +126,6 @@ router.get('/plan', checkAuth, async (req, res) => {
     if (req.session.planCode) {
       entries = await Weekplan.getWeek(req.session.planCode, +week);
     }
-    console.log(entries);
     res.render('plan', {
       week: entries ? getWeek(entries, +week) : null,
       offset: +week,
