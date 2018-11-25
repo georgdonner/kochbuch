@@ -14,7 +14,7 @@ nav {
   margin: 0 auto;
 }
 
-#nav-wrapper a, #menu {
+#nav-wrapper a, #menu div {
   color: #666;
   padding: 1rem 0;
   font-family: 'Open Sans', sans-serif;
@@ -27,12 +27,39 @@ nav {
 }
 
 #menu {
-  color: #000;
+  position: relative;
   background: white;
   display: none;
   width: 100%;
   border: none;
+}
+
+#menu div {
+  color: #000;
+}
+
+#menu div.hidden {
+  display: none;
+}
+
+#menu button {
+  position: absolute;
+  left: 1rem;
+  top: 1rem;
+  border: none;
+  background: inherit;
+  font-size: 1.3rem;
   cursor: pointer;
+}
+
+#menu .icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: .25rem;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
 }
 
 #nav-wrapper.open {
