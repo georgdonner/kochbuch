@@ -21,3 +21,7 @@ module.exports.addList = list => list.save();
 module.exports.updateList = (name, list) => (
   Shoppinglist.findOneAndUpdate({ name }, list, { upsert: true, new: true })
 );
+
+module.exports.addItem = (name, item) => (
+  Shoppinglist.findOneAndUpdate({ name }, { $push: { list: item } }, { new: true })
+);

@@ -32,11 +32,16 @@ html(lang="de")
               button.down -
               span#servings(data-original=recipe.servings)= servings
               button.up +
-          ul#ingredients
+          ul#ingredients(data-listcode=session.listCode)
             each ingr in recipe.ingredients
               li
-                span.name(data-name=ingr.name)= ingr.name
-                span.hint= ingr.hint ? ` (${ingr.hint})` : ''
+                .content
+                  span.name(data-name=ingr.name)= ingr.name
+                  span.hint= ingr.hint ? ` (${ingr.hint})` : ''
+                if session.listCode
+                  button.cart
+                    svg.icon
+                      use(xlink:href='#icon-add_shopping_cart')
         div
           h2 Zubereitung
           .border-bottom
@@ -45,5 +50,8 @@ html(lang="de")
         if session.authenticated
           a.button(href=`/recipe/${recipe._id}/edit`) Bearbeiten
         a.button(href=`/pdf/recipe/${recipe._id}` download) PDF
+    if session.listCode
+      div#toast Testenenenenene
     script(src="/scripts/lib/recipe.js")
     include includes/arrow-icon.pug
+    include includes/cart-icon.pug

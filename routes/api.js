@@ -180,4 +180,16 @@ router.put('/list/:name', async (req, res) => {
   }
 });
 
+router.post('/list/:name', async (req, res) => {
+  try {
+    if (!req.session.listCode) {
+      return res.sendStatus(401);
+    }
+    const updated = await Shoppinglist.addItem(req.session.listCode, req.body.item);
+    return res.json(updated);
+  } catch (error) {
+    return res.send(error);
+  }
+});
+
 module.exports = router;

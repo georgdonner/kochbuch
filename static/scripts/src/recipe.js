@@ -2,6 +2,8 @@
 const getCurrentServings = () => Number(document.getElementById('servings').innerText);
 
 const ORIG_SERVINGS = Number(document.getElementById('servings').dataset.original);
+const listCode = document.getElementById('ingredients').dataset.listcode;
+let lastToast = null;
 
 const updateServings = (change = 0) => {
   const newServings = getCurrentServings() + change;
@@ -20,6 +22,59 @@ const updateIngredients = (newServings) => {
   });
 };
 
+const showToast = (message, duration = 3000) => {
+  const toast = document.getElementById('toast');
+  toast.classList.add('visible');
+  toast.innerText = message;
+  const added = Date.now();
+  lastToast = added;
+  setTimeout(() => {
+    if (lastToast === added) {
+      toast.classList.remove('visible');
+    }
+  }, duration);
+};
+
+const addToList = (item) => {
+  fetch(`/api/list/${listCode}`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ item }),
+  }).then((res) => {
+    if (res.ok) {
+      showToast(`${item} zur Einkaufsliste hinzugefügt`);
+    }
+  });
+};
+
+const addCartListeners = () => {
+  const longClick = 1000; // ms
+  if (listCode) {
+    const ingredientsLis = document.querySelectorAll('#ingredients .content');
+    ingredientsLis.forEach((ingredientLi) => {
+      let start;
+      ingredientLi.addEventListener('mousedown', () => {
+        start = Date.now();
+      });
+      ingredientLi.addEventListener('mouseup', () => {
+        if (Date.now() - start > longClick) {
+          const item = ingredientLi.innerText;
+          addToList(item);
+        }
+      });
+    });
+    const addToCartButtons = document.querySelectorAll('button.cart');
+    addToCartButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const item = button.parentNode.innerText;
+        addToList(item);
+      });
+    });
+  }
+};
+
 const init = () => {
   if (getCurrentServings() !== ORIG_SERVINGS) {
     updateServings();
@@ -28,6 +83,7 @@ const init = () => {
   const upButton = document.querySelector('.servings-control .up');
   downButton.addEventListener('click', () => updateServings(-1));
   upButton.addEventListener('click', () => updateServings(1));
+  addCartListeners();
 };
 
 init();
