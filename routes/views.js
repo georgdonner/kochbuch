@@ -2,7 +2,6 @@ const express = require('express');
 const moment = require('moment');
 require('moment/locale/de');
 
-moment.tz.setDefault('Europe/Berlin');
 moment.locale('de');
 const { markdown } = require('markdown');
 
