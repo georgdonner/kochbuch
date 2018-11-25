@@ -84,6 +84,14 @@ const init = () => {
   downButton.addEventListener('click', () => updateServings(-1));
   upButton.addEventListener('click', () => updateServings(1));
   addCartListeners();
+  // eslint-disable-next-line no-undef
+  const noSleep = new NoSleep();
+  const preventSleep = () => {
+    console.log('prevent sleep');
+    noSleep.enable();
+    window.removeEventListener('scroll', preventSleep, false);
+  };
+  window.addEventListener('scroll', preventSleep, false);
 };
 
 init();
