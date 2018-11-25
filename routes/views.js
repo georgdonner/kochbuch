@@ -126,8 +126,51 @@ router.get('/plan', checkAuth, async (req, res) => {
       entries = await Weekplan.getWeek(req.session.planCode, +week);
     }
     res.render('plan', {
-      week: getWeek(entries, +week),
+      week: entries ? getWeek(entries, +week) : null,
       offset: +week,
+      code: req.session.planCode,
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+router.get('/plan/new', checkAuth, async (req, res) => {
+  try {
+    if (!req.session.planCode) {
+      res.redirect('/plan');
+    }
+    const { date } = req.query;
+    const dateObj = date ? moment(+date) : moment().add(1, 'd');
+    res.render('plan-form', {
+      date: dateObj.format('YYYY-MM-DD'),
+      time: '19:30',
+      servings: 2,
+      custom: '',
+      code: req.session.planCode,
+    });
+  } catch (error) {
+    res.send(error);
+  }
+});
+
+router.get('/plan/edit', checkAuth, async (req, res) => {
+  try {
+    if (!req.session.planCode) {
+      res.redirect('/plan');
+    }
+    const { id } = req.query;
+    let entry = await Weekplan.getEntry(req.session.planCode, id);
+    entry = entry.toObject();
+    if (!entry) {
+      throw new Error('Entry not found');
+    }
+    res.render('plan-form', {
+      date: moment(entry.date).format('YYYY-MM-DD'),
+      time: entry.time,
+      servings: entry.servings,
+      custom: entry.custom,
+      recipe: entry.recipe,
       code: req.session.planCode,
     });
   } catch (error) {

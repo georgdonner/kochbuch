@@ -40,12 +40,27 @@ module.exports.getWeek = async (name, week) => {
   const planObj = await Weekplan.findOne({ name });
   if (planObj) {
     const { plan } = planObj;
-    // 1 for monday
-    const from = moment().day(1 + (week * 7)).startOf('day');
-    const until = moment().day(1 + ((week + 1) * 7)).startOf('day');
-    const entries = plan.filter(entry => moment(entry.date) >= from && moment(entry.date) <= until);
+    const from = moment().startOf('isoweek').add(week * 7, 'd').subtract(1, 'minute');
+    const until = moment(from).add(7, 'd').add(1, 'minute');
+    const entries = plan.filter(entry => moment(entry.date).isBetween(from, until));
     entries.sort((a, b) => new Date(a.date) - new Date(b.date));
     return entries;
   }
   return null;
 };
+
+module.exports.getEntry = async (name, entryId) => {
+  const { plan } = await Weekplan.findOne({ name });
+  return plan.find(entry => entry._id.toString() === entryId);
+};
+
+module.exports.addEntry = (name, entry) => (
+  Weekplan.findOneAndUpdate({ name }, { $push: { plan: entry } })
+);
+
+module.exports.updateEntry = (name, entryId, entry) => (
+  Weekplan.findOneAndUpdate(
+    { name, 'plan._id': entryId },
+    { $set: { 'plan.$': entry } },
+  )
+);

@@ -117,6 +117,24 @@ router.put('/plan/:name', (req, res) => {
   });
 });
 
+router.post('/plan/:name', async (req, res) => {
+  try {
+    await Weekplan.addEntry(req.params.name, req.body);
+    return res.sendStatus(201);
+  } catch (error) {
+    return res.send(error);
+  }
+});
+
+router.put('/plan/:name/:id', async (req, res) => {
+  try {
+    await Weekplan.updateEntry(req.params.name, req.params.id, req.body);
+    return res.sendStatus(200);
+  } catch (error) {
+    return res.send(error);
+  }
+});
+
 // SHOPPING LIST
 
 // Get Shopping List

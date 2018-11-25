@@ -81,6 +81,9 @@ html, body {
   color: #333;
   padding-top: .25rem;
   font-size: 1.1rem;
+}
+
+a {
   text-decoration: none;
 }
 

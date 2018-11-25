@@ -27,7 +27,7 @@ html(lang="de")
       #plan
         each day in week
           .day
-            .date= day.dateString
+            a.date(href=`/plan/new/?date=${+day.date}`)= day.dateString
             each entry in day.entries
               .meta #{entry.time} | #{entry.servings} Personen
               if entry.custom

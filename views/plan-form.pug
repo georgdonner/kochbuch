@@ -1,0 +1,34 @@
+doctype html
+html(lang="de")
+  head
+    title Neuer Eintrag
+    include includes/meta.pug
+    link(rel="stylesheet", href="/css/plan-form.css")
+  body
+    #plan-form(data-code=code)
+      h2 Neuer Eintrag
+      #half
+        div
+          label(for="date") Datum
+          input#date(type="date", name="date", value=date)
+        div
+          label(for="time") Uhrzeit
+          input#time(type="time", name="time", value=time)
+      #half
+        div
+          label(for="servings") Portionen
+          input#servings(type="number", name="servings", value=servings, min="0")
+      div
+        label(for="custom") Eigenes Rezept
+        input#custom(type="text", name="custom", placeholder="z.B. Pizza", value=custom)
+      #recipe-search
+        label(for="recipe") Rezept suchen
+        input#recipe(type="text", name="recipe", value=recipe ? recipe.title : '', placeholder="Suche...", disabled=Boolean(recipe))
+      button#save Speichern
+    script(src="/scripts/lib/plan-form.js")
+    if recipe
+      script.
+        selectedRecipe = recipe;
+
+
+
