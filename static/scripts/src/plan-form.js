@@ -82,6 +82,14 @@ const saveEntry = () => {
   });
 };
 
+const deleteEntry = () => {
+  const entry = getEntry();
+  const url = `/api/plan/${planCode}/${entry._id}`;
+  fetch(url, { method: 'DELETE' }).then(() => {
+    window.location.replace(document.referrer);
+  });
+};
+
 const init = () => {
   recipeSearch.addEventListener('keypress', ({ key, target }) => {
     if (key === 'Enter') {
@@ -95,6 +103,7 @@ const init = () => {
     }
   });
   document.getElementById('save').addEventListener('click', saveEntry);
+  document.getElementById('delete').addEventListener('click', deleteEntry);
 };
 
 init();

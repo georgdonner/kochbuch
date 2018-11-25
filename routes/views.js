@@ -144,6 +144,7 @@ router.get('/plan/new', checkAuth, async (req, res) => {
     const { date } = req.query;
     const dateObj = date ? moment(+date) : moment().add(1, 'd');
     res.render('plan-form', {
+      mode: 'new',
       date: dateObj.format('YYYY-MM-DD'),
       time: '19:30',
       servings: 2,
@@ -167,6 +168,7 @@ router.get('/plan/edit', checkAuth, async (req, res) => {
       throw new Error('Entry not found');
     }
     res.render('plan-form', {
+      mode: 'edit',
       date: moment(entry.date).format('YYYY-MM-DD'),
       time: entry.time,
       servings: entry.servings,

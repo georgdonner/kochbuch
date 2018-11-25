@@ -92,3 +92,19 @@ button.inverted:hover {
 #search-results div:hover {
   background: #f2f2f2;
 }
+
+#buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+#delete {
+  color: #fff;
+  background: #c9342c;
+  border-color: #c9342c;
+}
+
+#delete:hover {
+  color: #c9342c;
+  background: #fff;
+}

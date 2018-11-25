@@ -1,12 +1,12 @@
 doctype html
 html(lang="de")
   head
-    title Neuer Eintrag
+    title= mode === 'new' ? 'Neuer Eintrag' : 'Eintrag bearbeiten'
     include includes/meta.pug
     link(rel="stylesheet", href="/css/plan-form.css")
   body
     #plan-form(data-code=code)
-      h2 Neuer Eintrag
+      h2= mode === 'new' ? 'Neuer Eintrag' : 'Eintrag bearbeiten'
       #half
         div
           label(for="date") Datum
@@ -24,7 +24,10 @@ html(lang="de")
       #recipe-search
         label(for="recipe") Rezept suchen
         input#recipe(type="text", name="recipe", value=recipe ? recipe.title : '', placeholder="Suche...", disabled=Boolean(recipe))
-      button#save Speichern
+      #buttons
+        button#save Speichern
+        if mode === 'edit'
+          button#delete Löschen
     script(src="/scripts/lib/plan-form.js")
     if recipe
       script.

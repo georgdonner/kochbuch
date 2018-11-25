@@ -64,3 +64,10 @@ module.exports.updateEntry = (name, entryId, entry) => (
     { $set: { 'plan.$': entry } },
   )
 );
+
+module.exports.deleteEntry = (name, entryId) => (
+  Weekplan.findOneAndUpdate(
+    { name },
+    { $pull: { plan: { _id: entryId } } },
+  )
+);

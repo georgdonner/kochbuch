@@ -135,6 +135,15 @@ router.put('/plan/:name/:id', async (req, res) => {
   }
 });
 
+router.delete('/plan/:name/:id', async (req, res) => {
+  try {
+    await Weekplan.deleteEntry(req.params.name, req.params.id);
+    return res.sendStatus(200);
+  } catch (error) {
+    return res.send(error);
+  }
+});
+
 // SHOPPING LIST
 
 // Get Shopping List
