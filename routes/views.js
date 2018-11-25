@@ -1,6 +1,9 @@
 const express = require('express');
 const moment = require('moment');
 require('moment/locale/de');
+
+moment.tz.setDefault('Europe/Berlin');
+moment.locale('de');
 const { markdown } = require('markdown');
 
 const router = express.Router();
@@ -93,7 +96,6 @@ router.get('/list', checkAuth, async (req, res) => {
 
 const getEntries = (plan, date) => plan.filter(entry => moment(entry.date).isSame(moment(date), 'day'));
 const weekday = (date) => {
-  moment.locale('de');
   if (moment(date).isSame(moment(), 'day')) {
     return 'Heute';
   } if (moment(date).isSame(moment().add(1, 'd'), 'day')) {
@@ -125,6 +127,7 @@ router.get('/plan', checkAuth, async (req, res) => {
     if (req.session.planCode) {
       entries = await Weekplan.getWeek(req.session.planCode, +week);
     }
+    console.log(entries);
     res.render('plan', {
       week: entries ? getWeek(entries, +week) : null,
       offset: +week,
