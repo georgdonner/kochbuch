@@ -27,7 +27,7 @@ self.addEventListener('activate', (e) => {
 });
 
 self.addEventListener('fetch', (e) => {
-  if (e.request.method !== 'PUT') {
+  if (e.request.method === 'GET') {
     e.respondWith(
       fetch(e.request)
         .then((res) => {
