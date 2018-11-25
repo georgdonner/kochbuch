@@ -7,16 +7,16 @@ nav {
   z-index: 10;
 }
 
-.nav-wrapper {
+#nav-wrapper {
   max-width: 1200px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   margin: 0 auto;
-  padding: 1rem 0;
 }
 
-.nav-wrapper a {
+#nav-wrapper a, #menu {
   color: #666;
+  padding: 1rem 0;
   font-family: 'Open Sans', sans-serif;
   font-size: 1rem;
   font-weight: 700;
@@ -26,10 +26,34 @@ nav {
   transition: all .5s ease;
 }
 
-.nav-wrapper a:hover {
+#menu {
+  color: #000;
+  background: white;
+  display: none;
+  width: 100%;
+  border: none;
+  cursor: pointer;
+}
+
+#nav-wrapper.open {
+  display: grid;
+}
+
+#nav-wrapper a:hover {
   color: #000;
 }
 
-.nav-wrapper a.active {
+#nav-wrapper a.active {
   color: #000;
+}
+
+@media only screen and (max-width: 600px) {
+  #nav-wrapper {
+    display: none;
+    grid-template-columns: 1fr;
+  }
+  #menu {
+    display: flex;
+    justify-content: center;
+  }
 }

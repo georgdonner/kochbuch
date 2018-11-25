@@ -1,8 +1,15 @@
 nav
-  .nav-wrapper
+  button#menu Menü
+  #nav-wrapper
     a(href="/", class=page === 'index' ? 'active' : '') Rezepte
     a(href="/list", class=page === 'list' ? 'active' : '') Einkaufsliste
     a(href="/plan", class=page === 'plan' ? 'active' : '') Wochenplan
 style
   include nav.css
+script.
+  const button = document.getElementById('menu');
+  const nav = document.getElementById('nav-wrapper');
+  button.addEventListener('click', function() {
+    nav.classList.toggle('open');
+  });
   
