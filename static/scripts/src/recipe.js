@@ -87,7 +87,6 @@ const init = () => {
   // eslint-disable-next-line no-undef
   const noSleep = new NoSleep();
   const preventSleep = () => {
-    console.log('prevent sleep');
     noSleep.enable();
     window.removeEventListener('scroll', preventSleep, false);
   };
