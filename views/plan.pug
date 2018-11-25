@@ -15,6 +15,7 @@ html(lang="de")
             input(type="text", name="code", placeholder="Wochenplan Code")
             button(type="submit") Bestätigen
     else
+      a#new-entry(href="/plan/new") +
       #plan-nav-wrapper
         #plan-nav.container
           a(href=`/plan?week=${offset - 1}`)
