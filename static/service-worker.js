@@ -26,25 +26,40 @@ self.addEventListener('activate', (e) => {
   );
 });
 
+function fetchRequest(request) {
+  return fetch(request)
+    .then((res) => {
+      const resClone = res.clone();
+      caches.open(cacheName).then((cache) => {
+        cache.put(request, resClone);
+      });
+      return res;
+    })
+    .catch(() => caches.match(request).then((res) => {
+      const url = new URL(request.url);
+      if (!res && url.origin === 'https://process.filestackapi.com' && url.pathname.includes('w:2000')) {
+        return caches.match(new Request(url.href.replace('w:2000', 'w:600'))).then(r => r);
+      }
+      return res;
+    }));
+}
+
 self.addEventListener('fetch', (e) => {
   if (e.request.method === 'GET') {
-    e.respondWith(
-      fetch(e.request)
-        .then((res) => {
-          const resClone = res.clone();
-          caches.open(cacheName).then((cache) => {
-            cache.put(e.request, resClone);
-          });
-          return res;
-        })
-        .catch(() => caches.match(e.request).then((res) => {
-          const url = new URL(e.request.url);
-          if (!res && url.origin === 'https://process.filestackapi.com' && url.pathname.includes('w:2000')) {
-            return caches.match(new Request(url.href.replace('w:2000', 'w:600'))).then(r => r);
+    const url = new URL(e.request.url);
+    const local = url.origin === location.origin;
+    if (local) {
+      e.respondWith(fetchRequest(e.request));
+    } else {
+      e.respondWith(
+        caches.match(e.request).then((res) => {
+          if (res) {
+            return res;
           }
-          return res;
-        })),
-    );
+          return fetchRequest(e.request);
+        }),
+      );
+    }
   }
 });
 
