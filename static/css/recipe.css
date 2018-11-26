@@ -4,15 +4,19 @@ html, body {
   font-family: 'Merriweather', serif;
 }
 
-#top-bar {
+#top-bar-container {
   background: #fff;
   position: fixed;
   width: 100%;
-  max-width: inherit;
+  z-index: 10;
+}
+
+#top-bar {
+  max-width: 1000px;
   display: flex;
   justify-content: space-between;
-  padding: 1rem 0;
-  z-index: 10;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
 }
 
 #top-bar a {
@@ -34,10 +38,10 @@ html, body {
 
 @keyframes hovericon {
   from {
-    left: 0;
+    left: 1.5rem;
   }
   to {
-    left: -1rem;
+    left: 0.5rem;
   }
 }
 
@@ -52,7 +56,7 @@ html, body {
 
 #top-bar .icon {
   position: absolute;
-  left: 0;
+  left: 1.5rem;
   margin-right: .25rem;
 }
 

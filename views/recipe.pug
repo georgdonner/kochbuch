@@ -5,7 +5,7 @@ html(lang="de")
     include includes/meta.pug
     link(rel="stylesheet", href="/css/recipe.css")
   body
-    .container
+    #top-bar-container
       #top-bar
         a(href="/")
           svg.icon.icon-arrow-left2
@@ -13,6 +13,7 @@ html(lang="de")
           | Alle Rezepte
         if session.planCode
           a(href=`/plan/new?recipe=${recipe._id}`) Zum Wochenplan
+    .container
       h1.recipe-title= recipe.title
       if recipe.heroImage
         img.recipe-img(
