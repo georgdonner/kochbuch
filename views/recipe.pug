@@ -18,8 +18,9 @@ html(lang="de")
         img.recipe-img(
           src=recipe.heroImage.replace('w:2000', 'w:600'),
           srcset=`${recipe.heroImage.replace('w:2000', 'w:600')} 600w, ${recipe.heroImage} 2000w`,
-          sizes="(max-width: 650px) 600px, 2000px"
-          alt=recipe.title
+          sizes="(max-width: 650px) 600px, 2000px",
+          alt=recipe.title,
+          crossorigin="anonymous"
         )
       .recipe-info
         div.duration #{recipe.duration} Minuten

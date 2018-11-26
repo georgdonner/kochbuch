@@ -15,7 +15,7 @@ const setState = (obj) => {
 };
 
 const fetchRecipes = () => {
-  let url = `./api/recipes?condensed=true&limit=${FETCH_AMOUNT}&page=${state.pagesFetched + 1}`;
+  let url = `/api/recipes?condensed=true&limit=${FETCH_AMOUNT}&page=${state.pagesFetched + 1}`;
   if (state.search) {
     url += `&search=${encodeURIComponent(state.search.replace(/,\s+/, ','))}`;
   }
@@ -43,7 +43,7 @@ const createRecipeCard = (recipe) => {
     title = `<h2><span class="${vegan ? 'vegan' : 'vegetarian'}">${recipe.title}</span></h2>`;
   }
   const content = `
-    <img src="${imgUrl}" />
+    <img crossorigin="anonymous" src="${imgUrl}" />
     ${title}
   `;
   card.innerHTML = content;
