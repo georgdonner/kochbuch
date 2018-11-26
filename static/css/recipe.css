@@ -20,6 +20,7 @@ html, body {
 }
 
 #top-bar a {
+  position: relative;
   display: inline-flex;
   align-items: center;
   color: #777;
@@ -38,10 +39,10 @@ html, body {
 
 @keyframes hovericon {
   from {
-    left: 1.5rem;
+    left: 0;
   }
   to {
-    left: 0.5rem;
+    left: -1rem;
   }
 }
 
@@ -56,7 +57,7 @@ html, body {
 
 #top-bar .icon {
   position: absolute;
-  left: 1.5rem;
+  left: 0;
   margin-right: .25rem;
 }
 
