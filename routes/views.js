@@ -193,6 +193,10 @@ router.get('/plan/edit', checkAuth, async (req, res) => {
   }
 });
 
+router.get('/offline', (req, res) => {
+  res.render('offline');
+});
+
 router.get('/', (req, res) => {
   res.render('recipes', { session: req.session });
 });

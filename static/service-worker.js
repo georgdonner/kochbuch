@@ -30,6 +30,7 @@ self.addEventListener('activate', (e) => {
   const assets = [
     '/css/recipe.css', '/scripts/lib/recipe.js',
     '/list', '/css/list.css', '/scripts/lib/list.js',
+    '/offline',
   ];
   e.waitUntil(
     caches
@@ -132,6 +133,9 @@ function fetchRequest(request) {
       }
       if (!res && url.origin === 'https://process.filestackapi.com' && url.pathname.includes('w:2000')) {
         return caches.match(new Request(url.href.replace('w:2000', 'w:600'))).then(r => r);
+      }
+      if (!res) {
+        return caches.match('/offline').then(r => r);
       }
       return res;
     }));
