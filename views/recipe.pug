@@ -55,9 +55,9 @@ html(lang="de")
       #buttons
         if session.authenticated
           a.button(href=`/recipe/${recipe._id}/edit`) Bearbeiten
+        button.button#cooking-mode Kochmodus
         a.button(href=`/pdf/recipe/${recipe._id}` download) PDF
-    if session.listCode
-      div#toast Testenenenenene
+    div#toast
     script(src="/scripts/nosleep.js")
     script(src="/scripts/lib/recipe.js")
     include includes/arrow-icon.pug

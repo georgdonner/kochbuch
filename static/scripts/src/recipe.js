@@ -84,13 +84,15 @@ const init = () => {
   downButton.addEventListener('click', () => updateServings(-1));
   upButton.addEventListener('click', () => updateServings(1));
   addCartListeners();
+  const cookingModeButton = document.getElementById('cooking-mode');
   // eslint-disable-next-line no-undef
   const noSleep = new NoSleep();
   const preventSleep = () => {
     noSleep.enable();
-    window.removeEventListener('scroll', preventSleep, false);
+    cookingModeButton.remove();
+    showToast('Kochmodus aktiviert!');
   };
-  window.addEventListener('scroll', preventSleep, false);
+  cookingModeButton.addEventListener('click', preventSleep, false);
 };
 
 init();
