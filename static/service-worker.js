@@ -1,5 +1,30 @@
 /* eslint-disable no-restricted-globals */
 const cacheName = 'v1';
+let db;
+
+function initDatabase() {
+  const request = self.indexedDB.open('recipes-db');
+  request.onerror = () => {
+    console.error(`DB request error: ${request.errorCode}`);
+  };
+  request.onsuccess = (event) => {
+    db = event.target.result;
+    db.onerror = (dbEvent) => {
+      console.error(`Database error: ${dbEvent.target.errorCode}`);
+    };
+  };
+  request.onupgradeneeded = (event) => {
+    db = event.target.result;
+    db.createObjectStore('recipes', { keyPath: '_id' });
+  };
+}
+
+initDatabase();
+
+self.addEventListener('install', () => {
+  // eslint-disable-next-line no-undef
+  importScripts('/scripts/recipe-template.js');
+});
 
 self.addEventListener('activate', (e) => {
   const assets = [
@@ -26,6 +51,47 @@ self.addEventListener('activate', (e) => {
   );
 });
 
+function matchRecipe(recipe, terms) {
+  // eslint-disable-next-line arrow-body-style
+  const matched = terms.filter((term) => {
+    return recipe.title.toLowerCase().includes(term)
+        || recipe.ingredients.find(ingr => ingr.name.toLowerCase().includes(term))
+        || recipe.categories.find(ctg => ctg.toLowerCase().includes(term));
+  });
+  return matched.length === terms.length;
+}
+
+function searchRecipes(query) {
+  return new Promise((resolve, reject) => {
+    if (!db) {
+      reject(new Error('No db found'));
+    }
+    const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
+    const req = store.getAll();
+    req.onsuccess = () => {
+      if (!query) {
+        resolve(req.result);
+      }
+      const terms = query.split(/,\s*/).map(term => term.toLowerCase());
+      const filtered = req.result.filter(recipe => matchRecipe(recipe, terms));
+      resolve(filtered);
+    };
+  });
+}
+
+function getRecipe(id) {
+  return new Promise((resolve, reject) => {
+    if (!db) {
+      reject(new Error('No db found'));
+    }
+    const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
+    const req = store.get(id);
+    req.onsuccess = () => {
+      resolve(req.result);
+    };
+  });
+}
+
 function fetchRequest(request) {
   return fetch(request)
     .then((res) => {
@@ -37,6 +103,33 @@ function fetchRequest(request) {
     })
     .catch(() => caches.match(request).then((res) => {
       const url = new URL(request.url);
+      if (!res && url.origin === location.origin && url.pathname === '/api/recipes') {
+        // eslint-disable-next-line arrow-body-style
+        return searchRecipes(url.searchParams.get('search')).then((recipes) => {
+          const limit = +url.searchParams.get('limit') || 15;
+          const page = +url.searchParams.get('page') || 1;
+          const body = {
+            recipes: recipes.slice((page - 1) * limit, page * limit),
+            total: recipes.length,
+          };
+          return new Response(JSON.stringify(body), {
+            headers: { 'Content-Type': 'application/json' },
+          });
+        });
+      }
+      // eslint-disable-next-line no-undef
+      if (!res && url.origin === location.origin && url.pathname.startsWith('/recipe/') && template) {
+        const recipeId = url.pathname.split('/')[2];
+        return getRecipe(recipeId).then(recipe => (
+          // eslint-disable-next-line no-undef
+          new Response(template({
+            recipe,
+            descriptionHtml: recipe.description,
+            session: {},
+            servings: recipe.servings,
+          }), { headers: { 'Content-Type': 'text/html' } })
+        ));
+      }
       if (!res && url.origin === 'https://process.filestackapi.com' && url.pathname.includes('w:2000')) {
         return caches.match(new Request(url.href.replace('w:2000', 'w:600'))).then(r => r);
       }
@@ -63,19 +156,30 @@ self.addEventListener('fetch', (e) => {
   }
 });
 
+function updateDatabase(recipes) {
+  if (!db) { return; }
+  const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
+  const clearReq = store.clear();
+  clearReq.onsuccess = () => {
+    recipes.forEach((recipe) => {
+      store.add(recipe);
+    });
+  };
+}
+
 self.addEventListener('message', (e) => {
   if (e.data && e.data.recipes) {
-    const { recipes } = e.data;
-    const requests = recipes.map(recipe => new Request(`/recipe/${recipe._id}`));
-    const cached = requests.map(request => (
-      caches.match(request).then(res => res ? null : request.url)
-    ));
-    Promise.all(cached)
-      .then((urls) => {
-        const toCache = urls.filter(url => url);
-        caches.open(cacheName).then((cache) => {
-          cache.addAll(toCache);
+    if (e.data.shouldUpdate) {
+      fetch('/api/recipes/compressed')
+        .then((res) => {
+          if (res.ok) { return res.json(); }
+          return [];
+        })
+        .then((recipes) => {
+          if (recipes.length > 0) {
+            updateDatabase(recipes);
+          }
         });
-      });
+    }
   }
 });

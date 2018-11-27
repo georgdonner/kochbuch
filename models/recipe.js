@@ -33,7 +33,7 @@ module.exports = Recipe;
 
 module.exports.getRecipeById = id => Recipe.findById(id);
 
-module.exports.getAllRecipes = () => Recipe.find({});
+module.exports.getAllRecipes = () => Recipe.find({}).lean();
 
 const convertSearch = (searchString) => {
   const terms = searchString.split(',');
@@ -61,6 +61,10 @@ module.exports.getPage = async (page, limit, search) => {
     .lean();
   return recipes.map(({ score, ...recipe }) => recipe);
 };
+
+module.exports.lastUpdated = async () => (
+  Recipe.find().limit(1).sort({ updatedAt: -1 })
+);
 
 module.exports.addRecipe = newRecipe => newRecipe.save();
 

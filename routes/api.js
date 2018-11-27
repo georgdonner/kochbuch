@@ -1,4 +1,6 @@
+const compression = require('compression');
 const express = require('express');
+const { markdown } = require('markdown');
 
 const router = express.Router();
 
@@ -17,10 +19,28 @@ router.get('/recipes', async (req, res) => {
     if (condensed) {
       const total = await Recipe.getCount(search);
       const recipes = await Recipe.getPage(Number(page), Number(limit), search);
-      return res.json({ recipes, total });
+      const lastUpdatedRecipe = await Recipe.lastUpdated();
+      const lastUpdated = lastUpdatedRecipe.length > 0
+        ? Date.parse(lastUpdatedRecipe[0].updatedAt)
+        : Date.now();
+      return res.json({ recipes, total, lastUpdated });
     }
     const recipes = await Recipe.getAllRecipes();
     return res.json(recipes);
+  } catch (error) {
+    return res.send(error);
+  }
+});
+
+router.get('/recipes/compressed', compression(), async (req, res) => {
+  try {
+    const recipes = await Recipe.getAllRecipes();
+    const mapped = recipes.map(recipe => ({
+      ...recipe,
+      description: markdown.toHTML(recipe.description),
+      ingredients: recipe.ingredients.map(({ name, hint }) => ({ name, hint })),
+    }));
+    return res.json(mapped);
   } catch (error) {
     return res.send(error);
   }
