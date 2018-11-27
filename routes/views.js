@@ -47,14 +47,16 @@ router.post('/zauberwort', (req, res) => {
 });
 
 router.get('/recipes/new', checkAuth, (req, res) => {
-  res.render('recipe-form', { recipe: defaultRecipe });
+  const uploadcareKey = process.env.UPLOADCARE_PUBLIC_KEY;
+  res.render('recipe-form', { recipe: defaultRecipe, uploadcareKey });
 });
 
 router.get('/recipe/:id/edit', checkAuth, async (req, res) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
     if (!recipe) throw new Error('Recipe not found.');
-    res.render('recipe-form', { recipe });
+    const uploadcareKey = process.env.UPLOADCARE_PUBLIC_KEY;
+    res.render('recipe-form', { recipe, uploadcareKey });
   } catch (error) {
     res.send(error);
   }

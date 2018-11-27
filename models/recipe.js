@@ -8,6 +8,7 @@ const RecipeSchema = new Schema({
     type: String,
     required: true,
   },
+  image: String,
   heroImage: String,
   servings: Number,
   duration: Number,
@@ -57,7 +58,7 @@ module.exports.getPage = async (page, limit, search) => {
     .limit(limit)
     .skip((page - 1) * limit)
     .sort(search ? { score: { $meta: 'textScore' } } : '-createdAt')
-    .select('_id title heroImage categories')
+    .select('_id title image categories')
     .lean();
   return recipes.map(({ score, ...recipe }) => recipe);
 };

@@ -41,7 +41,7 @@ textarea {
   line-height: 1.4;
 }
 
-button {
+button, .uploadcare--widget__button {
   color: #333;
   background: #fff;
   border: 2px #333 solid;
@@ -54,7 +54,7 @@ button {
   cursor: pointer;
 }
 
-button:hover {
+button:hover, .uploadcare--widget__button:hover {
   color: #fff;
   background: #333;
 }
@@ -85,6 +85,11 @@ h2 {
 #title-wrapper input {
   flex-grow: 1;
   margin-right: 2rem;
+}
+
+.uploadcare--widget {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
 }
 
 #number-inputs {

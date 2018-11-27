@@ -1,31 +1,18 @@
 let uploadedImgSrc = null;
+// eslint-disable-next-line no-undef
+const widget = uploadcare.SingleWidget('[role=uploadcare-uploader]');
 
-const updateImg = () => {
+const updateImg = (newSrc) => {
+  uploadedImgSrc = newSrc;
   const currentImg = document.querySelector('.recipe-img');
   if (currentImg) {
     currentImg.remove();
   }
+  const imgWidth = document.querySelector('.container').clientWidth;
   const newImg = document.createElement('img');
   newImg.className = 'recipe-img';
-  newImg.src = uploadedImgSrc;
+  newImg.src = `${newSrc}-/resize/${imgWidth}x/`;
   document.querySelector('.container').prepend(newImg);
-};
-
-const showImgPicker = () => {
-  // eslint-disable-next-line no-undef
-  const client = filestack.init('AwD48ceQaWtGBs9plMog7z');
-  client.picker({
-    accept: ['image/*'],
-    maxFiles: 1,
-    maxSize: 10485760,
-    onUploadDone: (res) => {
-      if (res.filesUploaded.length > 0) {
-        const { handle } = res.filesUploaded[0];
-        uploadedImgSrc = `https://process.filestackapi.com/resize=w:2000,fit:max/quality=value:80/compress/${handle}`;
-        updateImg();
-      }
-    },
-  }).open();
 };
 
 const addIngredient = () => {
@@ -88,7 +75,7 @@ const getRecipe = () => {
     categories,
   };
   if (uploadedImgSrc) {
-    recipe.heroImage = uploadedImgSrc;
+    recipe.image = uploadedImgSrc;
   }
   return recipe;
 };
@@ -117,9 +104,14 @@ const saveRecipe = () => {
 };
 
 const init = () => {
-  // show image picker on button click
-  const newImgButton = document.getElementById('new-image');
-  newImgButton.addEventListener('click', showImgPicker);
+  // update image on widget change
+  widget.onChange((file) => {
+    file.done((info) => {
+      updateImg(info.originalUrl);
+    });
+  });
+  const imgInput = document.getElementsByName('recipe_image')[0];
+  imgInput.addEventListener('change', updateImg);
   // add new ingredient on enter
   document.querySelectorAll('#new-ingredient input')
     .forEach((input) => {

@@ -41,7 +41,23 @@ const createRecipeCard = (recipe) => {
   card.className = 'recipe-card';
   card.id = recipe._id;
   card.href = `/recipe/${recipe._id}`;
-  const imgUrl = recipe.heroImage ? recipe.heroImage.replace('w:2000', 'w:600') : 'img/comingsoon.jpg';
+  const imgUrl = (width, doubleRes = false) => (
+    recipe.image.concat(`-/resize/${width}x/`, `-/quality/${doubleRes ? 'lightest' : 'lighter'}/`, '-/progressive/yes/')
+  );
+  const responsiveImg = () => `
+    <img
+      srcset="${imgUrl(1200, true)} 1200w,
+        ${imgUrl(800, true)} 800w,
+        ${imgUrl(600)} 600w,
+        ${imgUrl(400)} 400w"
+      sizes="(min-width: 1200px) 400px,
+        (min-width: 600px) 33.3vw,
+        100vw"
+      src="${imgUrl(600)}"
+      alt="${recipe.title}"
+      crossorigin="anonymous" />
+  `;
+  const fallbackImg = () => '<img src="img/comingsoon.jpg" alt="Bild kommt bald" />';
   let title = `<h2>${recipe.title}</h2>`;
   const vegetarian = recipe.categories.includes('Vegetarisch');
   const vegan = recipe.categories.includes('Vegan');
@@ -49,7 +65,7 @@ const createRecipeCard = (recipe) => {
     title = `<h2><span class="${vegan ? 'vegan' : 'vegetarian'}">${recipe.title}</span></h2>`;
   }
   const content = `
-    <img crossorigin="anonymous" src="${imgUrl}" />
+    ${recipe.image ? responsiveImg() : fallbackImg()}
     ${title}
   `;
   card.innerHTML = content;

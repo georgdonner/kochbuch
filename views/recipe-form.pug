@@ -4,19 +4,30 @@ html(lang="de")
     title= recipe.title || 'Neues Rezept'
     include includes/meta.pug
     link(rel="stylesheet", href="/css/recipe-form.css")
-    script(src="//static.filestackapi.com/filestack-js/1.x.x/filestack.min.js", async)
+    script(src="https://ucarecdn.com/libs/widget/3.6.1/uploadcare.full.min.js", charset="utf-8")
   body
     .container
-      if recipe.heroImage
+      if recipe.image
+        - var imgUrl = (width) => recipe.image.concat(`-/resize/${width}x/`, `-/quality/lighter/`, '-/progressive/yes/')
         img.recipe-img(
-          src=recipe.heroImage,
-          srcset=`${recipe.heroImage.replace('w:2000', 'w:600')} 600w, ${recipe.heroImage} 2000w`,
-          sizes="(max-width: 650px) 600px, 2000px"
+          src=recipe.image,
+          srcset=`${imgUrl(800)} 800w, ${imgUrl(400)} 400w`,
+          sizes="(max-width: 450px) 400px, 800px"
           alt=recipe.title
         )
       #title-wrapper
         input#title(type="text", name="title", value=recipe.title, placeholder="Titel")
-        button#new-image Neues Bild
+        input(
+          type="hidden", role="uploadcare-uploader", name="recipe_image",
+          data-public-key=uploadKey, data-crop="",
+          data-image-shrink="2000x2000" data-images-only
+        )
+        script.
+          UPLOADCARE_LOCALE = 'de';
+          UPLOADCARE_LOCALE_TRANSLATIONS = {
+            buttons: { choose: { images: { one: 'Neues Bild' } } }
+          }
+          UPLOADCARE_PUBLIC_KEY = '#{uploadcareKey}';
       #number-inputs
         div
           label(for="servings") Portionen

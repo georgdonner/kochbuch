@@ -15,14 +15,16 @@ html(lang="de")
           a(href=`/plan/new?recipe=${recipe._id}`) Zum Wochenplan
     .container
       h1.recipe-title= recipe.title
-      if recipe.heroImage
-        img.recipe-img(
-          src=recipe.heroImage.replace('w:2000', 'w:600'),
-          srcset=`${recipe.heroImage.replace('w:2000', 'w:600')} 600w, ${recipe.heroImage} 2000w`,
-          sizes="(max-width: 650px) 600px, 2000px",
-          alt=recipe.title,
-          crossorigin="anonymous"
-        )
+      if recipe.image
+        - var imgUrl = (width, highRes=false) => recipe.image.concat(`-/resize/${highRes ? width * 2 : width}x/`, `-/quality/${doubleRes ? 'lightest' : 'lighter'}/`, '-/progressive/yes/')
+        mixin source(width, sizes='100vw')
+          source(media=`(min-width: ${width}px)` srcset=`${imgUrl(width)}, ${imgUrl(width, true)} 2x` sizes=sizes)
+        picture
+          +source(1000, '1000px')
+          +source(800)
+          +source(600)
+          +source(400)
+          img.recipe-img(src=imgUrl(1000), alt=recipe.title)
       .recipe-info
         div.duration #{recipe.duration} Minuten
         .categories

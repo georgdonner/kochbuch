@@ -69,6 +69,8 @@ router.get('/recipe/:id', async (req, res) => {
 router.post('/recipe', async (req, res) => {
   try {
     const newRecipe = new Recipe({ ...req.body });
+    // still support deprecated heroImage property for kochbuch app
+    newRecipe.heroImage = `${newRecipe.image}-/resize/600x/`;
     const saved = await Recipe.addRecipe(newRecipe);
     res.json(saved);
   } catch (error) {
