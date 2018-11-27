@@ -130,9 +130,26 @@ function fetchRequest(request) {
             servings: recipe.servings,
           }), { headers: { 'Content-Type': 'text/html' } })
         ));
-      }
-      if (!res && url.origin === 'https://process.filestackapi.com' && url.pathname.includes('w:2000')) {
-        return caches.match(new Request(url.href.replace('w:2000', 'w:600'))).then(r => r);
+      } if (!res && url.origin === 'https://ucarecdn.com') {
+        const uuid = url.pathname.split('/')[1];
+        const imgWidths = [400, 600, 800, 1000];
+        const getImgUrl = (width, doubleRes = false) => (
+          url.origin.concat('/', uuid, `/-/resize/${width}x/`, `-/quality/${doubleRes ? 'lightest' : 'lighter'}/`, '-/progressive/yes/')
+        );
+        const imgUrls = [];
+        imgWidths.forEach((width) => {
+          imgUrls.push(getImgUrl(width), getImgUrl(width * 2, true));
+        });
+        return Promise.all(imgUrls.map(imgUrl => caches.match(imgUrl)))
+          .then((responses) => {
+            const filtered = responses.filter(response => response);
+            if (filtered.length > 0) {
+              const getWidth = resizeUrl => +resizeUrl.match(/resize\/\d+/)[0].split('/')[1];
+              filtered.sort((a, b) => getWidth(b.url) - getWidth(a.url));
+              return filtered[0];
+            }
+            return undefined;
+          });
       }
       if (!res) {
         return caches.match('/offline').then(r => r);
