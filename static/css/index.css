@@ -46,6 +46,15 @@ html, body {
   font-family: 'Open Sans', sans-serif;
 }
 
+/* Fix for Safari */
+input[type="search"] {
+  -webkit-appearance: textfield;
+}
+
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
 ::placeholder {
   color: #b2b2b2;
 }
