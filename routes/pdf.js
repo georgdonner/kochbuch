@@ -69,7 +69,7 @@ const getDoc = recipe => ({
         {
           width: '*',
           text: [
-            formatDescription(recipe.description),
+            ...formatDescription(recipe.description),
             { text: `Zubereitungszeit: ${recipe.duration} Minuten, Zutaten für ${recipe.servings} Portionen, `, fontSize: 10 },
           ],
         },
@@ -99,9 +99,9 @@ const getImageWidth = (recipe) => {
 const getPdf = async (recipe) => {
   const pdf = getDoc(recipe);
   const imageWidth = getImageWidth(recipe);
-  if (recipe.heroImage && imageWidth > 200) {
+  if (recipe.image && imageWidth > 200) {
     try {
-      const imageRes = await request.get(recipe.heroImage, {
+      const imageRes = await request.get(recipe.image, {
         encoding: null,
         resolveWithFullResponse: true,
       });
