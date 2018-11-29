@@ -3,6 +3,7 @@
 .env
 static/scripts/lib
 cert
+.vscode
 
 # compiled output
 /tmp
