@@ -75,10 +75,20 @@ const addCartListeners = () => {
   }
 };
 
+const back = () => {
+  if (document.referrer === `${window.location.origin}/`) {
+    window.history.back();
+  } else {
+    window.location.assign('/');
+  }
+};
+
 const init = () => {
   if (getCurrentServings() !== ORIG_SERVINGS) {
     updateServings();
   }
+  const backButton = document.getElementById('back');
+  backButton.addEventListener('click', back);
   const downButton = document.querySelector('.servings-control .down');
   const upButton = document.querySelector('.servings-control .up');
   downButton.addEventListener('click', () => updateServings(-1));
