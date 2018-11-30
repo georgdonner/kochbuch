@@ -23,15 +23,13 @@ html(lang="de")
         input#custom(type="text", name="custom", placeholder="z.B. Pizza", value=custom)
       #recipe-search
         label(for="recipe") Rezept suchen
-        input#recipe(type="text", name="recipe", value=recipe ? recipe.title : '', placeholder="Suche...", disabled=Boolean(recipe))
+        input#recipe(
+          type="text", name="recipe", value=recipe ? recipe.title : '',
+          placeholder="Suche...", disabled=Boolean(recipe),
+          data-recipe=recipe ? recipe.id : ''
+        )
       #buttons
         button#save Speichern
         if mode === 'edit'
           button#delete Löschen
     script(src="/scripts/lib/plan-form.js")
-    if recipe
-      script.
-        selectedRecipe = recipe;
-
-
-

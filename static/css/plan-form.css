@@ -38,7 +38,6 @@ input:disabled {
 }
 
 button {
-  max-width: 150px;
   color: #fff;
   background: #333;
   border: 2px #333 solid;

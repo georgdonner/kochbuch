@@ -4,7 +4,7 @@ let selectedRecipe = null;
 
 const createChangeButton = () => {
   const change = document.createElement('button');
-  change.innerText = 'Ändern';
+  change.innerText = 'Rezept ändern';
   change.className = 'inverted';
   change.style.marginTop = '1rem';
   change.addEventListener('click', (e) => {
@@ -91,6 +91,13 @@ const deleteEntry = () => {
 };
 
 const init = () => {
+  if (recipeSearch.value) {
+    selectedRecipe = {
+      _id: recipeSearch.dataset.recipe,
+      title: recipeSearch.value,
+    };
+    recipeSearch.parentNode.appendChild(createChangeButton());
+  }
   recipeSearch.addEventListener('keypress', ({ key, target }) => {
     if (key === 'Enter') {
       const results = document.getElementById('search-results');
@@ -103,7 +110,10 @@ const init = () => {
     }
   });
   document.getElementById('save').addEventListener('click', saveEntry);
-  document.getElementById('delete').addEventListener('click', deleteEntry);
+  const deleteButton = document.getElementById('delete');
+  if (deleteButton) {
+    deleteButton.addEventListener('click', deleteEntry);
+  }
 };
 
 init();
