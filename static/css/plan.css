@@ -72,6 +72,7 @@ nav {
 
 .day .date {
   color: #aaa;
+  display: block;
   font-weight: 600;
   font-size: .9rem;
   text-transform: uppercase;
