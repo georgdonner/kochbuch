@@ -23,8 +23,13 @@ html(lang="de")
             each item in list
               .item-wrapper
                 label.input-container
-                  span.item= item
                   input(type="checkbox")
                   span.checkmark.box
+                  span.item
+                    span=item
+                    button
+                      svg.icon
+                        use(xlink:href='#icon-pencil')
           
     script(src="/scripts/lib/list.js")
+    include includes/edit-icon.pug

@@ -1,3 +1,6 @@
+// item that is currently edited
+let currentlyEditing = null;
+
 const getListCode = () => {
   const list = document.querySelector('.list');
   return list.dataset.code;
@@ -28,14 +31,22 @@ const addItem = (item) => {
   wrapper.className = 'item-wrapper';
   wrapper.innerHTML = `
     <label class="input-container">
-      <span class="item">${item}</span>
       <input type="checkbox" />
       <span class="checkmark box"></span>
+      <span class="item">
+        <span>${item}</span>
+        <button><svg class="icon"><use xlink:href="#icon-pencil"></use></svg></button>
+      </span>
     </label>
   `;
   const list = document.querySelector('.list');
   list.appendChild(wrapper);
   wrapper.querySelector('.checkmark').addEventListener('click', removeItem);
+  const editButton = wrapper.querySelector('.item button');
+  editButton.addEventListener('click', () => {
+    currentlyEditing = editButton.parentNode.querySelector('span');
+    document.querySelector('#new-item input').value = currentlyEditing.innerText;
+  });
 };
 
 const init = () => {
@@ -43,10 +54,18 @@ const init = () => {
   if (input) {
     input.addEventListener('keypress', ({ key, target }) => {
       if (key === 'Enter') {
-        const list = getList().concat([target.value]);
+        if (currentlyEditing) {
+          currentlyEditing.innerText = target.value;
+        }
+        const list = currentlyEditing
+          ? getList()
+          : getList().concat([target.value]);
         updateList(list).then(() => {
-          addItem(target.value);
+          if (!currentlyEditing) {
+            addItem(target.value);
+          }
           input.value = '';
+          currentlyEditing = null;
         });
       }
     });
@@ -59,6 +78,13 @@ const init = () => {
     .forEach((checkbox) => {
       // eslint-disable-next-line no-param-reassign
       checkbox.checked = false;
+    });
+  document.querySelectorAll('.item button')
+    .forEach((editButton) => {
+      editButton.addEventListener('click', () => {
+        currentlyEditing = editButton.parentNode.querySelector('span');
+        input.value = currentlyEditing.innerText;
+      });
     });
 };
 

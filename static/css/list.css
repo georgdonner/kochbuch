@@ -47,6 +47,35 @@ html, body {
   padding: 1rem;
 }
 
+.input-container {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item button {
+  color: #aaa;
+  background: inherit;
+  display: inline-flex;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
 @media only screen and (max-width: 1200px) {
   #new-item input {
     padding-left: 1rem;
@@ -117,7 +146,6 @@ button:hover {
   margin-right: 1rem;
   font-size: 1rem;
   font-weight: 400;
-  cursor: pointer;
   -webkit-user-select: none;
   -moz-user-select: none;
   -ms-user-select: none;
@@ -127,7 +155,6 @@ button:hover {
 .input-container input {
   position: absolute;
   opacity: 0;
-  cursor: pointer;
   height: 0;
   width: 0;
 }
@@ -139,9 +166,10 @@ button:hover {
   height: 25px;
   width: 25px;
   background-color: #f2f2f2;
+  cursor: pointer;
 }
 
-.input-container:hover input ~ .checkmark {
+.checkmark:hover {
   background-color: #d9d9d9;
 }
 
