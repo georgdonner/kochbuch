@@ -43,6 +43,11 @@ const addCategory = (category) => {
       <button class="remove">x</button>
     `;
     categories.appendChild(categoryDiv);
+    categoryDiv.querySelector('.remove').addEventListener('click', () => {
+      categoryDiv.remove();
+    });
+    document.querySelector('#categories-container input').value = '';
+    document.getElementById('autocomplete-items').innerHTML = '';
   }
 };
 
@@ -103,6 +108,28 @@ const saveRecipe = () => {
     });
 };
 
+const fetchCategories = () => (
+  fetch('/api/recipes/categories')
+    .then(res => res.json())
+);
+
+const renderAutocomplete = (searchValue, categories) => {
+  console.log(searchValue);
+  const autocompleteItems = document.getElementById('autocomplete-items');
+  autocompleteItems.innerHTML = '';
+  if (searchValue) {
+    const filtered = categories.filter(
+      ctg => ctg.toLowerCase().startsWith(searchValue.toLowerCase()),
+    );
+    filtered.forEach((ctg) => {
+      const item = document.createElement('div');
+      item.innerText = ctg;
+      item.addEventListener('click', () => addCategory(ctg));
+      autocompleteItems.appendChild(item);
+    });
+  }
+};
+
 const init = () => {
   // update image on widget change
   widget.onChange((file) => {
@@ -140,8 +167,6 @@ const init = () => {
   ctgInput.addEventListener('keypress', ({ key, target }) => {
     if (key === 'Enter') {
       addCategory(target.value);
-      // eslint-disable-next-line no-param-reassign
-      target.value = '';
     }
   });
   // remove category on button click
@@ -151,6 +176,10 @@ const init = () => {
         target.parentNode.remove();
       });
     });
+  // add category autocomplete
+  fetchCategories().then((categories) => {
+    ctgInput.addEventListener('input', ({ target }) => renderAutocomplete(target.value, categories));
+  });
   // save recipe on button click
   document.getElementById('save').addEventListener('click', saveRecipe);
 };

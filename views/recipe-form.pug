@@ -81,6 +81,7 @@ html(lang="de")
               span.ctg= ctg
               button.remove x
         label(for="category") Neue Kategorie
-        input(type="text", name="category", placeholder="Enter drücken zum Hinzufügen")
+        input(type="text", name="category", placeholder="Enter drücken zum Hinzufügen", autocomplete="off")
+        div#autocomplete-items
       button#save.inverted Rezept speichern
     script(src="/scripts/lib/recipe-form.js")  
