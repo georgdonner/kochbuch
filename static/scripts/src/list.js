@@ -1,5 +1,6 @@
 // item that is currently edited
 let currentlyEditing = null;
+let lastToast = null;
 
 const getListCode = () => {
   const list = document.querySelector('.list');
@@ -24,6 +25,7 @@ const updateList = list => (
 const removeItem = ({ target }) => {
   target.parentNode.parentNode.remove();
   updateList(getList());
+  showToast(target.parentNode.innerText); // eslint-disable-line
 };
 
 const addItem = (item) => {
@@ -48,6 +50,31 @@ const addItem = (item) => {
     document.querySelector('#new-item input').value = currentlyEditing.innerText;
   });
 };
+
+function showToast(item) {
+  const toast = document.getElementById('toast');
+  toast.innerHTML = '';
+  toast.classList.add('visible');
+  toast.innerHTML = `
+    <span>${item} entfernt.</span>
+    <button>Rückgänging</button>
+  `;
+  toast.querySelector('button').addEventListener('click', () => {
+    const list = getList().concat([item]);
+    updateList(list).then(() => {
+      addItem(item);
+      toast.classList.remove('visible');
+    });
+  });
+  const added = Date.now();
+  lastToast = added;
+  setTimeout(() => {
+    if (lastToast === added) {
+      toast.classList.remove('visible');
+    }
+  }, 10000);
+}
+
 
 const init = () => {
   const input = document.querySelector('#new-item input');
