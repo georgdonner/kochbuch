@@ -114,7 +114,6 @@ const fetchCategories = () => (
 );
 
 const renderAutocomplete = (searchValue, categories) => {
-  console.log(searchValue);
   const autocompleteItems = document.getElementById('autocomplete-items');
   autocompleteItems.innerHTML = '';
   if (searchValue) {
