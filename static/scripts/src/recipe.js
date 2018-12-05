@@ -60,7 +60,7 @@ const addCartListeners = () => {
       });
       ingredientLi.addEventListener('mouseup', () => {
         if (Date.now() - start > longClick) {
-          const item = ingredientLi.innerText;
+          const item = ingredientLi.innerText.trim();
           addToList(item);
         }
       });
@@ -68,7 +68,7 @@ const addCartListeners = () => {
     const addToCartButtons = document.querySelectorAll('button.cart');
     addToCartButtons.forEach((button) => {
       button.addEventListener('click', () => {
-        const item = button.parentNode.innerText;
+        const item = button.parentNode.innerText.trim();
         addToList(item);
       });
     });
