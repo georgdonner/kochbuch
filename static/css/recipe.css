@@ -1,6 +1,6 @@
 html, body {
   margin: 0;
-  margin-bottom: 2.5rem;
+  margin-bottom: 1.5rem;
   font-family: 'Merriweather', serif;
 }
 
@@ -212,6 +212,11 @@ button.cart:hover {
 
 #buttons {
   display: flex;
+  flex-wrap: wrap;
+}
+
+#buttons .button {
+  margin-bottom: 1rem;
 }
 
 #toast {
