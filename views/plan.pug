@@ -32,7 +32,7 @@ html(lang="de")
             each entry in day.entries
               .entry
                 .data
-                  .meta #{entry.time} | #{entry.servings} Personen
+                  .meta #{entry.time} | #{entry.servings} Person#{entry.servings !== 1 ? 'en' : ''}
                   if entry.custom
                     .title= entry.custom
                   else
