@@ -167,12 +167,14 @@ ul li {
   justify-content: space-between;
   align-items: center;
   list-style-type: none;
-  padding: .5rem 0;
+  padding: .66rem 0;
 }
 
 button.cart {
   color: #666;
   background: #fff;
+  display: flex;
+  margin-bottom: -.2rem;
   border: none;
   padding-right: 1rem;
   font-size: 1.3rem;
