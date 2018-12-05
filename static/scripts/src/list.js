@@ -28,6 +28,13 @@ const removeItem = ({ target }) => {
   showToast(target.parentNode.innerText); // eslint-disable-line
 };
 
+const onEditButtonClick = (button) => {
+  currentlyEditing = button.parentNode.querySelector('span');
+  const input = document.querySelector('#new-item input');
+  input.value = currentlyEditing.innerText;
+  input.focus();
+};
+
 const addItem = (item) => {
   const wrapper = document.createElement('div');
   wrapper.className = 'item-wrapper';
@@ -45,10 +52,7 @@ const addItem = (item) => {
   list.appendChild(wrapper);
   wrapper.querySelector('.checkmark').addEventListener('click', removeItem);
   const editButton = wrapper.querySelector('.item button');
-  editButton.addEventListener('click', () => {
-    currentlyEditing = editButton.parentNode.querySelector('span');
-    document.querySelector('#new-item input').value = currentlyEditing.innerText;
-  });
+  editButton.addEventListener('click', () => onEditButtonClick(editButton));
 };
 
 function showToast(item) {
@@ -75,7 +79,6 @@ function showToast(item) {
   }, 10000);
 }
 
-
 const init = () => {
   const input = document.querySelector('#new-item input');
   if (input) {
@@ -92,7 +95,10 @@ const init = () => {
             addItem(target.value);
           }
           input.value = '';
-          currentlyEditing = null;
+          if (currentlyEditing) {
+            input.blur();
+            currentlyEditing = null;
+          }
         });
       }
     });
@@ -108,10 +114,7 @@ const init = () => {
     });
   document.querySelectorAll('.item button')
     .forEach((editButton) => {
-      editButton.addEventListener('click', () => {
-        currentlyEditing = editButton.parentNode.querySelector('span');
-        input.value = currentlyEditing.innerText;
-      });
+      editButton.addEventListener('click', () => onEditButtonClick(editButton));
     });
 };
 
