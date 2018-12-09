@@ -22,14 +22,14 @@ const fetchRecipes = () => {
   return fetch(url)
     .then(res => res.json())
     .then((body) => {
-      if (navigator.serviceWorker.controller && body.lastUpdated) {
+      if (window.navigator.serviceWorker.controller && body.lastUpdated) {
         const lastUpdated = window.localStorage.getItem('lastUpdated');
         // update if no recipes were stored yet or have the same "age"
         const shouldUpdate = !lastUpdated || (body.lastUpdated > +lastUpdated);
         if (shouldUpdate) {
           window.localStorage.setItem('lastUpdated', body.lastUpdated);
         }
-        navigator.serviceWorker.controller.postMessage({ ...body, shouldUpdate });
+        window.navigator.serviceWorker.controller.postMessage({ ...body, shouldUpdate });
       }
       setState({ total: body.total });
       return body.recipes;
