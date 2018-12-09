@@ -22,7 +22,11 @@ const fetchRecipes = () => {
   return fetch(url)
     .then(res => res.json())
     .then((body) => {
-      if (window.navigator.serviceWorker.controller && body.lastUpdated) {
+      if (
+        window.navigator.serviceWorker
+        && window.navigator.serviceWorker.controller
+        && body.lastUpdated
+      ) {
         const lastUpdated = window.localStorage.getItem('lastUpdated');
         // update if no recipes were stored yet or have the same "age"
         const shouldUpdate = !lastUpdated || (body.lastUpdated > +lastUpdated);
