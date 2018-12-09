@@ -22,7 +22,8 @@ function initDatabase() {
 initDatabase();
 
 self.addEventListener('install', () => {
-  self.importScripts('/scripts/recipe-template.js');
+  // eslint-disable-next-line no-undef
+  importScripts('/scripts/recipe-template.js');
 });
 
 self.addEventListener('activate', (e) => {
@@ -118,7 +119,7 @@ function fetchRequest(request) {
         });
       }
       // eslint-disable-next-line no-undef
-      if (!res && url.origin === location.origin && url.pathname.startsWith('/recipe/') && template) {
+      if (!res && url.origin === location.origin && url.pathname.startsWith('/recipe/') && 'template' in self) {
         const recipeId = url.pathname.split('/')[2];
         return getRecipe(recipeId).then(recipe => (
           // eslint-disable-next-line no-undef
