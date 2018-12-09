@@ -112,7 +112,7 @@ const fetchAndRenderRecipes = () => {
     .catch((error) => {
       console.error(error);
       if (state.pagesFetched === 0) {
-        listNode.innerText = 'Konnte Rezepte nicht laden.';
+        listNode.innerText = `Konnte Rezepte nicht laden: ${error.message}`;
       }
     });
 };
