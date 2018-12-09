@@ -1,6 +1,7 @@
 /* eslint-disable no-restricted-globals */
 const cacheName = 'v1';
 let db;
+let template;
 
 function initDatabase() {
   const request = self.indexedDB.open('recipes-db');
@@ -22,8 +23,7 @@ function initDatabase() {
 initDatabase();
 
 self.addEventListener('install', () => {
-  // eslint-disable-next-line no-undef
-  importScripts('/scripts/recipe-template.js');
+  self.importScripts('/scripts/recipe-template.js');
 });
 
 self.addEventListener('activate', (e) => {
@@ -118,11 +118,9 @@ function fetchRequest(request) {
           });
         });
       }
-      // eslint-disable-next-line no-undef
       if (!res && url.origin === location.origin && url.pathname.startsWith('/recipe/') && template) {
         const recipeId = url.pathname.split('/')[2];
         return getRecipe(recipeId).then(recipe => (
-          // eslint-disable-next-line no-undef
           new Response(template({
             recipe,
             descriptionHtml: recipe.description,
