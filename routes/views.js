@@ -144,7 +144,13 @@ router.get('/plan/new', checkAuth, async (req, res) => {
       res.redirect('/plan');
     }
     const { date, recipe } = req.query;
-    const dateObj = date ? moment(+date) : moment().add(1, 'd');
+    let dateObj;
+    if (date) {
+      dateObj = moment(+date);
+    } else {
+      const nextDay = await Weekplan.getNextDay(req.session.planCode);
+      dateObj = moment(nextDay);
+    }
     const options = {
       mode: 'new',
       date: dateObj.format('YYYY-MM-DD'),

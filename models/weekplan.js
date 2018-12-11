@@ -71,3 +71,19 @@ module.exports.deleteEntry = (name, entryId) => (
     { $pull: { plan: { _id: entryId } } },
   )
 );
+
+module.exports.getNextDay = async (name) => {
+  const plan = await Weekplan.findOne({ name });
+  const date = moment().hour() < 16 ? moment() : moment().add(1, 'd');
+  let nextDay;
+  let i = 0;
+  while (!nextDay) {
+    // eslint-disable-next-line no-loop-func
+    const entry = plan.plan.find(e => moment(date).add(i, 'd').isSame(e.date, 'day'));
+    if (!entry) {
+      nextDay = date.add(i, 'd').toISOString();
+    }
+    i += 1;
+  }
+  return nextDay;
+};
