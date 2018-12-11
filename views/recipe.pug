@@ -12,7 +12,9 @@ html(lang="de")
             use(xlink:href='#icon-arrow-left2')
           | Alle Rezepte
         if session.planCode
-          a(href=`/plan/new?recipe=${recipe._id}`) Zum Wochenplan
+          a(href=`/plan/new?recipe=${recipe._id}`)
+            span(style="font-size: 1rem; margin-right: .25rem;") +
+            | Zum Wochenplan
     .container
       h1.recipe-title= recipe.title
       if recipe.image
