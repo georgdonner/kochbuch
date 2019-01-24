@@ -24,10 +24,6 @@ const RecipeSchema = new Schema({
 },
 { timestamps: true },
 );
-RecipeSchema.index(
-  { title: 'text', categories: 'text', 'ingredients.name': 'text' },
-  { default_language: 'german' },
-);
 
 const Recipe = mongoose.model('Recipe', RecipeSchema);
 module.exports = Recipe;
@@ -37,30 +33,35 @@ module.exports.getRecipeById = id => Recipe.findById(id);
 module.exports.getAllRecipes = () => Recipe.find({}).lean();
 
 const convertSearch = (searchString) => {
-  const terms = searchString.split(',');
-  const mapped = terms.map(term => `"${term}"`);
-  return mapped.join(' ');
+  const terms = searchString.split(',').map(str => str.trim());
+  return {
+    $and: terms.map(term => ({
+      $or: [
+        { title: { $regex: new RegExp(term, 'gi') } },
+        { categories: { $regex: new RegExp(term, 'gi') } },
+        { 'ingredients.name': { $regex: new RegExp(term, 'gi') } },
+      ],
+    })),
+  };
 };
 
 module.exports.getCount = (search) => {
   const query = search
-    ? { $text: { $search: convertSearch(search) } }
+    ? convertSearch(search)
     : {};
   return Recipe.countDocuments(query);
 };
 
 module.exports.getPage = async (page, limit, search) => {
   const query = search
-    ? { $text: { $search: convertSearch(search) } }
+    ? convertSearch(search)
     : {};
-  const recipes = await Recipe
-    .find(query, { score: { $meta: 'textScore' } })
+  return Recipe
+    .find(query)
     .limit(limit)
     .skip((page - 1) * limit)
-    .sort(search ? { score: { $meta: 'textScore' } } : '-createdAt')
     .select('_id title image categories')
     .lean();
-  return recipes.map(({ score, ...recipe }) => recipe);
 };
 
 module.exports.lastUpdated = async () => (
