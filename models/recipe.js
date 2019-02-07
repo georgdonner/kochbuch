@@ -61,6 +61,7 @@ module.exports.getPage = async (page, limit, search) => {
     .limit(limit)
     .skip((page - 1) * limit)
     .select('_id title image categories')
+    .sort({ createdAt: 'desc' })
     .lean();
 };
 
