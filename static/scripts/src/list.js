@@ -9,7 +9,7 @@ const getListCode = () => {
 
 const getList = () => (
   Array.from(document.querySelectorAll('.item'))
-    .map(node => node.innerText)
+    .map(node => node.innerText.trim())
 );
 
 const updateList = list => (
@@ -80,6 +80,14 @@ function showToast(item) {
 }
 
 const init = () => {
+  // eslint-disable-next-line no-undef
+  Sortable.create(document.querySelector('.list'), {
+    draggable: '.item-wrapper',
+    filter: 'button, .checkmark',
+    onUpdate: () => {
+      updateList(getList());
+    },
+  });
   const input = document.querySelector('#new-item input');
   if (input) {
     input.addEventListener('keypress', ({ key, target }) => {
