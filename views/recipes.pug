@@ -16,16 +16,17 @@ html(lang="de")
       }
   body
     if session.authenticated
-      - var page = 'index'
-      include includes/nav.pug
-    if session.authenticated
       a#new-recipe(href="/recipes/new") +
-    div#list-wrapper
+    #fixed-wrapper
+      if session.authenticated
+        - var page = 'index'
+        include includes/nav.pug
       div#searchbar
         div#search-input
           svg.icon.icon-search
             use(xlink:href='#icon-search')
           input(type="search", name="search", placeholder="Suche nach Zutaten, Kategorien oder Titel...")
+    div#list-wrapper
       div#recipe-list
         noscript Kann Rezepte ohne Javascript nicht darstellen
     include includes/search-icon.pug
