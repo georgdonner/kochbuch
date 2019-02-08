@@ -148,6 +148,7 @@ const init = () => {
         const listNode = document.getElementById('recipe-list');
         listNode.innerHTML = '';
         fetchAndRenderRecipes();
+        target.blur();
       }
     }
   });
