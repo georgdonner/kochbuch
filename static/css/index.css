@@ -37,13 +37,35 @@ html, body {
   background: #fff;
 }
 
-#searchbar input {
+#search-input {
+  display: flex;
+  align-items: center;
   width: 100%;
   max-width: 1200px;
   padding: 1.5rem 0;
-  font-size: 1.25rem;
+}
+
+.icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  stroke-width: 0;
+  stroke: currentColor;
+  fill: currentColor;
+}
+
+.icon.icon-search {
+  color: #b2b2b2;
+  width: 1.75rem;
+  height: 1.75rem;
+  margin-right: .75rem;
+}
+
+#searchbar input {
+  flex-grow: 1;
   border: none;
   font-family: 'Open Sans', sans-serif;
+  font-size: 1.25rem;
 }
 
 /* Fix for Safari */

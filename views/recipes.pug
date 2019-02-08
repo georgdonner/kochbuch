@@ -22,7 +22,11 @@ html(lang="de")
       a#new-recipe(href="/recipes/new") +
     div#list-wrapper
       div#searchbar
-        input(type="search", name="search", placeholder="Suche nach Zutaten, Kategorien oder Titel...")
+        div#search-input
+          svg.icon.icon-search
+            use(xlink:href='#icon-search')
+          input(type="search", name="search", placeholder="Suche nach Zutaten, Kategorien oder Titel...")
       div#recipe-list
         noscript Kann Rezepte ohne Javascript nicht darstellen
+    include includes/search-icon.pug
     script(src="scripts/lib/recipes.js")
