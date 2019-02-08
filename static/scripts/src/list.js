@@ -61,7 +61,7 @@ function showToast(item) {
   toast.classList.add('visible');
   toast.innerHTML = `
     <span>${item} entfernt.</span>
-    <button>Rückgänging</button>
+    <button>Rückgängig</button>
   `;
   toast.querySelector('button').addEventListener('click', () => {
     const list = getList().concat([item]);
