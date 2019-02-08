@@ -174,9 +174,12 @@ input[type="search"]::-webkit-search-decoration {
   #recipe-list {
     grid-template-columns: 1fr 1fr;
   }
-  #searchbar input {
+  #search-input {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+  .icon.icon-search {
+    margin-right: .5rem;
   }
 }
 @media only screen and (max-width: 600px) {
