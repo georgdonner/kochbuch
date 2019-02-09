@@ -82,6 +82,7 @@ function showToast(item) {
 const init = () => {
   // eslint-disable-next-line no-undef
   Sortable.create(document.querySelector('.list'), {
+    delay: 250,
     draggable: '.item-wrapper',
     filter: 'button, .checkmark',
     onUpdate: () => {
