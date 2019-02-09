@@ -48,6 +48,10 @@ html, body {
   padding: 1rem;
 }
 
+.chosen {
+  background: #fafafa;
+}
+
 .input-container {
   width: 100%;
   box-sizing: border-box;

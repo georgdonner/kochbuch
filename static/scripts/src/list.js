@@ -85,6 +85,7 @@ const init = () => {
     delay: 250,
     draggable: '.item-wrapper',
     filter: 'button, .checkmark',
+    chosenClass: 'chosen',
     onUpdate: () => {
       updateList(getList());
     },
