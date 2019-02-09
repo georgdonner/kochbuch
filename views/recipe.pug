@@ -5,8 +5,9 @@ html(lang="de")
     include includes/meta.pug
     link(rel="stylesheet", href="/css/recipe.css")
   body
-    - var page = 'index'
-    include includes/nav.pug
+    if session.authenticated
+      - var page = 'index'
+      include includes/nav.pug
     #top-bar-container
       #top-bar
         button#back(href="/")
