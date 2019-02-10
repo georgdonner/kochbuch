@@ -4,6 +4,10 @@ html, body {
   font-family: 'Merriweather', serif;
 }
 
+#nav-wrapper {
+  max-width: 1000px !important;
+}
+
 #top-bar-container {
   background: #fff;
   width: 100%;

@@ -5,17 +5,18 @@ nav
       svg.icon.icon-menu
         use(xlink:href='#icon-menu')
     div#current-page= pages[page]
-    div#right-buttons
+    div.right-buttons
   #nav-wrapper
     a(href="/", class=page === 'index' ? 'active' : '') Rezepte
     a(href="/list", class=page === 'list' ? 'active' : '') Einkaufsliste
     a(href="/plan", class=page === 'plan' ? 'active' : '') Wochenplan
+    div.right-buttons
 style
   include nav.css
 script.
-  const button = document.querySelector('#menu button');
+  const button = document.querySelector('.menu-button');
   const nav = document.getElementById('nav-wrapper');
-  const navText = document.querySelector('#menu div');
+  const navText = document.getElementById('current-page');
   button.addEventListener('click', function() {
     nav.classList.toggle('open');
     navText.classList.toggle('hidden');

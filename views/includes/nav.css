@@ -8,22 +8,28 @@ nav {
 }
 
 #nav-wrapper {
+  position: relative;
   max-width: 1200px;
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
   margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+#nav-wrapper a {
+  padding-right: 3rem;
 }
 
 #nav-wrapper a, #menu #current-page {
   color: #666;
-  padding: 1rem 0;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
   font-family: 'Open Sans', sans-serif;
   font-size: 1rem;
   font-weight: 700;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
-  transition: all .5s ease;
+  transition: all .3s ease;
 }
 
 #menu {
@@ -47,15 +53,20 @@ nav {
   display: none;
 }
 
-#menu button {
+nav button {
   border: none;
   background: inherit;
   font-size: 1.3rem;
   line-height: 1;
+  transition: all .3s ease;
   cursor: pointer;
 }
 
-#menu .icon {
+nav button:hover {
+  color: #666;
+}
+
+nav .icon {
   display: inline-block;
   width: 1em;
   height: 1em;
@@ -64,7 +75,7 @@ nav {
   fill: currentColor;
 }
 
-#right-buttons {
+.right-buttons {
   position: absolute;
   top: 1rem;
   right: 1rem;
@@ -86,7 +97,9 @@ nav {
 @media only screen and (max-width: 600px) {
   #nav-wrapper {
     display: none;
-    grid-template-columns: 1fr;
+  }
+  #nav-wrapper a {
+    padding-right: 0;
   }
   #menu {
     display: flex;

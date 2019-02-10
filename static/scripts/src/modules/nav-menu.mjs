@@ -1,6 +1,6 @@
 const addButton = (icon, onClick) => {
-  const buttonContainer = document.getElementById('right-buttons');
-  if (buttonContainer) {
+  const buttonContainers = document.getElementsByClassName('right-buttons');
+  Array.from(buttonContainers).forEach((buttonContainer) => {
     const button = document.createElement('button');
     button.innerHTML = `
     <svg class="icon icon-${icon}">
@@ -9,7 +9,7 @@ const addButton = (icon, onClick) => {
     `;
     button.addEventListener('click', onClick);
     buttonContainer.appendChild(button);
-  }
+  });
 };
 
 export default (buttons) => {
