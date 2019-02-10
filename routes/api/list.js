@@ -13,9 +13,9 @@ const checkListAuth = (req, res, next) => {
 };
 
 // Get Shopping List
-router.get('/list/:name', checkListAuth, async (req, res) => {
+router.get('/list', checkListAuth, async (req, res) => {
   try {
-    const list = await Shoppinglist.getByName(req.params.name);
+    const list = await Shoppinglist.getByName(req.session.listCode);
     return res.json(list);
   } catch (error) {
     return res.send(error);
@@ -34,23 +34,20 @@ router.post('/lists', checkAuth, async (req, res) => {
 });
 
 // Update Shopping List
-router.put('/list/:name', checkListAuth, async (req, res) => {
+router.put('/list', checkListAuth, async (req, res) => {
   try {
     const updList = new Shoppinglist({ ...req.body });
     const newData = updList.toObject();
     delete newData._id;
-    const list = await Shoppinglist.updateList(req.params.name, newData);
+    const list = await Shoppinglist.updateList(req.session.listCode, newData);
     return res.json(list);
   } catch (error) {
     return res.send(error);
   }
 });
 
-router.post('/list/:name', checkListAuth, async (req, res) => {
+router.post('/list', checkListAuth, async (req, res) => {
   try {
-    if (!req.session.listCode) {
-      return res.sendStatus(401);
-    }
     const updated = await Shoppinglist.addItem(req.session.listCode, req.body.item);
     return res.json(updated);
   } catch (error) {

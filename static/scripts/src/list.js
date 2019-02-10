@@ -15,18 +15,13 @@ addMenuButtons([
 // item that is currently edited
 let currentlyEditing = null;
 
-const getListCode = () => {
-  const list = document.querySelector('.list');
-  return list.dataset.code;
-};
-
 const getList = () => (
   Array.from(document.querySelectorAll('.item'))
     .map(node => node.innerText.trim())
 );
 
 const updateList = list => (
-  fetch(`/api/list/${getListCode()}`, {
+  fetch('/api/list', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -83,16 +78,19 @@ function removeItem({ target }) {
 }
 
 const init = () => {
-  // eslint-disable-next-line no-undef
-  Sortable.create(document.querySelector('.list'), {
-    delay: 250,
-    draggable: '.item-wrapper',
-    filter: 'button, .checkmark',
-    chosenClass: 'chosen',
-    onUpdate: () => {
-      updateList(getList());
-    },
-  });
+  const listEl = document.querySelector('.list');
+  if (listEl) {
+    // eslint-disable-next-line no-undef
+    Sortable.create(listEl, {
+      delay: 250,
+      draggable: '.item-wrapper',
+      filter: 'button, .checkmark',
+      chosenClass: 'chosen',
+      onUpdate: () => {
+        updateList(getList());
+      },
+    });
+  }
   const input = document.querySelector('#new-item input');
   if (input) {
     input.addEventListener('keypress', ({ key, target }) => {

@@ -73,19 +73,21 @@ router.get('/recipe/:id', async (req, res) => {
 router.get('/list', checkAuth, async (req, res) => {
   try {
     const { code } = req.query;
-    if (code) {
-      req.session.listCode = code;
-    }
     let list = null;
     if (req.session.listCode) {
       list = await Shoppinglist.getByName(req.session.listCode);
+    } else if (code) {
+      list = await Shoppinglist.getByName(code);
+      if (!list) {
+        list = await Shoppinglist.addList(code);
+      }
+      req.session.listCode = code;
     }
-    res.render('list', {
+    return res.render('list', {
       list: list ? list.list : null,
-      code: req.session.listCode,
     });
   } catch (error) {
-    res.send(error);
+    return res.send(error);
   }
 });
 
@@ -115,20 +117,23 @@ const getWeek = (plan, offset = 0) => {
 router.get('/plan', checkAuth, async (req, res) => {
   try {
     const { code, week = 0 } = req.query;
-    if (code) {
-      req.session.planCode = code;
-    }
     let entries = null;
     if (req.session.planCode) {
       entries = await Weekplan.getWeek(req.session.planCode, +week);
+    } else if (code) {
+      entries = await Weekplan.getWeek(code, +week);
+      if (!entries) {
+        await Weekplan.addPlan(code);
+        entries = [];
+      }
+      req.session.planCode = code;
     }
-    res.render('plan', {
+    return res.render('plan', {
       week: entries ? getWeek(entries, +week) : null,
       offset: +week,
-      code: req.session.planCode,
     });
   } catch (error) {
-    res.send(error);
+    return res.send(error);
   }
 });
 
@@ -151,7 +156,6 @@ router.get('/plan/new', checkAuth, async (req, res) => {
       time: '19:30',
       servings: 2,
       custom: '',
-      code: req.session.planCode,
     };
     if (recipe) {
       const recipeObj = await Recipe.findById(recipe);
@@ -186,7 +190,6 @@ router.get('/plan/edit', checkAuth, async (req, res) => {
       servings: entry.servings,
       custom: entry.custom,
       recipe: entry.recipe,
-      code: req.session.planCode,
     });
   } catch (error) {
     res.send(error);

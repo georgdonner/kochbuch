@@ -16,7 +16,7 @@ module.exports = Shoppinglist;
 
 module.exports.getByName = name => Shoppinglist.findOne({ name });
 
-module.exports.addList = list => list.save();
+module.exports.addList = name => Shoppinglist.create({ name });
 
 module.exports.updateList = (name, list) => (
   Shoppinglist.findOneAndUpdate({ name }, list, { upsert: true, new: true })

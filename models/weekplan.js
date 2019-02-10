@@ -24,13 +24,9 @@ const WeekplanSchema = new Schema({
 const Weekplan = mongoose.model('Weekplan', WeekplanSchema);
 module.exports = Weekplan;
 
-module.exports.getPlanByName = (name, callback) => {
-  Weekplan.findOne({ name }, callback);
-};
+module.exports.getPlanByName = name => Weekplan.findOne({ name });
 
-module.exports.addPlan = (newPlan, callback) => {
-  newPlan.save(callback);
-};
+module.exports.addPlan = name => Weekplan.create({ name });
 
 module.exports.updatePlan = (name, newPlan, callback) => {
   Weekplan.findOneAndUpdate({ name }, newPlan, { upsert: true, new: true }, callback);

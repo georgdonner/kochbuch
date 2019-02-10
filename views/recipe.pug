@@ -47,7 +47,7 @@ html(lang="de")
               button.down -
               span#servings(data-original=recipe.servings)= servings
               button.up +
-          ul#ingredients(data-listcode=session.listCode)
+          ul#ingredients
             each ingr in recipe.ingredients
               li
                 .content

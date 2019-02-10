@@ -17,7 +17,6 @@ addMenuButtons([
 const getCurrentServings = () => Number(document.getElementById('servings').innerText);
 
 const ORIG_SERVINGS = Number(document.getElementById('servings').dataset.original);
-const listCode = document.getElementById('ingredients').dataset.listcode;
 
 const updateServings = (change = 0) => {
   const newServings = getCurrentServings() + change;
@@ -37,7 +36,7 @@ const updateIngredients = (newServings) => {
 };
 
 const addToList = (item) => {
-  fetch(`/api/list/${listCode}`, {
+  fetch('/api/list', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -52,7 +51,8 @@ const addToList = (item) => {
 
 const addCartListeners = () => {
   const longClick = 1000; // ms
-  if (listCode) {
+  const addToCartButtons = document.querySelectorAll('button.cart');
+  if (addToCartButtons) {
     const ingredientsLis = document.querySelectorAll('#ingredients .content');
     ingredientsLis.forEach((ingredientLi) => {
       let start;
@@ -66,7 +66,6 @@ const addCartListeners = () => {
         }
       });
     });
-    const addToCartButtons = document.querySelectorAll('button.cart');
     addToCartButtons.forEach((button) => {
       button.addEventListener('click', () => {
         const item = button.parentNode.innerText.trim();

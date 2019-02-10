@@ -1,4 +1,3 @@
-const planCode = document.getElementById('plan-form').dataset.code;
 const recipeSearch = document.getElementById('recipe');
 let selectedRecipe = null;
 
@@ -66,7 +65,7 @@ const getEntry = () => {
 
 const saveEntry = () => {
   const entry = getEntry();
-  let url = `/api/plan/${planCode}`;
+  let url = '/api/plan';
   const isNew = window.location.pathname.split('/')[2] === 'new';
   if (!isNew) {
     url += `/${entry._id}`;
@@ -84,7 +83,7 @@ const saveEntry = () => {
 
 const deleteEntry = () => {
   const entry = getEntry();
-  const url = `/api/plan/${planCode}/${entry._id}`;
+  const url = `/api/plan/${entry._id}`;
   fetch(url, { method: 'DELETE' }).then(() => {
     window.location.replace(document.referrer);
   });
