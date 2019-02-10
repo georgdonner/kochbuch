@@ -1,4 +1,17 @@
+import addMenuButtons from './modules/nav-menu.mjs';
 import { showToast } from './modules/toast.mjs';
+
+addMenuButtons([
+  {
+    icon: 'keep_awake',
+    onClick: () => {
+      // eslint-disable-next-line no-undef
+      new NoSleep().enable();
+      showToast('Einkaufsmodus aktiviert!');
+    },
+  },
+]);
+
 // item that is currently edited
 let currentlyEditing = null;
 
@@ -59,11 +72,11 @@ function removeItem({ target }) {
     button: {
       text: 'Rückgängig',
       onClick: (e, toast) => {
-    const list = getList().concat([item]);
-    updateList(list).then(() => {
-      addItem(item);
-      toast.classList.remove('visible');
-    });
+        const list = getList().concat([item]);
+        updateList(list).then(() => {
+          addItem(item);
+          toast.classList.remove('visible');
+        });
       },
     },
   });

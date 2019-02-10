@@ -1,10 +1,11 @@
 - var pages = { index: 'Rezepte', list: 'Einkaufsliste', plan: 'Wochenplan' }
 nav
   #menu
-    button
+    button.menu-button
       svg.icon.icon-menu
         use(xlink:href='#icon-menu')
-    div= pages[page]
+    div#current-page= pages[page]
+    div#right-buttons
   #nav-wrapper
     a(href="/", class=page === 'index' ? 'active' : '') Rezepte
     a(href="/list", class=page === 'list' ? 'active' : '') Einkaufsliste

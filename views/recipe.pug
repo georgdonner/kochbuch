@@ -5,6 +5,7 @@ html(lang="de")
     include includes/meta.pug
     link(rel="stylesheet", href="/css/recipe.css")
     script(type="module" src="/scripts/src/modules/toast.mjs")
+    script(async src="/scripts/nosleep.js")
   body
     if session.authenticated
       - var page = 'index'
@@ -66,4 +67,4 @@ html(lang="de")
     div#toast
     script(src="/scripts/src/recipe.js")
     include includes/arrow-icon.pug
-    include includes/cart-icon.pug
+    include includes/add-cart-icon.pug

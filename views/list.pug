@@ -4,7 +4,9 @@ html(lang="de")
     title Einkaufsliste
     include includes/meta.pug
     link(rel="stylesheet", href="/css/list.css")
+    script(type="module" src="/scripts/src/modules/nav-menu.mjs")
     script(type="module" src="/scripts/src/modules/toast.mjs")
+    script(async src="/scripts/nosleep.js")
     script(async src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js")
   body
     - var page = 'list'
@@ -34,4 +36,5 @@ html(lang="de")
                         use(xlink:href='#icon-pencil')
         div#toast
     script(type="module" src="/scripts/src/list.js")
+    include includes/keep-awake-icon.pug
     include includes/edit-icon.pug
