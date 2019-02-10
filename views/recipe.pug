@@ -4,6 +4,7 @@ html(lang="de")
     title= recipe.title
     include includes/meta.pug
     link(rel="stylesheet", href="/css/recipe.css")
+    script(type="module" src="/scripts/src/modules/toast.mjs")
   body
     if session.authenticated
       - var page = 'index'

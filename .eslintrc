@@ -16,11 +16,13 @@
     "import"
   ],
   "rules": {
-    "linebreak-style": 0,
     "function-paren-newline": 0,
+    "linebreak-style": 0,
     "no-console": [2, { "allow": ["warn", "error"] } ],
     "no-confusing-arrow": 0,
     "no-unused-expressions": [2, { "allowTernary": true }],
-    "no-underscore-dangle": [0, { "allow": ["_id"] }]
+    "no-underscore-dangle": [0, { "allow": ["_id"] }],
+    "import/extensions": 0,
+    "import/prefer-default-export": 0
   }
 }

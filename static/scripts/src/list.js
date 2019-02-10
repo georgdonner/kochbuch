@@ -1,6 +1,6 @@
+import { showToast } from './modules/toast.mjs';
 // item that is currently edited
 let currentlyEditing = null;
-let lastToast = null;
 
 const getListCode = () => {
   const list = document.querySelector('.list');
@@ -21,12 +21,6 @@ const updateList = list => (
     body: JSON.stringify({ list }),
   })
 );
-
-const removeItem = ({ target }) => {
-  target.parentNode.parentNode.remove();
-  updateList(getList());
-  showToast(target.parentNode.innerText); // eslint-disable-line
-};
 
 const onEditButtonClick = (button) => {
   currentlyEditing = button.parentNode.querySelector('span');
@@ -50,33 +44,29 @@ const addItem = (item) => {
   `;
   const list = document.querySelector('.list');
   list.appendChild(wrapper);
+  // eslint-disable-next-line no-use-before-define
   wrapper.querySelector('.checkmark').addEventListener('click', removeItem);
   const editButton = wrapper.querySelector('.item button');
   editButton.addEventListener('click', () => onEditButtonClick(editButton));
 };
 
-function showToast(item) {
-  const toast = document.getElementById('toast');
-  toast.innerHTML = '';
-  toast.classList.add('visible');
-  toast.innerHTML = `
-    <span>${item} entfernt.</span>
-    <button>Rückgängig</button>
-  `;
-  toast.querySelector('button').addEventListener('click', () => {
+function removeItem({ target }) {
+  target.parentNode.parentNode.remove();
+  updateList(getList());
+  const item = target.parentNode.innerText;
+  showToast(`${item} entfernt.`, {
+    duration: 10000,
+    button: {
+      text: 'Rückgängig',
+      onClick: (e, toast) => {
     const list = getList().concat([item]);
     updateList(list).then(() => {
       addItem(item);
       toast.classList.remove('visible');
     });
+      },
+    },
   });
-  const added = Date.now();
-  lastToast = added;
-  setTimeout(() => {
-    if (lastToast === added) {
-      toast.classList.remove('visible');
-    }
-  }, 10000);
 }
 
 const init = () => {

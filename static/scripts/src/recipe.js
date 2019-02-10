@@ -1,9 +1,10 @@
+import { showToast } from './modules/toast.mjs';
+
 /* eslint-disable camelcase, no-use-before-define */
 const getCurrentServings = () => Number(document.getElementById('servings').innerText);
 
 const ORIG_SERVINGS = Number(document.getElementById('servings').dataset.original);
 const listCode = document.getElementById('ingredients').dataset.listcode;
-let lastToast = null;
 
 const updateServings = (change = 0) => {
   const newServings = getCurrentServings() + change;
@@ -20,19 +21,6 @@ const updateIngredients = (newServings) => {
     // eslint-disable-next-line no-param-reassign
     node.innerText = newText;
   });
-};
-
-const showToast = (message, duration = 3000) => {
-  const toast = document.getElementById('toast');
-  toast.classList.add('visible');
-  toast.innerText = message;
-  const added = Date.now();
-  lastToast = added;
-  setTimeout(() => {
-    if (lastToast === added) {
-      toast.classList.remove('visible');
-    }
-  }, duration);
 };
 
 const addToList = (item) => {
