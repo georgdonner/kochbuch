@@ -27,7 +27,6 @@ I use the fantastic service of [Uploadcare](https://uploadcare.com/) to handle t
 ### Development server
 
 - `npm install` to install all required packages.
-- `npm run build` or `npm run build:watch` to transpile the frontend JavaScript for older browsers.
 - `npm start` to start the server.
 
 For service workers and PWAs to work properly, HTTPS is required. That's why all http traffic gets redirected. For that to work on localhost, make sure `NODE_ENV` is set to `development` before starting the server and you have a trusted *.crt* and *.key* file in the `certs` folder.

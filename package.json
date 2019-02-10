@@ -1,14 +1,10 @@
 {
   "name": "kochbuch",
   "version": "1.0.0",
-  "description": "This project uses a MEAN stack (MongoDB, Express, Angular, Node.js) and the front-end was generated using the [Angular CLI](https://cli.angular.io/).",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "build": "babel static/scripts/src -d static/scripts/lib",
-    "build:watch": "babel -w static/scripts/src -d static/scripts/lib",
-    "lint": "eslint . --ignore-path .gitignore",
-    "heroku-postbuild": "npm run build"
+    "lint": "eslint . --ignore-path .gitignore"
   },
   "repository": {
     "type": "git",

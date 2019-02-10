@@ -28,8 +28,8 @@ self.addEventListener('install', () => {
 
 self.addEventListener('activate', (e) => {
   const assets = [
-    '/css/recipe.css', '/scripts/lib/recipe.js',
-    '/list', '/css/list.css', '/scripts/lib/list.js',
+    '/css/recipe.css', '/scripts/src/recipe.js',
+    '/list', '/css/list.css', '/scripts/src/list.js',
     '/offline',
   ];
   e.waitUntil(
