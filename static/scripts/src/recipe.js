@@ -1,5 +1,17 @@
 import { showToast } from './modules/toast.mjs';
 import calcServings from './modules/calc-servings.mjs';
+import addMenuButtons from './modules/nav-menu.mjs';
+
+addMenuButtons([
+  {
+    icon: 'keep_awake',
+    onClick: () => {
+      // eslint-disable-next-line no-undef
+      new NoSleep().enable();
+      showToast('Kochmodus aktiviert!');
+    },
+  },
+]);
 
 /* eslint-disable no-use-before-define */
 const getCurrentServings = () => Number(document.getElementById('servings').innerText);
@@ -84,14 +96,16 @@ const init = () => {
   upButton.addEventListener('click', () => updateServings(1));
   addCartListeners();
   const cookingModeButton = document.getElementById('cooking-mode');
-  // eslint-disable-next-line no-undef
-  const noSleep = new NoSleep();
-  const preventSleep = () => {
-    noSleep.enable();
-    cookingModeButton.remove();
-    showToast('Kochmodus aktiviert!');
-  };
-  cookingModeButton.addEventListener('click', preventSleep, false);
+  if (cookingModeButton) {
+    // eslint-disable-next-line no-undef
+    const noSleep = new NoSleep();
+    const preventSleep = () => {
+      noSleep.enable();
+      cookingModeButton.remove();
+      showToast('Kochmodus aktiviert!');
+    };
+    cookingModeButton.addEventListener('click', preventSleep, false);
+  }
 };
 
 init();
