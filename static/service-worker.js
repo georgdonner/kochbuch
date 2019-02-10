@@ -30,6 +30,8 @@ self.addEventListener('activate', (e) => {
   const assets = [
     '/css/recipe.css', '/scripts/src/recipe.js',
     '/list', '/css/list.css', '/scripts/src/list.js',
+    '/scripts/src/modules/calc-servings.mjs', '/scripts/src/modules/toast.mjs',
+    '/scripts/src/modules/nav-menu.mjs',
     '/offline',
   ];
   e.waitUntil(
