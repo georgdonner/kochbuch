@@ -7,6 +7,7 @@ const { markdown } = require('markdown');
 
 const router = express.Router();
 
+const checkAuth = require('./helpers/check-auth');
 const Recipe = require('../models/recipe');
 const Shoppinglist = require('../models/shoppinglist');
 const Weekplan = require('../models/weekplan');
@@ -19,13 +20,6 @@ const defaultRecipe = {
   ingredients: [],
   description: '',
   categories: [],
-};
-
-const checkAuth = (req, res, next) => {
-  if (req.session.authenticated) {
-    return next();
-  }
-  return res.sendStatus(401);
 };
 
 router.get('/login', (req, res) => {
