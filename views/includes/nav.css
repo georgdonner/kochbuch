@@ -91,13 +91,16 @@ nav .icon {
   color: #ef6461;
 }
 
-.right-buttons button:hover {
-  color: #ef6461;
+@media (hover: hover) {
+  .right-buttons button:hover {
+    color: #ef6461;
+  }
+  
+  .right-buttons button.active:hover {
+    color: #666;
+  }
 }
 
-.right-buttons button.active:hover {
-  color: #666;
-}
 
 #nav-wrapper.open {
   display: grid;
