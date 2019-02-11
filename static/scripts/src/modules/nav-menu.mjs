@@ -1,4 +1,4 @@
-const addButton = (icon, onClick) => {
+const addButton = (icon, onClick, hasActiveState = false) => {
   const buttonContainers = document.getElementsByClassName('right-buttons');
   Array.from(buttonContainers).forEach((buttonContainer) => {
     const button = document.createElement('button');
@@ -7,13 +7,18 @@ const addButton = (icon, onClick) => {
       <use xlink:href="#icon-${icon}"></use>
     </svg>
     `;
-    button.addEventListener('click', onClick);
+    button.addEventListener('click', () => {
+      onClick(button);
+      if (hasActiveState) {
+        button.classList.toggle('active');
+      }
+    });
     buttonContainer.appendChild(button);
   });
 };
 
 export default (buttons) => {
   buttons.forEach((button) => {
-    addButton(button.icon, button.onClick);
+    addButton(button.icon, button.onClick, button.hasActiveState);
   });
 };

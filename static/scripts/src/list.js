@@ -1,14 +1,22 @@
 import addMenuButtons from './modules/nav-menu.mjs';
 import { showToast } from './modules/toast.mjs';
 
+// eslint-disable-next-line no-undef
+const noSleep = new NoSleep();
+
 addMenuButtons([
   {
     icon: 'keep_awake',
-    onClick: () => {
-      // eslint-disable-next-line no-undef
-      new NoSleep().enable();
-      showToast('Einkaufsmodus aktiviert!');
+    onClick: (button) => {
+      if (button.classList.contains('active')) {
+        noSleep.disable();
+        showToast('Kochmodus deaktiviert - Display kann sich wieder automatisch ausschalten');
+      } else {
+        noSleep.enable();
+        showToast('Kochmodus aktiviert - Display schaltet sich nicht automatisch aus');
+      }
     },
+    hasActiveState: true,
   },
 ]);
 

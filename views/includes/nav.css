@@ -63,7 +63,7 @@ nav button {
 }
 
 nav button:hover {
-  color: #666;
+  color: #000;
 }
 
 nav .icon {
@@ -80,6 +80,23 @@ nav .icon {
   top: 1rem;
   right: 1.5rem;
   line-height: 1;
+}
+
+.right-buttons button {
+  color: #666;
+  transition: all .3s ease;
+}
+
+.right-buttons button.active {
+  color: #ef6461;
+}
+
+.right-buttons button:hover {
+  color: #ef6461;
+}
+
+.right-buttons button.active:hover {
+  color: #666;
 }
 
 #nav-wrapper.open {
