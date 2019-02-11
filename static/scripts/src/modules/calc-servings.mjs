@@ -51,7 +51,7 @@ export default function calcServings(ingredientName, origServings, newServings) 
     const validMetric = /\d+\s?(g|kg|ml|l)\s+/i;
 
     if (!ingr.match(validMetric)) {
-      return ingr;
+      return ingr.replace(getQuantityString(ingr), newQty.toString());
     }
     const metricString = ingr.match(validMetric)[0];
 
@@ -60,7 +60,7 @@ export default function calcServings(ingredientName, origServings, newServings) 
       return ingr
         .replace(getQuantityString(ingr), newQty / 1000)
         .replace(/[g]/i, 'kg');
-    } if (metricString.match(/[k][g]/i) && newQty < 1000) {
+    } if (metricString.match(/[k][g]/i) && newQty < 1) {
       return ingr
         .replace(getQuantityString(ingr), newQty * 1000)
         .replace(/[k][g]/i, 'g');
@@ -68,12 +68,12 @@ export default function calcServings(ingredientName, origServings, newServings) 
       return ingr
         .replace(getQuantityString(ingr), newQty / 1000)
         .replace(/[m][l]/i, 'l');
-    } if (metricString.match(/[^m][l]/i) && newQty < 1000) {
+    } if (metricString.match(/[^m][l]/i) && newQty < 1) {
       return ingr
         .replace(getQuantityString(ingr), newQty * 1000)
         .replace(/[l]/i, 'ml');
     }
-    return ingr;
+    return ingr.replace(getQuantityString(ingr), newQty.toString());
   };
 
   function beautifulNumber(num) {
@@ -91,7 +91,7 @@ export default function calcServings(ingredientName, origServings, newServings) 
       case 0.75:
         return quotient !== 0 ? `${quotient.toString()} \xBE` : '\xBE';
       default:
-        return num.toPrecision(3);
+        return parseFloat(num.toPrecision(2)).toString();
     }
   }
 
@@ -147,12 +147,14 @@ export default function calcServings(ingredientName, origServings, newServings) 
   const quantity = getQuantity(ingredientName);
   const newQuantity = quantity * (newServings / origServings);
   const converted = convertMetrics(ingredientName, quantity, newQuantity);
-  const formatted = origServings === newServings
-    ? beautifulNumber(quantity)
-    : beautifulNumber(newQuantity);
-  let name = quantity > 0
-    ? converted.replace(getQuantityString(ingredientName), formatted)
-    : ingredientName;
+  let name = ingredientName;
+  if (quantity > 0) {
+    const convertedQty = Number(getQuantityString(converted).replace(',', '.'));
+    const formatted = beautifulNumber(convertedQty);
+    name = converted
+      .replace(getQuantityString(converted), formatted)
+      .replace('.', ',');
+  }
   if (origServings !== newServings) {
     name = adjustEnding(name, quantity, newQuantity);
   }
