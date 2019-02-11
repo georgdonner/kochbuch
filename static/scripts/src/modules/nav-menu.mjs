@@ -7,7 +7,8 @@ const addButton = (icon, onClick, hasActiveState = false) => {
       <use xlink:href="#icon-${icon}"></use>
     </svg>
     `;
-    button.addEventListener('click', () => {
+    button.addEventListener('click', (e) => {
+      e.preventDefault();
       onClick(button);
       if (hasActiveState) {
         button.classList.toggle('active');

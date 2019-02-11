@@ -17,7 +17,8 @@ script.
   const button = document.querySelector('.menu-button');
   const nav = document.getElementById('nav-wrapper');
   const navText = document.getElementById('current-page');
-  button.addEventListener('click', function() {
+  button.addEventListener('click', (e) => {
+    e.preventDefault();
     nav.classList.toggle('open');
     navText.classList.toggle('hidden');
   });
