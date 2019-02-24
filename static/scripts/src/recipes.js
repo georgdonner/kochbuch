@@ -102,10 +102,13 @@ const renderRecipes = (recipes) => {
 
 const fetchAndRenderRecipes = () => {
   const listNode = document.getElementById('recipe-list');
+  const loader = document.getElementById('loader');
+  loader.classList.add('active');
   setState({ fetching: true });
   fetchRecipes()
     .then((recipes) => {
       setState({ pagesFetched: state.pagesFetched + 1, fetching: false });
+      loader.classList.remove('active');
       if (recipes.length > 0) {
         updateSessionStorage(recipes);
         renderRecipes(recipes);
@@ -137,8 +140,9 @@ const submitSearch = (input) => {
     window.sessionStorage.removeItem('recipes');
     const listNode = document.getElementById('recipe-list');
     listNode.innerHTML = '';
-    fetchAndRenderRecipes();
+
     input.blur();
+    fetchAndRenderRecipes();
   }
 };
 

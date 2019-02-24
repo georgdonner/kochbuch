@@ -34,7 +34,10 @@ html, body {
 }
 
 #list-wrapper {
-  width: 100%;  
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column; 
 }
 
 #searchbar {
@@ -168,6 +171,16 @@ input[type="search"]::-webkit-search-decoration {
   font-size: 12px;
   font-weight: 900;
   text-transform: uppercase;
+}
+
+#loader {
+  display: none;
+}
+
+#loader.active {
+  color: #333;
+  display: flex;
+  justify-content: center;
 }
 
 @media only screen and (max-width: 1200px) {
