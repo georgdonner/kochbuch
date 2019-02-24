@@ -129,6 +129,19 @@ const onScroll = () => {
   }
 };
 
+const submitSearch = (input) => {
+  if (input.value.toLowerCase() === 'login') {
+    window.location.assign('/login');
+  } else {
+    setState({ pagesFetched: 0, search: input.value });
+    window.sessionStorage.removeItem('recipes');
+    const listNode = document.getElementById('recipe-list');
+    listNode.innerHTML = '';
+    fetchAndRenderRecipes();
+    input.blur();
+  }
+};
+
 const init = () => {
   const recipesStr = window.sessionStorage.getItem('recipes');
   if (recipesStr) {
@@ -138,18 +151,21 @@ const init = () => {
   }
   const searchbar = document.querySelector('#searchbar input');
   searchbar.value = state.search;
+  let timeoutId = null;
   searchbar.addEventListener('keypress', ({ key, target }) => {
+    clearTimeout(timeoutId);
     if (key === 'Enter') {
-      if (target.value.toLowerCase() === 'login') {
-        window.location.assign('/login');
-      } else {
-        setState({ pagesFetched: 0, search: target.value });
-        window.sessionStorage.removeItem('recipes');
-        const listNode = document.getElementById('recipe-list');
-        listNode.innerHTML = '';
-        fetchAndRenderRecipes();
-        target.blur();
-      }
+      submitSearch(target);
+    } else {
+      timeoutId = setTimeout(() => {
+        submitSearch(target);
+      }, 2500);
+    }
+  });
+  searchbar.addEventListener('blur', ({ target }) => {
+    clearTimeout(timeoutId);
+    if (target.value !== state.search) {
+      submitSearch(target);
     }
   });
   window.addEventListener('scroll', onScroll);
