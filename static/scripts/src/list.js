@@ -67,21 +67,25 @@ const addItem = (item) => {
 };
 
 function removeItem({ target }) {
-  target.parentNode.parentNode.remove();
-  updateList(getList());
-  const item = target.parentNode.innerText;
-  showToast(`${item} entfernt.`, {
-    duration: 10000,
-    button: {
-      text: 'Rückgängig',
-      onClick: (e, toast) => {
-        const list = getList().concat([item]);
-        updateList(list).then(() => {
-          addItem(item);
-          toast.classList.remove('visible');
-        });
+  const wrapperNode = target.parentNode.parentNode;
+  const itemNode = target.parentNode.querySelector('.item');
+  const updated = getList().filter(entry => entry !== itemNode.innerText.trim());
+  updateList(updated).then(() => {
+    wrapperNode.remove();
+    const item = target.parentNode.innerText;
+    showToast(`${item} entfernt.`, {
+      duration: 10000,
+      button: {
+        text: 'Rückgängig',
+        onClick: (e, toast) => {
+          const list = getList().concat([item]);
+          updateList(list).then(() => {
+            addItem(item);
+            toast.classList.remove('visible');
+          });
+        },
       },
-    },
+    });
   });
 }
 
