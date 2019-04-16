@@ -20,11 +20,8 @@ function initDatabase() {
 }
 
 initDatabase();
-
-self.addEventListener('install', () => {
-  // eslint-disable-next-line no-undef
-  importScripts('/scripts/recipe-template.js');
-});
+// eslint-disable-next-line no-undef
+importScripts('/scripts/recipe-template.js');
 
 self.addEventListener('activate', (e) => {
   const assets = [

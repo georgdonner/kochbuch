@@ -4,8 +4,11 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "lint": "eslint . --ignore-path .gitignore"
+    "lint": "eslint .",
+    "templates": "node compile-templates.js"
   },
+  "pre-commit": "templates",
+  "eslintIgnore": [".eslintignore", ".gitignore"],
   "repository": {
     "type": "git",
     "url": "https://github.com/LinkinGeorge/georgs-recipes.git"
@@ -40,7 +43,8 @@
     "babel-eslint": "^10.0.1",
     "eslint": "^5.9.0",
     "eslint-config-airbnb-base": "^13.1.0",
-    "eslint-plugin-import": "^2.14.0"
+    "eslint-plugin-import": "^2.14.0",
+    "pre-commit": "^1.2.2"
   },
   "license": "ISC",
   "bugs": {
