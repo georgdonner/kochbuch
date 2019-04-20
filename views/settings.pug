@@ -1,0 +1,17 @@
+doctype html
+html(lang="de")
+  head
+    title Kochbuch - Einstellungen
+    include includes/meta.pug
+    link(rel="stylesheet", href="/css/settings.css")
+  body
+    - var page = 'settings'
+    include includes/nav.pug
+    #settings
+      h2 Einstellungen
+      form(action="/settings", method="get")
+        label(for="listCode") Einkaufslisten Code
+        input(type="text", name="listCode", value=session.listCode || '', placeholder="Einkaufslisten Code")
+        label(for="planCode") Wochenplan Code
+        input(type="text", name="planCode", value=session.planCode || '', placeholder="Wochenplan Code")
+        button(type="submit") Speichern

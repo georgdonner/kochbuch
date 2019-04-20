@@ -1,3 +1,12 @@
+import addMenuButtons from './modules/nav-menu.mjs';
+
+addMenuButtons([
+  {
+    icon: 'settings',
+    link: '/settings',
+  },
+]);
+
 const FETCH_AMOUNT = window.matchMedia('min-width: 1200px') ? 15 : 10;
 const stateStr = window.sessionStorage.getItem('state');
 const oldState = stateStr ? JSON.parse(stateStr) : {};

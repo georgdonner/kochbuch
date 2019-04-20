@@ -196,6 +196,33 @@ router.get('/plan/edit', checkAuth, async (req, res) => {
   }
 });
 
+router.get('/settings', checkAuth, async (req, res) => {
+  if (Object.keys(req.query).length === 0) {
+    return res.render('settings', { session: req.session });
+  }
+  const promises = Object.entries(req.query).map(async ([key, value]) => {
+    if (!value) {
+      delete req.session[key];
+    } else if (value !== req.session[key]) {
+      if (key === 'listCode') {
+        const list = await Shoppinglist.getByName(value);
+        if (!list) {
+          await Shoppinglist.addList(value);
+        }
+      } else if (key === 'planCode') {
+        const plan = await Weekplan.getPlanByName(value);
+        if (!plan) {
+          await Weekplan.addPlan(value);
+        }
+      }
+      req.session[key] = value;
+    }
+    return Promise.resolve();
+  });
+  await Promise.all(promises);
+  return res.redirect('/');
+});
+
 router.get('/offline', (req, res) => {
   res.render('offline');
 });
