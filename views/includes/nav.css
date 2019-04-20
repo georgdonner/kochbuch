@@ -15,11 +15,11 @@ nav {
   padding: 0 1.5rem;
 }
 
-#nav-wrapper a {
+#nav-wrapper > a {
   padding-right: 3rem;
 }
 
-#nav-wrapper a, #menu #current-page {
+#nav-wrapper > a, #menu #current-page {
   color: #666;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -53,7 +53,7 @@ nav {
   display: none;
 }
 
-nav button {
+nav button, nav .button {
   border: none;
   background: inherit;
   font-size: 1.3rem;
@@ -82,21 +82,22 @@ nav .icon {
   line-height: 1;
 }
 
-.right-buttons button {
+.right-buttons .button {
+  padding: 2px 7px;
   color: #666;
   transition: all .3s ease;
 }
 
-.right-buttons button.active {
+.right-buttons .button.active {
   color: #ef6461;
 }
 
 @media (hover: hover) {
-  .right-buttons button:hover {
+  .right-buttons .button:hover {
     color: #ef6461;
   }
   
-  .right-buttons button.active:hover {
+  .right-buttons .button.active:hover {
     color: #666;
   }
 }
@@ -106,11 +107,11 @@ nav .icon {
   display: grid;
 }
 
-#nav-wrapper a:hover {
+#nav-wrapper > a:hover {
   color: #000;
 }
 
-#nav-wrapper a.active {
+#nav-wrapper > a.active {
   color: #000;
 }
 
@@ -118,7 +119,7 @@ nav .icon {
   #nav-wrapper {
     display: none;
   }
-  #nav-wrapper a {
+  #nav-wrapper > a {
     padding-right: 0;
   }
   #menu {
