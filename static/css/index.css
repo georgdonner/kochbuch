@@ -103,9 +103,9 @@ input[type="search"]::-webkit-search-decoration {
 }
 
 .recipe-card {
+  display: flex;
+  flex-direction: column;
   border: 1px #d9d9d9 solid;
-  position: relative;
-  padding-bottom: 54px; /* make place for footer */
   background: #fff;
   cursor: pointer;
   color: inherit;
@@ -119,6 +119,7 @@ input[type="search"]::-webkit-search-decoration {
 }
 
 .recipe-card h2 {
+  flex-grow: 1;
   margin: 0;
   padding: 1.5rem;
   font-size: 1.5rem;
@@ -157,10 +158,6 @@ input[type="search"]::-webkit-search-decoration {
 }
 
 .recipe-card footer {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
   border-top: 1px solid #f2f2f2;
   padding: 1rem 0;
   margin: 0 1rem;
