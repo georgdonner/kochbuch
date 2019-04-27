@@ -83,6 +83,7 @@ nav .icon {
 }
 
 .right-buttons .nav-button {
+  padding: 0;
   color: #666;
   transition: all .3s ease;
 }
