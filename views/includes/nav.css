@@ -53,7 +53,7 @@ nav {
   display: none;
 }
 
-nav button, nav .button {
+nav button, nav .nav-button {
   border: none;
   background: inherit;
   font-size: 1.3rem;
@@ -82,22 +82,21 @@ nav .icon {
   line-height: 1;
 }
 
-.right-buttons .button {
-  padding: 2px 7px;
+.right-buttons .nav-button {
   color: #666;
   transition: all .3s ease;
 }
 
-.right-buttons .button.active {
+.right-buttons .nav-button.active {
   color: #ef6461;
 }
 
 @media (hover: hover) {
-  .right-buttons .button:hover {
+  .right-buttons .nav-button:hover {
     color: #ef6461;
   }
   
-  .right-buttons .button.active:hover {
+  .right-buttons .nav-button.active:hover {
     color: #666;
   }
 }
