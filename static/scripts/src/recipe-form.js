@@ -85,6 +85,13 @@ const getRecipe = () => {
   return recipe;
 };
 
+const promptLeave = (e) => {
+  // Cancel the event
+  e.preventDefault();
+  // Chrome requires returnValue to be set
+  e.returnValue = '';
+};
+
 const saveRecipe = () => {
   const recipe = getRecipe();
   let url = '/api/recipe';
@@ -102,6 +109,7 @@ const saveRecipe = () => {
   })
     .then(res => res.json())
     .then((saved) => {
+      window.removeEventListener('beforeunload', promptLeave);
       window.sessionStorage.removeItem('recipes');
       window.sessionStorage.removeItem('state');
       window.location.replace(`/recipe/${saved._id}`);
@@ -181,6 +189,8 @@ const init = () => {
   });
   // save recipe on button click
   document.getElementById('save').addEventListener('click', saveRecipe);
+  // prompt the user before leaving the site
+  window.addEventListener('beforeunload', promptLeave);
 };
 
 init();
