@@ -141,7 +141,7 @@ const init = () => {
   // add new ingredient on enter
   document.querySelectorAll('#new-ingredient input')
     .forEach((input) => {
-      input.addEventListener('keypress', ({ key }) => {
+      input.addEventListener('keydown', ({ key }) => {
         if (key === 'Enter') {
           addIngredient();
         }
@@ -163,7 +163,7 @@ const init = () => {
   }, false);
   // add category on enter
   const ctgInput = document.querySelector('#categories-container input');
-  ctgInput.addEventListener('keypress', ({ key, target }) => {
+  ctgInput.addEventListener('keydown', ({ key, target }) => {
     if (key === 'Enter') {
       addCategory(target.value);
     }

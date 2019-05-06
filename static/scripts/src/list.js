@@ -105,7 +105,7 @@ const init = () => {
   }
   const input = document.querySelector('#new-item input');
   if (input) {
-    input.addEventListener('keypress', ({ key, target }) => {
+    input.addEventListener('keydown', ({ key, target }) => {
       if (key === 'Enter') {
         if (currentlyEditing) {
           currentlyEditing.innerText = target.value;

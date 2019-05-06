@@ -97,7 +97,7 @@ const init = () => {
     };
     recipeSearch.parentNode.appendChild(createChangeButton());
   }
-  recipeSearch.addEventListener('keypress', ({ key, target }) => {
+  recipeSearch.addEventListener('keydown', ({ key, target }) => {
     if (key === 'Enter') {
       const results = document.getElementById('search-results');
       if (results) results.remove();

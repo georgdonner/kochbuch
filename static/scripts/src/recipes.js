@@ -165,7 +165,7 @@ const init = () => {
   const searchbar = document.querySelector('#searchbar input');
   searchbar.value = state.search;
   let timeoutId = null;
-  searchbar.addEventListener('keypress', ({ key, target }) => {
+  searchbar.addEventListener('keydown', ({ key, target }) => {
     clearTimeout(timeoutId);
     if (key === 'Enter') {
       submitSearch(target);
