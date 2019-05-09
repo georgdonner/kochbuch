@@ -51,34 +51,6 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-function matchRecipe(recipe, terms) {
-  // eslint-disable-next-line arrow-body-style
-  const matched = terms.filter((term) => {
-    return recipe.title.toLowerCase().includes(term)
-        || recipe.ingredients.find(ingr => ingr.name.toLowerCase().includes(term))
-        || recipe.categories.find(ctg => ctg.toLowerCase().includes(term));
-  });
-  return matched.length === terms.length;
-}
-
-function searchRecipes(query) {
-  return new Promise((resolve, reject) => {
-    if (!db) {
-      reject(new Error('No db found'));
-    }
-    const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
-    const req = store.getAll();
-    req.onsuccess = () => {
-      if (!query) {
-        resolve(req.result);
-      }
-      const terms = query.split(/,\s*/).map(term => term.toLowerCase());
-      const filtered = req.result.filter(recipe => matchRecipe(recipe, terms));
-      resolve(filtered);
-    };
-  });
-}
-
 function getRecipe(id) {
   return new Promise((resolve, reject) => {
     if (!db) {
@@ -103,20 +75,6 @@ function fetchRequest(request) {
     })
     .catch(() => caches.match(request).then((res) => {
       const url = new URL(request.url);
-      if (!res && url.origin === location.origin && url.pathname === '/api/recipes') {
-        // eslint-disable-next-line arrow-body-style
-        return searchRecipes(url.searchParams.get('search')).then((recipes) => {
-          const limit = +url.searchParams.get('limit') || 15;
-          const page = +url.searchParams.get('page') || 1;
-          const body = {
-            recipes: recipes.slice((page - 1) * limit, page * limit),
-            total: recipes.length,
-          };
-          return new Response(JSON.stringify(body), {
-            headers: { 'Content-Type': 'application/json' },
-          });
-        });
-      }
       // eslint-disable-next-line no-undef
       if (!res && url.origin === location.origin && url.pathname.startsWith('/recipe/') && 'template' in self) {
         const recipeId = url.pathname.split('/')[2];
@@ -172,34 +130,6 @@ self.addEventListener('fetch', (e) => {
           return fetchRequest(e.request);
         }),
       );
-    }
-  }
-});
-
-function updateDatabase(recipes) {
-  if (!db) { return; }
-  const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
-  const clearReq = store.clear();
-  clearReq.onsuccess = () => {
-    recipes.forEach((recipe) => {
-      store.add(recipe);
-    });
-  };
-}
-
-self.addEventListener('message', (e) => {
-  if (e.data && e.data.recipes) {
-    if (e.data.shouldUpdate) {
-      fetch('/api/recipes/compressed')
-        .then((res) => {
-          if (res.ok) { return res.json(); }
-          return [];
-        })
-        .then((recipes) => {
-          if (recipes.length > 0) {
-            updateDatabase(recipes);
-          }
-        });
     }
   }
 });

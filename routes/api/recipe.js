@@ -43,6 +43,33 @@ router.get('/recipes/compressed', compression(), async (req, res) => {
   }
 });
 
+router.post('/recipes/changes', compression(), async (req, res) => {
+  try {
+    const { lastUpdated, ids } = req.body;
+    const allRecipes = await Recipe.getAllRecipes();
+    const removed = ids ? ids.filter(
+      id => !allRecipes.find(recipe => recipe._id.toString() === id),
+    ) : [];
+    const updated = lastUpdated ? allRecipes.filter(recipe => (
+      +new Date(recipe.updatedAt) > lastUpdated
+    )) : allRecipes;
+    const mapped = updated.map(recipe => ({
+      ...recipe,
+      description: markdown.toHTML(recipe.description),
+      ingredients: recipe.ingredients.map(({ name, hint }) => ({ name, hint })),
+    }));
+    return res.json({
+      lastUpdated: Date.now(),
+      data: {
+        removed,
+        updated: mapped,
+      },
+    });
+  } catch (error) {
+    return res.send(error);
+  }
+});
+
 router.get('/recipe/:id', async (req, res) => {
   try {
     const recipe = await Recipe.getRecipeById(req.params.id);

@@ -1,4 +1,5 @@
 import addMenuButtons from './modules/nav-menu.mjs';
+import { syncDatabase, getRecipes } from './modules/recipes-db.mjs';
 
 addMenuButtons([
   {
@@ -8,45 +9,20 @@ addMenuButtons([
 ]);
 
 const FETCH_AMOUNT = window.matchMedia('min-width: 1200px') ? 15 : 10;
+
 const stateStr = window.sessionStorage.getItem('state');
 const oldState = stateStr ? JSON.parse(stateStr) : {};
 const defaultState = {
-  pagesFetched: 0,
-  fetching: false,
-  total: null,
+  page: 1,
   search: '',
 };
 let state = Object.assign(defaultState, oldState);
+window.sessionStorage.setItem('state', JSON.stringify(state));
+let currentRecipes;
 
 const setState = (obj) => {
   state = Object.assign(state, obj);
   window.sessionStorage.setItem('state', JSON.stringify(state));
-};
-
-const fetchRecipes = () => {
-  let url = `/api/recipes?condensed=true&limit=${FETCH_AMOUNT}&page=${state.pagesFetched + 1}`;
-  if (state.search) {
-    url += `&search=${encodeURIComponent(state.search.replace(/,\s+/, ','))}`;
-  }
-  return fetch(url)
-    .then(res => res.json())
-    .then((body) => {
-      if (
-        window.navigator.serviceWorker
-        && window.navigator.serviceWorker.controller
-        && body.lastUpdated
-      ) {
-        const lastUpdated = window.localStorage.getItem('lastUpdated');
-        // update if no recipes were stored yet or have the same "age"
-        const shouldUpdate = !lastUpdated || (body.lastUpdated > +lastUpdated);
-        if (shouldUpdate) {
-          window.localStorage.setItem('lastUpdated', body.lastUpdated);
-        }
-        window.navigator.serviceWorker.controller.postMessage({ ...body, shouldUpdate });
-      }
-      setState({ total: body.total });
-      return body.recipes;
-    });
 };
 
 const createRecipeCard = (recipe) => {
@@ -101,6 +77,11 @@ const updateSessionStorage = (recipes) => {
   window.sessionStorage.setItem('recipes', JSON.stringify(saved.concat(recipes)));
 };
 
+const getPage = (page) => {
+  const start = (page - 1) * FETCH_AMOUNT;
+  return currentRecipes.slice(start, start + FETCH_AMOUNT);
+};
+
 const renderRecipes = (recipes) => {
   const listNode = document.getElementById('recipe-list');
   recipes.forEach((recipe) => {
@@ -109,61 +90,64 @@ const renderRecipes = (recipes) => {
   });
 };
 
-const fetchAndRenderRecipes = () => {
-  const listNode = document.getElementById('recipe-list');
-  const loader = document.getElementById('loader');
-  loader.classList.add('active');
-  setState({ fetching: true });
-  fetchRecipes()
-    .then((recipes) => {
-      setState({ pagesFetched: state.pagesFetched + 1, fetching: false });
-      loader.classList.remove('active');
-      if (recipes.length > 0) {
-        updateSessionStorage(recipes);
-        renderRecipes(recipes);
-      } else {
-        listNode.innerText = `Keine Ergebnisse für ${state.search} gefunden.`;
-      }
-    })
-    .catch((error) => {
-      console.error(error);
-      if (state.pagesFetched === 0) {
-        listNode.innerText = `Konnte Rezepte nicht laden: ${error.message}`;
-      }
-    });
-};
-
 const onScroll = () => {
-  const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
-  const hasNext = state.total > FETCH_AMOUNT * state.pagesFetched;
-  if (hasNext && !state.fetching && nearBottom) {
-    fetchAndRenderRecipes();
+  if (currentRecipes) {
+    const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
+    const hasNext = currentRecipes.length > FETCH_AMOUNT * state.page;
+    if (hasNext && nearBottom) {
+      setState({ page: state.page + 1 });
+      renderRecipes(getPage(state.page));
+      updateSessionStorage(getPage(state.page));
+    }
   }
 };
 
-const submitSearch = (input) => {
+const submitSearch = async (input) => {
   if (input.value.toLowerCase() === 'login') {
     window.location.assign('/login');
   } else {
-    setState({ pagesFetched: 0, search: input.value });
+    setState({ page: 1, search: input.value });
     window.sessionStorage.removeItem('recipes');
     const listNode = document.getElementById('recipe-list');
     listNode.innerHTML = '';
+    currentRecipes = await getRecipes(state.search);
+    window.sessionStorage.removeItem('recipes');
+    updateSessionStorage(getPage(state.page));
 
     input.blur();
-    fetchAndRenderRecipes();
+    if (currentRecipes.length > 0) {
+      renderRecipes(getPage(state.page));
+    } else {
+      listNode.innerText = `Keine Ergebnisse für ${state.search} gefunden.`;
+    }
   }
 };
 
-const init = () => {
-  const recipesStr = window.sessionStorage.getItem('recipes');
-  if (recipesStr) {
-    renderRecipes(JSON.parse(recipesStr));
-  } else {
-    fetchAndRenderRecipes();
-  }
+const init = async () => {
   const searchbar = document.querySelector('#searchbar input');
   searchbar.value = state.search;
+  const recipesStr = window.sessionStorage.getItem('recipes');
+  let rendered = false;
+  if (recipesStr) {
+    renderRecipes(JSON.parse(recipesStr));
+    rendered = true;
+  } else {
+    const loader = document.getElementById('loader');
+    try {
+      loader.classList.add('active');
+      await syncDatabase();
+      loader.classList.remove('active');
+    } catch (error) {
+      console.error(error);
+      loader.classList.remove('active');
+    }
+  }
+  currentRecipes = await getRecipes(state.search);
+  if (!rendered) {
+    updateSessionStorage(getPage(state.page));
+    renderRecipes(currentRecipes.slice(0, FETCH_AMOUNT * state.page));
+  }
+
   let timeoutId = null;
   searchbar.addEventListener('keydown', ({ key, target }) => {
     clearTimeout(timeoutId);
@@ -172,7 +156,7 @@ const init = () => {
     } else {
       timeoutId = setTimeout(() => {
         submitSearch(target);
-      }, 2500);
+      }, 5000);
     }
   });
   searchbar.addEventListener('blur', ({ target }) => {
