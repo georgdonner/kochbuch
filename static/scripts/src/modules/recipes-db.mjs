@@ -18,14 +18,28 @@ const openDb = () => new Promise((resolve, reject) => {
   };
 });
 
-function matchRecipe(recipe, terms) {
-  // eslint-disable-next-line arrow-body-style
-  const matched = terms.filter((term) => {
-    return recipe.title.toLowerCase().includes(term)
-        || recipe.ingredients.find(ingr => ingr.name.toLowerCase().includes(term))
-        || recipe.categories.find(ctg => ctg.toLowerCase().includes(term));
-  });
-  return matched.length === terms.length;
+function searchScore(recipe, terms, regexTerms) {
+  const getScore = (str, term, regex) => {
+    const matches = regex.exec(str);
+    return matches ? (1 / (matches[0].length - term.length + 1)) : 0;
+  };
+  const toSearch = [
+    recipe.title,
+    recipe.ingredients.map(({ name }) => name).join(' '),
+    recipe.categories.join(' '),
+  ];
+  let totalScore = 0;
+  for (let i = 0; i < terms.length; i += 1) {
+    const term = terms[i];
+    const regex = regexTerms[i];
+    const scores = toSearch.map(str => getScore(str, term, regex));
+    const bestScore = scores.reduce((a, b) => Math.max(a, b));
+    if (bestScore <= 0) {
+      return 0;
+    }
+    totalScore += bestScore;
+  }
+  return totalScore;
 }
 
 const getAll = db => new Promise((resolve, reject) => {
@@ -48,7 +62,12 @@ export const getRecipes = async (query) => {
     return recipes;
   }
   const terms = query.split(/,\s*/).map(term => term.toLowerCase());
-  return recipes.filter(recipe => matchRecipe(recipe, terms));
+  const regexTerms = terms.map(term => new RegExp(`\\S*${term}\\S*`, 'i'));
+  const matches = recipes
+    .map(recipe => ({ recipe, score: searchScore(recipe, terms, regexTerms) }))
+    .filter(({ score }) => score > 0);
+  matches.sort((a, b) => b.score - a.score);
+  return matches.map(({ recipe }) => recipe);
 };
 
 const removeRecipe = (id, db) => new Promise((resolve, reject) => {
