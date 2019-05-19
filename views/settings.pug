@@ -23,7 +23,7 @@ html(lang="de")
         button(type="submit") Speichern
     script.
       const dietSelect = document.getElementById('diet');
-      const currentDiet = window.sessionStorage.getItem('diet');
+      const currentDiet = window.localStorage.getItem('diet');
       if (currentDiet) {
         dietSelect.value = currentDiet;
       }
@@ -32,8 +32,8 @@ html(lang="de")
         window.sessionStorage.removeItem('recipes');
         window.sessionStorage.removeItem('state');
         if (value === 'alles') {
-          window.sessionStorage.removeItem('diet');
+          window.localStorage.removeItem('diet');
         } else {
-          window.sessionStorage.setItem('diet', value);
+          window.localStorage.setItem('diet', value);
         }
       });

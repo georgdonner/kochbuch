@@ -57,7 +57,7 @@ export const getRecipes = async (query) => {
   const recipes = await getAll(db);
   recipes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   let searchQuery = query;
-  const diet = window.sessionStorage.getItem('diet');
+  const diet = window.localStorage.getItem('diet');
   if (diet) {
     searchQuery = query ? `${query}, ${diet}` : diet;
   }
