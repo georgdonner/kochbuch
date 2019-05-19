@@ -2,7 +2,7 @@
 const cacheName = 'v1';
 
 const openDb = () => new Promise((resolve, reject) => {
-  const request = window.indexedDB.open('recipes-db');
+  const request = self.indexedDB.open('recipes-db');
   request.onerror = () => {
     reject(new Error(`DB request error: ${request.errorCode}`));
   };
@@ -64,6 +64,23 @@ function getRecipe(id) {
   });
 }
 
+function isRecipeView(url) {
+  return url.origin === location.origin && url.pathname.startsWith('/recipe/');
+}
+
+function renderRecipe(url) {
+  const recipeId = url.pathname.split('/')[2];
+  return getRecipe(recipeId).then(recipe => (
+    // eslint-disable-next-line no-undef
+    new Response(template({
+      recipe,
+      descriptionHtml: recipe.description,
+      session: {},
+      servings: recipe.servings,
+    }), { headers: { 'Content-Type': 'text/html' } })
+  ));
+}
+
 function fetchRequest(request) {
   return fetch(request)
     .then((res) => {
@@ -76,17 +93,8 @@ function fetchRequest(request) {
     .catch(() => caches.match(request).then((res) => {
       const url = new URL(request.url);
       // eslint-disable-next-line no-undef
-      if (!res && url.origin === location.origin && url.pathname.startsWith('/recipe/') && 'template' in self) {
-        const recipeId = url.pathname.split('/')[2];
-        return getRecipe(recipeId).then(recipe => (
-          // eslint-disable-next-line no-undef
-          new Response(template({
-            recipe,
-            descriptionHtml: recipe.description,
-            session: {},
-            servings: recipe.servings,
-          }), { headers: { 'Content-Type': 'text/html' } })
-        ));
+      if (!res && isRecipeView(url) && 'template' in self) {
+        return renderRecipe(url);
       } if (!res && url.origin === 'https://ucarecdn.com') {
         const uuid = url.pathname.split('/')[1];
         const imgWidths = [400, 600, 800, 1000];
@@ -120,7 +128,17 @@ self.addEventListener('fetch', (e) => {
     const url = new URL(e.request.url);
     const local = url.origin === location.origin;
     if (local) {
-      e.respondWith(fetchRequest(e.request));
+      if (isRecipeView(url) && 'template' in self) {
+        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+        const renderOffline = async () => {
+          await sleep(5000);
+          return renderRecipe(url);
+        };
+        const firstPromise = Promise.race([fetchRequest(e.request), renderOffline()]);
+        e.respondWith(firstPromise);
+      } else {
+        e.respondWith(fetchRequest(e.request));
+      }
     } else {
       e.respondWith(
         caches.match(e.request).then((res) => {
