@@ -18,20 +18,20 @@ h2 {
   margin-bottom: 2rem;
 }
 
-#settings form {
+#settings > * {
   display: flex;
   flex-direction: column;
   max-width: 800px;
 }
 
-form label {
+label {
   color: #333;
   margin-bottom: 0.5rem;
   font-size: 1rem;
   font-weight: 600;
 }
 
-form input {
+input {
   color: #333;
   margin-bottom: 1rem;
   border: none;
@@ -40,7 +40,7 @@ form input {
   font-size: 1.25rem;
 }
 
-form button {
+button {
   margin-top: 1rem;
   color: #fff;
   background: #333;
@@ -50,6 +50,16 @@ form button {
   font-size: 1rem;
   font-weight: 600;
   text-transform: uppercase;
-  transition: all ease .5s;
+  transition: color ease .5s;
   cursor: pointer;
+}
+
+select {
+  color: #333;
+  margin-bottom: 1rem;
+  background: #fff;
+  border: none;
+  border-bottom: 2px #d9d9d9 solid;
+  padding: .5rem .25rem;
+  font-size: 1.25rem;
 }

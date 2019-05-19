@@ -9,9 +9,31 @@ html(lang="de")
     include includes/nav.pug
     #settings
       h2 Einstellungen
+      div
+        label(for="diet") Ernährung
+        select#diet(name="diet")
+          option(value="alles") Alles
+          option(value="vegetarisch") Vegetarisch
+          option(value="vegan") Vegan
       form(action="/settings", method="get")
         label(for="listCode") Einkaufslisten Code
         input(type="text", name="listCode", value=session.listCode || '', placeholder="Einkaufslisten Code")
         label(for="planCode") Wochenplan Code
         input(type="text", name="planCode", value=session.planCode || '', placeholder="Wochenplan Code")
         button(type="submit") Speichern
+    script.
+      const dietSelect = document.getElementById('diet');
+      const currentDiet = window.sessionStorage.getItem('diet');
+      if (currentDiet) {
+        dietSelect.value = currentDiet;
+      }
+      dietSelect.addEventListener('change', (event) => {
+        const { value } = event.target;
+        window.sessionStorage.removeItem('recipes');
+        window.sessionStorage.removeItem('state');
+        if (value === 'alles') {
+          window.sessionStorage.removeItem('diet');
+        } else {
+          window.sessionStorage.setItem('diet', value);
+        }
+      });

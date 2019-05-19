@@ -56,10 +56,15 @@ export const getRecipes = async (query) => {
   }
   const recipes = await getAll(db);
   recipes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  if (!query) {
+  let searchQuery = query;
+  const diet = window.sessionStorage.getItem('diet');
+  if (diet) {
+    searchQuery = query ? `${query}, ${diet}` : diet;
+  }
+  if (!searchQuery) {
     return recipes;
   }
-  const terms = query.split(/,\s*/).map(term => term.toLowerCase());
+  const terms = searchQuery.split(/,\s*/).map(term => term.toLowerCase());
   const regexTerms = terms.map(term => new RegExp(`\\S*${term.slice(0, -1)}\\S*`, 'i'));
   const matches = recipes
     .map(recipe => ({ recipe, score: searchScore(recipe, terms, regexTerms) }))
