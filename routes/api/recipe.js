@@ -5,6 +5,7 @@ const markdown = require('markdown-it')();
 const router = express.Router();
 
 const checkAuth = require('../helpers/check-auth');
+const StatusError = require('../helpers/status-error');
 const Recipe = require('../../models/recipe');
 
 const toHtml = recipe => ({
@@ -54,47 +55,50 @@ router.post('/recipes/changes', compression(), async (req, res) => {
   }
 });
 
-router.get('/recipe/:id', async (req, res) => {
+router.get('/recipe/:id', async (req, res, next) => {
   try {
     const { format = 'markdown' } = req.query;
     const recipe = await Recipe.getRecipeById(req.params.id);
+    if (!recipe) {
+      throw new StatusError(`Could not find recipe with id ${req.params.id}`, 404);
+    }
     const formatted = format === 'html' ? toHtml(recipe) : recipe;
     return res.json(formatted);
   } catch (error) {
-    return res.send(error);
+    return next(error);
   }
 });
 
-router.get('/recipes/categories', async (req, res) => {
+router.get('/recipes/categories', async (req, res, next) => {
   try {
     const categories = await Recipe.distinct('categories');
     return res.json(categories);
   } catch (error) {
-    return res.send(error);
+    return next(error);
   }
 });
 
-router.post('/recipe', checkAuth, async (req, res) => {
+router.post('/recipe', checkAuth, async (req, res, next) => {
   try {
     const newRecipe = new Recipe({ ...req.body });
     // still support deprecated heroImage property for kochbuch app
     newRecipe.heroImage = `${newRecipe.image}-/resize/600x/`;
     const saved = await Recipe.addRecipe(newRecipe);
-    res.json(saved);
+    return res.json(saved);
   } catch (error) {
-    res.send(error);
+    return next(error);
   }
 });
 
-router.put('/recipe/:id', checkAuth, async (req, res) => {
+router.put('/recipe/:id', checkAuth, async (req, res, next) => {
   try {
     const {
       _id, __v, createdAt, updatedAt, ...newData
     } = req.body;
     const recipe = await Recipe.updateRecipe(req.params.id, newData);
-    res.json(recipe);
+    return res.json(recipe);
   } catch (error) {
-    res.send(error);
+    return next(error);
   }
 });
 

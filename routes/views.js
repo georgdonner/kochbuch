@@ -8,6 +8,7 @@ const markdown = require('markdown-it')();
 const router = express.Router();
 
 const checkAuth = require('./helpers/check-auth');
+const StatusError = require('./helpers/status-error');
 const Recipe = require('../models/recipe');
 const Shoppinglist = require('../models/shoppinglist');
 const Weekplan = require('../models/weekplan');
@@ -29,48 +30,52 @@ router.get('/login', (req, res) => {
   return res.render('login', { error: req.query.error });
 });
 
-router.post('/zauberwort', (req, res) => {
-  const { zauberwort } = req.body;
-  if (!zauberwort) {
-    return res.status(400).send('Please provide a zauberwort in the request body.');
-  } if (zauberwort === process.env.ZAUBERWORT) {
-    req.session.authenticated = true;
-    return res.redirect('/');
+router.post('/zauberwort', (req, res, next) => {
+  try {
+    const { zauberwort } = req.body;
+    if (!zauberwort) {
+      throw new StatusError('Please provide a zauberwort in the request body.', 400);
+    } if (zauberwort === process.env.ZAUBERWORT) {
+      req.session.authenticated = true;
+      return res.redirect('/');
+    }
+    return res.redirect('/login?error=true');
+  } catch (error) {
+    return next(error);
   }
-  return res.redirect('/login?error=true');
 });
 
 router.get('/recipes/new', checkAuth, (req, res) => {
   const uploadcareKey = process.env.UPLOADCARE_PUBLIC_KEY;
-  res.render('recipe-form', { recipe: defaultRecipe, uploadcareKey });
+  return res.render('recipe-form', { recipe: defaultRecipe, uploadcareKey });
 });
 
-router.get('/recipe/:id/edit', checkAuth, async (req, res) => {
+router.get('/recipe/:id/edit', checkAuth, async (req, res, next) => {
   try {
     const recipe = await Recipe.findById(req.params.id);
-    if (!recipe) throw new Error('Recipe not found.');
+    if (!recipe) throw new StatusError(`Could not find recipe with id ${req.params.id}`, 404);
     const uploadcareKey = process.env.UPLOADCARE_PUBLIC_KEY;
-    res.render('recipe-form', { recipe, uploadcareKey });
+    return res.render('recipe-form', { recipe, uploadcareKey });
   } catch (error) {
-    res.send(error);
+    return next(error);
   }
 });
 
-router.get('/recipe/:id', async (req, res) => {
+router.get('/recipe/:id', async (req, res, next) => {
   try {
     const { servings } = req.query;
     const recipe = await Recipe.findById(req.params.id);
-    if (!recipe) throw new Error('Recipe not found.');
+    if (!recipe) throw new StatusError(`Could not find recipe with id ${req.params.id}`, 404);
     const descriptionHtml = recipe.description ? markdown.render(recipe.description) : '';
-    res.render('recipe', {
+    return res.render('recipe', {
       recipe, descriptionHtml, session: req.session, servings: servings || recipe.servings,
     });
   } catch (error) {
-    res.send(error);
+    return next(error);
   }
 });
 
-router.get('/list', checkAuth, async (req, res) => {
+router.get('/list', checkAuth, async (req, res, next) => {
   try {
     const { code } = req.query;
     let list = null;
@@ -87,7 +92,7 @@ router.get('/list', checkAuth, async (req, res) => {
       list: list ? list.list : null,
     });
   } catch (error) {
-    return res.send(error);
+    return next(error);
   }
 });
 
@@ -114,7 +119,7 @@ const getWeek = (plan, offset = 0) => {
   return week;
 };
 
-router.get('/plan', checkAuth, async (req, res) => {
+router.get('/plan', checkAuth, async (req, res, next) => {
   try {
     const { code, week = 0 } = req.query;
     let entries = null;
@@ -133,11 +138,11 @@ router.get('/plan', checkAuth, async (req, res) => {
       offset: +week,
     });
   } catch (error) {
-    return res.send(error);
+    return next(error);
   }
 });
 
-router.get('/plan/new', checkAuth, async (req, res) => {
+router.get('/plan/new', checkAuth, async (req, res, next) => {
   try {
     if (!req.session.planCode) {
       res.redirect('/plan');
@@ -166,13 +171,13 @@ router.get('/plan/new', checkAuth, async (req, res) => {
         };
       }
     }
-    res.render('plan-form', options);
+    return res.render('plan-form', options);
   } catch (error) {
-    res.send(error);
+    return next(error);
   }
 });
 
-router.get('/plan/edit', checkAuth, async (req, res) => {
+router.get('/plan/edit', checkAuth, async (req, res, next) => {
   try {
     if (!req.session.planCode) {
       res.redirect('/plan');
@@ -183,7 +188,7 @@ router.get('/plan/edit', checkAuth, async (req, res) => {
     if (!entry) {
       throw new Error('Entry not found');
     }
-    res.render('plan-form', {
+    return res.render('plan-form', {
       mode: 'edit',
       date: moment(entry.date).format('YYYY-MM-DD'),
       time: entry.time,
@@ -192,43 +197,43 @@ router.get('/plan/edit', checkAuth, async (req, res) => {
       recipe: entry.recipe,
     });
   } catch (error) {
-    res.send(error);
+    return next(error);
   }
 });
 
-router.get('/settings', checkAuth, async (req, res) => {
-  if (Object.keys(req.query).length === 0) {
-    return res.render('settings', { session: req.session });
-  }
-  const promises = Object.entries(req.query).map(async ([key, value]) => {
-    if (!value) {
-      delete req.session[key];
-    } else if (value !== req.session[key]) {
-      if (key === 'listCode') {
-        const list = await Shoppinglist.getByName(value);
-        if (!list) {
-          await Shoppinglist.addList(value);
-        }
-      } else if (key === 'planCode') {
-        const plan = await Weekplan.getPlanByName(value);
-        if (!plan) {
-          await Weekplan.addPlan(value);
-        }
-      }
-      req.session[key] = value;
+router.get('/settings', checkAuth, async (req, res, next) => {
+  try {
+    if (Object.keys(req.query).length === 0) {
+      return res.render('settings', { session: req.session });
     }
-    return Promise.resolve();
-  });
-  await Promise.all(promises);
-  return res.redirect('/');
+    const promises = Object.entries(req.query).map(async ([key, value]) => {
+      if (!value) {
+        delete req.session[key];
+      } else if (value !== req.session[key]) {
+        if (key === 'listCode') {
+          const list = await Shoppinglist.getByName(value);
+          if (!list) {
+            await Shoppinglist.addList(value);
+          }
+        } else if (key === 'planCode') {
+          const plan = await Weekplan.getPlanByName(value);
+          if (!plan) {
+            await Weekplan.addPlan(value);
+          }
+        }
+        req.session[key] = value;
+      }
+      return Promise.resolve();
+    });
+    await Promise.all(promises);
+    return res.redirect('/');
+  } catch (error) {
+    return next(error);
+  }
 });
 
-router.get('/offline', (req, res) => {
-  res.render('offline');
-});
+router.get('/offline', (req, res) => res.render('offline'));
 
-router.get('/', (req, res) => {
-  res.render('recipes', { session: req.session });
-});
+router.get('/', (req, res) => res.render('recipes', { session: req.session }));
 
 module.exports = router;

@@ -1,0 +1,27 @@
+doctype html
+html(lang="de")
+  head
+    title Kochbuch
+    include includes/meta.pug
+  body
+    style.
+      html, body {
+        margin: 0;
+        font-family: 'Open Sans', sans-serif;
+        height: 100%;
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .container {
+        color: #333;
+        font-size: 1.2rem;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+    .container
+      h1 Error #{statusCode} - #{status}
+      p= message
+      

@@ -39,6 +39,8 @@ app.use(require('./routes/backup'));
 
 app.use(require('./routes/views'));
 
+app.use(require('./routes/helpers/error-handler'));
+
 const port = process.env.PORT || 3000;
 /* eslint-disable no-console */
 if (process.env.NODE_ENV === 'development') {
