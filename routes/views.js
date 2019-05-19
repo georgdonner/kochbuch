@@ -3,7 +3,7 @@ const moment = require('moment');
 require('moment/locale/de');
 
 moment.locale('de');
-const { markdown } = require('markdown');
+const markdown = require('markdown-it')();
 
 const router = express.Router();
 
@@ -61,7 +61,7 @@ router.get('/recipe/:id', async (req, res) => {
     const { servings } = req.query;
     const recipe = await Recipe.findById(req.params.id);
     if (!recipe) throw new Error('Recipe not found.');
-    const descriptionHtml = recipe.description ? markdown.toHTML(recipe.description) : '';
+    const descriptionHtml = recipe.description ? markdown.render(recipe.description) : '';
     res.render('recipe', {
       recipe, descriptionHtml, session: req.session, servings: servings || recipe.servings,
     });

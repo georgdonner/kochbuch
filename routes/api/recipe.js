@@ -1,6 +1,6 @@
 const compression = require('compression');
 const express = require('express');
-const { markdown } = require('markdown');
+const markdown = require('markdown-it')();
 
 const router = express.Router();
 
@@ -34,7 +34,7 @@ router.get('/recipes/compressed', compression(), async (req, res) => {
     const recipes = await Recipe.getAllRecipes();
     const mapped = recipes.map(recipe => ({
       ...recipe,
-      description: markdown.toHTML(recipe.description),
+      description: markdown.render(recipe.description),
       ingredients: recipe.ingredients.map(({ name, hint }) => ({ name, hint })),
     }));
     return res.json(mapped);
@@ -55,7 +55,7 @@ router.post('/recipes/changes', compression(), async (req, res) => {
     )) : allRecipes;
     const mapped = updated.map(recipe => ({
       ...recipe,
-      description: markdown.toHTML(recipe.description),
+      description: markdown.render(recipe.description),
       ingredients: recipe.ingredients.map(({ name, hint }) => ({ name, hint })),
     }));
     return res.json({
