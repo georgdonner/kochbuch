@@ -1,8 +1,11 @@
-export const showToast = (msg, { duration = 3000, button } = {}) => {
+export const showToast = (msg, { duration = 3000, button, isError = false } = {}) => {
   const toast = document.getElementById('toast');
   if (!toast) return;
   toast.innerHTML = `<span>${msg}</span>`;
   toast.classList.add('visible');
+  if (isError) {
+    toast.classList.add('error');
+  }
   if (button) {
     const buttonEl = document.createElement('button');
     buttonEl.innerText = button.text;
@@ -16,6 +19,7 @@ export const showToast = (msg, { duration = 3000, button } = {}) => {
   setTimeout(() => {
     if (+toast.dataset.added === added) {
       toast.classList.remove('visible');
+      toast.classList.remove('error');
     }
   }, duration);
 };

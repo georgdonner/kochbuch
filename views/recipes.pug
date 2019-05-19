@@ -7,6 +7,7 @@ html(lang="de")
     link(rel="stylesheet", href="/css/index.css")
     script(type="module" src="/scripts/src/modules/nav-menu.mjs")
     script(type="module" src="/scripts/src/modules/recipes-db.mjs")
+    script(type="module" src="/scripts/src/modules/toast.mjs")
     script.
       if ('serviceWorker' in navigator && 'caches' in window) {
         window.addEventListener('load', () => {
@@ -33,6 +34,7 @@ html(lang="de")
         noscript Kann Rezepte ohne Javascript nicht darstellen
       div#loader
         include includes/loader.pug
+      div#toast
     include icons/search.pug
     include icons/settings.pug
     script(type="module", src="scripts/src/recipes.js")

@@ -1,5 +1,6 @@
 import addMenuButtons from './modules/nav-menu.mjs';
 import { syncDatabase, getRecipes } from './modules/recipes-db.mjs';
+import { showToast } from './modules/toast.mjs';
 
 addMenuButtons([
   {
@@ -135,7 +136,10 @@ const init = async () => {
     const loader = document.getElementById('loader');
     try {
       loader.classList.add('active');
-      await syncDatabase();
+      const synced = await syncDatabase(5000);
+      if (!synced) {
+        showToast('Konnte Rezepte nicht aktualisieren.', { isError: true });
+      }
       loader.classList.remove('active');
     } catch (error) {
       console.error(error);

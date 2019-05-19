@@ -110,13 +110,25 @@ const fetchUpdatedData = async (recipes) => {
   return body.data;
 };
 
-export const syncDatabase = async () => {
+export const syncDatabase = async (timeout) => {
   const db = await openDb();
   if (!db) {
     throw new Error('No db found');
   }
   const recipes = await getAll(db);
-  const { removed, updated } = await fetchUpdatedData(recipes);
-  await Promise.all(removed.map(id => removeRecipe(id, db)));
-  await Promise.all(updated.map(recipe => updateRecipe(recipe, db)));
+  let data;
+  if (timeout && recipes.length > 0) {
+    const timeoutPromise = new Promise(((resolve) => {
+      setTimeout(resolve, timeout, null);
+    }));
+    data = await Promise.race([timeoutPromise, fetchUpdatedData(recipes)]);
+  } else {
+    data = await fetchUpdatedData(recipes);
+  }
+  if (data) {
+    const { removed, updated } = data;
+    await Promise.all(removed.map(id => removeRecipe(id, db)));
+    await Promise.all(updated.map(recipe => updateRecipe(recipe, db)));
+  }
+  return Boolean(data);
 };
