@@ -1,4 +1,3 @@
-
 const openDb = () => new Promise((resolve, reject) => {
   const request = window.indexedDB.open('recipes-db');
   request.onerror = () => {
@@ -14,7 +13,6 @@ const openDb = () => new Promise((resolve, reject) => {
   request.onupgradeneeded = (event) => {
     const db = event.target.result;
     db.createObjectStore('recipes', { keyPath: '_id' });
-    resolve(db);
   };
 });
 

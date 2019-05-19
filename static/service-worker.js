@@ -1,25 +1,24 @@
 /* eslint-disable no-restricted-globals */
 const cacheName = 'v1';
-let db;
 
-function initDatabase() {
-  const request = self.indexedDB.open('recipes-db');
+const openDb = () => new Promise((resolve, reject) => {
+  const request = window.indexedDB.open('recipes-db');
   request.onerror = () => {
-    console.error(`DB request error: ${request.errorCode}`);
+    reject(new Error(`DB request error: ${request.errorCode}`));
   };
   request.onsuccess = (event) => {
-    db = event.target.result;
+    const db = event.target.result;
     db.onerror = (dbEvent) => {
       console.error(`Database error: ${dbEvent.target.errorCode}`);
     };
+    resolve(db);
   };
   request.onupgradeneeded = (event) => {
-    db = event.target.result;
+    const db = event.target.result;
     db.createObjectStore('recipes', { keyPath: '_id' });
   };
-}
+});
 
-initDatabase();
 // eslint-disable-next-line no-undef
 importScripts('/scripts/recipe-template.js');
 
@@ -52,7 +51,8 @@ self.addEventListener('activate', (e) => {
 });
 
 function getRecipe(id) {
-  return new Promise((resolve, reject) => {
+  return new Promise(async (resolve, reject) => {
+    const db = await openDb();
     if (!db) {
       reject(new Error('No db found'));
     }
