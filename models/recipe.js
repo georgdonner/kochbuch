@@ -28,9 +28,9 @@ const RecipeSchema = new Schema({
 const Recipe = mongoose.model('Recipe', RecipeSchema);
 module.exports = Recipe;
 
-module.exports.getRecipeById = id => Recipe.findById(id);
+module.exports.getRecipeById = id => Recipe.findById(id, '-__v -ingredients._id').lean();
 
-module.exports.getAllRecipes = () => Recipe.find({}).lean();
+module.exports.getAllRecipes = () => Recipe.find({}, '-__v -ingredients._id').lean();
 
 const convertSearch = (searchString) => {
   const terms = searchString.split(',').map(str => str.trim());
@@ -52,15 +52,12 @@ module.exports.getCount = (search) => {
   return Recipe.countDocuments(query);
 };
 
-module.exports.getPage = async (page, limit, search) => {
+module.exports.search = async (search) => {
   const query = search
     ? convertSearch(search)
     : {};
   return Recipe
-    .find(query)
-    .limit(limit)
-    .skip((page - 1) * limit)
-    .select('_id title image categories')
+    .find(query, '-__v -ingredients._id')
     .sort({ createdAt: 'desc' })
     .lean();
 };
