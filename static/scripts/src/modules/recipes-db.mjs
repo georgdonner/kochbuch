@@ -18,10 +18,10 @@ const openDb = () => new Promise((resolve, reject) => {
   };
 });
 
-function searchScore(recipe, terms, regexTerms) {
+const searchScore = (recipe, terms, regexTerms) => {
   const getScore = (str, term, regex) => {
     const matches = regex.exec(str);
-    return matches ? (1 / (matches[0].length - term.length + 1)) : 0;
+    return matches ? (1 / (Math.abs(matches[0].length - term.length) + 1)) : 0;
   };
   const toSearch = [
     recipe.title,
@@ -40,7 +40,7 @@ function searchScore(recipe, terms, regexTerms) {
     totalScore += bestScore;
   }
   return totalScore;
-}
+};
 
 const getAll = db => new Promise((resolve, reject) => {
   const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
@@ -62,7 +62,7 @@ export const getRecipes = async (query) => {
     return recipes;
   }
   const terms = query.split(/,\s*/).map(term => term.toLowerCase());
-  const regexTerms = terms.map(term => new RegExp(`\\S*${term}\\S*`, 'i'));
+  const regexTerms = terms.map(term => new RegExp(`\\S*${term.slice(0, -1)}\\S*`, 'i'));
   const matches = recipes
     .map(recipe => ({ recipe, score: searchScore(recipe, terms, regexTerms) }))
     .filter(({ score }) => score > 0);
