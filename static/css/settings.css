@@ -54,6 +54,11 @@ button {
   cursor: pointer;
 }
 
+button.inverted {
+  color: #333;
+  background: #fff;
+}
+
 select {
   color: #333;
   margin-bottom: 1rem;
@@ -62,4 +67,8 @@ select {
   border-bottom: 2px #d9d9d9 solid;
   padding: .5rem .25rem;
   font-size: 1.25rem;
+}
+
+#advanced {
+  margin-top: 2.5rem;
 }

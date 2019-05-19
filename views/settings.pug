@@ -4,6 +4,7 @@ html(lang="de")
     title Kochbuch - Einstellungen
     include includes/meta.pug
     link(rel="stylesheet", href="/css/settings.css")
+    script(type="module" src="/scripts/src/modules/recipes-db.mjs")
   body
     - var page = 'settings'
     include includes/nav.pug
@@ -21,7 +22,11 @@ html(lang="de")
         label(for="planCode") Wochenplan Code
         input(type="text", name="planCode", value=session.planCode || '', placeholder="Wochenplan Code")
         button(type="submit") Speichern
-    script.
+      #advanced
+        label Erweiterte Einstellungen
+        button.inverted#manual-sync Rezepte manuell synchronisieren
+    script(type="module").
+      import { refreshDatabase } from '/scripts/src/modules/recipes-db.mjs';
       const dietSelect = document.getElementById('diet');
       const currentDiet = window.localStorage.getItem('diet');
       if (currentDiet) {
@@ -37,3 +42,5 @@ html(lang="de")
           window.localStorage.setItem('diet', value);
         }
       });
+
+      document.getElementById('manual-sync').addEventListener('click', refreshDatabase);

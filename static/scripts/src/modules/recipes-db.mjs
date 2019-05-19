@@ -73,6 +73,13 @@ export const getRecipes = async (query) => {
   return matches.map(({ recipe }) => recipe);
 };
 
+const addRecipe = (recipe, db) => new Promise((resolve, reject) => {
+  const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
+  const req = store.add(recipe);
+  req.onerror = reject;
+  req.onsuccess = resolve;
+});
+
 const removeRecipe = (id, db) => new Promise((resolve, reject) => {
   const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
   const req = store.delete(id);
@@ -136,4 +143,30 @@ export const syncDatabase = async (timeout) => {
     await Promise.all(updated.map(recipe => updateRecipe(recipe, db)));
   }
   return Boolean(data);
+};
+
+const fetchAllRecipes = async () => {
+  const fetchReq = await fetch('/api/recipes?format=html', {
+    headers: { 'Content-Type': 'application/json' },
+  });
+  const body = await fetchReq.json();
+  window.localStorage.setItem('lastUpdated', Date.now());
+  return body;
+};
+
+const clearDatabase = db => new Promise((resolve, reject) => {
+  const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
+  const clearReq = store.clear();
+  clearReq.onsuccess = resolve;
+  clearReq.onerror = reject;
+});
+
+export const refreshDatabase = async () => {
+  const db = await openDb();
+  if (!db) {
+    throw new Error('No db found');
+  }
+  const recipes = await fetchAllRecipes();
+  await clearDatabase(db);
+  return Promise.all(recipes.map(recipe => addRecipe(recipe, db)));
 };
