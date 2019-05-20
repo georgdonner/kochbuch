@@ -4,6 +4,7 @@ html(lang="de")
     title= mode === 'new' ? 'Neuer Eintrag' : 'Eintrag bearbeiten'
     include includes/meta.pug
     link(rel="stylesheet", href="/css/plan-form.css")
+    script(type="module" src="/scripts/src/modules/recipes-db.mjs")
   body
     #plan-form
       h2= mode === 'new' ? 'Neuer Eintrag' : 'Eintrag bearbeiten'
@@ -32,4 +33,4 @@ html(lang="de")
         button#save Speichern
         if mode === 'edit'
           button#delete Löschen
-    script(src="/scripts/src/plan-form.js")
+    script(type="module", src="/scripts/src/plan-form.js")

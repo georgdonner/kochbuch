@@ -1,3 +1,5 @@
+import { getRecipes } from './modules/recipes-db.mjs';
+
 const recipeSearch = document.getElementById('recipe');
 let selectedRecipe = null;
 
@@ -97,15 +99,12 @@ const init = () => {
     };
     recipeSearch.parentNode.appendChild(createChangeButton());
   }
-  recipeSearch.addEventListener('keydown', ({ key, target }) => {
+  recipeSearch.addEventListener('keydown', async ({ key, target }) => {
     if (key === 'Enter') {
       const results = document.getElementById('search-results');
       if (results) results.remove();
-      fetch(`/api/recipes/?condensed=true&limit=15&search=${target.value}`)
-        .then(res => res.json())
-        .then((body) => {
-          displaySearchResults(body.recipes);
-        });
+      const matches = await getRecipes(target.value);
+      displaySearchResults(matches);
     }
   });
   document.getElementById('save').addEventListener('click', saveEntry);
