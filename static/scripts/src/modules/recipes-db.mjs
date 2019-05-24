@@ -1,3 +1,12 @@
+/* eslint-disable quote-props, object-property-newline */
+const SEARCH_MAP = {
+  'nudeln': 'pasta',
+  'möhre': 'karotte', 'möhren': 'karotten',
+  'lauchzwiebel': 'frühlingszwiebel', 'lauchzwiebeln': 'frühlingszwiebeln',
+  'stangensellerie': 'staudensellerie',
+};
+/* eslint-enable quote-props, object-property-newline  */
+
 const openDb = () => new Promise((resolve, reject) => {
   const request = window.indexedDB.open('recipes-db');
   request.onerror = () => {
@@ -64,7 +73,9 @@ export const getRecipes = async (query) => {
   if (!searchQuery) {
     return recipes;
   }
-  const terms = searchQuery.split(/,\s*/).map(term => term.toLowerCase());
+  const terms = searchQuery.split(/,\s*/)
+    .map(term => term.toLowerCase().trim())
+    .map(term => SEARCH_MAP[term] || term);
   const regexTerms = terms.map(term => new RegExp(`\\S*${term.slice(0, -1)}\\S*`, 'i'));
   const matches = recipes
     .map(recipe => ({ recipe, score: searchScore(recipe, terms, regexTerms) }))
