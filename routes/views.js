@@ -147,7 +147,7 @@ router.get('/plan/new', checkAuth, async (req, res, next) => {
     if (!req.session.planCode) {
       res.redirect('/plan');
     }
-    const { date, recipe } = req.query;
+    const { date, recipe, servings = 2 } = req.query;
     let dateObj;
     if (date) {
       dateObj = moment(+date);
@@ -159,7 +159,7 @@ router.get('/plan/new', checkAuth, async (req, res, next) => {
       mode: 'new',
       date: dateObj.format('YYYY-MM-DD'),
       time: '19:30',
-      servings: 2,
+      servings,
       custom: '',
     };
     if (recipe) {

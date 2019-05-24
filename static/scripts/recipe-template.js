@@ -12,7 +12,7 @@ pug_html = pug_html + "\u003Cnav\u003E\u003Cdiv id=\"menu\"\u003E\u003Cbutton cl
 }
 pug_html = pug_html + "\u003Cdiv id=\"top-bar-container\"\u003E\u003Cdiv id=\"top-bar\"\u003E\u003Cbutton id=\"back\" href=\"\u002F\"\u003E\u003Csvg class=\"icon icon-arrow-left2\"\u003E\u003Cuse xlink:href=\"#icon-arrow-left2\"\u003E\u003C\u002Fuse\u003E\u003C\u002Fsvg\u003EAlle Rezepte\u003C\u002Fbutton\u003E";
 if (session.planCode) {
-pug_html = pug_html + "\u003Ca" + (pug_attr("href", `/plan/new?recipe=${recipe._id}`, true, true)) + "\u003E\u003Cspan style=\"font-size: 1rem; margin-right: .25rem;\"\u003E+\u003C\u002Fspan\u003EZum Wochenplan\u003C\u002Fa\u003E";
+pug_html = pug_html + "\u003Ca" + (" id=\"add-to-plan\""+pug_attr("href", `/plan/new?recipe=${recipe._id}&servings=${recipe.servings}`, true, true)) + "\u003E\u003Cspan style=\"font-size: 1rem; margin-right: .25rem;\"\u003E+\u003C\u002Fspan\u003EZum Wochenplan\u003C\u002Fa\u003E";
 }
 pug_html = pug_html + "\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003Cdiv class=\"container\"\u003E\u003Ch1 class=\"recipe-title\"\u003E" + (pug_escape(null == (pug_interp = recipe.title) ? "" : pug_interp)) + "\u003C\u002Fh1\u003E";
 if (recipe.image) {

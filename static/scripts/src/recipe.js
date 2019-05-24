@@ -30,6 +30,10 @@ const updateServings = (change = 0) => {
   const newServings = getCurrentServings() + change;
   if (newServings > 0) {
     document.getElementById('servings').innerText = newServings;
+    const addToPlanLink = document.getElementById('add-to-plan');
+    if (addToPlanLink) {
+      addToPlanLink.href = addToPlanLink.href.replace(/servings=\d+/, `servings=${newServings}`);
+    }
     updateIngredients(newServings);
   }
 };
