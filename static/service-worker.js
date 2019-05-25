@@ -130,7 +130,7 @@ self.addEventListener('fetch', (e) => {
   if (e.request.method === 'GET') {
     const url = new URL(e.request.url);
     const local = url.origin === location.origin;
-    const cacheLocal = ['/scripts/nosleep.js'];
+    const cacheLocal = ['/scripts/nosleep.js', '/assets/tomato-icon-192.png', '/assets/tomato-icon.png', '/manifest.json'];
     if (local && !cacheLocal.includes(url.pathname)) {
       if (isRecipeView(url) && 'template' in self) {
         // get server response with 5 second timeout, render offline otherwise
