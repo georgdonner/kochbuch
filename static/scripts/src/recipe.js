@@ -2,8 +2,7 @@ import { showToast } from './modules/toast.mjs';
 import calcServings from './modules/calc-servings.mjs';
 import addMenuButtons from './modules/nav-menu.mjs';
 
-// eslint-disable-next-line no-undef
-const noSleep = new NoSleep();
+let noSleep;
 
 addMenuButtons([
   {
@@ -13,6 +12,10 @@ addMenuButtons([
         noSleep.disable();
         showToast('Kochmodus deaktiviert - Display kann sich wieder automatisch ausschalten');
       } else {
+        if (!noSleep) {
+          // eslint-disable-next-line no-undef
+          noSleep = new NoSleep();
+        }
         noSleep.enable();
         showToast('Kochmodus aktiviert - Display schaltet sich nicht automatisch aus');
       }
