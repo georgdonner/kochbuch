@@ -92,7 +92,19 @@ function removeItem({ target }) {
   });
 }
 
-const init = () => {
+const fetchList = async () => {
+  const loader = document.getElementById('loader');
+  loader.classList.add('active');
+  const res = await fetch('/api/list');
+  const { list } = await res.json();
+  if (!list) {
+    showToast('Konnte Liste nicht aktualisieren.', { isError: true });
+  }
+  loader.classList.remove('active');
+  return list;
+};
+
+const init = async () => {
   const listEl = document.querySelector('.list');
   if (listEl) {
     // eslint-disable-next-line no-undef
@@ -129,19 +141,10 @@ const init = () => {
       }
     });
   }
-  document.querySelectorAll('.checkmark')
-    .forEach((checkbox) => {
-      checkbox.addEventListener('click', removeItem);
-    });
-  document.querySelectorAll('input[type="checkbox"]')
-    .forEach((checkbox) => {
-      // eslint-disable-next-line no-param-reassign
-      checkbox.checked = false;
-    });
-  document.querySelectorAll('.item button')
-    .forEach((editButton) => {
-      editButton.addEventListener('click', () => onEditButtonClick(editButton));
-    });
+  const list = await fetchList();
+  list.forEach((item) => {
+    addItem(item);
+  });
 };
 
 init();

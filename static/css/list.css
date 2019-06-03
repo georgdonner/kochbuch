@@ -9,6 +9,9 @@ html, body {
 
 #list-wrapper {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column; 
 }
 
 #new-item {
@@ -31,9 +34,10 @@ html, body {
 }
 
 .container {
+  width: 100%;
   max-width: 1200px;
   margin: 0 auto;
-  padding: 0 1rem;
+  box-sizing: border-box;
 }
 
 .list {
@@ -81,6 +85,16 @@ html, body {
   fill: currentColor;
 }
 
+#loader {
+  display: none;
+}
+
+#loader.active {
+  color: #333;
+  display: flex;
+  justify-content: center;
+}
+
 #toast {
   box-sizing: border-box;
   background: #fff;
@@ -114,6 +128,10 @@ html, body {
   #new-item input {
     padding-left: 1rem;
     padding-right: 1rem;
+  }
+
+  .container {
+    padding: 0 1rem;
   }
 }
 

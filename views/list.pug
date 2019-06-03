@@ -24,16 +24,18 @@ html(lang="de")
           input(type="text", name="newitem" placeholder="Hinzufügen")
         .container
           .list
-            each item in list
-              .item-wrapper
-                label.input-container
-                  input(type="checkbox")
-                  span.checkmark.box
-                  span.item
-                    span=item
-                    button
-                      svg.icon
-                        use(xlink:href='#icon-pencil')
+            //- each item in list
+            //-   .item-wrapper
+            //-     label.input-container
+            //-       input(type="checkbox")
+            //-       span.checkmark.box
+            //-       span.item
+            //-         span=item
+            //-         button
+            //-           svg.icon
+            //-             use(xlink:href='#icon-pencil')
+        div#loader
+          include includes/loader.pug
         div#toast
     script(type="module" src="/scripts/src/list.js")
     include icons/keep-awake.pug
