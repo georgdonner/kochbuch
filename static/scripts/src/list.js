@@ -1,3 +1,4 @@
+import { getList as getListDb, updateList as updateListDb } from './modules/list-db.mjs';
 import addMenuButtons from './modules/nav-menu.mjs';
 import { showToast } from './modules/toast.mjs';
 
@@ -31,15 +32,16 @@ const getList = () => (
     .map(node => node.innerText.trim())
 );
 
-const updateList = list => (
-  fetch('/api/list', {
+const updateList = async (list) => {
+  await updateListDb(list);
+  return fetch('/api/list', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({ list }),
-  })
-);
+  });
+};
 
 const onEditButtonClick = (button) => {
   currentlyEditing = button.parentNode.querySelector('span');
@@ -94,14 +96,17 @@ function removeItem({ target }) {
 
 const fetchList = async () => {
   const loader = document.getElementById('loader');
-  loader.classList.add('active');
-  const res = await fetch('/api/list');
-  const { list } = await res.json();
-  if (!list) {
-    showToast('Konnte Liste nicht aktualisieren.', { isError: true });
+  try {
+    loader.classList.add('active');
+    const res = await fetch('/api/list');
+    const { list } = await res.json();
+    if (!list) {
+      showToast('Konnte Liste nicht aktualisieren.', { isError: true });
+    }
+    return list;
+  } finally {
+    loader.classList.remove('active');
   }
-  loader.classList.remove('active');
-  return list;
 };
 
 const init = async () => {
@@ -141,7 +146,16 @@ const init = async () => {
       }
     });
   }
-  const list = await fetchList();
+  let list;
+  try {
+    list = await fetchList();
+    await updateListDb(list);
+  } catch (error) {
+    console.error(error);
+  }
+  if (!list) {
+    list = await getListDb();
+  }
   list.forEach((item) => {
     addItem(item);
   });
