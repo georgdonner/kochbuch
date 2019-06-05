@@ -8,15 +8,7 @@ html(lang="de")
     script(type="module" src="/scripts/src/modules/nav-menu.mjs")
     script(type="module" src="/scripts/src/modules/recipes-db.mjs")
     script(type="module" src="/scripts/src/modules/toast.mjs")
-    script.
-      if ('serviceWorker' in navigator && 'caches' in window) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker
-            .register('./service-worker.js')
-            .then(reg => console.log('Service Worker: Registered'))
-            .catch(err => console.log(`Service Worker: Error: ${err}`));
-        });
-      }
+    include includes/registerSw.pug
   body
     if session.authenticated
       a#new-recipe(href="/recipes/new") +
