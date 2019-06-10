@@ -22,6 +22,16 @@ module.exports.updateList = (name, list) => (
   Shoppinglist.findOneAndUpdate({ name }, list, { upsert: true, new: true })
 );
 
+const filterByAction = (updates, action) => updates.filter(update => update.action === action);
+module.exports.processListUpdates = async (name, listUpdates) => {
+  const toAdd = filterByAction(listUpdates, 'added').map(({ item }) => item);
+  const toRemove = filterByAction(listUpdates, 'removed').map(({ item }) => item);
+  await Shoppinglist.findOneAndUpdate({ name }, { $push: { list: { $each: toAdd } } });
+  return Shoppinglist.findOneAndUpdate({ name }, {
+    $pull: { list: { $in: toRemove } },
+  }, { new: true });
+};
+
 module.exports.addItem = (name, item) => (
   Shoppinglist.findOneAndUpdate({ name }, { $push: { list: item } }, { new: true })
 );

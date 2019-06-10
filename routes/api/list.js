@@ -46,6 +46,16 @@ router.put('/list', checkListAuth, async (req, res, next) => {
   }
 });
 
+// Update Shopping List with "added" and "removed" actions
+router.put('/list/updates', checkListAuth, async (req, res, next) => {
+  try {
+    const list = await Shoppinglist.processListUpdates(req.session.listCode, req.body);
+    return res.json(list);
+  } catch (error) {
+    return next(error);
+  }
+});
+
 router.post('/list', checkListAuth, async (req, res, next) => {
   try {
     const updated = await Shoppinglist.addItem(req.session.listCode, req.body.item);

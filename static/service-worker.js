@@ -1,8 +1,8 @@
 /* eslint-disable no-restricted-globals */
 const cacheName = 'v1';
 
-const openDb = () => new Promise((resolve, reject) => {
-  const request = self.indexedDB.open('recipes-db');
+const openDb = dbName => new Promise((resolve, reject) => {
+  const request = self.indexedDB.open(dbName);
   request.onerror = () => {
     reject(new Error(`DB request error: ${request.errorCode}`));
   };
@@ -12,10 +12,6 @@ const openDb = () => new Promise((resolve, reject) => {
       console.error(`Database error: ${dbEvent.target.errorCode}`);
     };
     resolve(db);
-  };
-  request.onupgradeneeded = (event) => {
-    const db = event.target.result;
-    db.createObjectStore('recipes', { keyPath: '_id' });
   };
 });
 
@@ -46,7 +42,7 @@ self.addEventListener('activate', (e) => {
 
 function getRecipe(id) {
   return new Promise(async (resolve, reject) => {
-    const db = await openDb();
+    const db = await openDb('recipes-db', { name: 'recipes', keyPath: '_id' });
     if (!db) {
       reject(new Error('No db found'));
     }
@@ -150,5 +146,65 @@ self.addEventListener('fetch', (e) => {
     } else {
       e.respondWith(cacheFirst(e));
     }
+  }
+});
+
+const getListUpdates = db => new Promise(async (resolve, reject) => {
+  const store = db.transaction('list-updates').objectStore('list-updates');
+  const req = store.getAll();
+  req.onerror = reject;
+  req.onsuccess = () => {
+    resolve(req.result);
+  };
+});
+
+async function processListUpdates(listUpdates) {
+  const res = await fetch('/api/list/updates', {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(listUpdates),
+  });
+  const body = await res.json();
+  return body.list;
+}
+
+const clearObjectStore = (db, objStore) => new Promise(async (resolve, reject) => {
+  const store = db.transaction(objStore, 'readwrite').objectStore(objStore);
+  const clearReq = store.clear();
+  clearReq.onsuccess = resolve;
+  clearReq.onerror = reject;
+});
+
+const addItem = (item, db) => new Promise((resolve, reject) => {
+  const store = db.transaction('list', 'readwrite').objectStore('list');
+  const req = store.add({ item });
+  req.onerror = reject;
+  req.onsuccess = resolve;
+});
+
+const updateListDb = async (list) => {
+  const db = await openDb('list-db');
+  await clearObjectStore(db, 'list');
+  return Promise.all(list.map(item => addItem(item, db)));
+};
+
+async function listSync() {
+  const db = await openDb('list-db');
+  if (!db) {
+    throw new Error('No db found');
+  }
+  const listUpdates = await getListUpdates(db);
+  const updatedList = await processListUpdates(listUpdates);
+  await clearObjectStore(db, 'list-updates');
+  const channel = new BroadcastChannel('listSync');
+  channel.postMessage({ list: updatedList });
+  return updateListDb(updatedList);
+}
+
+self.addEventListener('sync', (e) => {
+  if (e.tag === 'listSync') {
+    e.waitUntil(listSync());
   }
 });

@@ -1,4 +1,4 @@
-import { getList as getListDb, updateList as updateListDb } from './modules/list-db.mjs';
+import { getList as getListDb, updateList as updateListDb, addListUpdates } from './modules/list-db.mjs';
 import addMenuButtons from './modules/nav-menu.mjs';
 import { showToast } from './modules/toast.mjs';
 
@@ -27,12 +27,14 @@ addMenuButtons([
 // item that is currently edited
 let currentlyEditing = null;
 
+const arrayEquals = (a, b) => new Set(a.concat(b)).size === a.length;
+
 const getList = () => (
   Array.from(document.querySelectorAll('.item'))
     .map(node => node.innerText.trim())
 );
 
-const updateList = async (list) => {
+const sendData = async (list) => {
   await updateListDb(list);
   return fetch('/api/list', {
     method: 'PUT',
@@ -42,6 +44,21 @@ const updateList = async (list) => {
     body: JSON.stringify({ list }),
   });
 };
+
+async function updateList(list) {
+  if ('serviceWorker' in navigator && 'SyncManager' in window) {
+    try {
+      await addListUpdates(list);
+      const reg = await navigator.serviceWorker.ready;
+      reg.sync.register('listSync');
+    } catch (error) {
+      console.error(error);
+      sendData(list);
+    }
+  } else {
+    sendData(list);
+  }
+}
 
 const onEditButtonClick = (button) => {
   currentlyEditing = button.parentNode.querySelector('span');
@@ -159,6 +176,19 @@ const init = async () => {
   list.forEach((item) => {
     addItem(item);
   });
+  if ('serviceWorker' in navigator && 'SyncManager' in window) {
+    const channel = new BroadcastChannel('listSync');
+    channel.addEventListener('message', async (event) => {
+      const currentList = getList();
+      if (!arrayEquals(currentList, event.data.list)) {
+        // new render
+        listEl.innerHTML = '';
+        event.data.list.forEach((item) => {
+          addItem(item);
+        });
+      }
+    });
+  }
 };
 
 init();
