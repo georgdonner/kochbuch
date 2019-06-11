@@ -1,6 +1,7 @@
 import { showToast } from './modules/toast.mjs';
 import calcServings from './modules/calc-servings.mjs';
 import addMenuButtons from './modules/nav-menu.mjs';
+import { putList, getList } from './modules/list-db.mjs';
 
 let noSleep;
 
@@ -50,18 +51,10 @@ const updateIngredients = (newServings) => {
   });
 };
 
-const addToList = (item) => {
-  fetch('/api/list', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ item }),
-  }).then((res) => {
-    if (res.ok) {
-      showToast(`${item} zur Einkaufsliste hinzugefügt`);
-    }
-  });
+const addToList = async (item) => {
+  const currentList = await getList();
+  await putList(currentList.concat([item]));
+  showToast(`${item} zur Einkaufsliste hinzugefügt`);
 };
 
 const addCartListeners = () => {
