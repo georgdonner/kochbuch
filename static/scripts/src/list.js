@@ -42,21 +42,43 @@ const sendData = async list => fetch('/api/list', {
   body: JSON.stringify({ list }),
 });
 
+const incrementDuplicate = (match, group) => {
+  const num = Number(group.match(/\d+/)[0]);
+  return match.replace(group, group.replace(/\d+/, num + 1));
+};
+
+const checkDuplicates = (list) => {
+  const newList = [];
+  list.forEach((item) => {
+    const regex = new RegExp(`${item}(\\s*\\(\\d+x\\))?$`);
+    const duplicateIndex = newList.findIndex(i => i.match(regex));
+    if (duplicateIndex !== -1) {
+      const [match, group] = newList[duplicateIndex].match(regex);
+      const updated = group ? incrementDuplicate(match, group) : `${match} (2x)`;
+      newList.splice(duplicateIndex, 1, updated);
+    } else {
+      newList.push(item);
+    }
+  });
+  return newList;
+};
+
 async function updateList(list) {
+  const updated = checkDuplicates(list);
   if ('serviceWorker' in navigator && 'SyncManager' in window) {
     try {
-      await addListUpdates(list);
-      await updateListDb(list);
+      await addListUpdates(updated);
+      await updateListDb(updated);
       const reg = await navigator.serviceWorker.ready;
       reg.sync.register('listSync');
     } catch (error) {
       console.error(error);
-      await updateListDb(list);
-      sendData(list);
+      await updateListDb(updated);
+      sendData(updated);
     }
   } else {
-    await updateListDb(list);
-    sendData(list);
+    await updateListDb(updated);
+    sendData(updated);
   }
 }
 
