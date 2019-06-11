@@ -12,42 +12,31 @@ const openDb = () => new Promise((resolve, reject) => {
   };
   request.onupgradeneeded = (event) => {
     const db = event.target.result;
-    db.createObjectStore('list', { keyPath: 'item' });
+    const store = db.createObjectStore('list', { keyPath: 'name' });
     db.createObjectStore('list-updates', { keyPath: 'item' });
+    store.add({ name: 'main-list', list: [] });
   };
-});
-
-export const clearDatabase = () => new Promise(async (resolve, reject) => {
-  const db = await openDb();
-  const store = db.transaction('list', 'readwrite').objectStore('list');
-  const clearReq = store.clear();
-  clearReq.onsuccess = resolve;
-  clearReq.onerror = reject;
 });
 
 export const getList = () => new Promise(async (resolve, reject) => {
   const db = await openDb();
   const store = db.transaction('list', 'readwrite').objectStore('list');
-  const req = store.getAll();
+  const req = store.get('main-list');
   req.onerror = reject;
-  req.onsuccess = () => {
-    resolve(req.result.map(item => item.item));
+  req.onsuccess = async () => {
+    resolve(req.result.list);
   };
 });
 
-const addItem = (item, db) => new Promise((resolve, reject) => {
-  const store = db.transaction('list', 'readwrite').objectStore('list');
-  const req = store.add(item);
-  req.onerror = reject;
-  req.onsuccess = resolve;
-});
-
-export const updateList = async (list) => {
+export const updateList = list => new Promise(async (resolve, reject) => {
   const db = await openDb();
-  await clearDatabase();
-  const items = list.map(item => ({ item }));
-  return Promise.all(items.map(item => addItem(item, db)));
-};
+  const store = db.transaction('list', 'readwrite').objectStore('list');
+  const req = store.put({ name: 'main-list', list });
+  req.onerror = reject;
+  req.onsuccess = async () => {
+    resolve(req.result.list);
+  };
+});
 
 const addListUpdate = (listUpdate, db) => new Promise((resolve, reject) => {
   const store = db.transaction('list-updates', 'readwrite').objectStore('list-updates');
@@ -66,13 +55,11 @@ const addListUpdate = (listUpdate, db) => new Promise((resolve, reject) => {
   };
 });
 
-const getAdded = (oldList, newList) => newList.filter(item => !oldList.includes(item));
 const getRemoved = (oldList, newList) => oldList.filter(item => !newList.includes(item));
 
 export const addListUpdates = async (newList) => {
   const db = await openDb();
   const oldList = await getList();
-  const added = getAdded(oldList, newList).map(item => ({ item, action: 'added' }));
   const removed = getRemoved(oldList, newList).map(item => ({ item, action: 'removed' }));
-  return Promise.all(added.concat(removed).map(update => addListUpdate(update, db)));
+  return Promise.all(removed.map(update => addListUpdate(update, db)));
 };

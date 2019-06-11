@@ -27,35 +27,35 @@ addMenuButtons([
 // item that is currently edited
 let currentlyEditing = null;
 
-const arrayEquals = (a, b) => new Set(a.concat(b)).size === a.length;
+const arrayEquals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
 const getList = () => (
   Array.from(document.querySelectorAll('.item'))
     .map(node => node.innerText.trim())
 );
 
-const sendData = async (list) => {
-  await updateListDb(list);
-  return fetch('/api/list', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ list }),
-  });
-};
+const sendData = async list => fetch('/api/list', {
+  method: 'PUT',
+  headers: {
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify({ list }),
+});
 
 async function updateList(list) {
   if ('serviceWorker' in navigator && 'SyncManager' in window) {
     try {
       await addListUpdates(list);
+      await updateListDb(list);
       const reg = await navigator.serviceWorker.ready;
       reg.sync.register('listSync');
     } catch (error) {
       console.error(error);
+      await updateListDb(list);
       sendData(list);
     }
   } else {
+    await updateListDb(list);
     sendData(list);
   }
 }
@@ -127,19 +127,6 @@ const fetchList = async () => {
 };
 
 const init = async () => {
-  const listEl = document.querySelector('.list');
-  if (listEl) {
-    // eslint-disable-next-line no-undef
-    Sortable.create(listEl, {
-      delay: 250,
-      draggable: '.item-wrapper',
-      filter: 'button, .checkmark',
-      chosenClass: 'chosen',
-      onUpdate: () => {
-        updateList(getList());
-      },
-    });
-  }
   const input = document.querySelector('#new-item input');
   if (input) {
     input.addEventListener('keydown', ({ key, target }) => {
@@ -176,6 +163,19 @@ const init = async () => {
   list.forEach((item) => {
     addItem(item);
   });
+  const listEl = document.querySelector('.list');
+  if (listEl) {
+    // eslint-disable-next-line no-undef
+    Sortable.create(listEl, {
+      delay: 250,
+      draggable: '.item-wrapper',
+      filter: 'button, .checkmark',
+      chosenClass: 'chosen',
+      onUpdate: () => {
+        updateList(getList());
+      },
+    });
+  }
   if ('serviceWorker' in navigator && 'SyncManager' in window) {
     const channel = new BroadcastChannel('listSync');
     channel.addEventListener('message', async (event) => {

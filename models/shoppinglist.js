@@ -23,13 +23,19 @@ module.exports.updateList = (name, list) => (
 );
 
 const filterByAction = (updates, action) => updates.filter(update => update.action === action);
-module.exports.processListUpdates = async (name, listUpdates) => {
-  const toAdd = filterByAction(listUpdates, 'added').map(({ item }) => item);
-  const toRemove = filterByAction(listUpdates, 'removed').map(({ item }) => item);
-  await Shoppinglist.findOneAndUpdate({ name }, { $push: { list: { $each: toAdd } } });
-  return Shoppinglist.findOneAndUpdate({ name }, {
-    $pull: { list: { $in: toRemove } },
-  }, { new: true });
+module.exports.processListUpdates = async (name, { list, updates = [] } = {}) => {
+  const currentList = await Shoppinglist.findOne({ name });
+  const mergedSet = new Set(list ? list.concat(currentList.list) : currentList.list);
+  filterByAction(updates, 'added').forEach(({ item }) => {
+    mergedSet.add(item);
+  });
+  filterByAction(updates, 'removed').forEach(({ item }) => {
+    mergedSet.delete(item);
+  });
+  const mergedList = Array.from(mergedSet);
+  currentList.list = mergedList;
+  await currentList.save();
+  return currentList;
 };
 
 module.exports.addItem = (name, item) => (

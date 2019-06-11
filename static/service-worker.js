@@ -158,13 +158,13 @@ const getListUpdates = db => new Promise(async (resolve, reject) => {
   };
 });
 
-async function processListUpdates(listUpdates) {
+async function processListUpdates(currentList, listUpdates) {
   const res = await fetch('/api/list/updates', {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(listUpdates),
+    body: JSON.stringify({ list: currentList, updates: listUpdates }),
   });
   const body = await res.json();
   return body.list;
@@ -177,26 +177,35 @@ const clearObjectStore = (db, objStore) => new Promise(async (resolve, reject) =
   clearReq.onerror = reject;
 });
 
-const addItem = (item, db) => new Promise((resolve, reject) => {
+
+const getListDb = () => new Promise(async (resolve, reject) => {
+  const db = await openDb('list-db');
   const store = db.transaction('list', 'readwrite').objectStore('list');
-  const req = store.add({ item });
+  const req = store.get('main-list');
   req.onerror = reject;
-  req.onsuccess = resolve;
+  req.onsuccess = async () => {
+    resolve(req.result.list);
+  };
 });
 
-const updateListDb = async (list) => {
+const updateListDb = list => new Promise(async (resolve, reject) => {
   const db = await openDb('list-db');
-  await clearObjectStore(db, 'list');
-  return Promise.all(list.map(item => addItem(item, db)));
-};
+  const store = db.transaction('list', 'readwrite').objectStore('list');
+  const req = store.put({ name: 'main-list', list });
+  req.onerror = reject;
+  req.onsuccess = async () => {
+    resolve(req.result.list);
+  };
+});
 
 async function listSync() {
   const db = await openDb('list-db');
   if (!db) {
     throw new Error('No db found');
   }
+  const currentList = await getListDb(db);
   const listUpdates = await getListUpdates(db);
-  const updatedList = await processListUpdates(listUpdates);
+  const updatedList = await processListUpdates(currentList, listUpdates);
   await clearObjectStore(db, 'list-updates');
   const channel = new BroadcastChannel('listSync');
   channel.postMessage({ list: updatedList });
