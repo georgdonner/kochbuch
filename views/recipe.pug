@@ -8,7 +8,6 @@ html(lang="de")
     script(type="module" src="/scripts/src/modules/nav-menu.mjs")
     script(type="module" src="/scripts/src/modules/toast.mjs")
     script(async src="/scripts/nosleep.js")
-    include includes/registerSw.pug
   body
     if session.authenticated
       - var page = 'index'
