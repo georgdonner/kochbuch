@@ -29,6 +29,8 @@ addMenuButtons([
 const getCurrentServings = () => Number(document.getElementById('servings').innerText);
 
 const ORIG_SERVINGS = Number(document.getElementById('servings').dataset.original);
+const ORIG_DESCR = document.querySelector('.description').innerHTML;
+const ORIG_DESCR_MATCHES = ORIG_DESCR.match(/{(.+?)}/gm);
 
 const updateServings = (change = 0) => {
   const newServings = getCurrentServings() + change;
@@ -39,6 +41,7 @@ const updateServings = (change = 0) => {
       addToPlanLink.href = addToPlanLink.href.replace(/servings=\d+/, `servings=${newServings}`);
     }
     updateIngredients(newServings);
+    updateDescription(newServings);
   }
 };
 
@@ -49,6 +52,22 @@ const updateIngredients = (newServings) => {
     // eslint-disable-next-line no-param-reassign
     node.innerText = newText;
   });
+};
+
+const updateDescription = (servings = ORIG_SERVINGS) => {
+  // update ingredient counts in description
+  if (ORIG_DESCR_MATCHES) {
+    let descrCopy = ORIG_DESCR;
+    ORIG_DESCR_MATCHES.forEach((match) => {
+      const count = Number(match.replace(/({|})/g, ''));
+      const newCount = count * (servings / ORIG_SERVINGS);
+      descrCopy = descrCopy.replace(
+        match,
+        newCount % 1 === 0 ? newCount.toString() : newCount.toFixed(1),
+      );
+    });
+    document.querySelector('.description').innerHTML = descrCopy;
+  }
 };
 
 const addToList = async (item) => {
@@ -95,6 +114,7 @@ const init = () => {
   if (getCurrentServings() !== ORIG_SERVINGS) {
     updateServings();
   }
+  updateDescription();
   const backButton = document.getElementById('back');
   backButton.addEventListener('click', back);
   const downButton = document.querySelector('.servings-control .down');
