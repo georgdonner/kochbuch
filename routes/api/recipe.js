@@ -32,7 +32,7 @@ router.get('/recipes/search', compression(), async (req, res) => {
   }
 });
 
-router.post('/recipes/changes', compression(), async (req, res) => {
+router.post('/recipes/changes', compression(), async (req, res, next) => {
   try {
     const { lastUpdated, ids } = req.body;
     const allRecipes = await Recipe.getAllRecipes();
@@ -51,7 +51,7 @@ router.post('/recipes/changes', compression(), async (req, res) => {
       },
     });
   } catch (error) {
-    return res.send(error);
+    return next(error);
   }
 });
 

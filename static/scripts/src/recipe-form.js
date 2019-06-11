@@ -141,7 +141,7 @@ const init = () => {
   // update image on widget change
   widget.onChange((file) => {
     file.done((info) => {
-      updateImg(info.originalUrl);
+      updateImg(info.cdnUrl.replace('-/preview/', ''));
     });
   });
   const imgInput = document.getElementsByName('recipe_image')[0];

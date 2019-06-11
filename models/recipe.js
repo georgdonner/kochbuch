@@ -20,7 +20,10 @@ const RecipeSchema = new Schema({
   }],
   description: String,
   descrImage: String,
-  categories: [String],
+  categories: {
+    type: [String],
+    default: [],
+  },
 },
 { timestamps: true },
 );
