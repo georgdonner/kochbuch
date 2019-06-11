@@ -1,5 +1,5 @@
 import { showToast } from './modules/toast.mjs';
-import calcServings from './modules/calc-servings.mjs';
+import calcServings, { beautifulNumber } from './modules/calc-servings.mjs';
 import addMenuButtons from './modules/nav-menu.mjs';
 import { putList, getList } from './modules/list-db.mjs';
 
@@ -61,10 +61,7 @@ const updateDescription = (servings = ORIG_SERVINGS) => {
     ORIG_DESCR_MATCHES.forEach((match) => {
       const count = Number(match.replace(/({|})/g, ''));
       const newCount = count * (servings / ORIG_SERVINGS);
-      descrCopy = descrCopy.replace(
-        match,
-        newCount % 1 === 0 ? newCount.toString() : newCount.toFixed(1),
-      );
+      descrCopy = descrCopy.replace(match, beautifulNumber(newCount));
     });
     document.querySelector('.description').innerHTML = descrCopy;
   }

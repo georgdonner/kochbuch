@@ -1,4 +1,24 @@
 /* eslint-disable camelcase, no-use-before-define */
+
+export const beautifulNumber = (num) => {
+  // convert number to a string that uses fraction symbols
+  if (num % 1 === 0) {
+    return num.toString();
+  }
+  const remainder = num % 1;
+  const quotient = num - remainder;
+  switch (remainder) {
+    case 0.25:
+      return quotient !== 0 ? `${quotient.toString()} \xBC` : '\xBC';
+    case 0.5:
+      return quotient !== 0 ? `${quotient.toString()} \xBD` : '\xBD';
+    case 0.75:
+      return quotient !== 0 ? `${quotient.toString()} \xBE` : '\xBE';
+    default:
+      return parseFloat(num.toPrecision(2)).toString();
+  }
+};
+
 export default function calcServings(ingredientName, origServings, newServings) {
   // regex for german specific quantity units
   const multUnit_n = /\d\s?((prise|zehe|stange|dose|flasche|tasse|messerspitze)\w*)/i;
@@ -75,25 +95,6 @@ export default function calcServings(ingredientName, origServings, newServings) 
     }
     return ingr.replace(getQuantityString(ingr), newQty.toString());
   };
-
-  function beautifulNumber(num) {
-    // convert number to a string that uses fraction symbols
-    if (num % 1 === 0) {
-      return num.toString();
-    }
-    const remainder = num % 1;
-    const quotient = num - remainder;
-    switch (remainder) {
-      case 0.25:
-        return quotient !== 0 ? `${quotient.toString()} \xBC` : '\xBC';
-      case 0.5:
-        return quotient !== 0 ? `${quotient.toString()} \xBD` : '\xBD';
-      case 0.75:
-        return quotient !== 0 ? `${quotient.toString()} \xBE` : '\xBE';
-      default:
-        return parseFloat(num.toPrecision(2)).toString();
-    }
-  }
 
   function adjustEnding(str, qty, newQty) {
     const isNowSingle = qty > 1 && newQty <= 1;
