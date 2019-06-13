@@ -1,3 +1,5 @@
+import { syncDatabase } from './modules/recipes-db.mjs';
+
 let uploadedImgSrc = null;
 // eslint-disable-next-line no-undef
 const widget = uploadcare.SingleWidget('[role=uploadcare-uploader]');
@@ -92,7 +94,7 @@ const promptLeave = (e) => {
   e.returnValue = '';
 };
 
-const saveRecipe = () => {
+const saveRecipe = async () => {
   const recipe = getRecipe();
   let url = '/api/recipe';
   const { pathname } = window.location;
@@ -100,20 +102,21 @@ const saveRecipe = () => {
   if (recipeId) {
     url += `/${recipeId}`;
   }
-  fetch(url, {
+  const res = await fetch(url, {
     method: recipeId ? 'PUT' : 'POST',
     headers: {
       'Content-Type': 'application/json; charset=utf-8',
     },
     body: JSON.stringify(recipe),
-  })
-    .then(res => res.json())
-    .then((saved) => {
-      window.removeEventListener('beforeunload', promptLeave);
-      window.sessionStorage.removeItem('recipes');
-      window.sessionStorage.removeItem('state');
-      window.location.replace(`/recipe/${saved._id}`);
-    });
+  });
+  const saved = await res.json();
+  window.removeEventListener('beforeunload', promptLeave);
+  window.sessionStorage.removeItem('recipes');
+  if (!recipeId) {
+    window.sessionStorage.removeItem('state');
+  }
+  await syncDatabase();
+  window.location.replace(`/recipe/${saved._id}`);
 };
 
 const fetchCategories = () => (

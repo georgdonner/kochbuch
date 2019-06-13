@@ -5,6 +5,7 @@ html(lang="de")
     include includes/meta.pug
     link(rel="stylesheet", href="/css/recipe-form.css")
     script(src="https://ucarecdn.com/libs/widget/3.x/uploadcare.full.min.js", charset="utf-8")
+    script(type="module" src="/scripts/src/modules/recipes-db.mjs")
   body
     .container
       if recipe.image
@@ -84,4 +85,4 @@ html(lang="de")
         input(type="text", name="category", placeholder="Enter drücken zum Hinzufügen", autocomplete="off")
         div#autocomplete-items
       button#save.inverted Rezept speichern
-    script(src="/scripts/src/recipe-form.js")  
+    script(type="module" src="/scripts/src/recipe-form.js")  
