@@ -67,7 +67,9 @@ export const getRecipes = async (query) => {
   recipes.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   let searchQuery = query;
   const diet = window.localStorage.getItem('diet');
-  if (diet) {
+  const ignoreDiet = query.endsWith('!');
+  if (ignoreDiet) query.replace(/!$/, '');
+  if (diet && !ignoreDiet) {
     searchQuery = query ? `${query}, ${diet}` : diet;
   }
   if (!searchQuery) {
