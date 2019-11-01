@@ -33,7 +33,7 @@
     "mark-twain": "^2.0.3",
     "markdown-it": "^8.4.2",
     "moment": "^2.22.2",
-    "mongoose": "^5.3.13",
+    "mongoose": "^5.7.5",
     "pdfmake": "^0.1.39",
     "pug": "^2.0.3",
     "request": "^2.88.0",
