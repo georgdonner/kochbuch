@@ -5,7 +5,7 @@ html, body {
 }
 
 #nav-wrapper {
-  max-width: 1000px !important;
+  max-width: 1200px !important;
 }
 
 #top-bar-container {
@@ -20,6 +20,7 @@ html, body {
   justify-content: space-between;
   margin: 0 auto;
   padding: 1rem 1.5rem;
+  padding-bottom: 0;
 }
 
 #top-bar a, #top-bar button {
@@ -76,8 +77,7 @@ html, body {
 }
 
 .recipe-title {
-  margin-top: 1rem;
-  margin-bottom: 2rem;
+  margin: 2rem 0;
   font-size: 2rem;
   font-weight: 400;
   letter-spacing: .5px;

@@ -13,13 +13,13 @@ html(lang="de")
     if session.authenticated
       - var page = 'index'
       include includes/nav.pug
-    #top-bar-container
-      #top-bar
-        button#back(href="/")
-          svg.icon.icon-arrow-left2
-            use(xlink:href='#icon-arrow-left2')
-          | Alle Rezepte
-        if session.planCode
+    if session.planCode
+      #top-bar-container
+        #top-bar
+          button#back(href="/")
+            svg.icon.icon-arrow-left2
+              use(xlink:href='#icon-arrow-left2')
+            | Alle Rezepte
           a#add-to-plan(href=`/plan/new?recipe=${recipe._id}&servings=${recipe.servings}`)
             span(style="font-size: 1rem; margin-right: .25rem;") +
             | Zum Wochenplan
