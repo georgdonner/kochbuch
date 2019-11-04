@@ -113,22 +113,14 @@ const init = () => {
   }
   updateDescription();
   const backButton = document.getElementById('back');
-  backButton.addEventListener('click', back);
+  if (backButton) {
+    backButton.addEventListener('click', back);
+  }
   const downButton = document.querySelector('.servings-control .down');
   const upButton = document.querySelector('.servings-control .up');
   downButton.addEventListener('click', () => updateServings(-1));
   upButton.addEventListener('click', () => updateServings(1));
   addCartListeners();
-  const cookingModeButton = document.getElementById('cooking-mode');
-  if (cookingModeButton) {
-    const preventSleep = () => {
-      // eslint-disable-next-line no-undef
-      new NoSleep().enable();
-      cookingModeButton.remove();
-      showToast('Kochmodus aktiviert!');
-    };
-    cookingModeButton.addEventListener('click', preventSleep, false);
-  }
 };
 
 init();

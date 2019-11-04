@@ -2,11 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 
-const checkAuth = require('../helpers/check-auth');
 const Shoppinglist = require('../../models/shoppinglist');
 
 const checkListAuth = (req, res, next) => {
-  if (req.session.authenticated && req.session.listCode) {
+  if (req.session.listCode) {
     return next();
   }
   return res.sendStatus(401);
@@ -23,7 +22,7 @@ router.get('/list', checkListAuth, async (req, res, next) => {
 });
 
 // New Shopping List
-router.post('/lists', checkAuth, async (req, res, next) => {
+router.post('/lists', async (req, res, next) => {
   try {
     const newList = new Shoppinglist({ ...req.body });
     const list = await Shoppinglist.addList(newList);

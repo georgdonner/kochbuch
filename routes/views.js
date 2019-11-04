@@ -75,7 +75,7 @@ router.get('/recipe/:id', async (req, res, next) => {
   }
 });
 
-router.get('/list', checkAuth, async (req, res, next) => {
+router.get('/list', async (req, res, next) => {
   try {
     const { code } = req.query;
     let list = null;
@@ -119,7 +119,7 @@ const getWeek = (plan, offset = 0) => {
   return week;
 };
 
-router.get('/plan', checkAuth, async (req, res, next) => {
+router.get('/plan', async (req, res, next) => {
   try {
     const { code, week = 0 } = req.query;
     let entries = null;
@@ -142,7 +142,7 @@ router.get('/plan', checkAuth, async (req, res, next) => {
   }
 });
 
-router.get('/plan/new', checkAuth, async (req, res, next) => {
+router.get('/plan/new', async (req, res, next) => {
   try {
     if (!req.session.planCode) {
       res.redirect('/plan');
@@ -177,7 +177,7 @@ router.get('/plan/new', checkAuth, async (req, res, next) => {
   }
 });
 
-router.get('/plan/edit', checkAuth, async (req, res, next) => {
+router.get('/plan/edit', async (req, res, next) => {
   try {
     if (!req.session.planCode) {
       res.redirect('/plan');
@@ -201,7 +201,7 @@ router.get('/plan/edit', checkAuth, async (req, res, next) => {
   }
 });
 
-router.get('/settings', checkAuth, async (req, res, next) => {
+router.get('/settings', async (req, res, next) => {
   try {
     if (Object.keys(req.query).length === 0) {
       return res.render('settings', { session: req.session });

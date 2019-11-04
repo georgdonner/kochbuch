@@ -2,11 +2,10 @@ const express = require('express');
 
 const router = express.Router();
 
-const checkAuth = require('../helpers/check-auth');
 const Weekplan = require('../../models/weekplan');
 
 const checkPlanAuth = (req, res, next) => {
-  if (req.session.authenticated && req.session.planCode) {
+  if (req.session.planCode) {
     return next();
   }
   return res.sendStatus(401);
@@ -23,7 +22,7 @@ router.get('/plan', checkPlanAuth, async (req, res, next) => {
 });
 
 // New weekplan
-router.post('/plans', checkAuth, async (req, res, next) => {
+router.post('/plans', async (req, res, next) => {
   try {
     const added = await Weekplan.addPlan(req.body.name);
     return res.json(added);

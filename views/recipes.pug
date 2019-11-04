@@ -13,9 +13,8 @@ html(lang="de")
     if session.authenticated
       a#new-recipe(href="/recipes/new") +
     #fixed-wrapper
-      if session.authenticated
-        - var page = 'index'
-        include includes/nav.pug
+      - var page = 'index'
+      include includes/nav.pug
       div#searchbar
         div#search-input
           svg.icon.icon-search
