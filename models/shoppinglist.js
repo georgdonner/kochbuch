@@ -14,15 +14,15 @@ const ShoppinglistSchema = new Schema({
 const Shoppinglist = mongoose.model('Shoppinglist', ShoppinglistSchema);
 module.exports = Shoppinglist;
 
-module.exports.getByName = name => Shoppinglist.findOne({ name });
+module.exports.getByName = (name) => Shoppinglist.findOne({ name });
 
-module.exports.addList = name => Shoppinglist.create({ name });
+module.exports.addList = (name) => Shoppinglist.create({ name });
 
 module.exports.updateList = (name, list) => (
   Shoppinglist.findOneAndUpdate({ name }, list, { upsert: true, new: true })
 );
 
-const filterByAction = (updates, action) => updates.filter(update => update.action === action);
+const filterByAction = (updates, action) => updates.filter((update) => update.action === action);
 module.exports.processListUpdates = async (name, { list, updates = [] } = {}) => {
   const currentList = await Shoppinglist.findOne({ name });
   const mergedSet = new Set(list ? list.concat(currentList.list) : currentList.list);

@@ -31,7 +31,7 @@ const arrayEquals = (a, b) => JSON.stringify(a) === JSON.stringify(b);
 
 const getList = () => (
   Array.from(document.querySelectorAll('.item'))
-    .map(node => node.innerText.trim())
+    .map((node) => node.innerText.trim())
 );
 
 const onEditButtonClick = (button) => {
@@ -65,7 +65,7 @@ const addItem = (item) => {
 function removeItem({ target }) {
   const wrapperNode = target.parentNode.parentNode;
   const itemNode = target.parentNode.querySelector('.item');
-  const updated = getList().filter(entry => entry !== itemNode.innerText.trim());
+  const updated = getList().filter((entry) => entry !== itemNode.innerText.trim());
   updateList(updated).then(() => {
     wrapperNode.remove();
     const item = target.parentNode.innerText;

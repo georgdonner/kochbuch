@@ -31,14 +31,14 @@ const RecipeSchema = new Schema({
 const Recipe = mongoose.model('Recipe', RecipeSchema);
 module.exports = Recipe;
 
-module.exports.getRecipeById = id => Recipe.findById(id, '-__v -ingredients._id').lean();
+module.exports.getRecipeById = (id) => Recipe.findById(id, '-__v -ingredients._id').lean();
 
 module.exports.getAllRecipes = () => Recipe.find({}, '-__v -ingredients._id').lean();
 
 const convertSearch = (searchString) => {
-  const terms = searchString.split(',').map(str => str.trim());
+  const terms = searchString.split(',').map((str) => str.trim());
   return {
-    $and: terms.map(term => ({
+    $and: terms.map((term) => ({
       $or: [
         { title: { $regex: new RegExp(term, 'gi') } },
         { categories: { $regex: new RegExp(term, 'gi') } },
@@ -69,9 +69,9 @@ module.exports.lastUpdated = async () => (
   Recipe.find().limit(1).sort({ updatedAt: -1 })
 );
 
-module.exports.addRecipe = newRecipe => newRecipe.save();
+module.exports.addRecipe = (newRecipe) => newRecipe.save();
 
-module.exports.removeRecipe = id => Recipe.findOneAndRemove({ _id: id });
+module.exports.removeRecipe = (id) => Recipe.findOneAndRemove({ _id: id });
 
 module.exports.updateRecipe = (id, newData) => (
   Recipe.findByIdAndUpdate(id, { $set: newData }, { upsert: true, new: true })

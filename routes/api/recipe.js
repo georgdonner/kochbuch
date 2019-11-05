@@ -8,7 +8,7 @@ const checkAuth = require('../helpers/check-auth');
 const StatusError = require('../helpers/status-error');
 const Recipe = require('../../models/recipe');
 
-const toHtml = recipe => ({
+const toHtml = (recipe) => ({
   ...recipe,
   description: markdown.render(recipe.description),
 });
@@ -17,7 +17,7 @@ const toHtml = recipe => ({
 router.get('/recipes', compression(), async (req, res) => {
   const { format = 'markdown' } = req.query;
   const recipes = await Recipe.getAllRecipes();
-  const formatted = format === 'html' ? recipes.map(r => toHtml(r)) : recipes;
+  const formatted = format === 'html' ? recipes.map((r) => toHtml(r)) : recipes;
   return res.json(formatted);
 });
 
@@ -25,7 +25,7 @@ router.get('/recipes/search', compression(), async (req, res) => {
   try {
     const { q: query, format = 'markdown' } = req.query;
     const recipes = await Recipe.search(query);
-    const formatted = format === 'html' ? recipes.map(r => toHtml(r)) : recipes;
+    const formatted = format === 'html' ? recipes.map((r) => toHtml(r)) : recipes;
     return res.json(formatted);
   } catch (error) {
     return res.send(error);
@@ -37,12 +37,12 @@ router.post('/recipes/changes', compression(), async (req, res, next) => {
     const { lastUpdated, ids } = req.body;
     const allRecipes = await Recipe.getAllRecipes();
     const removed = ids ? ids.filter(
-      id => !allRecipes.find(recipe => recipe._id.toString() === id),
+      (id) => !allRecipes.find((recipe) => recipe._id.toString() === id),
     ) : [];
-    const updated = lastUpdated ? allRecipes.filter(recipe => (
+    const updated = lastUpdated ? allRecipes.filter((recipe) => (
       +new Date(recipe.updatedAt) > lastUpdated
     )) : allRecipes;
-    const mapped = updated.map(r => toHtml(r));
+    const mapped = updated.map((r) => toHtml(r));
     return res.json({
       lastUpdated: Date.now(),
       data: {

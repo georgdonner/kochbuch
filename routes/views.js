@@ -96,7 +96,7 @@ router.get('/list', async (req, res, next) => {
   }
 });
 
-const getEntries = (plan, date) => plan.filter(entry => moment(entry.date).isSame(moment(date), 'day'));
+const getEntries = (plan, date) => plan.filter((entry) => moment(entry.date).isSame(moment(date), 'day'));
 const weekday = (date) => {
   if (moment(date).isSame(moment(), 'day')) {
     return 'Heute';

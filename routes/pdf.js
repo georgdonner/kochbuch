@@ -18,7 +18,7 @@ const printer = new PdfPrinter(fonts);
 
 const formatDescription = (description) => {
   const parsed = markdown(description);
-  const content = parsed.content.filter(el => el.includes('p'));
+  const content = parsed.content.filter((el) => el.includes('p'));
   const items = [];
   content.forEach((p) => {
     p.shift(); // remove 'p'
@@ -44,7 +44,7 @@ const formatDescription = (description) => {
   return items;
 };
 
-const getDoc = recipe => ({
+const getDoc = (recipe) => ({
   content: [
     {
       text: recipe.title, fontSize: 20, bold: true, alignment: 'center', margin: [0, 0, 0, 16],
@@ -60,7 +60,7 @@ const getDoc = recipe => ({
       columns: [
         {
           width: '33%',
-          ul: recipe.ingredients.map(ingr => ({
+          ul: recipe.ingredients.map((ingr) => ({
             text: `${ingr.name}${ingr.hint ? ` (${ingr.hint})` : ''}`,
             margin: [0, 3],
             fontSize: 10,

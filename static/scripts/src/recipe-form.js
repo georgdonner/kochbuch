@@ -59,13 +59,13 @@ const getRecipe = () => {
   const duration = +document.getElementById('duration').value;
   const difficulty = +document.querySelector('#difficulty input:checked').value;
   const ingredients = Array.from(document.querySelectorAll('#ingredients .ingredient'))
-    .map(node => ({
+    .map((node) => ({
       name: node.children.name.value,
       hint: node.children.hint.value,
     }));
   const description = document.getElementById('description').value;
   const categories = Array.from(document.querySelectorAll('#categories .ctg'))
-    .map(node => node.innerText);
+    .map((node) => node.innerText);
   document.querySelectorAll('#veggie-options input')
     .forEach((node) => {
       if (node.checked) {
@@ -121,7 +121,7 @@ const saveRecipe = async () => {
 
 const fetchCategories = () => (
   fetch('/api/recipes/categories')
-    .then(res => res.json())
+    .then((res) => res.json())
 );
 
 const renderAutocomplete = (searchValue, categories) => {
@@ -129,7 +129,7 @@ const renderAutocomplete = (searchValue, categories) => {
   autocompleteItems.innerHTML = '';
   if (searchValue) {
     const filtered = categories.filter(
-      ctg => ctg.toLowerCase().startsWith(searchValue.toLowerCase()),
+      (ctg) => ctg.toLowerCase().startsWith(searchValue.toLowerCase()),
     );
     filtered.forEach((ctg) => {
       const item = document.createElement('div');

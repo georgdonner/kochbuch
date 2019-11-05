@@ -1,7 +1,7 @@
 /* eslint-disable no-restricted-globals */
 const cacheName = 'v1';
 
-const openDb = dbName => new Promise((resolve, reject) => {
+const openDb = (dbName) => new Promise((resolve, reject) => {
   const request = self.indexedDB.open(dbName);
   request.onerror = () => {
     reject(new Error(`DB request error: ${request.errorCode}`));
@@ -12,6 +12,13 @@ const openDb = dbName => new Promise((resolve, reject) => {
       console.error(`Database error: ${dbEvent.target.errorCode}`);
     };
     resolve(db);
+  };
+});
+
+const reqPromise = (req) => new Promise((resolve, reject) => {
+  req.onerror = reject;
+  req.onsuccess = () => {
+    resolve(req.result);
   };
 });
 
@@ -29,7 +36,7 @@ self.addEventListener('activate', (e) => {
       .then(() => self.skipWaiting()),
   );
   e.waitUntil(
-    caches.keys().then(cacheNames => Promise.all(
+    caches.keys().then((cacheNames) => Promise.all(
       cacheNames.map((cache) => {
         if (cache !== cacheName) {
           return caches.delete(cache);
@@ -40,18 +47,14 @@ self.addEventListener('activate', (e) => {
   );
 });
 
-function getRecipe(id) {
-  return new Promise(async (resolve, reject) => {
-    const db = await openDb('recipes-db', { name: 'recipes', keyPath: '_id' });
-    if (!db) {
-      reject(new Error('No db found'));
-    }
-    const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
-    const req = store.get(id);
-    req.onsuccess = () => {
-      resolve(req.result);
-    };
-  });
+async function getRecipe(id) {
+  const db = await openDb('recipes-db', { name: 'recipes', keyPath: '_id' });
+  if (!db) {
+    throw new Error('No db found');
+  }
+  const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
+  const req = store.get(id);
+  return reqPromise(req);
 }
 
 function isRecipeView(url) {
@@ -60,7 +63,7 @@ function isRecipeView(url) {
 
 function renderRecipe(url) {
   const recipeId = url.pathname.split('/')[2];
-  return getRecipe(recipeId).then(recipe => (
+  return getRecipe(recipeId).then((recipe) => (
     // eslint-disable-next-line no-undef
     new Response(template({
       recipe,
@@ -98,18 +101,18 @@ function fetchRequest(request) {
         imgWidths.forEach((width) => {
           imgUrls.push(getImgUrl(width), getImgUrl(width * 2, true));
         });
-        return Promise.all(imgUrls.map(imgUrl => caches.match(imgUrl)))
+        return Promise.all(imgUrls.map((imgUrl) => caches.match(imgUrl)))
           .then((responses) => {
-            const filtered = responses.filter(response => response);
+            const filtered = responses.filter((response) => response);
             if (filtered.length > 0) {
-              const getWidth = resizeUrl => +resizeUrl.match(/resize\/\d+/)[0].split('/')[1];
+              const getWidth = (resizeUrl) => +resizeUrl.match(/resize\/\d+/)[0].split('/')[1];
               filtered.sort((a, b) => getWidth(b.url) - getWidth(a.url));
               return filtered[0];
             }
             return undefined;
           });
       }
-      return caches.match('/offline').then(r => r);
+      return caches.match('/offline').then((r) => r);
     }));
 }
 
@@ -133,7 +136,7 @@ self.addEventListener('fetch', (e) => {
     if (local && !cacheLocal.includes(url.pathname)) {
       if (isRecipeView(url) && 'template' in self) {
         // get server response with 5 second timeout, render offline otherwise
-        const sleep = ms => new Promise(resolve => setTimeout(resolve, ms));
+        const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
         const renderOffline = async () => {
           await sleep(5000);
           return renderRecipe(url);
@@ -149,14 +152,11 @@ self.addEventListener('fetch', (e) => {
   }
 });
 
-const getListUpdates = db => new Promise(async (resolve, reject) => {
+const getListUpdates = async (db) => {
   const store = db.transaction('list-updates').objectStore('list-updates');
   const req = store.getAll();
-  req.onerror = reject;
-  req.onsuccess = () => {
-    resolve(req.result);
-  };
-});
+  return reqPromise(req);
+};
 
 async function processListUpdates(currentList, listUpdates) {
   const res = await fetch('/api/list/updates', {
@@ -170,33 +170,28 @@ async function processListUpdates(currentList, listUpdates) {
   return body.list;
 }
 
-const clearObjectStore = (db, objStore) => new Promise(async (resolve, reject) => {
+const clearObjectStore = async (db, objStore) => {
   const store = db.transaction(objStore, 'readwrite').objectStore(objStore);
   const clearReq = store.clear();
-  clearReq.onsuccess = resolve;
-  clearReq.onerror = reject;
-});
+  return reqPromise(clearReq);
+};
 
 
-const getListDb = () => new Promise(async (resolve, reject) => {
+const getListDb = async () => {
   const db = await openDb('list-db');
   const store = db.transaction('list', 'readwrite').objectStore('list');
   const req = store.get('main-list');
-  req.onerror = reject;
-  req.onsuccess = async () => {
-    resolve(req.result.list);
-  };
-});
+  const result = await reqPromise(req);
+  return result.list;
+};
 
-const updateListDb = list => new Promise(async (resolve, reject) => {
+const updateListDb = async (list) => {
   const db = await openDb('list-db');
   const store = db.transaction('list', 'readwrite').objectStore('list');
   const req = store.put({ name: 'main-list', list });
-  req.onerror = reject;
-  req.onsuccess = async () => {
-    resolve(req.result.list);
-  };
-});
+  const result = await reqPromise(req);
+  return result.list;
+};
 
 async function listSync() {
   const db = await openDb('list-db');

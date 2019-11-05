@@ -60,10 +60,10 @@ const createRecipeCard = (recipe) => {
   `;
   card.innerHTML = content;
   // filter out vegan/vegeterian categories and check if footer is needed
-  const categories = recipe.categories.filter(ctg => ctg !== 'Vegetarisch' && ctg !== 'Vegan');
+  const categories = recipe.categories.filter((ctg) => ctg !== 'Vegetarisch' && ctg !== 'Vegan');
   if (categories.length > 0) {
     const footer = document.createElement('footer');
-    footer.innerHTML = categories.map(ctg => `<span>${ctg}</span>`).join('\n');
+    footer.innerHTML = categories.map((ctg) => `<span>${ctg}</span>`).join('\n');
     card.appendChild(footer);
   }
   return card;
