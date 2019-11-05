@@ -11,7 +11,10 @@ html(lang="de")
       .container
         .form-wrapper
           form(action="/plan", method="get")
-            label(for="code", ) Um den Wochenplan nutzen zu können, geben Sie bitte hier den Code ein.
+            label(for="code", )
+              | Um den Wochenplan nutzen zu können, gib hier bitte einen Code ein. Dieser Code wird verwendet, um deinen Wochenplan eindeutig zu identifizieren, daher such dir am besten einen einzigartigen und ausgefallenen Code aus.
+              br
+              | Falls du den gleichen Wochenplan auf einem anderen Gerät verwenden oder mit jemandem zusammen benutzen möchtest, einfach dort den gleichen Code eingeben und der Plan synchronisiert sich automatisch!
             input(type="text", name="code", placeholder="Wochenplan Code")
             button(type="submit") Bestätigen
     else

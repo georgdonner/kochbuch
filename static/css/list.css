@@ -158,8 +158,7 @@ form label {
   color: #333;
   margin-bottom: 1.5rem;
   font-size: 1rem;
-  font-weight: 600;
-  text-align: center;
+  line-height: 1.5;
 }
 
 form input {

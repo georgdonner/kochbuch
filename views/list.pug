@@ -17,7 +17,10 @@ html(lang="de")
       .container
         .form-wrapper
           form(action="/list", method="get")
-            label(for="code", ) Um die Einkaufsliste nutzen zu können, geben Sie bitte hier den Code ein.
+            label(for="code", )
+              | Um die Einkaufsliste nutzen zu können, gib hier bitte einen Code ein. Dieser Code wird verwendet, um deine Einkaufsliste eindeutig zu identifizieren, daher such dir am besten einen einzigartigen und ausgefallenen Code aus.
+              br
+              | Falls du die gleiche Liste auf einem anderen Gerät verwenden oder mit jemandem zusammen benutzen möchtest, einfach dort den gleichen Code eingeben und die Liste synchronisiert sich automatisch!
             input(type="text", name="code", placeholder="Einkaufslisten Code")
             button(type="submit") Bestätigen
     else
