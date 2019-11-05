@@ -10,7 +10,7 @@ const enforce = require('express-sslify');
 const mongoose = require('mongoose');
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true });
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const app = express();
 
