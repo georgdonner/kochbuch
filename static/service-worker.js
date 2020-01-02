@@ -200,8 +200,8 @@ async function listSync() {
   }
   const currentList = await getListDb(db);
   const listUpdates = await getListUpdates(db);
-  const updatedList = await processListUpdates(currentList, listUpdates);
   await clearObjectStore(db, 'list-updates');
+  const updatedList = await processListUpdates(currentList, listUpdates);
   const channel = new BroadcastChannel('listSync');
   channel.postMessage({ list: updatedList });
   return updateListDb(updatedList);
