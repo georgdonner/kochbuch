@@ -39,7 +39,7 @@ const searchScore = (recipe, terms, regexTerms) => {
   for (let i = 0; i < terms.length; i += 1) {
     const term = terms[i];
     const regex = regexTerms[i];
-    const scores = toSearch.map(str => getScore(str, term, regex));
+    const scores = toSearch.map((str) => getScore(str, term, regex));
     const bestScore = scores.reduce((a, b) => Math.max(a, b));
     if (bestScore <= 0) {
       return 0;
@@ -49,7 +49,7 @@ const searchScore = (recipe, terms, regexTerms) => {
   return totalScore;
 };
 
-const getAll = db => new Promise((resolve, reject) => {
+const getAll = (db) => new Promise((resolve, reject) => {
   const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
   const req = store.getAll();
   req.onerror = reject;
@@ -76,20 +76,20 @@ export const getRecipes = async (query) => {
     return recipes;
   }
   const terms = searchQuery.split(/,\s*/)
-    .map(term => term.toLowerCase().trim())
-    .map(term => SEARCH_MAP[term] || term);
-  const regexTerms = terms.map(term => new RegExp(`\\S*${term}\\S*`, 'i'));
-  const regexTermsShort = terms.map(term => new RegExp(`\\S*${term.slice(0, -1)}\\S*`, 'i'));
+    .map((term) => term.toLowerCase().trim())
+    .map((term) => SEARCH_MAP[term] || term);
+  const regexTerms = terms.map((term) => new RegExp(`\\S*${term}\\S*`, 'i'));
+  const regexTermsShort = terms.map((term) => new RegExp(`\\S*${term.slice(0, -1)}\\S*`, 'i'));
   const matches = recipes
-    .map(recipe => ({ recipe, score: searchScore(recipe, terms, regexTerms) }))
+    .map((recipe) => ({ recipe, score: searchScore(recipe, terms, regexTerms) }))
     .filter(({ score }) => score > 0);
   matches.sort((a, b) => b.score - a.score);
   const matchesShort = recipes
-    .map(recipe => ({ recipe, score: searchScore(recipe, terms, regexTermsShort) }))
+    .map((recipe) => ({ recipe, score: searchScore(recipe, terms, regexTermsShort) }))
     .filter(({ score }) => score > 0);
   matchesShort.sort((a, b) => b.score - a.score);
   const allMatches = matches.concat(
-    matchesShort.filter(({ recipe }) => !matches.find(match => recipe._id === match.recipe._id)),
+    matchesShort.filter(({ recipe }) => !matches.find((match) => recipe._id === match.recipe._id)),
   );
   return allMatches.map(({ recipe }) => recipe);
 };
@@ -129,7 +129,7 @@ const updateRecipe = (recipe, db) => new Promise((resolve, reject) => {
 const fetchUpdatedData = async (recipes) => {
   const payload = {
     lastUpdated: window.localStorage.getItem('lastUpdated'),
-    ids: recipes.map(recipe => recipe._id),
+    ids: recipes.map((recipe) => recipe._id),
   };
   const fetchReq = await fetch('/api/recipes/changes', {
     method: 'POST',
@@ -160,8 +160,8 @@ export const syncDatabase = async (timeout) => {
   }
   if (data) {
     const { removed, updated } = data;
-    await Promise.all(removed.map(id => removeRecipe(id, db)));
-    await Promise.all(updated.map(recipe => updateRecipe(recipe, db)));
+    await Promise.all(removed.map((id) => removeRecipe(id, db)));
+    await Promise.all(updated.map((recipe) => updateRecipe(recipe, db)));
   }
   return Boolean(data);
 };
@@ -175,7 +175,7 @@ const fetchAllRecipes = async () => {
   return body;
 };
 
-const clearDatabase = db => new Promise((resolve, reject) => {
+const clearDatabase = (db) => new Promise((resolve, reject) => {
   const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
   const clearReq = store.clear();
   clearReq.onsuccess = resolve;
@@ -189,5 +189,5 @@ export const refreshDatabase = async () => {
   }
   const recipes = await fetchAllRecipes();
   await clearDatabase(db);
-  return Promise.all(recipes.map(recipe => addRecipe(recipe, db)));
+  return Promise.all(recipes.map((recipe) => addRecipe(recipe, db)));
 };

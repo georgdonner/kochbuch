@@ -18,25 +18,30 @@ const openDb = () => new Promise((resolve, reject) => {
   };
 });
 
-export const getList = () => new Promise(async (resolve, reject) => {
+export const getList = async () => {
   const db = await openDb();
-  const store = db.transaction('list', 'readwrite').objectStore('list');
-  const req = store.get('main-list');
-  req.onerror = reject;
-  req.onsuccess = async () => {
-    resolve(req.result.list);
-  };
-});
+  return new Promise((resolve, reject) => {
+    const store = db.transaction('list', 'readwrite').objectStore('list');
+    const req = store.get('main-list');
+    req.onerror = reject;
+    req.onsuccess = async () => {
+      resolve(req.result.list);
+    };
+  });
+};
 
-export const updateList = list => new Promise(async (resolve, reject) => {
+
+export const updateList = async (list) => {
   const db = await openDb();
-  const store = db.transaction('list', 'readwrite').objectStore('list');
-  const req = store.put({ name: 'main-list', list });
-  req.onerror = reject;
-  req.onsuccess = async () => {
-    resolve(req.result.list);
-  };
-});
+  return new Promise((resolve, reject) => {
+    const store = db.transaction('list', 'readwrite').objectStore('list');
+    const req = store.put({ name: 'main-list', list });
+    req.onerror = reject;
+    req.onsuccess = async () => {
+      resolve(req.result.list);
+    };
+  });
+};
 
 const addListUpdate = (listUpdate, db) => new Promise((resolve, reject) => {
   const store = db.transaction('list-updates', 'readwrite').objectStore('list-updates');
@@ -55,16 +60,16 @@ const addListUpdate = (listUpdate, db) => new Promise((resolve, reject) => {
   };
 });
 
-const getRemoved = (oldList, newList) => oldList.filter(item => !newList.includes(item));
+const getRemoved = (oldList, newList) => oldList.filter((item) => !newList.includes(item));
 
 export const addListUpdates = async (newList) => {
   const db = await openDb();
   const oldList = await getList();
-  const removed = getRemoved(oldList, newList).map(item => ({ item, action: 'removed' }));
-  return Promise.all(removed.map(update => addListUpdate(update, db)));
+  const removed = getRemoved(oldList, newList).map((item) => ({ item, action: 'removed' }));
+  return Promise.all(removed.map((update) => addListUpdate(update, db)));
 };
 
-const sendData = async list => fetch('/api/list', {
+const sendData = async (list) => fetch('/api/list', {
   method: 'PUT',
   headers: {
     'Content-Type': 'application/json',
@@ -81,7 +86,7 @@ const checkDuplicates = (list) => {
   const newList = [];
   list.forEach((item) => {
     const regex = new RegExp(`${item}(\\s*\\(\\d+x\\))?$`);
-    const duplicateIndex = newList.findIndex(i => i.match(regex));
+    const duplicateIndex = newList.findIndex((i) => i.match(regex));
     if (duplicateIndex !== -1) {
       const [match, group] = newList[duplicateIndex].match(regex);
       const updated = group ? incrementDuplicate(match, group) : `${match} (2x)`;
