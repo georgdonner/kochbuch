@@ -127,23 +127,27 @@ const submitSearch = async (input) => {
 const init = async () => {
   const searchbar = document.querySelector('#searchbar input');
   searchbar.value = state.search;
+
   const recipesStr = window.sessionStorage.getItem('recipes');
   let rendered = false;
   if (recipesStr) {
     renderRecipes(JSON.parse(recipesStr));
     rendered = true;
-  } else {
+  }
+
+  const staleData = (Date.now() - window.localStorage.getItem('lastUpdated')) > 1000 * 60 * 30; // 30 min
+  if (staleData) {
     const loader = document.getElementById('loader');
     try {
-      loader.classList.add('active');
+      if (!rendered) loader.classList.add('active');
       const synced = await syncDatabase(5000);
       if (!synced) {
         showToast('Konnte Rezepte nicht aktualisieren.', { isError: true });
       }
-      loader.classList.remove('active');
     } catch (error) {
       console.error(error);
-      loader.classList.remove('active');
+    } finally {
+      if (!rendered) loader.classList.remove('active');
     }
   }
   currentRecipes = await getRecipes(state.search);

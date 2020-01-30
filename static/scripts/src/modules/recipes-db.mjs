@@ -94,77 +94,19 @@ export const getRecipes = async (query) => {
   return allMatches.map(({ recipe }) => recipe);
 };
 
-const addRecipe = (recipe, db) => new Promise((resolve, reject) => {
+const addRecipes = (recipes, db) => new Promise((resolve) => {
   const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
-  const req = store.add(recipe);
-  req.onerror = reject;
-  req.onsuccess = resolve;
-});
-
-const removeRecipe = (id, db) => new Promise((resolve, reject) => {
-  const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
-  const req = store.delete(id);
-  req.onerror = reject;
-  req.onsuccess = resolve;
-});
-
-const updateRecipe = (recipe, db) => new Promise((resolve, reject) => {
-  const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
-  const req = store.get(recipe._id);
-  req.onerror = reject;
-  req.onsuccess = (event) => {
-    let data = event.target.result;
-    let requestUpdate;
-    if (data) {
-      data = Object.assign(data, recipe);
-      requestUpdate = store.put(data);
-    } else {
-      requestUpdate = store.add(recipe);
+  let i = 0;
+  const addNext = () => {
+    if (i < recipes.length) {
+      store.add(recipes[i]).onsuccess = addNext;
+      i += 1;
+    } else { // complete
+      resolve();
     }
-    requestUpdate.onerror = reject;
-    requestUpdate.onsuccess = resolve;
   };
+  addNext();
 });
-
-const fetchUpdatedData = async (recipes) => {
-  const payload = {
-    lastUpdated: window.localStorage.getItem('lastUpdated'),
-    ids: recipes.map((recipe) => recipe._id),
-  };
-  const fetchReq = await fetch('/api/recipes/changes', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(payload),
-  });
-  const body = await fetchReq.json();
-  window.localStorage.setItem('lastUpdated', body.lastUpdated);
-  return body.data;
-};
-
-export const syncDatabase = async (timeout) => {
-  const db = await openDb();
-  if (!db) {
-    throw new Error('No db found');
-  }
-  const recipes = await getAll(db);
-  let data;
-  if (timeout && recipes.length > 0) {
-    const timeoutPromise = new Promise(((resolve) => {
-      setTimeout(resolve, timeout, null);
-    }));
-    data = await Promise.race([timeoutPromise, fetchUpdatedData(recipes)]);
-  } else {
-    data = await fetchUpdatedData(recipes);
-  }
-  if (data) {
-    const { removed, updated } = data;
-    await Promise.all(removed.map((id) => removeRecipe(id, db)));
-    await Promise.all(updated.map((recipe) => updateRecipe(recipe, db)));
-  }
-  return Boolean(data);
-};
 
 const fetchAllRecipes = async () => {
   const fetchReq = await fetch('/api/recipes?format=html', {
@@ -182,6 +124,30 @@ const clearDatabase = (db) => new Promise((resolve, reject) => {
   clearReq.onerror = reject;
 });
 
+export const syncDatabase = async (timeout) => {
+  const db = await openDb();
+  if (!db) {
+    throw new Error('No db found');
+  }
+  const recipesLocal = await getAll(db);
+  const lastUpdated = window.localStorage.getItem('lastUpdated');
+  let recipes;
+  if (timeout && recipesLocal.length > 0) {
+    const timeoutPromise = new Promise(((resolve) => {
+      setTimeout(resolve, timeout, null);
+    }));
+    recipes = await Promise.race([timeoutPromise, fetchAllRecipes()]);
+  } else {
+    recipes = await fetchAllRecipes();
+  }
+  if (window.localStorage.getItem('lastUpdated') !== lastUpdated) {
+    console.log('Recipe data refreshed'); // eslint-disable-line no-console
+    await clearDatabase(db);
+    await addRecipes(recipes, db);
+  }
+  return Boolean(recipes);
+};
+
 export const refreshDatabase = async () => {
   const db = await openDb();
   if (!db) {
@@ -189,5 +155,5 @@ export const refreshDatabase = async () => {
   }
   const recipes = await fetchAllRecipes();
   await clearDatabase(db);
-  return Promise.all(recipes.map((recipe) => addRecipe(recipe, db)));
+  return addRecipes(recipes, db);
 };
