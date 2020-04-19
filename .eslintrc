@@ -1,28 +1,30 @@
 {
-  "env": {
-    "node": true,
-    "es6": true,
-    "browser": true
-  },
   "parser": "babel-eslint",
-  "extends": "airbnb-base",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "experimentalObjectRestSpread": true
-    },
-    "sourceType": "module"
-  },
+  "extends": "airbnb",
   "plugins": [
+    "react",
+    "react-hooks",
+    "jsx-a11y",
     "import"
   ],
   "rules": {
-    "function-paren-newline": 0,
     "linebreak-style": 0,
-    "no-console": [2, { "allow": ["warn", "error"] } ],
-    "no-confusing-arrow": 0,
+    "function-paren-newline": 0,
     "no-unused-expressions": [2, { "allowTernary": true }],
+    "no-confusing-arrow": 0,
+    "no-console": [2, { "allow": ["warn", "error"] } ],
     "no-underscore-dangle": [0, { "allow": ["_id"] }],
-    "import/extensions": 0,
-    "import/prefer-default-export": 0
+    "no-restricted-syntax": 0,
+    "import/no-extraneous-dependencies": ["error", {"devDependencies": ["**/mock/**", "**/__tests__/**"]}],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/no-did-mount-set-state": 0,
+    "react/jsx-first-prop-new-line": 0,
+    "react/jsx-max-props-per-line": 0,
+    "react/no-typos": 0,
+    "react/destructuring-assignment": 0,
+    "jsx-a11y/anchor-is-valid": [0, { "components": [ "Link" ] } ]
+  },
+  "env": {
+    "browser": true
   }
 }

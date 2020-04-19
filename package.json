@@ -4,6 +4,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
+    "client": "parcel watch client/index.html -d build --no-hmr",
     "lint": "eslint . --ext js,mjs",
     "templates": "node compile-templates.js"
   },
@@ -30,24 +31,38 @@
     "dropbox": "^2.5.13",
     "express": "^4.17.1",
     "express-sslify": "^1.2.0",
+    "idb": "^5.0.1",
     "mark-twain": "^2.0.3",
     "markdown-it": "^10.0.0",
     "moment": "^2.24.0",
     "mongoose": "^5.8.4",
+    "nosleep.js": "^0.9.0",
     "pdfmake": "^0.1.63",
+    "prop-types": "^15.7.2",
     "pug": "^2.0.4",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "react-router-dom": "^5.1.2",
     "request": "^2.88.0",
     "request-promise-native": "^1.0.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",
     "@babel/core": "^7.7.7",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.8.3",
     "@babel/preset-env": "^7.7.7",
+    "@babel/preset-react": "^7.8.3",
     "babel-eslint": "^10.0.3",
     "eslint": "^6.8.0",
-    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.19.1",
-    "pre-commit": "^1.2.2"
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.18.3",
+    "eslint-plugin-react-hooks": "^2.4.0",
+    "parcel-bundler": "^1.12.4",
+    "pre-commit": "^1.2.2",
+    "sass": "^1.26.1"
   },
   "license": "ISC",
   "bugs": {

@@ -9,6 +9,8 @@ cert
 /tmp
 /out-tsc
 /dist
+/build
+/.cache
 
 # dependencies
 /node_modules

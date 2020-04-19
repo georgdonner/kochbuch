@@ -27,6 +27,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
+app.use(express.static(path.join(__dirname, 'build')));
 
 // view engine
 app.set('views', path.join(__dirname, 'views'));
@@ -37,7 +38,9 @@ app.use('/api', require('./routes/api'));
 app.use('/pdf', require('./routes/pdf'));
 app.use(require('./routes/backup'));
 
-app.use(require('./routes/views'));
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+});
 
 app.use(require('./routes/helpers/error-handler'));
 

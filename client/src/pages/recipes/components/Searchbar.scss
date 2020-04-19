@@ -1,0 +1,50 @@
+#searchbar {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background: #fff;
+}
+
+#search-input {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  padding: 1.5rem 0;
+}
+
+.icon.icon-search {
+  color: #b2b2b2;
+  font-size: 1.75rem;
+  margin-right: .75rem;
+}
+
+#searchbar input {
+  flex-grow: 1;
+  border: none;
+  font-family: 'Open Sans', sans-serif;
+  font-size: 1.25rem;
+}
+
+/* Fix for Safari */
+input[type="search"] {
+  -webkit-appearance: textfield;
+}
+
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+::placeholder {
+  color: #b2b2b2;
+}
+
+@media only screen and (max-width: 1200px) {
+  #search-input {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .icon.icon-search {
+    margin-right: .5rem;
+  }
+}

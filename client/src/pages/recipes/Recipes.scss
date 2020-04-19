@@ -1,0 +1,24 @@
+#list-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  background: #f2f2f2;
+}
+
+#recipe-list {
+  max-width: 1200px;
+  margin: 1.5rem auto;
+  padding: 0 1rem;
+  padding-bottom: 5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 1.5rem;
+  row-gap: 1.5rem;
+  @media only screen and (max-width: 1200px) {
+    grid-template-columns: 1fr 1fr;
+  }
+  @media only screen and (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
