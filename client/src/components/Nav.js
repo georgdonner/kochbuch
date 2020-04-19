@@ -48,7 +48,7 @@ Nav.defaultProps = {
 export default Nav;
 
 export const NavButton = ({
-  icon, onClick, link, hasActiveState = true,
+  icon, onClick, link, hasActiveState = false,
 }) => {
   const [active, setActive] = useState(false);
   const className = `nav-button${active ? ' active' : ''}`;
