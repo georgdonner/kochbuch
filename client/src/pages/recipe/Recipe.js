@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import NoSleep from 'nosleep.js';
+import { toast } from 'react-toastify';
 
 import Nav, { NavButton } from '../../components/Nav';
 import RecipeImage from './components/Image';
@@ -73,6 +74,9 @@ export default () => {
           onClick={() => {
             const action = keepAwake ? 'disable' : 'enable';
             noSleep[action]();
+            toast.info(!keepAwake
+              ? 'Kochmodus aktiviert - Display schaltet sich nicht automatisch aus'
+              : 'Kochmodus deaktiviert - Display kann sich wieder automatisch ausschalten');
             setAwake(!keepAwake);
           }}
           hasActiveState

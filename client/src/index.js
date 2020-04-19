@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css';
 
 import Loading from './components/Loading';
 import Recipe from './pages/recipe/Recipe';
@@ -8,6 +10,12 @@ import Recipes from './pages/recipes/Recipes';
 import RecipesContext from './services/recipesContext';
 import { syncDatabase } from './services/recipesDb';
 import './index.scss';
+
+toast.configure({
+  position: 'bottom-center',
+  newestOnTop: true,
+  hideProgressBar: true,
+});
 
 class App extends Component {
   constructor(props) {
