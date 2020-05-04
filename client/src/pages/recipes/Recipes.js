@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 import Nav from '../../components/Nav';
 import Searchbar from './components/Searchbar';
@@ -48,13 +49,18 @@ export default class Recipes extends Component {
         <Nav page="recipes" />
         <Searchbar
           onSearch={(val) => {
+            const login = val === 'login';
+            const query = login ? '' : val;
             this.setState({
               page: 1,
-              query: val,
-              recipes: searchRecipes(this.context.recipes, val),
+              query,
+              recipes: searchRecipes(this.context.recipes, query),
             });
             window.sessionStorage.setItem('page', 1);
-            window.sessionStorage.setItem('query', val);
+            window.sessionStorage.setItem('query', query);
+            if (login) {
+              this.props.history.push('/login');
+            }
           }}
           query={this.state.query}
         />
@@ -63,9 +69,16 @@ export default class Recipes extends Component {
             {recipes.map((recipe) => <RecipeCard key={recipe._id} recipe={recipe} />)}
           </div>
         </div>
+        {this.context.user.authenticated ? (
+          <a href="/recipes/new" id="new-recipe">+</a>
+        ) : null}
       </>
     );
   }
 }
 
 Recipes.contextType = MainContext;
+
+Recipes.propTypes = {
+  history: PropTypes.object.isRequired, // eslint-disable-line
+};

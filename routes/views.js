@@ -37,9 +37,9 @@ router.post('/zauberwort', (req, res, next) => {
       throw new StatusError('Please provide a zauberwort in the request body.', 400);
     } if (zauberwort === process.env.ZAUBERWORT) {
       req.session.authenticated = true;
-      return res.redirect('/');
+      return res.sendStatus(200);
     }
-    return res.redirect('/login?error=true');
+    return res.sendStatus(401);
   } catch (error) {
     return next(error);
   }

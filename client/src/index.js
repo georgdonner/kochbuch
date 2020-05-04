@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import Loading from './components/Loading';
 import Recipe from './pages/recipe/Recipe';
 import Recipes from './pages/recipes/Recipes';
+import Login from './pages/login/Login';
 import MainContext from './services/context';
 import { syncDatabase } from './services/recipesDb';
 import { getUser } from './services/auth';
@@ -26,6 +27,8 @@ class App extends Component {
       allRecipes: null,
       user: null,
     };
+
+    this.updateUser = this.updateUser.bind(this);
   }
 
   async componentDidMount() {
@@ -38,11 +41,26 @@ class App extends Component {
     this.setState({ allRecipes: recipes, user });
   }
 
+  updateUser(user) {
+    this.setState((state) => ({
+      user: {
+        ...state.user,
+        ...user,
+      },
+    }));
+  }
+
   render() {
+    const context = {
+      recipes: this.state.allRecipes,
+      user: this.state.user,
+      updateUser: this.updateUser,
+    };
     return this.state.allRecipes && this.state.user ? (
-      <MainContext.Provider value={{ recipes: this.state.allRecipes, user: this.state.user }}>
+      <MainContext.Provider value={context}>
         <Router>
           <Switch>
+            <Route path="/login" component={Login} />
             <Route path="/list">
               <div>List</div>
             </Route>

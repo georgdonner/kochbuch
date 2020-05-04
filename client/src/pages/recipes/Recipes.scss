@@ -22,3 +22,22 @@
     grid-template-columns: 1fr;
   }
 }
+
+#new-recipe {
+  position: fixed;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  height: 3.5rem;
+  width: 3.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #fff;
+  color: #333;
+  border: 2px #f2f2f2 solid;
+  border-radius: 50%;
+  font-size: 2rem;
+  text-decoration: none;
+  cursor: pointer;
+  z-index: 10;
+}
