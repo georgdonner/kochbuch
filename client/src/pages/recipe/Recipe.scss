@@ -128,27 +128,6 @@ button.cart:hover {
   }
 }
 
-.button {
-  color: #333;
-  background: #fff;
-  margin-right: 1rem;
-  border: 2px #333 solid;
-  border-radius: 10px;
-  padding: .5rem 1rem;
-  font-family: 'Open Sans', sans-serif;
-  font-size: 1rem;
-  font-weight: 600;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: all ease .5s;
-  cursor: pointer;
-}
-
-.button:hover {
-  color: #fff;
-  background: #333;
-}
-
 #buttons {
   display: flex;
   flex-wrap: wrap;

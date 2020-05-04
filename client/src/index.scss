@@ -6,3 +6,24 @@ html, body {
   margin: 0;
 }
 
+.button {
+  color: #333;
+  background: #fff;
+  border: 2px #333 solid;
+  border-radius: 10px;
+  padding: .5rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  transition: all ease .5s;
+  cursor: pointer;
+
+  &.inverted, &:hover {
+    color: #fff;
+    background: #333;
+  }
+  &.inverted:hover {
+    color: #333;
+    background: #fff;
+  }
+}

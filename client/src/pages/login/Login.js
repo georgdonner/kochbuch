@@ -45,7 +45,7 @@ export default () => {
           }}
           value={password}
         />
-        <button type="button" onClick={login}>Login</button>
+        <button className="button inverted" type="button" onClick={login}>Login</button>
       </div>
     </div>
   );
