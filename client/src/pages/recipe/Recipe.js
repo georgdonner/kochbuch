@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 import Nav, { NavButton } from '../../components/Nav';
 import RecipeImage from './components/Image';
 import Description from './components/Description';
-import RecipesContext from '../../services/recipesContext';
+import MainContext from '../../services/context';
 import calcServings from './modules/calcServings';
 import './Recipe.scss';
 
@@ -14,7 +14,7 @@ const noSleep = new NoSleep();
 
 export default () => {
   const { id } = useParams();
-  const recipes = useContext(RecipesContext);
+  const { recipes } = useContext(MainContext);
 
   useEffect(() => {
     window.scrollTo(0, 0);

@@ -4,7 +4,7 @@ import Nav from '../../components/Nav';
 import Searchbar from './components/Searchbar';
 import RecipeCard from './components/RecipeCard';
 import searchRecipes from './modules/searchRecipes';
-import RecipesContext from '../../services/recipesContext';
+import MainContext from '../../services/context';
 import './Recipes.scss';
 
 export default class Recipes extends Component {
@@ -21,7 +21,7 @@ export default class Recipes extends Component {
   componentDidMount() {
     window.addEventListener('scroll', this.onScroll);
     this.setState((state) => ({
-      recipes: searchRecipes(this.context, state.query),
+      recipes: searchRecipes(this.context.recipes, state.query),
     }));
   }
 
@@ -51,7 +51,7 @@ export default class Recipes extends Component {
             this.setState({
               page: 1,
               query: val,
-              recipes: searchRecipes(this.context, val),
+              recipes: searchRecipes(this.context.recipes, val),
             });
             window.sessionStorage.setItem('page', 1);
             window.sessionStorage.setItem('query', val);
@@ -68,4 +68,4 @@ export default class Recipes extends Component {
   }
 }
 
-Recipes.contextType = RecipesContext;
+Recipes.contextType = MainContext;

@@ -7,8 +7,10 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import Loading from './components/Loading';
 import Recipe from './pages/recipe/Recipe';
 import Recipes from './pages/recipes/Recipes';
-import RecipesContext from './services/recipesContext';
+import MainContext from './services/context';
 import { syncDatabase } from './services/recipesDb';
+import { getUser } from './services/auth';
+import { withTimeout } from './utils';
 import './index.scss';
 
 toast.configure({
@@ -22,17 +24,23 @@ class App extends Component {
     super(props);
     this.state = {
       allRecipes: null,
+      user: null,
     };
   }
 
   async componentDidMount() {
-    const recipes = await syncDatabase(5000);
-    this.setState({ allRecipes: recipes });
+    const timeout = 5000;
+    const [recipes, user] = await Promise.all([
+      syncDatabase(5000),
+      withTimeout(getUser, { timeout, defaultValue: { authenticated: false } }),
+    ]);
+
+    this.setState({ allRecipes: recipes, user });
   }
 
   render() {
-    return this.state.allRecipes ? (
-      <RecipesContext.Provider value={this.state.allRecipes}>
+    return this.state.allRecipes && this.state.user ? (
+      <MainContext.Provider value={{ recipes: this.state.allRecipes, user: this.state.user }}>
         <Router>
           <Switch>
             <Route path="/list">
@@ -45,7 +53,7 @@ class App extends Component {
             <Route path="/" component={Recipes} />
           </Switch>
         </Router>
-      </RecipesContext.Provider>
+      </MainContext.Provider>
     ) : <Loading />;
   }
 }
