@@ -9,7 +9,7 @@ const responsiveImg = (recipe) => {
     recipe.image.concat(`-/resize/${width}x/`, `-/quality/${doubleRes ? 'lightest' : 'lighter'}/`, '-/progressive/yes/')
   );
 
-  return (
+  return recipe.image ? (
     <img
       srcSet={`${imgUrl(1200, true)} 1200w,
       ${imgUrl(800, true)} 800w,
@@ -22,6 +22,8 @@ const responsiveImg = (recipe) => {
       alt={recipe.title}
       crossOrigin="anonymous"
     />
+  ) : (
+    <img src="img/comingsoon.jpg" alt="Bild kommt bald" />
   );
 };
 

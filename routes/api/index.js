@@ -12,7 +12,12 @@ router.use(require('./plan'));
 router.get('/auth', checkAuth, (req, res) => res.sendStatus(200));
 
 router.get('/user', (req, res) => {
-  res.json(req.session);
+  res.json({
+    ...req.session,
+    ...req.session.authenticated ? {
+      uploadcareKey: process.env.UPLOADCARE_PUBLIC_KEY,
+    } : {},
+  });
 });
 
 router.post('/password', (req, res, next) => {

@@ -13,7 +13,7 @@ export const getAll = async () => {
   return recipes;
 };
 
-const refreshDatabase = async (recipes) => {
+export const refreshDatabase = async (recipes) => {
   const db = await openDb();
   await db.clear('recipes');
   const tx = db.transaction('recipes', 'readwrite');

@@ -23,7 +23,8 @@
     "react/jsx-max-props-per-line": 0,
     "react/no-typos": 0,
     "react/destructuring-assignment": 0,
-    "jsx-a11y/anchor-is-valid": [0, { "components": [ "Link" ] } ]
+    "jsx-a11y/anchor-is-valid": [0, { "components": [ "Link" ] } ],
+    "jsx-a11y/label-has-associated-control": 0
   },
   "env": {
     "browser": true

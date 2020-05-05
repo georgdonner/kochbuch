@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import Nav from '../../components/Nav';
 import Searchbar from './components/Searchbar';
@@ -70,7 +71,7 @@ export default class Recipes extends Component {
           </div>
         </div>
         {this.context.user.authenticated ? (
-          <a href="/recipes/new" id="new-recipe">+</a>
+          <Link to="/recipes/new" id="new-recipe">+</Link>
         ) : null}
       </>
     );

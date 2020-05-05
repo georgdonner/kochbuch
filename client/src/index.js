@@ -1,15 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.min.css';
 
+import App from './app';
 import Loading from './components/Loading';
-import Recipe from './pages/recipe/Recipe';
-import Recipes from './pages/recipes/Recipes';
-import Login from './pages/login/Login';
 import MainContext from './services/context';
-import { syncDatabase } from './services/recipesDb';
+import { syncDatabase, refreshDatabase } from './services/recipesDb';
 import { getUser } from './services/auth';
 import { withTimeout } from './utils';
 import './index.scss';
@@ -20,15 +17,13 @@ toast.configure({
   hideProgressBar: true,
 });
 
-class App extends Component {
+class Root extends Component {
   constructor(props) {
     super(props);
     this.state = {
       allRecipes: null,
       user: null,
     };
-
-    this.updateUser = this.updateUser.bind(this);
   }
 
   async componentDidMount() {
@@ -41,7 +36,21 @@ class App extends Component {
     this.setState({ allRecipes: recipes, user });
   }
 
-  updateUser(user) {
+  addRecipe = (recipe) => {
+    this.setState((state) => ({
+      allRecipes: state.allRecipes.concat(recipe),
+    }));
+    refreshDatabase(this.state.allRecipes);
+  }
+
+  updateRecipe = (recipe) => {
+    this.setState((state) => ({
+      allRecipes: state.allRecipes.map((r) => r._id === recipe._id ? recipe : r),
+    }));
+    refreshDatabase(this.state.allRecipes);
+  }
+
+  updateUser = (user) => {
     this.setState((state) => ({
       user: {
         ...state.user,
@@ -53,24 +62,14 @@ class App extends Component {
   render() {
     const context = {
       recipes: this.state.allRecipes,
+      addRecipe: this.addRecipe,
+      updateRecipe: this.updateRecipe,
       user: this.state.user,
       updateUser: this.updateUser,
     };
     return this.state.allRecipes && this.state.user ? (
       <MainContext.Provider value={context}>
-        <Router>
-          <Switch>
-            <Route path="/login" component={Login} />
-            <Route path="/list">
-              <div>List</div>
-            </Route>
-            <Route path="/plan">
-              <div>Plan</div>
-            </Route>
-            <Route path="/recipe/:id" component={Recipe} />
-            <Route path="/" component={Recipes} />
-          </Switch>
-        </Router>
+        <App />
       </MainContext.Provider>
     ) : <Loading />;
   }
@@ -78,4 +77,4 @@ class App extends Component {
 
 const root = document.getElementById('root');
 
-ReactDOM.render(<App />, root);
+ReactDOM.render(<Root />, root);

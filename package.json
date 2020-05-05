@@ -45,7 +45,8 @@
     "react-router-dom": "^5.1.2",
     "react-toastify": "^5.5.0",
     "request": "^2.88.0",
-    "request-promise-native": "^1.0.8"
+    "request-promise-native": "^1.0.8",
+    "uploadcare-widget": "^3.9.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.7.7",

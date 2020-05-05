@@ -6,12 +6,16 @@ html, body {
   margin: 0;
 }
 
+a.button {
+  text-decoration: none;
+}
 .button {
   color: #333;
   background: #fff;
   border: 2px #333 solid;
   border-radius: 10px;
   padding: .5rem 1rem;
+  font-family: 'Open Sans', sans-serif;
   font-size: 1rem;
   font-weight: 600;
   text-transform: uppercase;

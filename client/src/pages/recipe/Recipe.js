@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import NoSleep from 'nosleep.js';
 import { toast } from 'react-toastify';
 
@@ -14,7 +14,7 @@ const noSleep = new NoSleep();
 
 export default () => {
   const { id } = useParams();
-  const { recipes } = useContext(MainContext);
+  const { recipes, user } = useContext(MainContext);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -63,6 +63,12 @@ export default () => {
         </div>
 
         <Description recipe={recipe} servings={servings} />
+      </div>
+
+      <div id="buttons">
+        {user.authenticated ? (
+          <Link to={`/recipe/${id}/edit`} className="button">Bearbeiten</Link>
+        ) : null}
       </div>
     </div>
   ) : <div>Rezept konnte nicht gefunden werden :(</div>;
