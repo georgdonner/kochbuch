@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import uploadcare from 'uploadcare-widget';
 
 import MainContext from '../../services/context';
+import api from '../../services/api';
 import Ingredients from './components/Ingredients';
 import Description from './components/Description';
 import Categories from './components/Categories';
@@ -55,8 +56,7 @@ export default class RecipeForm extends Component {
     const { pathname } = this.props.location;
     this.recipeId = pathname.includes('edit') ? pathname.split('/')[2] : null;
     if (this.recipeId) {
-      const res = await fetch(`/api/recipe/${this.recipeId}`);
-      const recipe = await res.json();
+      const recipe = await api.get(`/recipe/${this.recipeId}`);
       this.setState(recipe);
     }
   }
@@ -116,18 +116,14 @@ export default class RecipeForm extends Component {
   }
 
   saveRecipe = async () => {
-    let url = '/api/recipe';
+    let url = '/recipe';
     if (this.recipeId) {
       url += `/${this.recipeId}`;
     }
-    const res = await fetch(url, {
-      method: this.recipeId ? 'PUT' : 'POST',
-      headers: {
-        'Content-Type': 'application/json; charset=utf-8',
-      },
-      body: JSON.stringify(this.state),
+    const method = this.recipeId ? 'put' : 'post';
+    const saved = await api[method](url, {
+      body: this.state,
     });
-    const saved = await res.json();
     if (this.recipeId) {
       this.context.updateRecipe(saved);
     } else {

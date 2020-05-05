@@ -1,12 +1,12 @@
-export const withTimeout = async (func, { timeout, defaultValue }) => {
+export const withTimeout = async (promise, { timeout, defaultValue }) => {
   let value = defaultValue;
   if (timeout) {
     const timeoutPromise = new Promise(((resolve) => {
       setTimeout(resolve, timeout, false);
     }));
-    value = await Promise.race([timeoutPromise, func()]);
+    value = await Promise.race([timeoutPromise, promise()]);
   } else {
-    value = await func();
+    value = await promise();
   }
   return value;
 };

@@ -3,6 +3,7 @@ import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import api from '../../services/api';
 import MainContext from '../../services/context';
 import './Login.scss';
 
@@ -12,12 +13,9 @@ export default () => {
   const { updateUser } = useContext(MainContext);
 
   const login = async () => {
-    const res = await fetch('/api/password', {
-      method: 'post',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ password }),
+    const res = await api.post('/password', {
+      body: { password },
+      fullResponse: true,
     });
     if (res.ok) {
       updateUser({ authenticated: true });

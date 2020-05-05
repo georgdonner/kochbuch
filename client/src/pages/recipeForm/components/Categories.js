@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
+import api from '../../../services/api';
 import './Categories.scss';
 
 const Categories = ({ categories, onChange }) => {
@@ -9,8 +10,7 @@ const Categories = ({ categories, onChange }) => {
   const [allCategories, setAll] = useState();
   const [query, setQuery] = useState('');
   useEffect(() => {
-    fetch('/api/recipes/categories')
-      .then((res) => res.json())
+    api.get('/recipes/categories')
       .then((result) => {
         setAll(result);
       });
