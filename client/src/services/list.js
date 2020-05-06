@@ -172,6 +172,14 @@ export default class ListDb {
     const updateFn = (list) => list.filter((i) => i !== item);
     return this.itemUpdate(updateFn);
   };
+
+  /**
+   * @param {string[]} items
+   */
+  removeItems = async (items) => {
+    const updateFn = (list) => list.filter((i) => !items.includes(i));
+    return this.itemUpdate(updateFn);
+  };
 }
 
 /**

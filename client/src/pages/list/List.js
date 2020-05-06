@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import MainContext from '../../services/context';
 import api from '../../services/api';
 import ListDb from '../../services/list';
+import ToastUndo from '../../components/ToastUndo';
 import Nav, { NavButton } from '../../components/Nav';
 import Icon from '../../components/Icon';
 import NoList from './components/NoList';
@@ -21,6 +22,7 @@ export default class List extends Component {
       list: null,
       newItem: '',
       editing: null,
+      toRemove: [],
     };
   }
 
@@ -78,16 +80,35 @@ export default class List extends Component {
     }
   };
 
+  removeItem = async (item) => {
+    this.setState((state) => ({
+      list: { ...state.list, list: state.list.list.filter((i) => i !== item) },
+      toRemove: [...state.toRemove, item],
+    }));
+    const undo = () => {
+      this.setState((state) => ({
+        list: { ...state.list, list: state.list.list.concat([item]) },
+        toRemove: state.toRemove.filter((i) => i !== item),
+      }));
+    };
+    toast(<ToastUndo undo={undo} label={`${item} entfernt.`} />, {
+      onClose: () => {
+        if (this.state.toRemove.length) {
+          this.setState({ toRemove: [] });
+          this.listDb.removeItems(this.state.toRemove);
+        }
+      },
+      closeOnClick: false,
+    });
+  }
+
   getListItem = (item, index) => (
     <div key={`item-${index}`} className="item-wrapper">
       <label className="input-container">
         <input type="checkbox" />
         <span
           className="checkmark box"
-          onClick={() => {
-            console.log('remove');
-            this.listDb.removeItem(item);
-          }}
+          onClick={() => this.removeItem(item)}
         />
         <span className="item">
           <span>{item}</span>

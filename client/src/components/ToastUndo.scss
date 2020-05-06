@@ -1,0 +1,18 @@
+.toast-undo {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 1rem;
+  font-size: 1rem;
+  box-sizing: border-box;
+  button {
+    color: #b03b3b;
+    background: inherit;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+}
