@@ -135,7 +135,7 @@ export default class List extends Component {
       if (editing) {
         this.listDb.updateItem(editing, newItem);
       } else {
-        this.listDb.addItem(newItem);
+        this.listDb.addItems(newItem);
       }
       this.setState({
         editing: null,

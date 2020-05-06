@@ -24,7 +24,7 @@ const getChanges = (oldList, newList) => {
 };
 
 export default class ListDb {
-  constructor(name, { onUpdate }) {
+  constructor(name, { onUpdate } = {}) {
     this.name = name;
     this.onUpdate = onUpdate;
     if (!this.onUpdate) {
@@ -150,10 +150,10 @@ export default class ListDb {
   };
 
   /**
-   * @param {string} item
+   * @param {string|string[]} items
    */
-  addItem = async (item) => {
-    const updateFn = (list) => list.concat([item]);
+  addItems = async (items) => {
+    const updateFn = (list) => list.concat(toArray(items));
     return this.itemUpdate(updateFn);
   };
 
@@ -166,18 +166,10 @@ export default class ListDb {
   };
 
   /**
-   * @param {string} item
-   */
-  removeItem = async (item) => {
-    const updateFn = (list) => list.filter((i) => i !== item);
-    return this.itemUpdate(updateFn);
-  };
-
-  /**
-   * @param {string[]} items
+   * @param {string|string[]} items
    */
   removeItems = async (items) => {
-    const updateFn = (list) => list.filter((i) => !items.includes(i));
+    const updateFn = (list) => list.filter((i) => !toArray(items).includes(i));
     return this.itemUpdate(updateFn);
   };
 }
