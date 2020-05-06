@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Recipe from './pages/recipe/Recipe';
 import Recipes from './pages/recipes/Recipes';
+import List from './pages/list/List';
 import Login from './pages/login/Login';
 import RecipeForm from './pages/recipeForm/RecipeForm';
 
@@ -10,9 +11,7 @@ export default () => (
   <Router>
     <Switch>
       <Route path="/login" component={Login} />
-      <Route path="/list">
-        <div>List</div>
-      </Route>
+      <Route path="/list" component={List} />
       <Route path="/plan">
         <div>Plan</div>
       </Route>
