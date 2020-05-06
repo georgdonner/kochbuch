@@ -24,6 +24,11 @@ export default () => {
   const [servings, setServings] = useState(recipe.servings);
   const [keepAwake, setAwake] = useState(false);
 
+
+  useEffect(() => {
+    document.title = recipe.title;
+  }, [recipe]);
+
   const content = recipe ? (
     <div className="container">
       <h1 className="recipe-title">{recipe.title}</h1>

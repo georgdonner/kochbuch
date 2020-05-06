@@ -27,6 +27,7 @@ export default class List extends Component {
   }
 
   async componentDidMount() {
+    document.title = 'Einkaufsliste';
     const { listCode } = this.context.user || {};
     this.listDb = new ListDb(listCode, {
       onUpdate: (list) => {

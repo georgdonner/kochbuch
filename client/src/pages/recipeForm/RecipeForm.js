@@ -53,11 +53,13 @@ export default class RecipeForm extends Component {
   }
 
   async componentDidMount() {
+    document.title = 'Neues Rezept';
     const { pathname } = this.props.location;
     this.recipeId = pathname.includes('edit') ? pathname.split('/')[2] : null;
     if (this.recipeId) {
       const recipe = await api.get(`/recipe/${this.recipeId}`);
       this.setState(recipe);
+      document.title = recipe.title;
     }
   }
 
