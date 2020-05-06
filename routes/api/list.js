@@ -48,7 +48,8 @@ router.put('/list', checkListAuth, async (req, res, next) => {
 // Update Shopping List with "added" and "removed" actions
 router.put('/list/updates', checkListAuth, async (req, res, next) => {
   try {
-    const list = await Shoppinglist.processListUpdates(req.session.listCode, req.body);
+    console.log(req.body);
+    const list = await Shoppinglist.processListUpdates(req.session.listCode, { updates: req.body });
     return res.json(list);
   } catch (error) {
     return next(error);
@@ -57,8 +58,8 @@ router.put('/list/updates', checkListAuth, async (req, res, next) => {
 
 router.post('/list', checkListAuth, async (req, res, next) => {
   try {
-    const updated = await Shoppinglist.addItem(req.session.listCode, req.body.item);
-    return res.json(updated);
+    const list = await Shoppinglist.addItem(req.session.listCode, req.body.item);
+    return res.json(list);
   } catch (error) {
     return next(error);
   }
