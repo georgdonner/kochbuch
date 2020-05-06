@@ -1,20 +1,13 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 
-import api from '../../../services/api';
-import MainContext from '../../../services/context';
 import './NoList.scss';
 
-export default () => {
+const NoList = ({ onUpdate }) => {
   const [code, setCode] = useState('');
-  const { updateUser } = useContext(MainContext);
 
-  const updateCode = async () => {
-    const user = await api.post('/user', {
-      body: {
-        listCode: code,
-      },
-    });
-    updateUser(user);
+  const updateCode = () => {
+    onUpdate(code);
   };
 
   return (
@@ -41,3 +34,9 @@ export default () => {
     </div>
   );
 };
+
+NoList.propTypes = {
+  onUpdate: PropTypes.func.isRequired,
+};
+
+export default NoList;
