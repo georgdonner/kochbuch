@@ -1,10 +1,13 @@
-.recipe-form-container  {
+.recipe-form-container {
+  background: #fff;
+  width: 100%;
+}
+.recipe-form  {
   display: flex;
   flex-direction: column;
   max-width: 800px;
   margin: 0 auto;
   padding: 0 1.5rem;
-  background: #fff;
   & > * {
     margin-top: .75rem;
     margin-bottom: .75rem;

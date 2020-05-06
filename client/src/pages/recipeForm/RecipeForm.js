@@ -137,56 +137,58 @@ export default class RecipeForm extends Component {
   render() {
     return (
       <div className="recipe-form-container">
-        <Image image={this.state.image} />
-        <div id="title-wrapper">
-          <input
-            type="text" value={this.state.title} placeholder="Titel"
-            onChange={(e) => this.onChange(e.target.value, 'title')}
-          />
-          <button type="button" className="button" onClick={this.handleImageUpload}>
-            Neues Bild
+        <div className="recipe-form">
+          <Image image={this.state.image} />
+          <div id="title-wrapper">
+            <input
+              type="text" value={this.state.title} placeholder="Titel"
+              onChange={(e) => this.onChange(e.target.value, 'title')}
+            />
+            <button type="button" className="button" onClick={this.handleImageUpload}>
+              Neues Bild
+            </button>
+          </div>
+          <div id="number-inputs">
+            <div>
+              <label>Portionen</label>
+              <input
+                type="number" min="1"
+                value={this.state.servings}
+                onChange={(e) => this.onChange(e.target.value, 'servings')}
+              />
+            </div>
+            <div>
+              <label>Minuten</label>
+              <input
+                type="number" min="1"
+                value={this.state.duration}
+                onChange={(e) => this.onChange(e.target.value, 'duration')}
+              />
+            </div>
+          </div>
+          <div id="misc-inputs">
+            <div>
+              <form id="difficulty">
+                {this.getRadioButton({ value: 1, label: 'Einfach', prop: 'difficulty' })}
+                {this.getRadioButton({ value: 2, label: 'Mittel', prop: 'difficulty' })}
+                {this.getRadioButton({ value: 3, label: 'Schwer', prop: 'difficulty' })}
+              </form>
+            </div>
+            <div id="veggie-options">
+              {this.getVeggieOption('Vegetarisch')}
+              {this.getVeggieOption('Vegan')}
+            </div>
+          </div>
+          <Ingredients ingredients={this.state.ingredients} onChange={(v) => this.onChange(v, 'ingredients')} />
+          <Description value={this.state.description} onChange={(v) => this.onChange(v, 'description')} />
+          <Categories categories={this.state.categories} onChange={(v) => this.onChange(v, 'categories')} />
+          <button
+            type="button" className="button inverted" id="save"
+            onClick={this.saveRecipe}
+          >
+            Rezept speichern
           </button>
         </div>
-        <div id="number-inputs">
-          <div>
-            <label>Portionen</label>
-            <input
-              type="number" min="1"
-              value={this.state.servings}
-              onChange={(e) => this.onChange(e.target.value, 'servings')}
-            />
-          </div>
-          <div>
-            <label>Minuten</label>
-            <input
-              type="number" min="1"
-              value={this.state.duration}
-              onChange={(e) => this.onChange(e.target.value, 'duration')}
-            />
-          </div>
-        </div>
-        <div id="misc-inputs">
-          <div>
-            <form id="difficulty">
-              {this.getRadioButton({ value: 1, label: 'Einfach', prop: 'difficulty' })}
-              {this.getRadioButton({ value: 2, label: 'Mittel', prop: 'difficulty' })}
-              {this.getRadioButton({ value: 3, label: 'Schwer', prop: 'difficulty' })}
-            </form>
-          </div>
-          <div id="veggie-options">
-            {this.getVeggieOption('Vegetarisch')}
-            {this.getVeggieOption('Vegan')}
-          </div>
-        </div>
-        <Ingredients ingredients={this.state.ingredients} onChange={(v) => this.onChange(v, 'ingredients')} />
-        <Description value={this.state.description} onChange={(v) => this.onChange(v, 'description')} />
-        <Categories categories={this.state.categories} onChange={(v) => this.onChange(v, 'categories')} />
-        <button
-          type="button" className="button inverted" id="save"
-          onClick={this.saveRecipe}
-        >
-          Rezept speichern
-        </button>
       </div>
     );
   }

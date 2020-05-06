@@ -30,7 +30,8 @@ export default () => {
   }, [recipe]);
 
   const content = recipe ? (
-    <div className="container">
+    <div className="recipe-container">
+      <div className="recipe">
       <h1 className="recipe-title">{recipe.title}</h1>
 
       {recipe.image ? <RecipeImage recipe={recipe} /> : null}
@@ -75,6 +76,7 @@ export default () => {
           <Link to={`/recipe/${id}/edit`} className="button">Bearbeiten</Link>
         ) : null}
       </div>
+    </div>
     </div>
   ) : <div>Rezept konnte nicht gefunden werden :(</div>;
   return (

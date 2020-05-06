@@ -1,10 +1,14 @@
-.container {
+.recipe-container {
+  width: 100%;
+  background: #fff;
+}
+
+.recipe {
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 1.5rem;
   display: flex;
   flex-direction: column;
-  background: #fff;
 }
 
 .recipe-title {
@@ -93,6 +97,10 @@
 
 .servings-control button:hover {
   background: #f2f2f2;
+}
+
+.servings-control > * {
+  font-family: 'Merriweather', sans-serif;
 }
 
 ul {
