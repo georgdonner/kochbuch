@@ -18,8 +18,9 @@ const getOptions = (method, userOptions = {}) => {
 };
 
 const request = async (method, url, options) => {
-  const res = await fetch(`/api${url}`, getOptions(method, options));
-  return options.fullResponse ? res : res.json();
+  const parsedOptions = getOptions(method, options);
+  const res = await fetch(`/api${url}`, parsedOptions);
+  return parsedOptions.fullResponse ? res : res.json();
 };
 
 export default {

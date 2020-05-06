@@ -1,10 +1,5 @@
-import { openDB } from 'idb';
-
-const openDb = async () => openDB('recipes-db', 1, {
-  upgrade(database) {
-    database.createObjectStore('recipes', { keyPath: '_id' });
-  },
-});
+import { openDb } from './db';
+import api from './api';
 
 export const getAll = async () => {
   const db = await openDb();
@@ -23,12 +18,7 @@ export const refreshDatabase = async (recipes) => {
   return tx.done;
 };
 
-const fetchAllRecipes = async () => {
-  const fetchReq = await fetch('/api/recipes?format=html', {
-    headers: { 'Content-Type': 'application/json' },
-  });
-  return fetchReq.json();
-};
+const fetchAllRecipes = async () => api.get('/recipes?format=html');
 
 export const syncDatabase = async (timeout) => {
   const recipesLocal = await getAll();
