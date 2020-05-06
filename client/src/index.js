@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import App from './app';
 import Loading from './components/Loading';
 import MainContext from './services/context';
-import { syncDatabase, refreshDatabase } from './services/recipesDb';
+import { syncDatabase, refreshDatabase } from './services/recipes';
 import { getUser } from './services/auth';
 import { withTimeout } from './utils';
 import './index.scss';

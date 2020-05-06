@@ -31,7 +31,7 @@ export default () => {
   };
 
   return (
-    <div id="login-container">
+    <div className="fullscreen-container">
       <div id="login">
         <input
           type="text" placeholder="Passwort" autoFocus
