@@ -54,9 +54,9 @@ export const NavButton = ({
   const className = `nav-button${active ? ' active' : ''}`;
 
   return link ? (
-    <a className={className} href={link}>
+    <Link className={className} to={link}>
       <Icon name={icon} />
-    </a>
+    </Link>
   ) : (
     <button
       className={className} type="button"

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-import Nav from '../../components/Nav';
+import Nav, { NavButton } from '../../components/Nav';
 import Searchbar from './components/Searchbar';
 import RecipeCard from './components/RecipeCard';
 import searchRecipes from './modules/searchRecipes';
@@ -47,7 +47,9 @@ export default class Recipes extends Component {
     const recipes = this.state.recipes.slice(0, this.FETCH_AMOUNT * this.state.page);
     return (
       <>
-        <Nav page="recipes" />
+        <Nav page="recipes">
+          <NavButton icon="settings" link="/settings" />
+        </Nav>
         <Searchbar
           onSearch={(val) => {
             const login = val === 'login';

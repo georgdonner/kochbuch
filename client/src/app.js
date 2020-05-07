@@ -8,6 +8,7 @@ import RecipeForm from './pages/recipeForm/RecipeForm';
 import List from './pages/list/List';
 import Plan from './pages/plan/Plan';
 import PlanForm from './pages/planForm/PlanForm';
+import Settings from './pages/settings/Settings';
 
 export default () => (
   <Router>
@@ -20,6 +21,7 @@ export default () => (
       <Route path="/recipes/new" component={RecipeForm} />
       <Route path="/recipe/:id/edit" component={RecipeForm} />
       <Route path="/recipe/:id" component={Recipe} />
+      <Route path="/settings" component={Settings} />
       <Route path="/" component={Recipes} />
     </Switch>
   </Router>

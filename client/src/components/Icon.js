@@ -11,6 +11,7 @@ export const iconList = {
   keepAwake: 'icon-wb_sunny',
   menu: 'icon-menu',
   search: 'icon-search',
+  settings: 'icon-settings',
   share: 'icon-share',
 };
 
