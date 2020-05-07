@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import './NoList.scss';
-
 const NoList = ({ onUpdate }) => {
   const [code, setCode] = useState('');
 
@@ -11,8 +9,8 @@ const NoList = ({ onUpdate }) => {
   };
 
   return (
-    <div id="nolist-wrapper">
-      <div id="nolist">
+    <div id="nocode-wrapper">
+      <div id="nocode">
         <label htmlFor="code">
           Um die Einkaufsliste nutzen zu können, gib hier bitte einen Code ein.
           Dieser Code wird verwendet, um deine Einkaufsliste eindeutig zu identifizieren,
