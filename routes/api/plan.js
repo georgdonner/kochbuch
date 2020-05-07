@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 
 const Weekplan = require('../../models/weekplan');
+const WeekplanEntry = require('../../models/weekplanEntry');
 
 const checkPlanAuth = (req, res, next) => {
   if (req.session.planCode) {
@@ -11,11 +12,21 @@ const checkPlanAuth = (req, res, next) => {
   return res.sendStatus(401);
 };
 
+const getPlan = async (code) => {
+  let plan = await Weekplan.getPlanByName(code);
+  if (!plan) {
+    plan = await Weekplan.addPlan(code);
+  }
+  return plan;
+};
+
 // Get weekplan
 router.get('/plan', checkPlanAuth, async (req, res, next) => {
   try {
-    const plan = await Weekplan.getPlanByName(req.session.planCode);
-    return res.json(plan);
+    const week = Number(req.query.week) || 0;
+    const plan = await getPlan(req.session.planCode);
+    const entries = await WeekplanEntry.getWeek(plan._id, week);
+    return res.json(entries);
   } catch (error) {
     return next(error);
   }
@@ -33,7 +44,12 @@ router.post('/plans', async (req, res, next) => {
 
 router.post('/plan', checkPlanAuth, async (req, res, next) => {
   try {
-    await Weekplan.addEntry(req.session.planCode, req.body);
+    const plan = await getPlan(req.session.planCode);
+    const update = req.body;
+    if (!update.date) {
+      update.date = await WeekplanEntry.getNextDay(plan._id);
+    }
+    await WeekplanEntry.addEntry(plan._id, update);
     return res.sendStatus(201);
   } catch (error) {
     return next(error);
@@ -42,7 +58,7 @@ router.post('/plan', checkPlanAuth, async (req, res, next) => {
 
 router.put('/plan/:id', checkPlanAuth, async (req, res, next) => {
   try {
-    await Weekplan.updateEntry(req.session.planCode, req.params.id, req.body);
+    await WeekplanEntry.updateEntry(req.params.id, req.body);
     return res.sendStatus(200);
   } catch (error) {
     return next(error);
@@ -51,7 +67,7 @@ router.put('/plan/:id', checkPlanAuth, async (req, res, next) => {
 
 router.delete('/plan/:id', checkPlanAuth, async (req, res, next) => {
   try {
-    await Weekplan.deleteEntry(req.session.planCode, req.params.id);
+    await WeekplanEntry.deleteEntry(req.params.id);
     return res.sendStatus(200);
   } catch (error) {
     return next(error);
