@@ -46,6 +46,10 @@ export default class List extends Component {
     });
   }
 
+  async componentWillUnmount() {
+    toast.dismiss();
+  }
+
   getNav = () => (
     <Nav page="list">
       <NavButton
