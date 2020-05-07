@@ -70,8 +70,9 @@ export default class List extends Component {
       },
     });
     this.context.updateUser(user);
-    this.listDb.name = code;
+    await this.listDb.clear();
 
+    this.listDb.name = code;
     let list = await this.listDb.getList(5000);
     if (!list) {
       list = { name: code, list: [] };

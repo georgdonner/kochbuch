@@ -33,14 +33,27 @@ export default class ListDb {
   }
 
   /**
+   * @returns {Promise}
+   */
+  clear = async () => {
+    const db = await openDb();
+    return db.clear('list');
+  };
+
+  /**
    * @returns {Promise<ListDoc|null>}
    */
   getLocalList = async () => {
     const db = await openDb();
     if (this.name) {
-      return db.get('list', this.name);
+      let doc = await db.get('list', this.name);
+      if (!doc) {
+        doc = { name: this.name, list: [], pending: [] };
+        await db.add('list', doc);
+      }
+      return doc;
     }
-    const all = await db.getAll();
+    const all = await db.getAll('list');
     if (all.length) {
       this.name = all[0].name;
       return all[0];
