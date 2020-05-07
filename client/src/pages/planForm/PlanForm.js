@@ -22,17 +22,27 @@ export default () => {
 
   const createEntry = async () => {
     const query = new URLSearchParams(search);
-    let newDate = Number(query.get('date'));
-    if (!newDate) {
-      const { day } = await api.get('/plan/nextday');
-      newDate = day;
-    }
     const create = {
-      date: new Date(newDate),
       time: '19:30',
-      servings: Number(query.get('servings')) || 2,
       custom: '',
     };
+    create.servings = Number(query.get('servings')) || 2;
+
+    const checkDate = async () => {
+      let newDate = Number(query.get('date'));
+      if (!newDate) {
+        const { day } = await api.get('/plan/nextday');
+        newDate = day;
+      }
+      create.date = new Date(newDate);
+    };
+    const checkRecipe = async () => {
+      if (query.get('recipe')) {
+        const { title, _id } = await api.get(`/recipe/${query.get('recipe')}`);
+        create.recipe = { title, id: _id };
+      }
+    };
+    await Promise.all([checkDate(), checkRecipe()]);
     setEntry(create);
   };
 

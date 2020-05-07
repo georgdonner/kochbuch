@@ -34,7 +34,13 @@ const RecipeCard = ({ recipe }) => {
     .filter((ctg) => ctg !== 'Vegan' && ctg !== 'Vegetarisch');
 
   return (
-    <Link className="recipe-card" id={recipe._id} to={`/recipe/${recipe._id}`}>
+    <Link
+      className="recipe-card" id={recipe._id}
+      to={{
+        pathname: `/recipe/${recipe._id}`,
+        state: { fromHome: true },
+      }}
+    >
       {responsiveImg(recipe)}
       <h2>
         {vegetarian || vegan

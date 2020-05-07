@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useHistory, useParams, Link } from 'react-router-dom';
 import NoSleep from 'nosleep.js';
 import { toast } from 'react-toastify';
 
@@ -19,6 +19,7 @@ const ingrToStr = ({ name, hint }) => `${name}${hint ? ` (${hint})` : ''}`;
 
 export default () => {
   const { id } = useParams();
+  const history = useHistory();
   const { recipes, user } = useContext(MainContext);
 
   const [hasList, setHasList] = useState(false);
@@ -51,60 +52,85 @@ export default () => {
     document.title = recipe.title;
   }, [recipe]);
 
+  const back = () => {
+    const { state } = history.location;
+    if (state && state.fromHome) {
+      history.goBack();
+    } else {
+      history.push('/');
+    }
+  };
+
   const content = recipe ? (
-    <div className="recipe-container">
-      <div className="recipe">
-        <h1 className="recipe-title">{recipe.title}</h1>
-
-        {recipe.image ? <RecipeImage recipe={recipe} /> : null}
-
-        <div className="recipe-info">
-          <div className="duration">
-            {`${recipe.duration} Minuten`}
-          </div>
-          <div className="categories">
-            {recipe.categories.map((ctg) => <span key={ctg}>{ctg}</span>)}
+    <>
+      {user.planCode ? (
+        <div id="top-bar-container">
+          <div id="top-bar">
+            <button type="button" id="back" onClick={back}>
+              <Icon name="arrowLeft" />
+              Alle Rezepte
+            </button>
+            <Link id="add-to-plan" to={`/plan/new?recipe=${recipe._id}&servings=${recipe.servings}`}>
+              <span>+</span>
+              Zum Wochenplan
+            </Link>
           </div>
         </div>
+      ) : null}
+      <div className="recipe-container">
+        <div className="recipe">
+          <h1 className="recipe-title">{recipe.title}</h1>
 
-        <div className="recipe-main">
-          <div>
-            <h2 className="servings-header">
-              <span>Zutaten</span>
-              <div className="servings-control">
-                <button type="button" className="down" onClick={() => setServings(servings - 1)}>-</button>
-                <span id="servings">{servings}</span>
-                <button type="button" className="up" onClick={() => setServings(servings + 1)}>+</button>
-              </div>
-            </h2>
+          {recipe.image ? <RecipeImage recipe={recipe} /> : null}
 
-            <ul id="ingredients">
-              {recipe.ingredients.map((ingr) => (
-                <li key={ingr.name}>
-                  <div className="content">
-                    <span className="name">{calcServings(ingr.name, recipe.servings, servings)}</span>
-                    <span className="hint">{ingr.hint ? ` (${ingr.hint})` : ''}</span>
-                  </div>
-                  {hasList ? (
-                    <button className="cart" type="button" onClick={() => addItem(ingrToStr(ingr))}>
-                      <Icon name="addCart" />
-                    </button>
-                  ) : null}
-                </li>
-              ))}
-            </ul>
+          <div className="recipe-info">
+            <div className="duration">
+              {`${recipe.duration} Minuten`}
+            </div>
+            <div className="categories">
+              {recipe.categories.map((ctg) => <span key={ctg}>{ctg}</span>)}
+            </div>
           </div>
 
-          <Description recipe={recipe} servings={servings} />
-        </div>
+          <div className="recipe-main">
+            <div>
+              <h2 className="servings-header">
+                <span>Zutaten</span>
+                <div className="servings-control">
+                  <button type="button" className="down" onClick={() => setServings(servings - 1)}>-</button>
+                  <span id="servings">{servings}</span>
+                  <button type="button" className="up" onClick={() => setServings(servings + 1)}>+</button>
+                </div>
+              </h2>
 
-        <div id="buttons">
-          {user.authenticated ? (
-            <Link to={`/recipe/${id}/edit`} className="button">Bearbeiten</Link>
-          ) : null}
+              <ul id="ingredients">
+                {recipe.ingredients.map((ingr) => (
+                  <li key={ingr.name}>
+                    <div className="content">
+                      <span className="name">{calcServings(ingr.name, recipe.servings, servings)}</span>
+                      <span className="hint">{ingr.hint ? ` (${ingr.hint})` : ''}</span>
+                    </div>
+                    {hasList ? (
+                      <button className="cart" type="button" onClick={() => addItem(ingrToStr(ingr))}>
+                        <Icon name="addCart" />
+                      </button>
+                    ) : null}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <Description recipe={recipe} servings={servings} />
+          </div>
+
+          <div id="buttons">
+            {user.authenticated ? (
+              <Link to={`/recipe/${id}/edit`} className="button">Bearbeiten</Link>
+            ) : null}
+          </div>
         </div>
       </div>
-    </div>
+    </>
   ) : <div>Rezept konnte nicht gefunden werden :(</div>;
   return (
     <>

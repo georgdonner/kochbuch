@@ -1,3 +1,56 @@
+#top-bar-container {
+  background: #fff;
+  width: 100%;
+  z-index: 10;
+}
+
+#top-bar {
+  max-width: 1000px;
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  padding-bottom: 0;
+  #back  {
+    .icon {
+      margin-right: .5rem;
+      font-size: 10pt;
+    }
+  }
+  #add-to-plan {
+    span {
+      margin-right: .5rem;
+    }
+  }
+  a, button {
+    color: #777;
+    background: inherit;
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    border: none;
+    font-family: 'Open Sans', sans-serif;
+    font-size: .75rem;
+    font-weight: 600;
+    text-decoration: none;
+    text-transform: uppercase;
+    transition: all .5s ease;
+    cursor: pointer;
+    &:hover {
+      color: #333;
+    }
+  }
+}
+
+@keyframes hovericon {
+  from {
+    left: 0;
+  }
+  to {
+    left: -1rem;
+  }
+}
+
 .recipe-container {
   width: 100%;
   background: #fff;
