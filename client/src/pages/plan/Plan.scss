@@ -74,9 +74,9 @@
         color: #333;
         padding-top: .25rem;
         font-size: 1.1rem;
-        &:hover {
-          text-decoration: underline;
-        }
+      }
+      a.title:hover {
+        text-decoration: underline;
       }
     }
   }
