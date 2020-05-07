@@ -12,7 +12,7 @@ export const getWeekdays = (week) => {
 
 export const getTimeStr = (date) => date.toLocaleTimeString('de-DE', { hour: 'numeric', minute: 'numeric' });
 
-const getDateStr = (date) => date.toJSON().split('T')[0];
+export const getDateStr = (date) => date.toJSON().split('T')[0];
 
 export const getDayStr = (date) => {
   const compare = new Date();

@@ -20,7 +20,13 @@ const getOptions = (method, userOptions = {}) => {
 const request = async (method, url, options) => {
   const parsedOptions = getOptions(method, options);
   const res = await fetch(`/api${url}`, parsedOptions);
-  return parsedOptions.fullResponse ? res : res.json();
+  if (parsedOptions.fullResponse) return res;
+  try {
+    const json = await res.json();
+    return json;
+  } catch (error) {
+    return null;
+  }
 };
 
 export default {

@@ -56,6 +56,25 @@ router.post('/plan', checkPlanAuth, async (req, res, next) => {
   }
 });
 
+router.get('/plan/nextday', checkPlanAuth, async (req, res, next) => {
+  try {
+    const plan = await getPlan(req.session.planCode);
+    const nextDay = await WeekplanEntry.getNextDay(plan._id);
+    return res.json({ day: nextDay });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.get('/plan/:id', checkPlanAuth, async (req, res, next) => {
+  try {
+    const entry = await WeekplanEntry.getEntry(req.params.id);
+    return res.json(entry);
+  } catch (error) {
+    return next(error);
+  }
+});
+
 router.put('/plan/:id', checkPlanAuth, async (req, res, next) => {
   try {
     await WeekplanEntry.updateEntry(req.params.id, req.body);

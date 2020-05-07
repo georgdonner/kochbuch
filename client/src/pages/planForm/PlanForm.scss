@@ -1,0 +1,77 @@
+#plan-form-container {
+  background: #fff;
+  min-height: 100vh;
+}
+
+#plan-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  & > * {
+    margin-bottom: 1.5rem;
+  }
+  label {
+    color: #333;
+    display: block;
+    padding-left: .25rem;
+    font-size: .8rem;
+    font-weight: 600;
+  }
+  input {
+    color: #333;
+    width: 100%;
+    border: none;
+    border-bottom: 2px #d9d9d9 solid;
+    padding: .5rem .25rem;
+    padding-right: 0;
+    font-size: 1.25rem;
+    &:disabled {
+      background: #f2f2f2;
+    }
+  }
+
+  .half {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 4rem;
+  }
+
+  #recipe-search button {
+    margin-top: 1.5rem;
+  }
+  
+  #search-results {
+    border-left: 2px #f2f2f2 solid;
+    border-right: 2px #f2f2f2 solid;
+    width: 100%;
+    div {
+      font-size: 1.2rem;
+      padding: .5rem .25rem;
+      border-bottom: 2px #f2f2f2 solid;
+      cursor: pointer;
+      &:hover {
+        background: #f2f2f2;
+      }
+    }
+  }
+
+  #buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  #delete {
+    color: #fff;
+    background: #c9342c;
+    border-color: #c9342c;
+    &:hover {
+      color: #c9342c;
+      background: #fff;
+    }
+  }
+}
+
+
+

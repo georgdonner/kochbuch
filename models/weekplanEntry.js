@@ -49,7 +49,7 @@ module.exports.getNextDay = async (planId) => {
   const nextEntries = await WeekplanEntry.find({
     weekplan: planId,
     date: {
-      $gte: new Date(),
+      $gte: moment().hours(0).minutes(0).seconds(0),
     },
   });
   let nextDay;

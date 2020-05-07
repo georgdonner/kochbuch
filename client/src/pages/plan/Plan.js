@@ -48,14 +48,14 @@ export default () => {
       <div id="plan">
         {dateUtil.getWeekdays(week).map((day) => (
           <div key={day} className="day">
-            <Link className="date" to={`/plan/new/?date=${+day}`}>
+            <Link className="date" to={`/plan/new?date=${+day}`}>
               {dateUtil.getDayStr(day)}
             </Link>
             {filterByDay(entries, day).map((entry) => (
               <div className="entry" key={entry._id}>
                 <div className="data">
                   <div className="meta">
-                    {`${dateUtil.getTimeStr(new Date(entry.date))} | ${entry.servings} Person${entry.servings !== 1 ? 'en' : ''}`}
+                    {`${entry.time} | ${entry.servings} Person${entry.servings !== 1 ? 'en' : ''}`}
                   </div>
                   {entry.custom ? (
                     <div className="title">{entry.custom}</div>
@@ -66,7 +66,7 @@ export default () => {
                   )}
                 </div>
                 <div className="controls">
-                  <Link to={`/plan/edit?id=${entry._id}`}>
+                  <Link to={`/plan/${entry._id}/edit`}>
                     <Icon name="edit" />
                   </Link>
                 </div>
