@@ -192,10 +192,11 @@ button.cart:hover {
 #buttons {
   display: flex;
   flex-wrap: wrap;
-}
-
-#buttons .button {
-  margin-bottom: 1rem;
+  
+  .button {
+    margin-right: 1rem;
+    margin-bottom: 2rem;
+  }
 }
 
 @media only screen and (max-width: 1200px) {

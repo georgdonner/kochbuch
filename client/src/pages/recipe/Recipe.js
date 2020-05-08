@@ -127,6 +127,7 @@ export default () => {
             {user.authenticated ? (
               <Link to={`/recipe/${id}/edit`} className="button">Bearbeiten</Link>
             ) : null}
+            <a href={`/pdf/recipe/${id}`} className="button" download>PDF</a>
           </div>
         </div>
       </div>
