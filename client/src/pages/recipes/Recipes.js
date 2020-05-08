@@ -24,7 +24,7 @@ export default () => {
 
   const onScroll = () => {
     const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
-    const hasNext = recipes.length > FETCH_AMOUNT * page;
+    const hasNext = recipes && (recipes.length > FETCH_AMOUNT * page);
     if (hasNext && nearBottom) {
       window.sessionStorage.setItem('page', page + 1);
       setPage(page + 1);
