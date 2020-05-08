@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
 const enforce = require('express-sslify');
 const mongoose = require('mongoose');
+const compression = require('compression');
 
 mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -26,6 +27,7 @@ app.use(cookieSession({
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(compression());
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(express.static(path.join(__dirname, 'build')));
 
