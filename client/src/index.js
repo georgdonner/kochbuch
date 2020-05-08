@@ -11,6 +11,13 @@ import { getUser } from './services/auth';
 import { withTimeout } from './utils';
 import './index.scss';
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    const sw = 'service-worker.js';
+    navigator.serviceWorker.register(sw);
+  });
+}
+
 toast.configure({
   position: 'bottom-center',
   newestOnTop: true,

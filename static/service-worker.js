@@ -1,214 +1,113 @@
-/* eslint-disable no-restricted-globals */
-const cacheName = 'v1';
+/* global importScripts, workbox */
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 
-const openDb = (dbName) => new Promise((resolve, reject) => {
-  const request = self.indexedDB.open(dbName);
-  request.onerror = () => {
-    reject(new Error(`DB request error: ${request.errorCode}`));
-  };
-  request.onsuccess = (event) => {
-    const db = event.target.result;
-    db.onerror = (dbEvent) => {
-      console.error(`Database error: ${dbEvent.target.errorCode}`);
-    };
-    resolve(db);
-  };
-});
+const cacheMap = {
+  fontStylesheets: 'google-fonts-stylesheets',
+  fontFiles: 'google-fonts-webfonts',
+  static: 'static-resources',
+  uploadcare: 'uploadcare',
+};
 
-const reqPromise = (req) => new Promise((resolve, reject) => {
-  req.onerror = reject;
-  req.onsuccess = () => {
-    resolve(req.result);
-  };
-});
-
-// eslint-disable-next-line no-undef
-importScripts('/scripts/recipe-template.js');
-
-self.addEventListener('activate', (e) => {
-  const assets = ['/offline'];
-  e.waitUntil(
-    caches
-      .open(cacheName)
-      .then((cache) => {
-        cache.addAll(assets);
-      })
-      .then(() => self.skipWaiting()),
-  );
-  e.waitUntil(
-    caches.keys().then((cacheNames) => Promise.all(
-      cacheNames.map((cache) => {
-        if (cache !== cacheName) {
-          return caches.delete(cache);
-        }
-        return false;
+// Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.
+workbox.routing.registerRoute(
+  ({ url }) => url.origin === 'https://fonts.googleapis.com',
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: cacheMap.fontStylesheets,
+    plugins: [
+      new workbox.cacheableResponse.CacheableResponsePlugin({
+        statuses: [200],
       }),
-    )),
+    ],
+  }),
+);
+
+// Cache the underlying font files with a cache-first strategy for 1 year.
+workbox.routing.registerRoute(
+  ({ url }) => url.origin === 'https://fonts.gstatic.com',
+  new workbox.strategies.CacheFirst({
+    cacheName: cacheMap.fontFiles,
+    plugins: [
+      new workbox.cacheableResponse.CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+      new workbox.expiration.ExpirationPlugin({
+        maxAgeSeconds: 60 * 60 * 24 * 365,
+        maxEntries: 30,
+      }),
+    ],
+  }),
+);
+
+// Cache all static resources (stale while revalidate)
+workbox.routing.registerRoute(
+  ({ request }) => request.destination === 'script'
+    || request.destination === 'style'
+    || request.url === `${new URL(request.url).origin}/`
+    || request.url.match(/.png/)
+    || request.url.match(/.ttf/),
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: cacheMap.static,
+  }),
+);
+
+const getAllImgUrls = (url) => {
+  const [cdnUrl] = url.split('/-/resize');
+  const imgWidths = [400, 600, 800, 1000];
+  const getImgUrl = (width, doubleRes = false) => (
+    cdnUrl.concat(`/-/resize/${width}x/`, `-/quality/${doubleRes ? 'lightest' : 'lighter'}/`, '-/progressive/yes/')
   );
-});
-
-async function getRecipe(id) {
-  const db = await openDb('recipes-db', { name: 'recipes', keyPath: '_id' });
-  if (!db) {
-    throw new Error('No db found');
-  }
-  const store = db.transaction('recipes', 'readwrite').objectStore('recipes');
-  const req = store.get(id);
-  return reqPromise(req);
-}
-
-function isRecipeView(url) {
-  return url.origin === location.origin && url.pathname.startsWith('/recipe/');
-}
-
-function renderRecipe(url) {
-  const recipeId = url.pathname.split('/')[2];
-  return getRecipe(recipeId).then((recipe) => (
-    // eslint-disable-next-line no-undef
-    new Response(template({
-      recipe,
-      descriptionHtml: recipe.description,
-      session: {},
-      servings: recipe.servings,
-    }), { headers: { 'Content-Type': 'text/html' } })
-  ));
-}
-
-function fetchRequest(request) {
-  return fetch(request)
-    .then((res) => {
-      const resClone = res.clone();
-      caches.open(cacheName).then((cache) => {
-        cache.put(request, resClone);
-      });
-      return res;
-    })
-    .catch(() => caches.match(request).then((res) => {
-      if (res) {
-        return res;
-      }
-      const url = new URL(request.url);
-      // eslint-disable-next-line no-undef
-      if (isRecipeView(url) && 'template' in self) {
-        return renderRecipe(url);
-      } if (url.origin === 'https://ucarecdn.com') {
-        const uuid = url.pathname.split('/')[1];
-        const imgWidths = [400, 600, 800, 1000];
-        const getImgUrl = (width, doubleRes = false) => (
-          url.origin.concat('/', uuid, `/-/resize/${width}x/`, `-/quality/${doubleRes ? 'lightest' : 'lighter'}/`, '-/progressive/yes/')
-        );
-        const imgUrls = [];
-        imgWidths.forEach((width) => {
-          imgUrls.push(getImgUrl(width), getImgUrl(width * 2, true));
-        });
-        return Promise.all(imgUrls.map((imgUrl) => caches.match(imgUrl)))
-          .then((responses) => {
-            const filtered = responses.filter((response) => response);
-            if (filtered.length > 0) {
-              const getWidth = (resizeUrl) => +resizeUrl.match(/resize\/\d+/)[0].split('/')[1];
-              filtered.sort((a, b) => getWidth(b.url) - getWidth(a.url));
-              return filtered[0];
-            }
-            return undefined;
-          });
-      }
-      return caches.match('/offline').then((r) => r);
-    }));
-}
-
-function cacheFirst(e) {
-  return caches.match(e.request).then((res) => {
-    if (res) {
-      return res;
-    }
-    return fetchRequest(e.request);
+  const imgUrls = [];
+  imgWidths.forEach((width) => {
+    imgUrls.push(getImgUrl(width), getImgUrl(width * 2, true));
   });
-}
+  return imgUrls;
+};
 
-self.addEventListener('fetch', (e) => {
-  if (e.request.method === 'GET') {
-    const url = new URL(e.request.url);
-    const local = url.origin === location.origin;
-    const cacheLocal = ['/scripts/nosleep.js', '/assets/tomato-icon-192.png', '/assets/tomato-icon.png', '/manifest.json'];
-    if (url.pathname.startsWith('/api')) {
-      return; // don't cache API requests at all
-    }
-    if (local && !cacheLocal.includes(url.pathname)) {
-      if (isRecipeView(url) && 'template' in self) {
-        // get server response with 5 second timeout, render offline otherwise
-        const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-        const renderOffline = async () => {
-          await sleep(5000);
-          return renderRecipe(url);
-        };
-        const firstPromise = Promise.race([fetchRequest(e.request), renderOffline()]);
-        e.respondWith(firstPromise);
-      } else {
-        e.respondWith(fetchRequest(e.request));
+const getWidth = (url) => +url.match(/resize\/\d+/)[0].split('/')[1];
+
+const getImagesFromCache = async (cache, url) => {
+  const imgUrls = getAllImgUrls(url);
+  const allCached = await Promise.all(
+    imgUrls.map((imgUrl) => cache.match(imgUrl)),
+  );
+  const filtered = allCached.filter((res) => res);
+  filtered.sort((a, b) => getWidth(b.url) - getWidth(a.url));
+  return filtered;
+};
+
+const uploadcarePlugin = {
+  cacheWillUpdate: async ({ request, response }) => {
+    const cache = await caches.open(cacheMap.uploadcare);
+    const cached = await getImagesFromCache(cache, request.url);
+    if (cached.length) {
+      if (getWidth(response.url) > getWidth(cached[0].url)) {
+        // new image has better quality than all cached -> update cache
+        await Promise.all(cached.map((res) => cache.delete(res.url)));
+        return response;
       }
-    } else {
-      e.respondWith(cacheFirst(e));
+      return null;
     }
-  }
-});
-
-const getListUpdates = async (db) => {
-  const store = db.transaction('list-updates').objectStore('list-updates');
-  const req = store.getAll();
-  return reqPromise(req);
+    return response;
+  },
+  cacheKeyWillBeUsed: async ({ request, mode }) => {
+    if (mode === 'read') {
+      const cache = await caches.open(cacheMap.uploadcare);
+      const [cached] = await getImagesFromCache(cache, request.url);
+      if (cached && getWidth(request.url) <= getWidth(cached.url)) {
+        // cached image has equal or better quality than required -> return cache result
+        return cached.url;
+      }
+    }
+    return request;
+  },
 };
 
-async function processListUpdates(currentList, listUpdates) {
-  const res = await fetch('/api/list/updates', {
-    method: 'PUT',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ list: currentList, updates: listUpdates }),
-  });
-  const body = await res.json();
-  return body.list;
-}
+// Cache uploadcare images
 
-const clearObjectStore = async (db, objStore) => {
-  const store = db.transaction(objStore, 'readwrite').objectStore(objStore);
-  const clearReq = store.clear();
-  return reqPromise(clearReq);
-};
-
-
-const getListDb = async () => {
-  const db = await openDb('list-db');
-  const store = db.transaction('list', 'readwrite').objectStore('list');
-  const req = store.get('main-list');
-  const result = await reqPromise(req);
-  return result.list;
-};
-
-const updateListDb = async (list) => {
-  const db = await openDb('list-db');
-  const store = db.transaction('list', 'readwrite').objectStore('list');
-  const req = store.put({ name: 'main-list', list });
-  const result = await reqPromise(req);
-  return result.list;
-};
-
-async function listSync() {
-  const db = await openDb('list-db');
-  if (!db) {
-    throw new Error('No db found');
-  }
-  const currentList = await getListDb(db);
-  const listUpdates = await getListUpdates(db);
-  await clearObjectStore(db, 'list-updates');
-  const updatedList = await processListUpdates(currentList, listUpdates);
-  const channel = new BroadcastChannel('listSync');
-  channel.postMessage({ list: updatedList });
-  return updateListDb(updatedList);
-}
-
-self.addEventListener('sync', (e) => {
-  if (e.tag === 'listSync') {
-    e.waitUntil(listSync());
-  }
-});
+workbox.routing.registerRoute(
+  ({ url }) => url.origin === 'https://ucarecdn.com',
+  new workbox.strategies.CacheFirst({
+    cacheName: cacheMap.uploadcare,
+    plugins: [uploadcarePlugin],
+  }),
+);

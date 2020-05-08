@@ -18,7 +18,7 @@ const RecipeImage = ({ recipe }) => {
       {imgSource(800)}
       {imgSource(600)}
       {imgSource(400)}
-      <img className="recipe-img" src={imgUrl(1000)} alt={recipe.title} />
+      <img crossOrigin="anonymous" className="recipe-img" src={imgUrl(1000)} alt={recipe.title} />
     </picture>
   );
 };
