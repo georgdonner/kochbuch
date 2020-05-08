@@ -1,4 +1,5 @@
 /* global importScripts, workbox */
+/* eslint-disable no-restricted-globals */
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 
 const cacheMap = {
@@ -8,6 +9,17 @@ const cacheMap = {
   html: 'kochbuch-html',
   uploadcare: 'uploadcare',
 };
+
+const clearCaches = async () => {
+  const cacheNames = await caches.keys();
+  const filtered = cacheNames.filter((name) => !Object.values(cacheMap).includes(name));
+  return Promise.all(filtered.map((name) => caches.delete(name)));
+};
+
+// Clear unnecessary caches
+self.addEventListener('activate', (e) => {
+  e.waitUntil(clearCaches());
+});
 
 // Cache the Google Fonts stylesheets with a stale-while-revalidate strategy.
 workbox.routing.registerRoute(
