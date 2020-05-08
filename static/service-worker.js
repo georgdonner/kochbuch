@@ -5,6 +5,7 @@ const cacheMap = {
   fontStylesheets: 'google-fonts-stylesheets',
   fontFiles: 'google-fonts-webfonts',
   static: 'static-resources',
+  html: 'kochbuch-html',
   uploadcare: 'uploadcare',
 };
 
@@ -42,7 +43,6 @@ workbox.routing.registerRoute(
 workbox.routing.registerRoute(
   ({ request }) => request.destination === 'script'
     || request.destination === 'style'
-    || request.url === `${new URL(request.url).origin}/`
     || request.url.match(/.png/)
     || request.url.match(/.ttf/),
   new workbox.strategies.StaleWhileRevalidate({
@@ -50,64 +50,44 @@ workbox.routing.registerRoute(
   }),
 );
 
-const getAllImgUrls = (url) => {
-  const [cdnUrl] = url.split('/-/resize');
-  const imgWidths = [400, 600, 800, 1000];
-  const getImgUrl = (width, doubleRes = false) => (
-    cdnUrl.concat(`/-/resize/${width}x/`, `-/quality/${doubleRes ? 'lightest' : 'lighter'}/`, '-/progressive/yes/')
-  );
-  const imgUrls = [];
-  imgWidths.forEach((width) => {
-    imgUrls.push(getImgUrl(width), getImgUrl(width * 2, true));
-  });
-  return imgUrls;
-};
+// Cache index.html
+workbox.routing.registerRoute(
+  ({ url }) => {
+    const { pathname } = new URL(url);
+    return pathname === '/' || pathname === '/list' || pathname.startsWith('/recipe');
+  },
+  new workbox.strategies.StaleWhileRevalidate({
+    cacheName: cacheMap.html,
+    plugins: [{
+      cacheKeyWillBeUsed: () => 'index',
+    }],
+  }),
+);
 
 const getWidth = (url) => +url.match(/resize\/\d+/)[0].split('/')[1];
 
-const getImagesFromCache = async (cache, url) => {
-  const imgUrls = getAllImgUrls(url);
-  const allCached = await Promise.all(
-    imgUrls.map((imgUrl) => cache.match(imgUrl)),
-  );
-  const filtered = allCached.filter((res) => res);
-  filtered.sort((a, b) => getWidth(b.url) - getWidth(a.url));
-  return filtered;
-};
-
-const uploadcarePlugin = {
-  cacheWillUpdate: async ({ request, response }) => {
-    const cache = await caches.open(cacheMap.uploadcare);
-    const cached = await getImagesFromCache(cache, request.url);
-    if (cached.length) {
-      if (getWidth(response.url) > getWidth(cached[0].url)) {
-        // new image has better quality than all cached -> update cache
-        await Promise.all(cached.map((res) => cache.delete(res.url)));
-        return response;
-      }
-      return null;
+const imageHandler = async ({ url, event }) => {
+  const { request } = event;
+  const uuid = new URL(url).pathname.split('/')[1];
+  const cache = await caches.open(cacheMap.uploadcare);
+  let cached = await cache.match(uuid);
+  if (cached && (getWidth(request.url) <= getWidth(cached.url))) {
+    return cached;
+  }
+  try {
+    const res = await fetch(request);
+    if (res) {
+      await cache.put(uuid, res);
+      cached = await cache.match(uuid);
     }
-    return response;
-  },
-  cacheKeyWillBeUsed: async ({ request, mode }) => {
-    if (mode === 'read') {
-      const cache = await caches.open(cacheMap.uploadcare);
-      const [cached] = await getImagesFromCache(cache, request.url);
-      if (cached && getWidth(request.url) <= getWidth(cached.url)) {
-        // cached image has equal or better quality than required -> return cache result
-        return cached.url;
-      }
-    }
-    return request;
-  },
+    return cached;
+  } catch (error) {
+    return cached;
+  }
 };
 
 // Cache uploadcare images
-
 workbox.routing.registerRoute(
   ({ url }) => url.origin === 'https://ucarecdn.com',
-  new workbox.strategies.CacheFirst({
-    cacheName: cacheMap.uploadcare,
-    plugins: [uploadcarePlugin],
-  }),
+  imageHandler,
 );

@@ -15,7 +15,7 @@ export default class Recipes extends Component {
     this.FETCH_AMOUNT = window.matchMedia('min-width: 1200px') ? 15 : 10;
     this.state = {
       query: window.sessionStorage.getItem('query') || '',
-      page: window.sessionStorage.getItem('page') || 1,
+      page: +window.sessionStorage.getItem('page') || 1,
       recipes: null,
     };
   }

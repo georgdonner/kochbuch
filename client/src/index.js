@@ -35,12 +35,15 @@ class Root extends Component {
 
   async componentDidMount() {
     const timeout = 5000;
-    const [recipes, user] = await Promise.all([
+    const [recipesRes, userRes] = await Promise.allSettled([
       syncDatabase(5000),
       withTimeout(getUser, { timeout, defaultValue: { authenticated: false } }),
     ]);
 
-    this.setState({ allRecipes: recipes, user });
+    this.setState({
+      allRecipes: recipesRes.value,
+      user: userRes.value || { authenticated: false },
+    });
   }
 
   addRecipe = (recipe) => {

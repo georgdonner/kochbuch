@@ -22,18 +22,22 @@ const fetchAllRecipes = async () => api.get('/recipes?format=html');
 
 export const syncDatabase = async (timeout) => {
   const recipesLocal = await getAll();
-  let recipes;
-  if (timeout && recipesLocal.length > 0) {
-    const timeoutPromise = new Promise(((resolve) => {
-      setTimeout(resolve, timeout, null);
-    }));
-    recipes = await Promise.race([timeoutPromise, fetchAllRecipes()]);
-  } else {
-    recipes = await fetchAllRecipes();
-  }
-  if (recipes) {
-    await refreshDatabase(recipes);
-    return recipes;
+  try {
+    let recipes;
+    if (timeout && recipesLocal.length > 0) {
+      const timeoutPromise = new Promise(((resolve) => {
+        setTimeout(resolve, timeout, null);
+      }));
+      recipes = await Promise.race([timeoutPromise, fetchAllRecipes()]);
+    } else {
+      recipes = await fetchAllRecipes();
+    }
+    if (recipes) {
+      await refreshDatabase(recipes);
+      return recipes;
+    }
+  } catch (error) {
+    return recipesLocal;
   }
   return recipesLocal;
 };
