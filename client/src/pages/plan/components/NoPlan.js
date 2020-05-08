@@ -24,6 +24,11 @@ const NoPlan = ({ onUpdate }) => {
           type="text" name="code" placeholder="Wochenplan Code"
           value={code} className="input"
           onChange={({ target }) => setCode(target.value)}
+          onKeyDown={({ key }) => {
+            if (key === 'Enter') {
+              updateCode();
+            }
+          }}
         />
         <button className="button inverted" type="button" onClick={updateCode}>
           Bestätigen
