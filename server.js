@@ -29,10 +29,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(express.static(path.join(__dirname, 'build')));
 
-// view engine
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
-
 // set our routes
 app.use('/api', require('./routes/api'));
 app.use('/pdf', require('./routes/pdf'));
