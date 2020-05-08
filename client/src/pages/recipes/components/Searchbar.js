@@ -23,7 +23,7 @@ const Searchbar = ({ onSearch, query }) => {
               timeoutRef.current = setTimeout(() => {
                 onSearch(value);
                 target.blur();
-              }, 5000);
+              }, 3000);
             }
           })}
           defaultValue={query}

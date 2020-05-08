@@ -6,7 +6,7 @@ import 'react-toastify/dist/ReactToastify.min.css';
 import App from './app';
 import Loading from './components/Loading';
 import MainContext from './services/context';
-import { syncDatabase, refreshDatabase } from './services/recipes';
+import { syncDatabase, refreshDatabase, getAll } from './services/recipes';
 import { getUser } from './services/auth';
 import { withTimeout } from './utils';
 import './index.scss';
@@ -29,14 +29,18 @@ class Root extends Component {
     super(props);
     this.state = {
       allRecipes: null,
-      user: null,
+      user: { authenticated: false },
     };
   }
 
   async componentDidMount() {
+    const localRecipes = await getAll();
+    this.setState({
+      allRecipes: localRecipes,
+    });
     const timeout = 5000;
     const [recipesRes, userRes] = await Promise.allSettled([
-      syncDatabase(5000),
+      syncDatabase(timeout),
       withTimeout(getUser, { timeout, defaultValue: { authenticated: false } }),
     ]);
 
