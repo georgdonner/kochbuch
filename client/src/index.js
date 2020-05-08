@@ -46,7 +46,7 @@ class Root extends Component {
 
     this.setState({
       allRecipes: recipesRes.value,
-      user: userRes.value || { authenticated: false },
+      user: userRes.value ? { ...userRes.value, fetched: true } : null || { authenticated: false },
     });
   }
 

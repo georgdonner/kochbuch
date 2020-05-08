@@ -6,6 +6,7 @@ import MainContext from '../../services/context';
 import * as dateUtil from '../../utils/date';
 import Nav from '../../components/Nav';
 import Icon from '../../components/Icon';
+import Loading from '../../components/Loading';
 import NoPlan from './components/NoPlan';
 import './Plan.scss';
 
@@ -28,10 +29,12 @@ export default () => {
   }, []);
 
   useEffect(() => {
-    updateEntries();
+    if (user.planCode) {
+      updateEntries();
+    }
   }, [week, user]);
 
-  let content = user && !user.planCode ? (
+  let content = user.fetched && !user.planCode ? (
     <NoPlan
       onUpdate={async (code) => {
         const updatedUser = await api.post('/user', {
@@ -91,6 +94,10 @@ export default () => {
         </div>
       </>
     );
+  }
+
+  if (!content) {
+    content = <Loading />;
   }
 
   return (
