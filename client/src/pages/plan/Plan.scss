@@ -20,8 +20,10 @@
   button {
     color: #333;
     display: flex;
+    background: #fff;
     align-items: center;
     border: none;
+    cursor: pointer;
   }
 
   & > * {
