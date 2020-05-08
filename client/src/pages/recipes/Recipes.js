@@ -41,7 +41,7 @@ export default () => {
   return (
     <>
       <Nav page="recipes">
-        <NavButton icon="settings" link="/settings" />
+        {window.navigator.onLine ? <NavButton icon="settings" link="/settings" /> : null}
       </Nav>
       <Searchbar
         onSearch={(val) => {

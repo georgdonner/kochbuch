@@ -124,7 +124,7 @@ export default () => {
           </div>
 
           <div id="buttons">
-            {user.authenticated ? (
+            {user.authenticated && window.navigator.onLine ? (
               <Link to={`/recipe/${id}/edit`} className="button">Bearbeiten</Link>
             ) : null}
             <a href={`/pdf/recipe/${id}`} className="button" download>PDF</a>
