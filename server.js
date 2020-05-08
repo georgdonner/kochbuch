@@ -49,7 +49,7 @@ const port = process.env.PORT || 3000;
 if (process.env.NODE_ENV === 'development') {
   const certOptions = {
     key: fs.readFileSync(path.resolve('cert/server.key')),
-    cert: fs.readFileSync(path.resolve('cert/server.crt')),
+    cert: fs.readFileSync(path.resolve('cert/server.cert')),
   };
   https
     .createServer(certOptions, app)
