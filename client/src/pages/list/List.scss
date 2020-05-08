@@ -98,18 +98,10 @@
     background-color: #d9d9d9;
   }
   
-  .input-container input:checked ~ .checkmark {
-    background-color: #333;
-  }
-  
   .checkmark:after {
     content: "";
     position: absolute;
     display: none;
-  }
-  
-  .input-container input:checked ~ .checkmark:after {
-    display: block;
   }
   
   .input-container .checkmark.box:after {
