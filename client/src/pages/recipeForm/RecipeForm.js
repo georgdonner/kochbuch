@@ -4,6 +4,7 @@ import uploadcare from 'uploadcare-widget';
 
 import MainContext from '../../services/context';
 import api from '../../services/api';
+import Loading from '../../components/Loading';
 import Ingredients from './components/Ingredients';
 import Description from './components/Description';
 import Categories from './components/Categories';
@@ -46,7 +47,8 @@ const defaultRecipe = {
 export default class RecipeForm extends Component {
   constructor(props) {
     super(props);
-    this.recipeId = null;
+    const { pathname } = props.location;
+    this.recipeId = pathname.includes('edit') ? pathname.split('/')[2] : null;
     this.state = {
       ...defaultRecipe,
     };
@@ -54,8 +56,6 @@ export default class RecipeForm extends Component {
 
   async componentDidMount() {
     document.title = 'Neues Rezept';
-    const { pathname } = this.props.location;
-    this.recipeId = pathname.includes('edit') ? pathname.split('/')[2] : null;
     if (this.recipeId) {
       const recipe = await api.get(`/recipe/${this.recipeId}`);
       this.setState(recipe);
@@ -135,7 +135,7 @@ export default class RecipeForm extends Component {
   }
 
   render() {
-    return (
+    return (!this.recipeId || (this.recipeId && this.state._id)) ? (
       <div className="recipe-form-container">
         <div className="recipe-form">
           <Image image={this.state.image} />
@@ -190,7 +190,7 @@ export default class RecipeForm extends Component {
           </button>
         </div>
       </div>
-    );
+    ) : <Loading />;
   }
 }
 
