@@ -2,6 +2,8 @@
 /* eslint-disable no-restricted-globals */
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');
 
+self.__WB_DISABLE_DEV_LOGS = true;
+
 const cacheMap = {
   fontStylesheets: 'google-fonts-stylesheets',
   fontFiles: 'google-fonts-webfonts',
