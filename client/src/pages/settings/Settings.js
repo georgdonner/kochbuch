@@ -4,8 +4,9 @@ import { toast } from 'react-toastify';
 
 import MainContext from '../../services/context';
 import api from '../../services/api';
-import './Settings.scss';
+import DbList from '../../services/list';
 import Nav from '../../components/Nav';
+import './Settings.scss';
 
 export default () => {
   const history = useHistory();
@@ -18,6 +19,9 @@ export default () => {
     const updatedUser = await api.post('/user', {
       body: codes,
     });
+    if ((listCode || undefined) !== updatedUser.listCode) {
+      await new DbList().clear();
+    }
     updateUser({
       listCode: updatedUser.listCode,
       planCode: updatedUser.planCode,
