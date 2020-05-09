@@ -13,7 +13,7 @@ import './index.scss';
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    const sw = 'service-worker.js';
+    const sw = `${window.location.origin}/service-worker.js`;
     navigator.serviceWorker.register(sw);
   });
 }
