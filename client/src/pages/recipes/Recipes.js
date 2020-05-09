@@ -34,7 +34,7 @@ export default () => {
   useEffect(() => {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+  }, [recipes, page]);
 
   if (!recipes) return null;
   const sliced = recipes.slice(0, FETCH_AMOUNT * page);
