@@ -9,17 +9,14 @@ const RecipeSchema = new Schema({
     required: true,
   },
   image: String,
-  heroImage: String,
   servings: Number,
   duration: Number,
   difficulty: Number,
-  cookCount: Number,
   ingredients: [{
     name: String,
     hint: String,
   }],
   description: String,
-  descrImage: String,
   categories: {
     type: [String],
     default: [],

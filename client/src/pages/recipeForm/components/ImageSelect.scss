@@ -1,0 +1,15 @@
+.ReactModal__Content {
+  h2 {
+    margin-top: 0;
+  }
+  button {
+    margin-top: 1rem;
+  }
+}
+
+.ReactCrop {
+  height: 100%;
+  & > :first-child {
+    height: 100%;
+  }
+}

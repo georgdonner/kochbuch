@@ -9,7 +9,7 @@ const cacheMap = {
   fontFiles: 'google-fonts-webfonts',
   static: 'static-resources',
   html: 'kochbuch-html',
-  uploadcare: 'uploadcare',
+  images: 'images',
 };
 
 const clearCaches = async () => {
@@ -78,12 +78,12 @@ workbox.routing.registerRoute(
   }),
 );
 
-const getWidth = (url) => +url.match(/resize\/\d+/)[0].split('/')[1];
+const getWidth = (url) => +url.match(/\d+.jpg/)[0].split('.')[0];
 
 const imageHandler = async ({ url, event }) => {
   const { request } = event;
-  const uuid = new URL(url).pathname.split('/')[1];
-  const cache = await caches.open(cacheMap.uploadcare);
+  const uuid = new URL(url).pathname.split('/')[1].split('_')[0];
+  const cache = await caches.open(cacheMap.images);
   let cached = await cache.match(uuid);
   if (cached && (getWidth(request.url) <= getWidth(cached.url))) {
     return cached;
@@ -102,6 +102,6 @@ const imageHandler = async ({ url, event }) => {
 
 // Cache uploadcare images
 workbox.routing.registerRoute(
-  ({ url }) => url.origin === 'https://ucarecdn.com',
+  ({ url }) => url.origin.match(/amazonaws.com/),
   imageHandler,
 );

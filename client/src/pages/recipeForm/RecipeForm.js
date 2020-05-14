@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import uploadcare from 'uploadcare-widget';
 
 import MainContext from '../../services/context';
 import api from '../../services/api';
@@ -8,13 +7,11 @@ import Loading from '../../components/Loading';
 import Ingredients from './components/Ingredients';
 import Description from './components/Description';
 import Categories from './components/Categories';
+import ImageSelect from './components/ImageSelect';
 import './RecipeForm.scss';
 
 const Image = ({ image, alt }) => {
-  const imgUrl = (width) => image.concat(
-    `-/resize/${width}x/`,
-    '-/quality/lighter/',
-    '-/progressive/yes/');
+  const imgUrl = (width) => image.replace(/\d+.jpg/, `${width}.jpg`);
   return image ? (
     <img
       src={image}
@@ -101,22 +98,6 @@ export default class RecipeForm extends Component {
     </label>
   );
 
-  handleImageUpload = () => {
-    const dialog = uploadcare.openDialog(null, {
-      publicKey: this.context.user.uploadcareKey,
-      imagesOnly: true,
-      crop: '',
-      imageShrink: '2000x2000',
-    });
-    dialog.done((result) => {
-      result.promise().done((info) => {
-        this.setState({
-          image: info.cdnUrl.replace('-/preview/', ''),
-        });
-      });
-    });
-  }
-
   saveRecipe = async () => {
     let url = '/recipe';
     if (this.recipeId) {
@@ -144,9 +125,7 @@ export default class RecipeForm extends Component {
               type="text" value={this.state.title} placeholder="Titel"
               onChange={(e) => this.onChange(e.target.value, 'title')}
             />
-            <button type="button" className="button" onClick={this.handleImageUpload}>
-              Neues Bild
-            </button>
+            <ImageSelect updateImg={(image) => this.setState({ image })} />
           </div>
           <div id="number-inputs">
             <div>
