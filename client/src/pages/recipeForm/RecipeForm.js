@@ -10,17 +10,9 @@ import Categories from './components/Categories';
 import ImageSelect from './components/ImageSelect';
 import './RecipeForm.scss';
 
-const Image = ({ image, alt }) => {
-  const imgUrl = (width) => image.replace(/\d+.jpg/, `${width}.jpg`);
-  return image ? (
-    <img
-      src={image}
-      srcSet={`${imgUrl(800)} 800w, ${imgUrl(400)} 400w`}
-      sizes="(max-width: 450px) 400px, 800px"
-      alt={alt}
-    />
-  ) : null;
-};
+const Image = ({ image, alt }) => image ? (
+  <img src={image} alt={alt} />
+) : null;
 
 Image.propTypes = {
   image: PropTypes.string,
