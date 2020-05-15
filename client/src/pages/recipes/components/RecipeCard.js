@@ -9,11 +9,12 @@ const responsiveImg = (recipe) => {
 
   return recipe.image ? (
     <img
-      srcSet={`${imgUrl(1200)} 1200w,
+      srcSet={`${imgUrl(1600)} 1600w,
+      ${imgUrl(1000)} 1000w,
       ${imgUrl(800)} 800w,
       ${imgUrl(400)} 400w`}
       sizes="(min-width: 1200px) 400px,
-      (min-width: 600px) 33.3vw,
+      (min-width: 600px) 50vw,
       100vw"
       src={imgUrl(800)}
       alt={recipe.title}
