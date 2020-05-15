@@ -28,7 +28,7 @@ router.post('/upload/image', checkAuth, fileUpload(), async (req, res, next) => 
   try {
     const images = await Promise.all(IMG_WIDTHS.map(async (imgWidth) => {
       const sharpImg = sharp(file.data).rotate();
-      if (req.query) {
+      if (Object.keys(req.query).length) {
         sharpImg.extract(castQuery(req.query));
       }
       const resized = await sharpImg
