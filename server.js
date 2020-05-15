@@ -11,7 +11,9 @@ const mongoose = require('mongoose');
 const compression = require('compression');
 
 mongoose.set('useCreateIndex', true);
-mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false,
+});
 
 const app = express();
 

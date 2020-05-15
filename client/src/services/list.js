@@ -1,5 +1,6 @@
-import { openDb } from './db';
+import { v4 as uuidv4 } from 'uuid';
 
+import { openDb } from './db';
 import api from './api';
 import { withTimeout, toArray } from '../utils';
 
@@ -8,19 +9,39 @@ import { withTimeout, toArray } from '../utils';
  */
 const fetchList = async () => api.get('/list');
 
+const filterByAction = (changes, action) => changes.filter((change) => change.action === action);
+
 /**
- * @param {string[]} oldList
- * @param {string[]} newList
- * @returns {ListChange[]}
+ *
+ * @param {ListItem[]} list
+ * @param {ListChange[]} changes
  */
-const getChanges = (oldList, newList) => {
-  const removed = oldList
-    .filter((item) => !newList.includes(item))
-    .map((item) => ({ action: 'removed', item }));
-  const added = newList
-    .filter((item) => !oldList.includes(item))
-    .map((item) => ({ action: 'added', item }));
-  return [...removed, ...added];
+const updateList = (list, changes) => {
+  const newList = list.slice();
+  filterByAction(changes, 'added').forEach(({ item, id }) => {
+    newList.push({ name: item, id });
+  });
+  filterByAction(changes, 'removed').forEach(({ id }) => {
+    const index = newList.findIndex((item) => item.id === id);
+    if (index > -1) {
+      newList.splice(index, 1);
+    }
+  });
+  filterByAction(changes, 'updated').forEach(({ id, newItem }) => {
+    const item = newList.find((it) => it.id === id);
+    if (item) {
+      item.name = newItem;
+    }
+  });
+  filterByAction(changes, 'moved').forEach(({ id, index }) => {
+    const currentIndex = newList.findIndex((item) => item.id === id);
+    const item = newList[currentIndex];
+    if (currentIndex > -1) {
+      newList.splice(currentIndex, 1);
+      newList.splice(index, 0, item);
+    }
+  });
+  return newList;
 };
 
 export default class ListDb {
@@ -62,7 +83,7 @@ export default class ListDb {
   };
 
   /**
-   * @param {string[]} list
+   * @param {ListItem[]} list
    * @returns {Promise<ListDoc>}
    */
   updateLocalList = async (list) => {
@@ -143,16 +164,16 @@ export default class ListDb {
   };
 
   /**
-   * @param {updateFn} updateFn - The function to update the current list
+   * @param {ListChange|ListChange[]} changes - The changes to be made to the server list
    * @returns {Promise<ListDoc>}
    */
-  itemUpdate = async (updateFn) => {
+  itemUpdate = async (changes = []) => {
     const { name, list, pending } = await this.getLocalList();
-    const updated = updateFn(list);
+    const updated = updateList(list, toArray(changes));
     await this.updateLocalList(updated);
 
     const serverUpdated = await this.updateServerList(
-      getChanges(list, updated).concat(pending || []),
+      toArray(changes).concat(pending || []),
     );
     if (serverUpdated) {
       await this.updateLocalList(serverUpdated.list);
@@ -166,45 +187,59 @@ export default class ListDb {
    * @param {string|string[]} items
    */
   addItems = async (items) => {
-    const updateFn = (list) => list.concat(toArray(items));
-    return this.itemUpdate(updateFn);
+    const changes = toArray(items).map((item) => ({ item, id: uuidv4(), action: 'added' }));
+    return this.itemUpdate(changes);
   };
 
   /**
-   * @param {string} item
+   * @param {string} id
+   * @param {string} newItem
    */
-  updateItem = async (oldItem, newItem) => {
-    const updateFn = (list) => list.map((i) => i === oldItem ? newItem : i);
-    return this.itemUpdate(updateFn);
-  };
+  updateItem = async (id, newItem) => this.itemUpdate({
+    id,
+    newItem,
+    action: 'updated',
+  });
 
   /**
-   * @param {string|string[]} items
+   * @param {string} id
+   * @param {number} index
    */
-  removeItems = async (items) => {
-    const updateFn = (list) => list.filter((i) => !toArray(items).includes(i));
-    return this.itemUpdate(updateFn);
+  moveItem = async (id, index) => this.itemUpdate({
+    id,
+    index,
+    action: 'moved',
+  });
+
+  /**
+   * @param {string|string[]} ids
+   */
+  removeItems = async (ids) => {
+    const changes = toArray(ids).map((id) => ({ id, action: 'removed' }));
+    return this.itemUpdate(changes);
   };
 }
 
 /**
  * A list update
  * @typedef {Object} ListChange
- * @property {('added'|'removed')} action
- * @property {string} item
+ * @property {('added'|'removed'|'updated'|'moved')} action
+ * @property {string} [id]
+ * @property {string} [item]
+ * @property {string} [newItem]
  */
+
+/**
+  * A list item
+  * @typedef {Object} ListItem
+  * @property {string} id
+  * @property {string} name
+  */
 
 /**
  * A list document as saved in the database
  * @typedef {Object} ListDoc
  * @property {string} name - The list's unique name
- * @property {string[]} list - The shopping list
+ * @property {ListItem[]} list - The shopping list
  * @property {ListChange[]} [pending] - Pending changes
- */
-
-/**
- * An update function that takes the list and modifies it
- * @callback updateFn
- * @param {string[]} list
- * @returns {string[]}
  */

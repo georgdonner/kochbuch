@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import NoSleep from 'nosleep.js';
 import { toast } from 'react-toastify';
+import { ReactSortable } from 'react-sortablejs';
 
 import MainContext from '../../services/context';
 import api from '../../services/api';
@@ -16,6 +17,7 @@ export default class List extends Component {
     super(props);
     this.noSleep = new NoSleep();
     this.listDb = null;
+    this.inputRef = React.createRef();
     this.state = {
       keepAwake: false,
       fetching: true,
@@ -86,18 +88,19 @@ export default class List extends Component {
     }
   };
 
-  removeItem = async (item) => {
+  removeItem = async (id) => {
+    const origItem = this.state.list.list.find((item) => item.id === id);
     this.setState((state) => ({
-      list: { ...state.list, list: state.list.list.filter((i) => i !== item) },
-      toRemove: [...state.toRemove, item],
+      list: { ...state.list, list: state.list.list.filter((item) => item.id !== id) },
+      toRemove: [...state.toRemove, id],
     }));
     const undo = () => {
       this.setState((state) => ({
-        list: { ...state.list, list: state.list.list.concat([item]) },
-        toRemove: state.toRemove.filter((i) => i !== item),
+        list: { ...state.list, list: state.list.list.concat([origItem]) },
+        toRemove: state.toRemove.filter((rId) => rId !== id),
       }));
     };
-    toast(<ToastUndo undo={undo} label={`${item} entfernt.`} />, {
+    toast(<ToastUndo undo={undo} label={`${origItem.name} entfernt.`} />, {
       onClose: () => {
         if (this.state.toRemove.length) {
           this.setState({ toRemove: [] });
@@ -108,23 +111,24 @@ export default class List extends Component {
     });
   }
 
-  getListItem = (item, index) => (
-    <div key={`item-${index}`} className="item-wrapper">
+  getListItem = (item) => (
+    <div key={item.id} className="item-wrapper">
       <label className="input-container">
         <input type="checkbox" />
         <span
           className="checkmark box"
-          onClick={() => this.removeItem(item)}
+          onClick={() => this.removeItem(item.id)}
         />
         <span className="item">
-          <span>{item}</span>
+          <span>{item.name}</span>
           <button
             type="button"
             onClick={() => {
               this.setState({
-                editing: item,
-                newItem: item,
+                editing: item.id,
+                newItem: item.name,
               });
+              this.inputRef.current.focus();
             }}
           >
             <Icon name="edit" />
@@ -156,6 +160,7 @@ export default class List extends Component {
       <div id="list-wrapper">
         <div id="new-item">
           <input
+            ref={this.inputRef}
             value={this.state.newItem} type="text" placeholder="Hinzufügen"
             onChange={({ target }) => {
               this.setState({ newItem: target.value });
@@ -168,9 +173,17 @@ export default class List extends Component {
           />
         </div>
         <div id="list-container">
-          <div id="list">
-            {list.list.map((item, i) => this.getListItem(item, i))}
-          </div>
+          <ReactSortable
+            list={list.list} id="list"
+            setList={() => {}}
+            onUpdate={({ oldIndex, newIndex }) => {
+              if (oldIndex !== newIndex) {
+                this.listDb.moveItem(list.list[oldIndex].id, newIndex);
+              }
+            }}
+          >
+            {list.list.map((item) => this.getListItem(item))}
+          </ReactSortable>
         </div>
       </div>
     ) : <NoList onUpdate={this.onUpdateCode} />;

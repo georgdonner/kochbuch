@@ -4,10 +4,10 @@ module.exports = (err, req, res, next) => {
   if (res.headersSent) {
     return next(err);
   }
-  const { message, status = 500 } = err;
+  const { message, stack, status = 500 } = err;
 
   // logging
-  console.error(`Error: ${message}`);
+  console.error(`Error: ${message}\n${stack}`);
   if (req.path.startsWith('/api')) {
     return res.status(status).json({ error: { message } });
   }
