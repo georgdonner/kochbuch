@@ -71,5 +71,5 @@ module.exports.addRecipe = (newRecipe) => newRecipe.save();
 module.exports.removeRecipe = (id) => Recipe.findOneAndRemove({ _id: id });
 
 module.exports.updateRecipe = (id, newData) => (
-  Recipe.findByIdAndUpdate(id, { $set: newData }, { upsert: true, new: true })
+  Recipe.findByIdAndUpdate(id, { $set: newData }, { upsert: true, new: true, lean: true })
 );

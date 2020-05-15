@@ -95,6 +95,7 @@ export default class RecipeForm extends Component {
     if (this.recipeId) {
       url += `/${this.recipeId}`;
     }
+    url += '?format=html';
     const method = this.recipeId ? 'put' : 'post';
     const saved = await api[method](url, {
       body: this.state,

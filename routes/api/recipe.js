@@ -80,9 +80,11 @@ router.get('/recipes/categories', async (req, res, next) => {
 
 router.post('/recipe', checkAuth, async (req, res, next) => {
   try {
+    const { format = 'markdown' } = req.query;
     const newRecipe = new Recipe({ ...req.body });
     const saved = await Recipe.addRecipe(newRecipe);
-    return res.json(saved);
+    const formatted = format === 'html' ? toHtml(saved.toObject()) : saved;
+    return res.json(formatted);
   } catch (error) {
     return next(error);
   }
@@ -90,11 +92,13 @@ router.post('/recipe', checkAuth, async (req, res, next) => {
 
 router.put('/recipe/:id', checkAuth, async (req, res, next) => {
   try {
+    const { format = 'markdown' } = req.query;
     const {
       _id, __v, createdAt, updatedAt, ...newData
     } = req.body;
     const recipe = await Recipe.updateRecipe(req.params.id, newData);
-    return res.json(recipe);
+    const formatted = format === 'html' ? toHtml(recipe) : recipe;
+    return res.json(formatted);
   } catch (error) {
     return next(error);
   }
