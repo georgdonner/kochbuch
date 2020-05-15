@@ -11,7 +11,7 @@ import ImageSelect from './components/ImageSelect';
 import './RecipeForm.scss';
 
 const Image = ({ image, alt }) => image ? (
-  <img src={image} alt={alt} />
+  <img src={image} alt={alt} crossOrigin="anonymous" />
 ) : null;
 
 Image.propTypes = {
