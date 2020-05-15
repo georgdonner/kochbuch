@@ -85,12 +85,16 @@ const imageHandler = async ({ url, event }) => {
   const uuid = new URL(url).pathname.split('/')[1].split('_')[0];
   const cache = await caches.open(cacheMap.images);
   let cached = await cache.match(uuid);
+  if (cached.status >= 300) {
+    await cache.delete(cached);
+    cached = null;
+  }
   if (cached && (getWidth(request.url) <= getWidth(cached.url))) {
     return cached;
   }
   try {
     const res = await fetch(request);
-    if (res) {
+    if (res && res.status < 300) {
       await cache.put(uuid, res);
       cached = await cache.match(uuid);
     }
