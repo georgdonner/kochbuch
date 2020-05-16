@@ -26,9 +26,12 @@ export default () => {
   const listDb = new ListDb(user.listCode);
 
   const addItem = async (item) => {
-    await listDb.addItems(item);
+    const { list } = await listDb.addItems(item);
+    const removed = list.find((it) => it.name === item);
     const undo = () => {
-      listDb.removeItems(item);
+      if (removed) {
+        listDb.removeItems(removed.id);
+      }
     };
     toast(<ToastUndo undo={undo} label={`${item} hinzugefügt.`} />, {
       closeOnClick: false,
