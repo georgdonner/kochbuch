@@ -61,6 +61,11 @@ workbox.routing.registerRoute(
     || request.url.match(/.ttf/),
   new workbox.strategies.StaleWhileRevalidate({
     cacheName: cacheMap.static,
+    plugins: [
+      new workbox.expiration.ExpirationPlugin({
+        maxAgeSeconds: 60 * 60 * 24 * 30,
+      }),
+    ],
   }),
 );
 
