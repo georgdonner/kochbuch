@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { useHistory, useParams, Link } from 'react-router-dom';
+import {
+  useHistory, useLocation, useParams, Link,
+} from 'react-router-dom';
 import NoSleep from 'nosleep.js';
 import { toast } from 'react-toastify';
 
@@ -18,6 +20,7 @@ const noSleep = new NoSleep();
 const ingrToStr = ({ name, hint }) => `${name}${hint ? ` (${hint})` : ''}`;
 
 export default () => {
+  const location = useLocation();
   const { id } = useParams();
   const history = useHistory();
   const { recipes, user } = useContext(MainContext);
@@ -48,7 +51,9 @@ export default () => {
   }, []);
 
   const recipe = recipes.find(({ _id }) => _id === id);
-  const [servings, setServings] = useState(recipe.servings);
+
+  const passedServings = +(new URLSearchParams(location.search)).get('servings');
+  const [servings, setServings] = useState(passedServings || recipe.servings);
   const [keepAwake, setAwake] = useState(false);
 
   useEffect(() => {
