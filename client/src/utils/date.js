@@ -4,6 +4,19 @@ export const addDays = (date, days) => {
   return copy;
 };
 
+export const getWeek = (date) => {
+  const dateCopy = new Date(date.valueOf());
+  const dayNr = (date.getDay() + 6) % 7;
+  dateCopy.setDate(dateCopy.getDate() - dayNr + 3);
+  const firstThursday = dateCopy.valueOf();
+  dateCopy.setMonth(0, 1);
+  if (dateCopy.getDay() !== 4) {
+    // eslint-disable-next-line
+    dateCopy.setMonth(0, 1 + ((4 - dateCopy.getDay()) + 7) % 7);
+  }
+  return 1 + Math.ceil((firstThursday - dateCopy) / 604800000);
+};
+
 export const getWeekdays = (week) => {
   const weekday = new Date().getDay();
   const start = addDays(new Date(), -(weekday - 1) + (week * 7));
@@ -23,5 +36,8 @@ export const getDayStr = (date) => {
   if (getDateStr(date) === getDateStr(compare)) {
     return 'Morgen';
   }
-  return new Intl.DateTimeFormat('de-DE', { weekday: 'long' }).format(date);
+  if (getWeek(date) === getWeek(new Date())) {
+    return new Intl.DateTimeFormat('de-DE', { weekday: 'long' }).format(date);
+  }
+  return new Intl.DateTimeFormat('de-DE', { day: 'numeric', month: 'long' }).format(date);
 };
