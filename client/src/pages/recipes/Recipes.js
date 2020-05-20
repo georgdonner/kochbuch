@@ -40,24 +40,26 @@ export default () => {
   const sliced = recipes.slice(0, FETCH_AMOUNT * page);
   return (
     <>
-      <Nav page="recipes">
-        {window.navigator.onLine ? <NavButton icon="settings" link="/settings" /> : null}
-      </Nav>
-      <Searchbar
-        onSearch={(val) => {
-          const login = val === 'login';
-          const value = login ? '' : val;
-          setPage(1);
-          setQuery(value);
-          setRecipes(searchRecipes(allRecipes, value));
-          window.sessionStorage.setItem('page', 1);
-          window.sessionStorage.setItem('query', value);
-          if (login) {
-            history.push('/login');
-          }
-        }}
-        query={query}
-      />
+      <div style={{ position: 'sticky', top: 0, zIndex: 11 }}>
+        <Nav page="recipes">
+          {window.navigator.onLine ? <NavButton icon="settings" link="/settings" /> : null}
+        </Nav>
+        <Searchbar
+          onSearch={(val) => {
+            const login = val === 'login';
+            const value = login ? '' : val;
+            setPage(1);
+            setQuery(value);
+            setRecipes(searchRecipes(allRecipes, value));
+            window.sessionStorage.setItem('page', 1);
+            window.sessionStorage.setItem('query', value);
+            if (login) {
+              history.push('/login');
+            }
+          }}
+          query={query}
+        />
+      </div>
       <div id="list-wrapper">
         <div id="recipe-list">
           {sliced.map((recipe) => <RecipeCard key={recipe._id} recipe={recipe} />)}
