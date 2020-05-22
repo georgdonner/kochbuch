@@ -175,7 +175,7 @@ export default class List extends Component {
         <div id="list-container">
           <ReactSortable
             list={list.list} id="list"
-            setList={() => {}}
+            setList={() => {}} delay={250}
             onUpdate={({ oldIndex, newIndex }) => {
               if (oldIndex !== newIndex) {
                 this.listDb.moveItem(list.list[oldIndex].id, newIndex);
