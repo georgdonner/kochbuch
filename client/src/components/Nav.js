@@ -11,15 +11,17 @@ const PAGES = {
   plan: 'Wochenplan',
 };
 
-const Nav = ({ page, children }) => {
+const Nav = ({ page, children, menuButton }) => {
   const [open, setOpen] = useState(false);
 
   return (
     <nav>
       <div id="menu">
-        <button type="button" className="menu-button" onClick={() => setOpen(!open)}>
-          <Icon name="menu" color="#333" />
-        </button>
+        {!menuButton ? (
+          <button type="button" className="menu-button" onClick={() => setOpen(!open)}>
+            <Icon name="menu" color="#333" />
+          </button>
+        ) : menuButton}
         <div className={open ? 'hidden' : ''} id="current-page">{PAGES[page]}</div>
         <div className="right-buttons">{children}</div>
       </div>
@@ -39,10 +41,12 @@ Nav.propTypes = {
     PropTypes.arrayOf(PropTypes.node),
     PropTypes.node,
   ]),
+  menuButton: PropTypes.node,
 };
 
 Nav.defaultProps = {
   children: undefined,
+  menuButton: undefined,
 };
 
 export default Nav;

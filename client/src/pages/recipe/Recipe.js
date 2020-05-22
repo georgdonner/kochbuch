@@ -141,9 +141,17 @@ export default () => {
       </div>
     </>
   ) : <div>Rezept konnte nicht gefunden werden :(</div>;
+
   return (
     <>
-      <Nav page="recipes">
+      <Nav
+        page="recipes"
+        menuButton={(
+          <button type="button" className="menu-button" onClick={back}>
+            <Icon name="arrowLeft" color="#333" />
+          </button>
+        )}
+      >
         <NavButton
           icon="keepAwake"
           onClick={() => {
