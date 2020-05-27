@@ -8,6 +8,7 @@ import Nav from '../../components/Nav';
 import Icon from '../../components/Icon';
 import Loading from '../../components/Loading';
 import NoPlan from './components/NoPlan';
+import PlanEntry from './components/PlanEntry';
 import './Plan.scss';
 
 const filterByDay = (entries, day) => (
@@ -69,25 +70,7 @@ export default () => {
                 {dateUtil.getDayStr(day)}
               </Link>
               {filterByDay(entries, day).map((entry) => (
-                <div className="entry" key={entry._id}>
-                  <div className="data">
-                    <div className="meta">
-                      {`${entry.time} | ${entry.servings} Person${entry.servings !== 1 ? 'en' : ''}`}
-                    </div>
-                    {entry.custom ? (
-                      <div className="title">{entry.custom}</div>
-                    ) : (
-                      <Link className="title" to={`/recipe/${entry.recipe.id}?servings=${entry.servings}`}>
-                        {entry.recipe.title}
-                      </Link>
-                    )}
-                  </div>
-                  <div className="controls">
-                    <Link to={`/plan/${entry._id}/edit`}>
-                      <Icon name="edit" />
-                    </Link>
-                  </div>
-                </div>
+                <PlanEntry entry={entry} key={entry._id} />
               ))}
             </div>
           ))}
