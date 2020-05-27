@@ -64,7 +64,7 @@ export default () => {
   const back = () => {
     const { state } = history.location;
     if (state && state.fromHome) {
-      history.goBack();
+      history.go(-1);
     } else {
       history.push('/');
     }
