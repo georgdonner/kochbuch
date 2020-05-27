@@ -10,6 +10,16 @@ import './Recipes.scss';
 
 const FETCH_AMOUNT = window.matchMedia('min-width: 1200px') ? 15 : 10;
 
+const isElementInViewport = (el) => {
+  const rect = el.getBoundingClientRect();
+  return (
+    rect.top >= 0
+      && rect.left >= 0
+      && rect.bottom <= (window.innerHeight || document.documentElement.clientHeight)
+      && rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+  );
+};
+
 export default () => {
   const { recipes: allRecipes, user } = useContext(MainContext);
   const history = useHistory();
@@ -17,6 +27,19 @@ export default () => {
   const [query, setQuery] = useState(window.sessionStorage.getItem('query') || '');
   const [page, setPage] = useState(+window.sessionStorage.getItem('page') || 1);
   const [recipes, setRecipes] = useState(null);
+
+  useEffect(() => {
+    setTimeout(() => {
+      const lastViewed = window.sessionStorage.getItem('lastViewedRecipe');
+      if (lastViewed) {
+        window.sessionStorage.removeItem('lastViewedRecipe');
+        const el = document.getElementById(lastViewed);
+        if (el && !isElementInViewport(el)) {
+          el.scrollIntoView({ block: 'center' });
+        }
+      }
+    }, 10);
+  }, []);
 
   useEffect(() => {
     setRecipes(searchRecipes(allRecipes, query));
@@ -38,6 +61,7 @@ export default () => {
 
   if (!recipes) return null;
   const sliced = recipes.slice(0, FETCH_AMOUNT * page);
+
   return (
     <>
       <div style={{ position: 'sticky', top: 0, zIndex: 11 }}>

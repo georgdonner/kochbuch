@@ -43,6 +43,7 @@ export default () => {
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    window.sessionStorage.setItem('lastViewedRecipe', id);
     const checkList = async () => {
       const list = await listDb.getLocalList();
       setHasList(Boolean(list));
