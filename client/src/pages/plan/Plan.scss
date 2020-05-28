@@ -36,6 +36,7 @@
   margin: 0 auto;
   margin-top: 4.25rem;
   padding: 2rem 1rem;
+  overflow-y: scroll;
 
   a {
     text-decoration: none;
@@ -46,7 +47,14 @@
     background: #fff;
     margin-bottom: 1.5rem;
     padding: .75rem 1rem;
+    border: 1px white solid;
     border-radius: 10px;
+    &.drag-over {
+      border: 1px #333 dashed;
+      .date {
+        color: #333;
+      }
+    }
 
     .date {
       color: #aaa;

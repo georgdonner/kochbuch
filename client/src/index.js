@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import { toast } from 'react-toastify';
+import { polyfill } from 'mobile-drag-drop';
 import 'react-toastify/dist/ReactToastify.min.css';
 
 import App from './app';
@@ -10,6 +11,17 @@ import { syncDatabase, refreshDatabase, getAll } from './services/recipes';
 import { getUser } from './services/auth';
 import { withTimeout } from './utils';
 import './index.scss';
+
+polyfill({
+  forceApply: true,
+  dragStartConditionOverride: ((e) => {
+    if (e.target.classList.contains('draggable')) {
+      return true;
+    }
+    return false;
+  }),
+  holdToDrag: 250,
+});
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
@@ -34,6 +46,7 @@ class Root extends Component {
   }
 
   async componentDidMount() {
+    window.addEventListener('touchmove', () => {});
     const localRecipes = await getAll();
     this.setState({
       allRecipes: localRecipes,

@@ -65,7 +65,32 @@ export default () => {
         </div>
         <div id="plan">
           {dateUtil.getWeekdays(week).map((day) => (
-            <div key={day} className="day">
+            <div
+              key={day} className="day"
+              onDragOver={(e) => {
+                e.preventDefault();
+                e.dataTransfer.dropEffect = 'move';
+                e.currentTarget.classList.add('drag-over');
+              }}
+              onDragLeave={(e) => {
+                e.preventDefault();
+                e.currentTarget.classList.remove('drag-over');
+              }}
+              onDrop={async (e) => {
+                e.preventDefault();
+                e.currentTarget.classList.remove('drag-over');
+                const entryId = e.dataTransfer.getData('text/plain');
+                if (entryId && entryId.match(/^[a-f\d]{24}$/i)) {
+                  const updated = {
+                    ...entries.find(({ _id }) => _id === entryId),
+                    date: day,
+                  };
+                  await api.put(`/plan/${entryId}`, { body: updated });
+                  updateEntries();
+                }
+              }}
+              onDragEnter={(e) => e.preventDefault()}
+            >
               <Link className="date" to={`/plan/new?date=${+day}`}>
                 {dateUtil.getDayStr(day)}
               </Link>

@@ -5,27 +5,49 @@ import PropTypes from 'prop-types';
 import Icon from '../../../components/Icon';
 import './PlanEntry.scss';
 
-const PlanEntry = ({ entry }) => (
-  <div className="plan-entry">
-    <div className="data">
-      <div className="meta">
-        {`${entry.time} | ${entry.servings} Person${entry.servings !== 1 ? 'en' : ''}`}
+const PlanEntry = ({ entry }) => {
+  const scroll = (step) => {
+    window.scrollBy({ top: step });
+  };
+
+  return (
+    <div
+      className="plan-entry draggable" id={entry._id}
+      draggable="true"
+      onDragStart={(e) => {
+        e.stopPropagation();
+        e.dataTransfer.setData('text/plain', entry._id);
+      }}
+      onDrag={(e) => {
+        e.stopPropagation();
+        if (e.clientY < 250) {
+          scroll(-10);
+        }
+        if (e.clientY > (window.innerHeight - 150)) {
+          scroll(10);
+        }
+      }}
+    >
+      <div className="data">
+        <div className="meta">
+          {`${entry.time} | ${entry.servings} Person${entry.servings !== 1 ? 'en' : ''}`}
+        </div>
+        {entry.custom ? (
+          <div className="title">{entry.custom}</div>
+        ) : (
+          <Link className="title" to={`/recipe/${entry.recipe.id}?servings=${entry.servings}`}>
+            {entry.recipe.title}
+          </Link>
+        )}
       </div>
-      {entry.custom ? (
-        <div className="title">{entry.custom}</div>
-      ) : (
-        <Link className="title" to={`/recipe/${entry.recipe.id}?servings=${entry.servings}`}>
-          {entry.recipe.title}
+      <div className="controls">
+        <Link to={`/plan/${entry._id}/edit`}>
+          <Icon name="edit" />
         </Link>
-      )}
+      </div>
     </div>
-    <div className="controls">
-      <Link to={`/plan/${entry._id}/edit`}>
-        <Icon name="edit" />
-      </Link>
-    </div>
-  </div>
-);
+  );
+};
 
 export default PlanEntry;
 
