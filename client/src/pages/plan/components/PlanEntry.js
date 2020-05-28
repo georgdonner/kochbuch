@@ -6,27 +6,24 @@ import Icon from '../../../components/Icon';
 import './PlanEntry.scss';
 
 const PlanEntry = ({ entry }) => {
-  const scroll = (step) => {
-    window.scrollBy({ top: step });
+  const dragStart = (e) => {
+    e.dataTransfer.setData('text/plain', entry._id);
+  };
+  const drag = (e) => {
+    if (e.clientY < 250) {
+      window.scrollBy({ top: -30, behavior: 'smooth' });
+    }
+    if (e.clientY > (window.innerHeight - 150)) {
+      window.scrollBy({ top: 30, behavior: 'smooth' });
+    }
   };
 
   return (
     <div
       className="plan-entry draggable" id={entry._id}
       draggable="true"
-      onDragStart={(e) => {
-        e.stopPropagation();
-        e.dataTransfer.setData('text/plain', entry._id);
-      }}
-      onDrag={(e) => {
-        e.stopPropagation();
-        if (e.clientY < 250) {
-          scroll(-10);
-        }
-        if (e.clientY > (window.innerHeight - 150)) {
-          scroll(10);
-        }
-      }}
+      onDragStart={dragStart}
+      onDrag={drag}
     >
       <div className="data">
         <div className="meta">
@@ -35,7 +32,15 @@ const PlanEntry = ({ entry }) => {
         {entry.custom ? (
           <div className="title">{entry.custom}</div>
         ) : (
-          <Link className="title" to={`/recipe/${entry.recipe.id}?servings=${entry.servings}`}>
+          <Link
+            className="title draggable" draggable="true"
+            to={`/recipe/${entry.recipe.id}?servings=${entry.servings}`}
+            onContextMenu={(e) => {
+              e.preventDefault();
+            }}
+            onDragStart={dragStart}
+            onDrag={drag}
+          >
             {entry.recipe.title}
           </Link>
         )}
