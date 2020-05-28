@@ -84,7 +84,7 @@ export default () => {
           query={query}
         />
       </div>
-      <div id="list-wrapper">
+      <div id="recipe-list-wrapper">
         <div id="recipe-list">
           {sliced.map((recipe) => <RecipeCard key={recipe._id} recipe={recipe} />)}
         </div>
