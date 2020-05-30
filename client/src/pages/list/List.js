@@ -272,6 +272,16 @@ export default class List extends Component {
               {listItems.map((item) => this.getListItem(item))}
             </ReactSortable>
           )}
+          {list.list.length > 5 ? (
+            <div style={{ textAlign: 'center' }}>
+              <button className="button" id="remove-all" type="button" onClick={() => {
+                this.listDb.removeItems(list.list.map(({ id }) => id));
+              }}
+              >
+                Alle entfernen
+              </button>
+            </div>
+          ) : null}
         </div>
       </div>
     ) : <NoList onUpdate={this.onUpdateCode} />;

@@ -76,6 +76,10 @@
   cursor: pointer;
 }
 
+#remove-all {
+  margin-bottom: 3rem;
+}
+
 @media only screen and (max-width: 1200px) {
   #new-item input {
     padding-left: 1rem;
