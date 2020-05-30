@@ -13,6 +13,7 @@ export const iconList = {
   search: 'icon-search',
   settings: 'icon-settings',
   share: 'icon-share',
+  sort: 'icon-sort',
 };
 
 const Icon = ({ name, color, rotate }) => {

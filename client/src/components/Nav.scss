@@ -62,6 +62,10 @@ nav button, nav .nav-button {
   cursor: pointer;
 }
 
+nav .nav-button:not(:last-child) {
+  margin-right: 1rem;
+}
+
 nav button:hover {
   color: #000;
 }

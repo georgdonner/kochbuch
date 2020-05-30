@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import NoSleep from 'nosleep.js';
 import { toast } from 'react-toastify';
 import { ReactSortable } from 'react-sortablejs';
+import Modal from 'react-modal';
 
 import MainContext from '../../services/context';
 import api from '../../services/api';
@@ -39,6 +40,7 @@ export default class List extends Component {
       newItem: '',
       editing: null,
       toRemove: [],
+      choosingProfile: false,
     };
   }
 
@@ -68,6 +70,18 @@ export default class List extends Component {
 
   getNav = () => (
     <Nav page="list">
+      <NavButton
+        icon="sort"
+        onClick={async () => {
+          const { profiles } = this.state.list;
+          if (profiles && profiles.length > 1) {
+            this.setState({ choosingProfile: true });
+          } else {
+            const sortedList = await api.get('/list/sort');
+            this.listDb.updateLocalList(sortedList.list);
+          }
+        }}
+      />
       <NavButton
         icon="keepAwake"
         onClick={() => {
@@ -168,17 +182,27 @@ export default class List extends Component {
   }
 
   render() {
-    const { fetching, list } = this.state;
+    const { fetching, list, choosingProfile } = this.state;
 
     const content = list ? (
       <div id="list-wrapper">
-        <button type="button" onClick={async () => {
-          const sortedList = await api.get('/list/sort');
-          this.listDb.updateLocalList(sortedList.list);
-        }}
+        <Modal
+          isOpen={choosingProfile}
+          onRequestClose={() => this.setState({ choosingProfile: false })}
+          contentLabel="Profil auswählen"
         >
-          Sort Items
-        </button>
+          {(list.profiles || []).map((profile) => (
+            <button
+              type="button"
+              onClick={async () => {
+                const sortedList = await api.get(`/list/sort?profile=${profile._id}`);
+                this.listDb.updateLocalList(sortedList.list);
+              }}
+            >
+              {profile.name}
+            </button>
+          ))}
+        </Modal>
         <div id="new-item">
           <input
             ref={this.inputRef}
