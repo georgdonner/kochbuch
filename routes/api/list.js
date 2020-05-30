@@ -67,14 +67,16 @@ router.post('/list', checkListAuth, async (req, res, next) => {
   }
 });
 
-const removeQuantity = (value) => value.replace(/\d+(\.|,|\/|-)?\d*/i, '').trim();
-const removeUnit = (value) => value
-  .replace(/^((packung|prise|zehe|stange|dose|flasche|tasse|messerspitze|päckchen|scheibe|tüte)\w?)\s/i, '')
-  .replace(/^(glas|gläser|g|kg|l|ml|tl|el|bund)\s/i, '')
+const sanitizeItem = (value) => value
+  .replace(/\d+(\.|,|\/|-)?\d*/i, '').trim() // quantity
+  .replace(/^((packung|prise|zehe|stange|dose|flasche|tasse|messerspitze|päckchen|scheibe|tüte)\w?)\s/i, '') // unit
+  .replace(/^(glas|gläser|g|kg|l|ml|tl|el|bund)\s/i, '') // unit
+  .trim()
+  .replace(/\(.*\)/i) // hint
   .trim();
 
 const getBestMatch = (item, lookups) => {
-  const compare = removeUnit(removeQuantity(item.toLowerCase()));
+  const compare = sanitizeItem(item.toLowerCase());
   const withScores = lookups.map((lookup) => ({
     score: distance(compare, lookup.item),
     ...lookup,
