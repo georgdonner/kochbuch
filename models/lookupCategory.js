@@ -11,6 +11,7 @@ const schema = new Schema({
     required: true,
     type: String,
   },
+  order: Number,
 });
 
 const LookupCategory = mongoose.model('LookupCategory', schema);

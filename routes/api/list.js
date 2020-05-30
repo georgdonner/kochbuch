@@ -5,7 +5,6 @@ const router = express.Router();
 
 const Shoppinglist = require('../../models/shoppinglist');
 const ListLookup = require('../../models/listLookup');
-const LookupCategory = require('../../models/lookupCategory');
 
 const checkListAuth = (req, res, next) => {
   if (req.session.listCode) {
@@ -78,6 +77,7 @@ const getBestMatch = (item, lookups) => {
 };
 
 router.get('/list/sort', checkListAuth, async (req, res, next) => {
+  const { profile } = req.query;
   try {
     const listObj = await Shoppinglist.findOne({ name: req.session.listCode });
     const listLookups = await ListLookup.find().lean();
@@ -88,8 +88,8 @@ router.get('/list/sort', checkListAuth, async (req, res, next) => {
       }
     });
     await listObj.save();
-    const updated = await Shoppinglist.getByName(listObj.name);
-    return res.json(updated);
+    const sorted = await Shoppinglist.sortList(listObj.name, profile);
+    return res.json(sorted);
   } catch (error) {
     return next(error);
   }

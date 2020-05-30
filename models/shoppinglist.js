@@ -101,3 +101,25 @@ module.exports.addItem = (name, item) => (
     .populate('list.category')
     .populate('profiles.orderedCategories')
 );
+
+const getDefaultProfile = async () => {
+  const ordered = await LookupCategory.find().sort({ order: 1 }).lean();
+  return {
+    name: 'Default',
+    orderedCategories: ordered.map(({ _id }) => _id),
+  };
+};
+
+module.exports.sortList = async (name, profileId) => {
+  const { list, profiles } = await Shoppinglist.findOne({ name }).lean();
+  let profile = (profiles || []).find(({ _id }) => _id === profileId);
+  if (!profile) {
+    profile = await getDefaultProfile();
+  }
+  const getCtgIndex = (category) => {
+    const index = profile.orderedCategories.indexOf(category);
+    return index === -1 ? Infinity : index;
+  };
+  list.sort((a, b) => getCtgIndex(a.category) - getCtgIndex(b.category));
+  return Shoppinglist.updateList(name, { list });
+};

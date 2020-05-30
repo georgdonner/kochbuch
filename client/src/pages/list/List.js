@@ -174,7 +174,7 @@ export default class List extends Component {
       <div id="list-wrapper">
         <button type="button" onClick={async () => {
           const sortedList = await api.get('/list/sort');
-          this.dbList.updateLocalList(sortedList);
+          this.listDb.updateLocalList(sortedList.list);
         }}
         >
           Sort Items
