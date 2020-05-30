@@ -1,8 +1,11 @@
+const { compareTwoStrings: distance } = require('string-similarity');
 const express = require('express');
 
 const router = express.Router();
 
 const Shoppinglist = require('../../models/shoppinglist');
+const ListLookup = require('../../models/listLookup');
+const LookupCategory = require('../../models/lookupCategory');
 
 const checkListAuth = (req, res, next) => {
   if (req.session.listCode) {
@@ -59,6 +62,34 @@ router.post('/list', checkListAuth, async (req, res, next) => {
   try {
     const list = await Shoppinglist.addItem(req.session.listCode, req.body.item);
     return res.json(list);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+const getBestMatch = (item, lookups) => {
+  const compare = item.toLowerCase();
+  const withScores = lookups.map((lookup) => ({
+    score: distance(compare, lookup.item),
+    ...lookup,
+  }));
+  withScores.sort((a, b) => b.score - a.score);
+  return withScores[0];
+};
+
+router.get('/list/sort', checkListAuth, async (req, res, next) => {
+  try {
+    const listObj = await Shoppinglist.findOne({ name: req.session.listCode });
+    const listLookups = await ListLookup.find().lean();
+    listObj.list.forEach(async (item) => {
+      const bestMatch = getBestMatch(item.name, listLookups);
+      if (bestMatch.score >= 0.5) {
+        item.category = bestMatch.category; // eslint-disable-line
+      }
+    });
+    await listObj.save();
+    const updated = await Shoppinglist.getByName(listObj.name);
+    return res.json(updated);
   } catch (error) {
     return next(error);
   }

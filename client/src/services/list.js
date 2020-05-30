@@ -234,7 +234,15 @@ export default class ListDb {
   * @typedef {Object} ListItem
   * @property {string} id
   * @property {string} name
+  * @property {ListItemCategory} [category]
   */
+
+/**
+ * A list item category
+ * @typedef {Object} ListItemCategory
+ * @property {string} _id
+ * @property {string} name
+ */
 
 /**
  * A list document as saved in the database

@@ -2,6 +2,8 @@ const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 require('dotenv').config();
 
+const LookupCategory = require('./lookupCategory');
+
 // Weekplan Schema
 const { Schema } = mongoose;
 const ShoppinglistSchema = new Schema({
@@ -15,6 +17,23 @@ const ShoppinglistSchema = new Schema({
       _id: false,
       name: String,
       id: String,
+      category: {
+        type: String,
+        ref: LookupCategory.modelName,
+      },
+    }],
+  },
+  profiles: {
+    default: undefined,
+    type: [{
+      name: String,
+      orderedCategories: {
+        default: undefined,
+        type: [{
+          type: String,
+          ref: LookupCategory.modelName,
+        }],
+      },
     }],
   },
 });
@@ -22,12 +41,18 @@ const ShoppinglistSchema = new Schema({
 const Shoppinglist = mongoose.model('Shoppinglist', ShoppinglistSchema);
 module.exports = Shoppinglist;
 
-module.exports.getByName = (name) => Shoppinglist.findOne({ name });
+module.exports.getByName = (name) => Shoppinglist
+  .findOne({ name })
+  .populate('list.category')
+  .populate('profiles.orderedCategories');
 
 module.exports.addList = (name) => Shoppinglist.create({ name, list: [] });
 
 module.exports.updateList = (name, list) => (
-  Shoppinglist.findOneAndUpdate({ name }, list, { upsert: true, new: true })
+  Shoppinglist
+    .findOneAndUpdate({ name }, list, { upsert: true, new: true })
+    .populate('list.category')
+    .populate('profiles.orderedCategories')
 );
 
 const filterByAction = (updates, action) => updates.filter((update) => update.action === action);
@@ -64,9 +89,15 @@ module.exports.processListUpdates = async (name, { updates = [] } = {}) => {
     }
   });
 
-  return Shoppinglist.findOneAndUpdate({ name }, { list }, { new: true });
+  return Shoppinglist
+    .findOneAndUpdate({ name }, { list }, { new: true })
+    .populate('list.category')
+    .populate('profiles.orderedCategories');
 };
 
 module.exports.addItem = (name, item) => (
-  Shoppinglist.findOneAndUpdate({ name }, { $push: { list: item } }, { new: true })
+  Shoppinglist
+    .findOneAndUpdate({ name }, { $push: { list: item } }, { new: true })
+    .populate('list.category')
+    .populate('profiles.orderedCategories')
 );

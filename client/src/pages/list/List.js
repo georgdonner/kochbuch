@@ -12,6 +12,20 @@ import Icon from '../../components/Icon';
 import NoList from './components/NoList';
 import './List.scss';
 
+const groupByCategory = (list) => {
+  const grouped = new Map();
+  list.forEach((item) => {
+    const categoryId = item.category && item.category._id;
+    const category = grouped.get(categoryId);
+    if (category) {
+      category.items.push(item);
+    } else {
+      grouped.set(categoryId, { ...item.category || {}, items: [item] });
+    }
+  });
+  return Array.from(grouped.values());
+};
+
 export default class List extends Component {
   constructor(props) {
     super(props);
@@ -158,6 +172,13 @@ export default class List extends Component {
 
     const content = list ? (
       <div id="list-wrapper">
+        <button type="button" onClick={async () => {
+          const sortedList = await api.get('/list/sort');
+          this.dbList.updateLocalList(sortedList);
+        }}
+        >
+          Sort Items
+        </button>
         <div id="new-item">
           <input
             ref={this.inputRef}
@@ -173,17 +194,29 @@ export default class List extends Component {
           />
         </div>
         <div id="list-container">
-          <ReactSortable
-            list={list.list} id="list"
-            setList={() => {}} delay={250}
-            onUpdate={({ oldIndex, newIndex }) => {
-              if (oldIndex !== newIndex) {
-                this.listDb.moveItem(list.list[oldIndex].id, newIndex);
-              }
-            }}
-          >
-            {list.list.map((item) => this.getListItem(item))}
-          </ReactSortable>
+          {list.list.some(({ category }) => category) ? (
+            <div id="list">
+              {groupByCategory(list.list)
+                .map((category) => (
+                  <div key={category._id || 'none'} className="ctg-wrapper">
+                    <div className="ctg-label">{category.name || 'Sonstiges'}</div>
+                    {category.items.map((item) => this.getListItem(item))}
+                  </div>
+                ))}
+            </div>
+          ) : (
+            <ReactSortable
+              list={list.list} id="list"
+              setList={() => {}} delay={250}
+              onUpdate={({ oldIndex, newIndex }) => {
+                if (oldIndex !== newIndex) {
+                  this.listDb.moveItem(list.list[oldIndex].id, newIndex);
+                }
+              }}
+            >
+              {list.list.map((item) => this.getListItem(item))}
+            </ReactSortable>
+          )}
         </div>
       </div>
     ) : <NoList onUpdate={this.onUpdateCode} />;
