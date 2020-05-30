@@ -67,8 +67,14 @@ router.post('/list', checkListAuth, async (req, res, next) => {
   }
 });
 
+const removeQuantity = (value) => value.replace(/\d+(\.|,|\/|-)?\d*/i, '').trim();
+const removeUnit = (value) => value
+  .replace(/^((packung|prise|zehe|stange|dose|flasche|tasse|messerspitze|päckchen|scheibe|tüte)\w?)\s/i, '')
+  .replace(/^(glas|gläser|g|kg|l|ml|tl|el|bund)\s/i, '')
+  .trim();
+
 const getBestMatch = (item, lookups) => {
-  const compare = item.toLowerCase();
+  const compare = removeUnit(removeQuantity(item.toLowerCase()));
   const withScores = lookups.map((lookup) => ({
     score: distance(compare, lookup.item),
     ...lookup,

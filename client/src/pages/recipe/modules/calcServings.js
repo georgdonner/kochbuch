@@ -21,7 +21,7 @@ export const beautifulNumber = (num) => {
 
 export default function calcServings(ingredientName, origServings, newServings) {
   // regex for german specific quantity units
-  const multUnit_n = /\d\s?((prise|zehe|stange|dose|flasche|tasse|messerspitze)\w*)/i;
+  const multUnit_n = /\d\s?((prise|zehe|stange|dose|flasche|tasse|messerspitze|päckchen|scheibe|tüte)\w*)/i;
   const multUnit_en = /\d\s?((packung)\w*)/i;
   const glas = /\d\s?(glas|gläser)/i;
   // regex for pluralization of -e ending words (to -en)
