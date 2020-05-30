@@ -32,7 +32,6 @@ if ('serviceWorker' in navigator) {
 
 toast.configure({
   position: 'bottom-center',
-  newestOnTop: true,
   hideProgressBar: true,
 });
 

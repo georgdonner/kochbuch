@@ -40,7 +40,8 @@ export default class List extends Component {
       list: null,
       newItem: '',
       editing: null,
-      toRemove: [],
+      toRemove: null,
+      removed: [],
       choosingProfile: false,
     };
   }
@@ -118,21 +119,32 @@ export default class List extends Component {
   };
 
   removeItem = async (id) => {
+    if (this.state.toRemove) {
+      toast.dismiss();
+      this.setState((state) => ({
+        removed: state.removed.concat(state.toRemove),
+      }));
+      this.listDb.removeItems(this.state.toRemove);
+    }
+
     const origItem = this.state.list.list.find((item) => item.id === id);
     this.setState((state) => ({
       list: { ...state.list, list: state.list.list.filter((item) => item.id !== id) },
-      toRemove: [...state.toRemove, id],
+      toRemove: id,
     }));
     const undo = () => {
       this.setState((state) => ({
         list: { ...state.list, list: state.list.list.concat([origItem]) },
-        toRemove: state.toRemove.filter((rId) => rId !== id),
+        toRemove: null,
       }));
     };
     toast(<ToastUndo undo={undo} label={`${origItem.name} entfernt.`} />, {
       onClose: () => {
-        if (this.state.toRemove.length) {
-          this.setState({ toRemove: [] });
+        if (this.state.toRemove === id) {
+          this.setState((state) => ({
+            removed: state.removed.concat(state.toRemove),
+            toRemove: null,
+          }));
           this.listDb.removeItems(this.state.toRemove);
         }
       },
@@ -169,9 +181,9 @@ export default class List extends Component {
 
   submitItem = async () => {
     const { editing, newItem } = this.state;
-    if (this.state.toRemove.length) {
-      this.setState({ toRemove: [] });
+    if (this.state.toRemove) {
       await this.listDb.removeItems(this.state.toRemove);
+      this.setState({ toRemove: null });
     }
     if (newItem) {
       if (editing) {
@@ -187,7 +199,11 @@ export default class List extends Component {
   }
 
   render() {
-    const { fetching, list, choosingProfile } = this.state;
+    const {
+      fetching, list, choosingProfile, toRemove, removed,
+    } = this.state;
+    const listItems = list && list.list
+      .filter(({ id }) => id !== toRemove && !removed.includes(id));
 
     const content = list ? (
       <div id="list-wrapper">
@@ -233,9 +249,9 @@ export default class List extends Component {
           />
         </div>
         <div id="list-container">
-          {list.list.some(({ category }) => category) ? (
+          {listItems.some(({ category }) => category) ? (
             <div id="list">
-              {groupByCategory(list.list)
+              {groupByCategory(listItems)
                 .map((category) => (
                   <div key={category._id || 'none'} className="ctg-wrapper">
                     <div className="ctg-label">{category.name || 'Unsortiert'}</div>
@@ -245,7 +261,7 @@ export default class List extends Component {
             </div>
           ) : (
             <ReactSortable
-              list={list.list} id="list"
+              list={listItems} id="list"
               setList={() => {}} delay={250}
               onUpdate={({ oldIndex, newIndex }) => {
                 if (oldIndex !== newIndex) {
@@ -253,7 +269,7 @@ export default class List extends Component {
                 }
               }}
             >
-              {list.list.map((item) => this.getListItem(item))}
+              {listItems.map((item) => this.getListItem(item))}
             </ReactSortable>
           )}
         </div>
