@@ -10,6 +10,7 @@ import ListDb from '../../services/list';
 import ToastUndo from '../../components/ToastUndo';
 import Nav, { NavButton } from '../../components/Nav';
 import Icon from '../../components/Icon';
+import Loading from '../../components/Loading';
 import NoList from './components/NoList';
 import './List.scss';
 
@@ -190,13 +191,23 @@ export default class List extends Component {
           isOpen={choosingProfile}
           onRequestClose={() => this.setState({ choosingProfile: false })}
           contentLabel="Profil auswählen"
+          style={{
+            content: {
+              maxWidth: '400px',
+              margin: '0 auto',
+              top: '5rem',
+              textAlign: 'center',
+            },
+          }}
         >
+          <h2 style={{ marginTop: 0 }}>Profil auswählen</h2>
           {(list.profiles || []).map((profile) => (
             <button
-              type="button"
+              type="button" key={profile._id} className="profile-button"
               onClick={async () => {
                 const sortedList = await api.get(`/list/sort?profile=${profile._id}`);
                 this.listDb.updateLocalList(sortedList.list);
+                this.setState({ choosingProfile: false });
               }}
             >
               {profile.name}
@@ -248,7 +259,7 @@ export default class List extends Component {
     return (
       <>
         {this.getNav()}
-        {fetching ? null : content}
+        {fetching ? <Loading /> : content}
       </>
     );
   }

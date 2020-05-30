@@ -5,6 +5,7 @@ const router = express.Router();
 
 const Shoppinglist = require('../../models/shoppinglist');
 const ListLookup = require('../../models/listLookup');
+const LookupCategory = require('../../models/lookupCategory');
 
 const checkListAuth = (req, res, next) => {
   if (req.session.listCode) {
@@ -90,6 +91,26 @@ router.get('/list/sort', checkListAuth, async (req, res, next) => {
     await listObj.save();
     const sorted = await Shoppinglist.sortList(listObj.name, profile);
     return res.json(sorted);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.put('/list/profile', checkListAuth, async (req, res, next) => {
+  try {
+    const listObj = req.bosdy._id
+      ? await Shoppinglist.updateProfile(req.session.listCode, req.body)
+      : await Shoppinglist.addProfile(req.session.listCode, req.body);
+    return res.json(listObj);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.get('/list/profile/categories', checkListAuth, async (req, res, next) => {
+  try {
+    const ordered = await LookupCategory.find().sort({ order: 1 }).lean();
+    return res.json(ordered);
   } catch (error) {
     return next(error);
   }

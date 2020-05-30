@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -6,20 +6,33 @@ import MainContext from '../../services/context';
 import api from '../../services/api';
 import DbList from '../../services/list';
 import Nav from '../../components/Nav';
+import ListProfiles from './components/ListProfiles';
 import './Settings.scss';
 
 export default () => {
   const history = useHistory();
   const { user, updateUser } = useContext(MainContext);
-  const { planCode = '', listCode = '' } = user;
-  const [codes, setCodes] = useState({ planCode, listCode });
+  const [codes, setCodes] = useState({ planCode: '', listCode: '' });
   const [diet, setDiet] = useState(window.localStorage.getItem('diet') || 'alles');
+  const [list, setList] = useState(null);
+
+  useEffect(() => {
+    const { planCode = '', listCode = '' } = user;
+    setCodes({ planCode, listCode });
+    if (listCode && !list) {
+      const fetchList = async () => {
+        const fetched = await api.get('/list');
+        setList(fetched);
+      };
+      fetchList();
+    }
+  }, [user]);
 
   const save = async () => {
     const updatedUser = await api.post('/user', {
       body: codes,
     });
-    if ((listCode || undefined) !== updatedUser.listCode) {
+    if ((codes.listCode || undefined) !== updatedUser.listCode) {
       await new DbList().clear();
     }
     updateUser({
@@ -68,8 +81,11 @@ export default () => {
               setCodes({ ...codes, planCode: target.value });
             }}
           />
-          <button className="button inverted" type="button" onClick={save}>Speichern</button>
         </div>
+        {list ? (
+          <ListProfiles profiles={list.profiles} updateList={setList} />
+        ) : null}
+        <button className="button inverted" type="button" onClick={save}>Speichern</button>
       </div>
     </>
   );

@@ -112,7 +112,7 @@ const getDefaultProfile = async () => {
 
 module.exports.sortList = async (name, profileId) => {
   const { list, profiles } = await Shoppinglist.findOne({ name }).lean();
-  let profile = (profiles || []).find(({ _id }) => _id === profileId);
+  let profile = (profiles || []).find(({ _id }) => String(_id) === profileId);
   if (!profile) {
     profile = await getDefaultProfile();
   }
@@ -123,3 +123,21 @@ module.exports.sortList = async (name, profileId) => {
   list.sort((a, b) => getCtgIndex(a.category) - getCtgIndex(b.category));
   return Shoppinglist.updateList(name, { list });
 };
+
+module.exports.addProfile = async (name, profile) => (
+  Shoppinglist
+    .findOneAndUpdate({ name }, { $push: { profiles: profile } }, { new: true })
+    .populate('list.category')
+    .populate('profiles.orderedCategories')
+);
+
+module.exports.updateProfile = async (name, profile) => (
+  Shoppinglist
+    .findOneAndUpdate(
+      { name, 'profiles._id': profile._id },
+      { $set: { 'profiles.$': profile } },
+      { new: true },
+    )
+    .populate('list.category')
+    .populate('profiles.orderedCategories')
+);

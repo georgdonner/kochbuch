@@ -64,6 +64,18 @@
   }
 }
 
+.profile-button {
+  display: block;
+  margin: 1.5rem auto;
+  font-size: 1rem;
+  background: #fff;
+  border: 1px #ddd solid;
+  border-radius: 10px;
+  padding: .5rem 1rem;
+  width: 100%;
+  cursor: pointer;
+}
+
 @media only screen and (max-width: 1200px) {
   #new-item input {
     padding-left: 1rem;

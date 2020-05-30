@@ -1,0 +1,42 @@
+#profile-categories {
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+}
+
+.list-profiles {
+  margin-top: 1rem;
+  margin-bottom: 1.5rem;
+  .profile {
+    font-size: 1.1rem;
+    margin: .5rem 0;
+    button {
+      height: 2.5rem;
+      width: 2.5rem;
+      margin-left: 1rem;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+    }
+  }
+  & > button {
+    margin-top: 1rem;
+    align-self: flex-start;
+  }
+}
+
+.profile-category {
+  margin: .5rem 0;
+  padding: .5rem 1rem;
+  border: 1px #999 dotted;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-input {
+  color: #333;
+  margin-bottom: 1rem;
+  border: none;
+  border-bottom: 2px #d9d9d9 solid;
+  padding: .5rem .25rem;
+  font-size: 1.25rem;
+}
