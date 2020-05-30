@@ -36,7 +36,7 @@ const ShoppinglistSchema = new Schema({
       },
     }],
   },
-});
+}, { toObject: { versionKey: false } });
 
 const Shoppinglist = mongoose.model('Shoppinglist', ShoppinglistSchema);
 module.exports = Shoppinglist;

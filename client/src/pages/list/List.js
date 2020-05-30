@@ -79,7 +79,7 @@ export default class List extends Component {
             this.setState({ choosingProfile: true });
           } else {
             const sortedList = await api.get('/list/sort');
-            this.listDb.updateLocalList(sortedList.list);
+            this.listDb.updateLocalList(sortedList);
           }
         }}
       />
@@ -206,7 +206,7 @@ export default class List extends Component {
               type="button" key={profile._id} className="profile-button"
               onClick={async () => {
                 const sortedList = await api.get(`/list/sort?profile=${profile._id}`);
-                this.listDb.updateLocalList(sortedList.list);
+                this.listDb.updateLocalList(sortedList);
                 this.setState({ choosingProfile: false });
               }}
             >
@@ -234,7 +234,7 @@ export default class List extends Component {
               {groupByCategory(list.list)
                 .map((category) => (
                   <div key={category._id || 'none'} className="ctg-wrapper">
-                    <div className="ctg-label">{category.name || 'Sonstiges'}</div>
+                    <div className="ctg-label">{category.name || 'Unsortiert'}</div>
                     {category.items.map((item) => this.getListItem(item))}
                   </div>
                 ))}

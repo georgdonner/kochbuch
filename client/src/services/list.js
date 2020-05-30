@@ -89,12 +89,13 @@ export default class ListDb {
   updateLocalList = async (list) => {
     const dbListDoc = await this.getLocalList();
     const db = await openDb();
+    const updateWith = Array.isArray(list) ? { list } : list;
     let updatedDoc;
     if (dbListDoc) {
-      updatedDoc = { ...dbListDoc, list };
+      updatedDoc = { ...dbListDoc, ...updateWith };
       await db.put('list', updatedDoc);
     } else if (!dbListDoc && this.name) {
-      updatedDoc = { name: this.name, list, pending: [] };
+      updatedDoc = { name: this.name, ...updateWith, pending: [] };
       await db.add('list', updatedDoc);
     }
     this.onUpdate(updatedDoc);
@@ -154,7 +155,7 @@ export default class ListDb {
         listDoc = await updateAndFetch();
       }
       if (listDoc) {
-        await this.updateLocalList(listDoc.list);
+        await this.updateLocalList(listDoc);
         return listDoc;
       }
     } catch (error) {
@@ -176,7 +177,7 @@ export default class ListDb {
       toArray(changes).concat(pending || []),
     );
     if (serverUpdated) {
-      await this.updateLocalList(serverUpdated.list);
+      await this.updateLocalList(serverUpdated);
     }
     return serverUpdated || {
       list: updated, name,
