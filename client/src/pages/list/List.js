@@ -169,6 +169,10 @@ export default class List extends Component {
 
   submitItem = async () => {
     const { editing, newItem } = this.state;
+    if (this.state.toRemove.length) {
+      this.setState({ toRemove: [] });
+      await this.listDb.removeItems(this.state.toRemove);
+    }
     if (newItem) {
       if (editing) {
         this.listDb.updateItem(editing, newItem);
