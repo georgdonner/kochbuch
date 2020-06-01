@@ -269,7 +269,9 @@ export default class List extends Component {
                   <select
                     value={(editing.category && editing.category._id) || 'none'}
                     onChange={({ target }) => {
-                      this.listDb.updateItem(editing.id, { category: target.value });
+                      this.listDb.updateItem(editing.id,
+                        { category: target.value, name: this.state.newItem },
+                      );
                       this.setState({ editing: null, newItem: '' });
                     }}
                   >
