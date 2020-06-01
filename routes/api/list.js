@@ -6,6 +6,7 @@ const router = express.Router();
 const Shoppinglist = require('../../models/shoppinglist');
 const ListLookup = require('../../models/listLookup');
 const LookupCategory = require('../../models/lookupCategory');
+const CategoryLog = require('../../models/categoryLog');
 
 const checkListAuth = (req, res, next) => {
   if (req.session.listCode) {
@@ -51,7 +52,18 @@ router.put('/list', checkListAuth, async (req, res, next) => {
 // Update Shopping List with "added" and "removed" actions
 router.put('/list/updates', checkListAuth, async (req, res, next) => {
   try {
-    const list = await Shoppinglist.processListUpdates(req.session.listCode, { updates: req.body });
+    const updates = req.body || [];
+    await Promise.all(updates
+      .filter((update) => update.action === 'updated' && update.update.category)
+      .map(async ({ update, id }) => {
+        const item = await Shoppinglist.getItem(req.session.listCode, id);
+        return CategoryLog.create({
+          item: item.name,
+          category: update.category,
+          oldCategory: item.category,
+        });
+      }));
+    const list = await Shoppinglist.processListUpdates(req.session.listCode, { updates });
     return res.json(list);
   } catch (error) {
     return next(error);

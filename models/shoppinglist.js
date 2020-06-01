@@ -96,6 +96,12 @@ module.exports.processListUpdates = async (name, { updates = [] } = {}) => {
     .populate('profiles.orderedCategories');
 };
 
+module.exports.getItem = async (name, itemId) => {
+  const { list } = await Shoppinglist
+    .findOne({ name, 'list.id': itemId }, { 'list.$': 1 });
+  return list.length ? list[0] : null;
+};
+
 module.exports.addItem = (name, item) => (
   Shoppinglist
     .findOneAndUpdate({ name }, { $push: { list: item } }, { new: true })
