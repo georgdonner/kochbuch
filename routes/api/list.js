@@ -71,7 +71,6 @@ const sanitizeItem = (value) => value
   .replace(/\d+(\.|,|\/|-)?\d*/i, '').trim() // quantity
   .replace(/^((packung|prise|zehe|stange|dose|flasche|tasse|messerspitze|päckchen|scheibe|tüte)\w?)\s/i, '') // unit
   .replace(/^(glas|gläser|g|kg|l|ml|tl|el|bund)\s/i, '') // unit
-  .trim()
   .replace(/\(.*\)/i) // hint
   .trim();
 
@@ -115,7 +114,7 @@ router.put('/list/profile', checkListAuth, async (req, res, next) => {
   }
 });
 
-router.get('/list/profile/categories', checkListAuth, async (req, res, next) => {
+router.get('/list/profile/categories', async (req, res, next) => {
   try {
     const ordered = await LookupCategory.find().sort({ order: 1 }).lean();
     return res.json(ordered);

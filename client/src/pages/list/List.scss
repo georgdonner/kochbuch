@@ -1,17 +1,55 @@
+#new-item-wrapper {
+  display: flex;
+  justify-content: center;
+  background: #fff;
+}
 #new-item {
   display: flex;
   justify-content: center;
   width: 100%;
-  background: #fff;
+  max-width: 1200px;
   input {
-    width: 100%;
-    max-width: 1200px;
+    flex-grow: 1;
     padding: 1.5rem 0;
     font-size: 1.25rem;
     border: none;
   }
   ::placeholder {
     color: #b2b2b2;
+  }
+  .select {
+    position: relative;
+    margin: 1rem 1rem;
+    margin-right: 0;
+    display: flex;
+    select {
+      padding-right: 3rem;
+      text-align: right;
+      color: #333;
+      background: #fff;
+      font-size: 1rem;
+      border: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+    }
+    &::after {
+      border: 2px solid #333;
+      right: 1.125em;
+      z-index: 4;
+      border-right: 0;
+      border-top: 0;
+      content: " ";
+      display: block;
+      height: .625em;
+      margin-top: -.55em;
+      pointer-events: none;
+      cursor: pointer;
+      position: absolute;
+      top: 50%;
+      transform: rotate(-45deg);
+      transform-origin: center;
+      width: .625em;
+    }
   }
 }
 
@@ -81,13 +119,28 @@
 }
 
 @media only screen and (max-width: 1200px) {
-  #new-item input {
+  #new-item {
     padding-left: 1rem;
     padding-right: 1rem;
   }
-
   #list-container {
     padding: 0 1rem;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  #new-item {
+    flex-direction: column;
+    .select {
+      border: none;
+      border-radius: 0;
+      border-top: 2px #f2f2f2 solid;
+      margin: 0;
+      padding: 1rem 0;
+      select {
+        text-align: left;
+      }
+    }
   }
 }
 

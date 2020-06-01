@@ -74,10 +74,11 @@ module.exports.processListUpdates = async (name, { updates = [] } = {}) => {
       list.splice(index, 1);
     }
   });
-  filterByAction(updates, 'updated').forEach(({ id, newItem }) => {
+  filterByAction(updates, 'updated').forEach(({ id, update }) => {
     const item = list.find((it) => it.id === id);
     if (item) {
-      item.name = newItem;
+      const { id: itemId, ...itemUpdate } = update;
+      Object.assign(item, itemUpdate);
     }
   });
   filterByAction(updates, 'moved').forEach(({ id, index }) => {

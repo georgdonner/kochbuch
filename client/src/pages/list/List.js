@@ -36,6 +36,7 @@ export default class List extends Component {
     this.inputRef = React.createRef();
     this.state = {
       keepAwake: false,
+      availableCategories: null,
       fetching: true,
       list: null,
       newItem: '',
@@ -54,13 +55,8 @@ export default class List extends Component {
         this.setState({ list });
       },
     });
-    let list = await this.listDb.getList(5000);
-    if (listCode && !list) {
-      list = { name: listCode, list: [] };
-      await this.listDb.updateLocalList(list);
-    } else if (list) {
-      this.setState({ list });
-    }
+    await this.fetchList(listCode);
+    this.fetchCategories();
     this.setState({
       fetching: false,
     });
@@ -68,6 +64,21 @@ export default class List extends Component {
 
   async componentWillUnmount() {
     toast.dismiss();
+  }
+
+  fetchList = async (listCode) => {
+    let list = await this.listDb.getList(5000);
+    if (listCode && !list) {
+      list = { name: listCode, list: [] };
+      await this.listDb.updateLocalList(list);
+    } else if (list) {
+      this.setState({ list });
+    }
+  }
+
+  fetchCategories = async () => {
+    const availableCategories = await api.get('/list/profile/categories');
+    this.setState({ availableCategories });
   }
 
   getNav = () => (
@@ -166,7 +177,7 @@ export default class List extends Component {
             type="button"
             onClick={() => {
               this.setState({
-                editing: item.id,
+                editing: item,
                 newItem: item.name,
               });
               this.inputRef.current.focus();
@@ -187,7 +198,7 @@ export default class List extends Component {
     }
     if (newItem) {
       if (editing) {
-        this.listDb.updateItem(editing, newItem);
+        this.listDb.updateItem(editing.id, { name: newItem });
       } else {
         this.listDb.addItems(newItem);
       }
@@ -200,91 +211,116 @@ export default class List extends Component {
 
   render() {
     const {
-      fetching, list, choosingProfile, toRemove, removed,
+      fetching, list, choosingProfile, toRemove, removed, editing,
     } = this.state;
-    const listItems = list && list.list
-      .filter(({ id }) => id !== toRemove && !removed.includes(id));
 
-    const content = list ? (
-      <div id="list-wrapper">
-        <Modal
-          isOpen={choosingProfile}
-          onRequestClose={() => this.setState({ choosingProfile: false })}
-          contentLabel="Profil auswählen"
-          style={{
-            content: {
-              maxWidth: '400px',
-              margin: '0 auto',
-              top: '5rem',
-              textAlign: 'center',
-            },
-          }}
-        >
-          <h2 style={{ marginTop: 0 }}>Profil auswählen</h2>
-          {(list.profiles || []).map((profile) => (
-            <button
-              type="button" key={profile._id} className="profile-button"
-              onClick={async () => {
-                const sortedList = await api.get(`/list/sort?profile=${profile._id}`);
-                this.listDb.updateLocalList(sortedList);
-                this.setState({ choosingProfile: false });
-              }}
-            >
-              {profile.name}
-            </button>
-          ))}
-        </Modal>
-        <div id="new-item">
-          <input
-            ref={this.inputRef}
-            value={this.state.newItem} type="text" placeholder="Hinzufügen"
-            onChange={({ target }) => {
-              this.setState({ newItem: target.value });
+    let content;
+    if (!list) {
+      content = <NoList onUpdate={this.onUpdateCode} />;
+    } else {
+      const listItems = list.list.filter(({ id }) => id !== toRemove && !removed.includes(id));
+      const isSorted = listItems.some(({ category }) => category);
+
+      content = (
+        <div id="list-wrapper">
+          <Modal
+            isOpen={choosingProfile}
+            onRequestClose={() => this.setState({ choosingProfile: false })}
+            contentLabel="Profil auswählen"
+            style={{
+              content: {
+                maxWidth: '400px',
+                margin: '0 auto',
+                top: '5rem',
+                textAlign: 'center',
+              },
             }}
-            onKeyDown={({ key }) => {
-              if (key === 'Enter') {
-                this.submitItem();
-              }
-            }}
-          />
-        </div>
-        <div id="list-container">
-          {listItems.some(({ category }) => category) ? (
-            <div id="list">
-              {groupByCategory(listItems)
-                .map((category) => (
-                  <div key={category._id || 'none'} className="ctg-wrapper">
-                    <div className="ctg-label">{category.name || 'Unsortiert'}</div>
-                    {category.items.map((item) => this.getListItem(item))}
-                  </div>
-                ))}
-            </div>
-          ) : (
-            <ReactSortable
-              list={listItems} id="list"
-              setList={() => {}} delay={250}
-              onUpdate={({ oldIndex, newIndex }) => {
-                if (oldIndex !== newIndex) {
-                  this.listDb.moveItem(list.list[oldIndex].id, newIndex);
-                }
-              }}
-            >
-              {listItems.map((item) => this.getListItem(item))}
-            </ReactSortable>
-          )}
-          {list.list.length > 5 ? (
-            <div style={{ textAlign: 'center' }}>
-              <button className="button" id="remove-all" type="button" onClick={() => {
-                this.listDb.removeItems(list.list.map(({ id }) => id));
-              }}
+          >
+            <h2 style={{ marginTop: 0 }}>Profil auswählen</h2>
+            {(list.profiles || []).map((profile) => (
+              <button
+                type="button" key={profile._id} className="profile-button"
+                onClick={async () => {
+                  const sortedList = await api.get(`/list/sort?profile=${profile._id}`);
+                  this.listDb.updateLocalList(sortedList);
+                  this.setState({ choosingProfile: false });
+                }}
               >
-                Alle entfernen
+                {profile.name}
               </button>
+            ))}
+          </Modal>
+          <div id="new-item-wrapper">
+            <div id="new-item">
+              <input
+                ref={this.inputRef}
+                value={this.state.newItem} type="text" placeholder="Hinzufügen"
+                onChange={({ target }) => {
+                  this.setState({ newItem: target.value });
+                }}
+                onKeyDown={({ key }) => {
+                  if (key === 'Enter') {
+                    this.submitItem();
+                  }
+                }}
+              />
+              {this.state.availableCategories && editing && isSorted ? (
+                <div className="select">
+                  <select
+                    value={(editing.category && editing.category._id) || 'none'}
+                    onChange={({ target }) => {
+                      this.listDb.updateItem(editing.id, { category: target.value });
+                      this.setState({ editing: null, newItem: '' });
+                    }}
+                  >
+                    {!editing.category ? <option key="none" value="none">Kategorie auswählen</option> : null}
+                    {this.state.availableCategories.map((category) => (
+                      <option key={category._id} value={category._id}>{category.name}</option>
+                    ))}
+                  </select>
+                </div>
+              ) : null}
             </div>
-          ) : null}
+          </div>
+          <div id="list-container">
+            {isSorted ? (
+              <div id="list">
+                {groupByCategory(listItems)
+                  .map((category) => (
+                    <div key={category._id || 'none'} className="ctg-wrapper">
+                      <div className="ctg-label">{category.name || 'Unsortiert'}</div>
+                      {category.items.map((item) => this.getListItem(item))}
+                    </div>
+                  ))}
+              </div>
+            ) : (
+              <ReactSortable
+                list={listItems} id="list"
+                setList={() => {}} delay={250}
+                onUpdate={({ oldIndex, newIndex }) => {
+                  if (oldIndex !== newIndex) {
+                    this.listDb.moveItem(list.list[oldIndex].id, newIndex);
+                  }
+                }}
+              >
+                {listItems.map((item) => this.getListItem(item))}
+              </ReactSortable>
+            )}
+            {list.list.length > 5 ? (
+              <div style={{ textAlign: 'center' }}>
+                <button className="button" id="remove-all" type="button" onClick={() => {
+                  this.listDb.removeItems(list.list.map(({ id }) => id));
+                }}
+                >
+                  Alle entfernen
+                </button>
+              </div>
+            ) : null}
+          </div>
         </div>
-      </div>
-    ) : <NoList onUpdate={this.onUpdateCode} />;
+      );
+    }
+
 
     return (
       <>

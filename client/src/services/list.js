@@ -27,10 +27,11 @@ const updateList = (list, changes) => {
       newList.splice(index, 1);
     }
   });
-  filterByAction(changes, 'updated').forEach(({ id, newItem }) => {
+  filterByAction(changes, 'updated').forEach(({ id, update }) => {
     const item = newList.find((it) => it.id === id);
     if (item) {
-      item.name = newItem;
+      const { id: itemId, ...itemUpdate } = update;
+      Object.assign(item, itemUpdate);
     }
   });
   filterByAction(changes, 'moved').forEach(({ id, index }) => {
@@ -194,11 +195,11 @@ export default class ListDb {
 
   /**
    * @param {string} id
-   * @param {string} newItem
+   * @param {ListItem} update
    */
-  updateItem = async (id, newItem) => this.itemUpdate({
+  updateItem = async (id, update) => this.itemUpdate({
     id,
-    newItem,
+    update,
     action: 'updated',
   });
 
