@@ -101,12 +101,14 @@ router.get('/list/sort', checkListAuth, async (req, res, next) => {
   try {
     const listObj = await Shoppinglist.findOne({ name: req.session.listCode });
     const listLookups = await ListLookup.find().lean();
-    listObj.list.forEach(async (item) => {
-      const bestMatch = getBestMatch(item.name, listLookups);
-      if (bestMatch.score >= 0.5) {
-        item.category = bestMatch.category; // eslint-disable-line
-      }
-    });
+    listObj.list
+      .filter((item) => !item.ignoreSort)
+      .forEach(async (item) => {
+        const bestMatch = getBestMatch(item.name, listLookups);
+        if (bestMatch.score >= 0.5) {
+          item.category = bestMatch.category; // eslint-disable-line
+        }
+      });
     await listObj.save();
     const sorted = await Shoppinglist.sortList(listObj.name, profile);
     return res.json(sorted);

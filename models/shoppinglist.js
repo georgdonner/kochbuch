@@ -21,6 +21,7 @@ const ShoppinglistSchema = new Schema({
         type: String,
         ref: LookupCategory.modelName,
       },
+      ignoreSort: Boolean,
     }],
   },
   profiles: {
@@ -79,6 +80,9 @@ module.exports.processListUpdates = async (name, { updates = [] } = {}) => {
     if (item) {
       const { id: itemId, ...itemUpdate } = update;
       Object.assign(item, itemUpdate);
+      if (itemUpdate.category) {
+        item.ignoreSort = true;
+      }
     }
   });
   filterByAction(updates, 'moved').forEach(({ id, index }) => {
