@@ -12,7 +12,7 @@ nav {
   max-width: 1200px;
   display: flex;
   margin: 0 auto;
-  padding: 0 1.5rem;
+  padding: 0 1rem;
 }
 
 #nav-wrapper > a {
@@ -43,6 +43,7 @@ nav {
   top: 1rem;
   left: 1rem;
   z-index: 10;
+  padding-left: 0;
 }
 
 #menu #current-page {
