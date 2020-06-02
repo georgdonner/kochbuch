@@ -40,7 +40,7 @@ class Root extends Component {
     super(props);
     this.state = {
       allRecipes: null,
-      user: { authenticated: false },
+      user: null,
     };
   }
 

@@ -6,6 +6,7 @@ import MainContext from '../../services/context';
 import api from '../../services/api';
 import DbList from '../../services/list';
 import Nav from '../../components/Nav';
+import Loading from '../../components/Loading';
 import ListProfiles from './components/ListProfiles';
 import './Settings.scss';
 
@@ -43,7 +44,7 @@ export default () => {
     history.push('/');
   };
 
-  return (
+  return user ? (
     <>
       <Nav page="recipes" />
       <div id="settings-container">
@@ -90,5 +91,5 @@ export default () => {
         </div>
       </div>
     </>
-  );
+  ) : <Loading />;
 };
