@@ -79,38 +79,10 @@ router.post('/list', checkListAuth, async (req, res, next) => {
   }
 });
 
-const sanitizeItem = (value) => value
-  .replace(/\d+(\.|,|\/|-)?\d*/i, '').trim() // quantity
-  .replace(/^((packung|prise|zehe|stange|dose|flasche|tasse|messerspitze|päckchen|scheibe|tüte)\w?)\s/i, '') // unit
-  .replace(/^(glas|gläser|g|kg|l|ml|tl|el|bund)\s/i, '') // unit
-  .replace(/\(.*\)/i) // hint
-  .trim();
-
-const getBestMatch = (item, lookups) => {
-  const compare = sanitizeItem(item.toLowerCase());
-  const withScores = lookups.map((lookup) => ({
-    score: distance(compare, lookup.item),
-    ...lookup,
-  }));
-  withScores.sort((a, b) => b.score - a.score);
-  return withScores[0];
-};
-
 router.get('/list/sort', checkListAuth, async (req, res, next) => {
   const { profile } = req.query;
   try {
-    const listObj = await Shoppinglist.findOne({ name: req.session.listCode });
-    const listLookups = await ListLookup.find().lean();
-    listObj.list
-      .filter((item) => !item.ignoreSort)
-      .forEach(async (item) => {
-        const bestMatch = getBestMatch(item.name, listLookups);
-        if (bestMatch.score >= 0.5) {
-          item.category = bestMatch.category; // eslint-disable-line
-        }
-      });
-    await listObj.save();
-    const sorted = await Shoppinglist.sortList(listObj.name, profile);
+    const sorted = await Shoppinglist.sortList(req.session.listCode, profile);
     return res.json(sorted);
   } catch (error) {
     return next(error);

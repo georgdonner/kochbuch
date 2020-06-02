@@ -1,8 +1,10 @@
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
+const { compareTwoStrings: distance } = require('string-similarity');
 require('dotenv').config();
 
 const LookupCategory = require('./lookupCategory');
+const ListLookup = require('./listLookup');
 
 // Weekplan Schema
 const { Schema } = mongoose;
@@ -37,6 +39,7 @@ const ShoppinglistSchema = new Schema({
       },
     }],
   },
+  lastUsedProfile: Schema.Types.ObjectId,
 }, { toObject: { versionKey: false } });
 
 const Shoppinglist = mongoose.model('Shoppinglist', ShoppinglistSchema);
@@ -94,10 +97,15 @@ module.exports.processListUpdates = async (name, { updates = [] } = {}) => {
     }
   });
 
-  return Shoppinglist
+  const updated = await Shoppinglist
     .findOneAndUpdate({ name }, { list }, { new: true })
     .populate('list.category')
     .populate('profiles.orderedCategories');
+
+  if (list.some(({ category }) => category)) {
+    return Shoppinglist.sortList(name);
+  }
+  return updated;
 };
 
 module.exports.getItem = async (name, itemId) => {
@@ -121,18 +129,61 @@ const getDefaultProfile = async () => {
   };
 };
 
-module.exports.sortList = async (name, profileId) => {
-  const { list, profiles } = await Shoppinglist.findOne({ name }).lean();
-  let profile = (profiles || []).find(({ _id }) => String(_id) === profileId);
+const sanitizeItem = (value) => value
+  .replace(/\d+(\.|,|\/|-)?\d*/i, '').trim() // quantity
+  .replace(/^((packung|prise|zehe|stange|dose|flasche|tasse|messerspitze|päckchen|scheibe|tüte)\w?)\s/i, '') // unit
+  .replace(/^(glas|gläser|g|kg|l|ml|tl|el|bund)\s/i, '') // unit
+  .replace(/\(.*\)/i) // hint
+  .trim();
+
+const getBestMatch = (item, lookups) => {
+  const compare = sanitizeItem(item.toLowerCase());
+  const withScores = lookups.map((lookup) => ({
+    score: distance(compare, lookup.item),
+    ...lookup,
+  }));
+  withScores.sort((a, b) => b.score - a.score);
+  return withScores[0];
+};
+
+const scoreList = async (list) => {
+  const listLookups = await ListLookup.find().lean();
+  return list
+    .map((item) => {
+      if (item.ignoreSort) return item;
+      const bestMatch = getBestMatch(item.name, listLookups);
+      if (bestMatch.score >= 0.5) {
+        return { ...item, category: bestMatch.category };
+      }
+      return item;
+    });
+};
+
+const resolveProfile = async (profileId, { profiles, lastUsedProfile }) => {
+  let profile;
+  if (!profileId && lastUsedProfile) {
+    profile = profiles.find(({ _id }) => String(_id) === String(lastUsedProfile));
+  } else if (profiles.length === 1) {
+    [profile] = profiles;
+  } else if (profiles.length > 1) {
+    profile = profiles.find(({ _id }) => String(_id) === profileId);
+  }
   if (!profile) {
     profile = await getDefaultProfile();
   }
+  return profile;
+};
+
+module.exports.sortList = async (name, profileId) => {
+  const listObj = await Shoppinglist.findOne({ name }).lean();
+  const scoredList = await scoreList(listObj.list);
+  const profile = await resolveProfile(profileId, listObj);
   const getCtgIndex = (category) => {
     const index = profile.orderedCategories.indexOf(category);
     return index === -1 ? Infinity : index;
   };
-  list.sort((a, b) => getCtgIndex(a.category) - getCtgIndex(b.category));
-  return Shoppinglist.updateList(name, { list });
+  scoredList.sort((a, b) => getCtgIndex(a.category) - getCtgIndex(b.category));
+  return Shoppinglist.updateList(name, { list: scoredList, lastUsedProfile: profile._id });
 };
 
 module.exports.addProfile = async (name, profile) => (
