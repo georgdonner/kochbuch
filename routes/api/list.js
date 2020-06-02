@@ -119,9 +119,18 @@ router.get('/list/sort', checkListAuth, async (req, res, next) => {
 
 router.put('/list/profile', checkListAuth, async (req, res, next) => {
   try {
-    const listObj = req.bosdy._id
+    const listObj = req.body._id
       ? await Shoppinglist.updateProfile(req.session.listCode, req.body)
       : await Shoppinglist.addProfile(req.session.listCode, req.body);
+    return res.json(listObj);
+  } catch (error) {
+    return next(error);
+  }
+});
+
+router.delete('/list/profile/:id', checkListAuth, async (req, res, next) => {
+  try {
+    const listObj = await Shoppinglist.deleteProfile(req.session.listCode, req.params.id);
     return res.json(listObj);
   } catch (error) {
     return next(error);

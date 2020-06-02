@@ -152,3 +152,14 @@ module.exports.updateProfile = async (name, profile) => (
     .populate('list.category')
     .populate('profiles.orderedCategories')
 );
+
+module.exports.deleteProfile = async (name, profileId) => (
+  Shoppinglist
+    .findOneAndUpdate(
+      { name },
+      { $pull: { profiles: { _id: profileId } } },
+      { new: true },
+    )
+    .populate('list.category')
+    .populate('profiles.orderedCategories')
+);

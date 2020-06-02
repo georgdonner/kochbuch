@@ -42,6 +42,16 @@ const ListProfiles = ({ profiles, updateList }) => {
             >
               <Icon name="edit" />
             </button>
+            <button
+              type="button"
+              onClick={async () => {
+                const list = await api.delete(`/list/profile/${profile._id}`);
+                await updateList(list);
+                toast.success('Profil gelöscht');
+              }}
+            >
+              <span className="delete-profile">x</span>
+            </button>
           </div>
         ))
       ) : null}
