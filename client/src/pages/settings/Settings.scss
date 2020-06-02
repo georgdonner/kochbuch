@@ -1,8 +1,10 @@
-#settings {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1.5rem;
+#settings-container {
   background: #fff;
+}
+#settings {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 1.5rem;
   padding-bottom: 3rem;
 
   h2 {

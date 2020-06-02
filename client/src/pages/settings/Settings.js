@@ -46,46 +46,48 @@ export default () => {
   return (
     <>
       <Nav page="recipes" />
-      <div id="settings">
-        <h2>Einstellungen</h2>
-        <div>
-          <label>Ernährung</label>
-          <select
-            value={diet}
-            onChange={({ target }) => {
-              setDiet(target.value);
-              if (target.value === 'alles') {
-                window.localStorage.removeItem('diet');
-              } else {
-                window.localStorage.setItem('diet', target.value);
-              }
-            }}
-          >
-            <option value="alles">Alles</option>
-            <option value="vegetarisch">Vegetarisch</option>
-            <option value="vegan">Vegan</option>
-          </select>
+      <div id="settings-container">
+        <div id="settings">
+          <h2>Einstellungen</h2>
+          <div>
+            <label>Ernährung</label>
+            <select
+              value={diet}
+              onChange={({ target }) => {
+                setDiet(target.value);
+                if (target.value === 'alles') {
+                  window.localStorage.removeItem('diet');
+                } else {
+                  window.localStorage.setItem('diet', target.value);
+                }
+              }}
+            >
+              <option value="alles">Alles</option>
+              <option value="vegetarisch">Vegetarisch</option>
+              <option value="vegan">Vegan</option>
+            </select>
+          </div>
+          <div>
+            <label>Einkaufslisten Code</label>
+            <input
+              type="text" value={codes.listCode}
+              onChange={({ target }) => {
+                setCodes({ ...codes, listCode: target.value });
+              }}
+            />
+            <label>Wochenplan Code</label>
+            <input
+              type="text" value={codes.planCode}
+              onChange={({ target }) => {
+                setCodes({ ...codes, planCode: target.value });
+              }}
+            />
+          </div>
+          {list ? (
+            <ListProfiles profiles={list.profiles} updateList={setList} />
+          ) : null}
+          <button className="button inverted" type="button" onClick={save}>Speichern</button>
         </div>
-        <div>
-          <label>Einkaufslisten Code</label>
-          <input
-            type="text" value={codes.listCode}
-            onChange={({ target }) => {
-              setCodes({ ...codes, listCode: target.value });
-            }}
-          />
-          <label>Wochenplan Code</label>
-          <input
-            type="text" value={codes.planCode}
-            onChange={({ target }) => {
-              setCodes({ ...codes, planCode: target.value });
-            }}
-          />
-        </div>
-        {list ? (
-          <ListProfiles profiles={list.profiles} updateList={setList} />
-        ) : null}
-        <button className="button inverted" type="button" onClick={save}>Speichern</button>
       </div>
     </>
   );
