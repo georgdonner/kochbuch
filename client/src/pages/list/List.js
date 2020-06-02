@@ -250,7 +250,7 @@ export default class List extends Component {
               </button>
             ))}
           </Modal>
-          <div id="new-item-wrapper">
+          <div id="new-item-wrapper" className={editing ? 'sticky' : ''}>
             <div id="new-item">
               <input
                 ref={this.inputRef}
