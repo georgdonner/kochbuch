@@ -136,6 +136,18 @@ const sanitizeItem = (value) => value
   .replace(/\(.*\)/i) // hint
   .trim();
 
+const getCustomMatch = (item) => {
+  const map = new Map();
+  map.set(/\Wtk(\W|$)/i, 'tk'); // match "tk"
+  map.set(/(glas|dose|büchse)$/i, 'konserven');
+  for (const [regex, category] of map) {
+    if (item.match(regex)) {
+      return category;
+    }
+  }
+  return null;
+};
+
 const getBestMatch = (item, lookups) => {
   const compare = sanitizeItem(item.toLowerCase());
   const withScores = lookups.map((lookup) => ({
@@ -151,6 +163,10 @@ const scoreList = async (list) => {
   return list
     .map((item) => {
       if (item.ignoreSort) return item;
+      const customMatch = getCustomMatch(item.name);
+      if (customMatch) {
+        return { ...item, category: customMatch };
+      }
       const bestMatch = getBestMatch(item.name, listLookups);
       if (bestMatch.score >= 0.5) {
         return { ...item, category: bestMatch.category };
