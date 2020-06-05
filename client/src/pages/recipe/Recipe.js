@@ -12,7 +12,7 @@ import RecipeImage from './components/Image';
 import Description from './components/Description';
 import MainContext from '../../services/context';
 import ListDb from '../../services/list';
-import calcServings from './modules/calcServings';
+import calcServings from '../../utils/calcServings';
 import './Recipe.scss';
 
 const noSleep = new NoSleep();

@@ -3,6 +3,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { openDb } from './db';
 import api from './api';
 import { withTimeout, toArray } from '../utils';
+import {
+  removeQuantity, adjustQuantity, getBaseMetricQuantity, convertToBaseMetric,
+} from '../utils/calcServings';
 
 /**
  * @returns {Promise<ListDoc>}
@@ -43,6 +46,21 @@ const updateList = (list, changes) => {
     }
   });
   return newList;
+};
+
+const checkDuplicate = (newItem, list) => {
+  if (getBaseMetricQuantity(newItem) <= 0) {
+    return null;
+  }
+  const removeQtyWithMetric = (name) => removeQuantity(name).replace(/^(g|kg|ml|l)/i, '');
+  const name = removeQtyWithMetric(newItem);
+  return list
+    .filter((item) => getBaseMetricQuantity(item.name) > 0)
+    .map((item) => ({ ...item, noQuantity: removeQtyWithMetric(item.name) }))
+    .find(({ noQuantity }) => (
+      name.match(new RegExp(`^${noQuantity}\\w?\\w?$`))
+      || name.match(new RegExp(`^${noQuantity.slice(0, Math.max(2 - noQuantity.length, -2))}\\w?\\w?$`))
+    ));
 };
 
 export default class ListDb {
@@ -189,7 +207,22 @@ export default class ListDb {
    * @param {string|string[]} items
    */
   addItems = async (items) => {
-    const changes = toArray(items).map((item) => ({ item, id: uuidv4(), action: 'added' }));
+    const { list } = await this.getLocalList();
+    const changes = toArray(items)
+      .map((item) => {
+        const duplicate = checkDuplicate(item, list);
+        if (duplicate) {
+          const newQuantity = getBaseMetricQuantity(duplicate.name) + getBaseMetricQuantity(item);
+          return {
+            id: duplicate.id,
+            update: {
+              name: adjustQuantity(convertToBaseMetric(duplicate.name), newQuantity, false),
+            },
+            action: 'updated',
+          };
+        }
+        return { item, id: uuidv4(), action: 'added' };
+      });
     return this.itemUpdate(changes);
   };
 

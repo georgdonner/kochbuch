@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { recipe as recipePropType } from '../../../utils/propTypes';
 
-import { beautifulNumber } from '../modules/calcServings';
+import { beautifulNumber } from '../../../utils/calcServings';
 
 const Description = ({ recipe, servings }) => {
   const matches = recipe.description.match(/{(.+?)}/gm);
