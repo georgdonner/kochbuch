@@ -30,8 +30,9 @@ export default () => {
   }, [user]);
 
   const save = async () => {
+    const codesTrimmed = Object.fromEntries(Object.entries(codes).map(([k, v]) => [k, v.trim()]));
     const updatedUser = await api.post('/user', {
-      body: codes,
+      body: codesTrimmed,
     });
     if ((codes.listCode || undefined) !== updatedUser.listCode) {
       await new DbList().clear();

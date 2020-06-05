@@ -5,7 +5,7 @@ const NoList = ({ onUpdate }) => {
   const [code, setCode] = useState('');
 
   const updateCode = () => {
-    onUpdate(code);
+    onUpdate(code.trim());
   };
 
   return (
@@ -25,7 +25,7 @@ const NoList = ({ onUpdate }) => {
           value={code} className="input"
           onChange={({ target }) => setCode(target.value)}
           onKeyDown={({ key }) => {
-            if (key === 'Enter') {
+            if (key === 'Enter' && code.trim()) {
               updateCode();
             }
           }}
