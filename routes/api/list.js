@@ -1,10 +1,8 @@
-const { compareTwoStrings: distance } = require('string-similarity');
 const express = require('express');
 
 const router = express.Router();
 
 const Shoppinglist = require('../../models/shoppinglist');
-const ListLookup = require('../../models/listLookup');
 const LookupCategory = require('../../models/lookupCategory');
 const CategoryLog = require('../../models/categoryLog');
 

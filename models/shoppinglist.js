@@ -159,7 +159,7 @@ const scoreList = async (list) => {
     });
 };
 
-const resolveProfile = async (profileId, { profiles, lastUsedProfile }) => {
+const resolveProfile = async (profileId, { profiles = [], lastUsedProfile }) => {
   let profile;
   if (!profileId && lastUsedProfile) {
     profile = profiles.find(({ _id }) => String(_id) === String(lastUsedProfile));
