@@ -47,8 +47,8 @@ router.put('/list', checkListAuth, async (req, res, next) => {
   }
 });
 
-// Update Shopping List with "added" and "removed" actions
-router.put('/list/updates', checkListAuth, async (req, res, next) => {
+// Update Shopping List with "added", "removed", "updated" and "moved" actions
+const listUpdates = async (req, res, next) => {
   try {
     const updates = req.body || [];
     await Promise.all(updates
@@ -66,7 +66,10 @@ router.put('/list/updates', checkListAuth, async (req, res, next) => {
   } catch (error) {
     return next(error);
   }
-});
+};
+
+router.put('/list/updates', checkListAuth, listUpdates);
+router.post('/list/updates', checkListAuth, listUpdates);
 
 router.post('/list', checkListAuth, async (req, res, next) => {
   try {

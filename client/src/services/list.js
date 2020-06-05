@@ -222,6 +222,12 @@ export default class ListDb {
   };
 }
 
+export const sendRemovedItemBeacon = (id) => {
+  const payload = JSON.stringify([{ id, action: 'removed' }]);
+  const blob = new Blob([payload], { type: 'application/json' });
+  navigator.sendBeacon('/api/list/updates', blob);
+};
+
 /**
  * A list update
  * @typedef {Object} ListChange

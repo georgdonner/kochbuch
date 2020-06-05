@@ -6,7 +6,7 @@ import Modal from 'react-modal';
 
 import MainContext from '../../services/context';
 import api from '../../services/api';
-import ListDb from '../../services/list';
+import ListDb, { sendRemovedItemBeacon } from '../../services/list';
 import ToastUndo from '../../components/ToastUndo';
 import Nav, { NavButton } from '../../components/Nav';
 import Icon from '../../components/Icon';
@@ -59,6 +59,11 @@ export default class List extends Component {
     this.fetchCategories();
     this.setState({
       fetching: false,
+    });
+    window.addEventListener('unload', () => {
+      if (this.state.toRemove) {
+        sendRemovedItemBeacon(this.state.toRemove);
+      }
     });
   }
 
