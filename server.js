@@ -9,6 +9,7 @@ const cookieSession = require('cookie-session');
 const enforce = require('express-sslify');
 const mongoose = require('mongoose');
 const compression = require('compression');
+const morgan = require('morgan');
 
 mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.MONGODB_URI, {
@@ -32,6 +33,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(compression());
 app.use(express.static(path.join(__dirname, 'static')));
 app.use(express.static(path.join(__dirname, 'build')));
+
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
 
 // set our routes
 app.use('/api', require('./routes/api'));

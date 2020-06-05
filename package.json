@@ -39,6 +39,7 @@
     "mobile-drag-drop": "^2.3.0-rc.2",
     "moment": "^2.24.0",
     "mongoose": "^5.8.4",
+    "morgan": "^1.10.0",
     "nosleep.js": "^0.9.0",
     "pdfmake": "^0.1.63",
     "prop-types": "^15.7.2",
