@@ -133,7 +133,7 @@ const sanitizeItem = (value) => value
   .replace(/\d+(\.|,|\/|-)?\d*/i, '').trim() // quantity
   .replace(/^((packung|prise|zehe|stange|dose|flasche|tasse|messerspitze|päckchen|scheibe|tüte)\w?)\s/i, '') // unit
   .replace(/^(glas|gläser|g|kg|l|ml|tl|el|bund)\s/i, '') // unit
-  .replace(/\(.*\)/i) // hint
+  .replace(/\(.*\)/i, '') // hint
   .trim();
 
 const getCustomMatch = (item) => {
