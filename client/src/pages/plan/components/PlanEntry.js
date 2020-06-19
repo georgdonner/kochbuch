@@ -29,9 +29,7 @@ const PlanEntry = ({ entry }) => {
         <div className="meta">
           {`${entry.time} | ${entry.servings} Person${entry.servings !== 1 ? 'en' : ''}`}
         </div>
-        {entry.custom ? (
-          <div className="title">{entry.custom}</div>
-        ) : (
+        {entry.recipe ? (
           <Link
             className="title draggable" draggable="true"
             to={`/recipe/${entry.recipe.id}?servings=${entry.servings}`}
@@ -43,6 +41,8 @@ const PlanEntry = ({ entry }) => {
           >
             {entry.recipe.title}
           </Link>
+        ) : (
+          <div className="title">{entry.custom || ''}</div>
         )}
       </div>
       <div className="controls">

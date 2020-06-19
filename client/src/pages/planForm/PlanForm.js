@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation, useParams, useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import api from '../../services/api';
 import RecipeSearch from './components/RecipeSearch';
-import './PlanForm.scss';
 import { getDateStr } from '../../utils/date';
+import './PlanForm.scss';
 
 export default () => {
   const [editing, setEditing] = useState(false);
@@ -51,16 +52,23 @@ export default () => {
   };
 
   const save = async () => {
-    const { _id, recipe, ...toSave } = entry;
-    if (recipe) {
-      toSave.recipe = recipe;
+    try {
+      const { _id, recipe, ...toSave } = entry;
+      if (recipe) {
+        toSave.recipe = recipe;
+      }
+      if (!entry.custom && !entry.recipe) {
+        throw new Error('Konnte nicht gespeichert werden: Der Eintrag muss ein Rezept haben.');
+      }
+      if (_id) {
+        await api.put(`/plan/${_id}`, { body: toSave });
+      } else {
+        await api.post('/plan', { body: toSave });
+      }
+      history.replace('/plan');
+    } catch (error) {
+      toast.error(error.message);
     }
-    if (_id) {
-      await api.put(`/plan/${_id}`, { body: toSave });
-    } else {
-      await api.post('/plan', { body: toSave });
-    }
-    history.replace('/plan');
   };
 
   const deleteEntry = async () => {
