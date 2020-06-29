@@ -18,8 +18,9 @@ export const getWeek = (date) => {
 };
 
 export const getWeekdays = (week) => {
-  const weekday = new Date().getDay();
-  const start = addDays(new Date(), -(weekday - 1) + (week * 7));
+  // getDay starts with 0 on Sundays, however, we want 0 to be Monday
+  const weekday = (new Date().getDay() || 7) - 1;
+  const start = addDays(new Date(), -weekday + (week * 7));
   return new Array(7).fill(0).map((_, i) => addDays(start, i));
 };
 
