@@ -153,6 +153,18 @@ export default () => {
           </button>
         )}
       >
+        {navigator.canShare ? (
+          <NavButton
+            icon="share"
+            onClick={() => {
+              navigator.share({
+                url: window.location.href,
+                title: recipe.title,
+                text: recipe.title,
+              });
+            }}
+          />
+        ) : null}
         <NavButton
           icon="keepAwake"
           onClick={() => {
