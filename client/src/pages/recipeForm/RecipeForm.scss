@@ -54,6 +54,7 @@
     & > div {
       width: 50%;
       padding-right: 1rem;
+      box-sizing: border-box;
     }
     input {
       max-width: 100%;

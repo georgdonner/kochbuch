@@ -89,7 +89,7 @@ const ImageSelect = ({ updateImg }) => {
           onChange={(newCrop) => setCrop(newCrop)}
           onImageLoaded={onLoad}
           imageStyle={{ height: '100%' }}
-          style={{ display: 'flex' }}
+          style={{ display: 'flex', maxWidth: imgRef.current ? `${imgRef.current.width}px` : '100%' }}
         />
         <button type="button" className="button inverted" onClick={save}>Speichern</button>
       </Modal>

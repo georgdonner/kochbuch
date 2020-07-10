@@ -4,6 +4,7 @@
   margin-top: 0;
 
   .remove {
+    background: #fff;
     border: none;
     border-radius: 0;
     padding: 0;
@@ -27,7 +28,7 @@
   }
   .ingredient {
     display: grid;
-    grid-template-columns: 1fr 1fr 30px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 30px;
     grid-column-gap: 1rem;
   }
 }
