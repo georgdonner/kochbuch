@@ -4,6 +4,7 @@ import ReactCrop from 'react-image-crop';
 import Modal from 'react-modal';
 import 'react-image-crop/dist/ReactCrop.css';
 import './ImageSelect.scss';
+import Loading from '../../../components/Loading';
 
 Modal.setAppElement('#root');
 
@@ -21,6 +22,7 @@ const ImageSelect = ({ updateImg }) => {
 
   const [imgData, setImgData] = useState(null);
   const [imgFile, setImgFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const [crop, setCrop] = useState({
     unit: '%', width: 100, height: 100,
   });
@@ -62,16 +64,44 @@ const ImageSelect = ({ updateImg }) => {
       }
       const body = new FormData();
       body.append('file', imgFile);
-      const res = await fetch(url, {
-        method: 'POST',
-        body,
-        credentials: 'include',
-      });
-      const { url: imgUrl } = await res.json();
-      updateImg(imgUrl);
-      setImgData(null);
+      setUploading(true);
+      try {
+        const res = await fetch(url, {
+          method: 'POST',
+          body,
+          credentials: 'include',
+        });
+        const { url: imgUrl } = await res.json();
+        updateImg(imgUrl);
+        setImgData(null);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setUploading(false);
+      }
     }
   };
+
+  const message = `
+  Bild wird hochgeladen und verarbeitet...\n
+  Dies kann etwas länger dauern.
+  `;
+
+  const modalContent = uploading ? (
+    <Loading message={message} />
+  ) : (
+    <>
+      <h2>Bild zuschneiden</h2>
+      <ReactCrop
+        src={imgData} crop={crop}
+        onChange={(newCrop) => setCrop(newCrop)}
+        onImageLoaded={onLoad}
+        imageStyle={{ height: '100%' }}
+        style={{ display: 'flex', maxWidth: imgRef.current ? `${imgRef.current.width}px` : '100%' }}
+      />
+      <button type="button" className="button inverted" onClick={save}>Speichern</button>
+    </>
+  );
 
   return (
     <>
@@ -83,15 +113,7 @@ const ImageSelect = ({ updateImg }) => {
         onRequestClose={() => setImgData(null)}
         contentLabel="Bild zuschneiden"
       >
-        <h2>Bild zuschneiden</h2>
-        <ReactCrop
-          src={imgData} crop={crop}
-          onChange={(newCrop) => setCrop(newCrop)}
-          onImageLoaded={onLoad}
-          imageStyle={{ height: '100%' }}
-          style={{ display: 'flex', maxWidth: imgRef.current ? `${imgRef.current.width}px` : '100%' }}
-        />
-        <button type="button" className="button inverted" onClick={save}>Speichern</button>
+        {modalContent}
       </Modal>
     </>
   );

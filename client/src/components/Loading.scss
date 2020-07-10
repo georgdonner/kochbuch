@@ -1,6 +1,8 @@
 #loader {
   color: #333;
   display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
   margin-top: 5rem;
 }
@@ -28,4 +30,10 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.message {
+  margin-top: 2rem;
+  white-space: pre-wrap;
+  text-align: center;
 }
