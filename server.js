@@ -11,6 +11,9 @@ const mongoose = require('mongoose');
 const compression = require('compression');
 const morgan = require('morgan');
 
+const getIndexFile = require('./routes/helpers/get-index-file');
+const Recipe = require('./models/recipe');
+
 mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false,
@@ -43,8 +46,17 @@ app.use('/api', require('./routes/api'));
 app.use('/pdf', require('./routes/pdf'));
 app.use(require('./routes/backup'));
 
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'build', 'index.html'));
+app.get('*', async (req, res) => {
+  const match = req.path.match(/^\/recipe\/(\w+)$/);
+  let recipe;
+  if (match) {
+    const recipeId = match[1];
+    recipe = await Recipe.getRecipeById(recipeId);
+  }
+  const content = await getIndexFile(recipe);
+  res.type('text/html');
+  res.status(200);
+  return res.send(content);
 });
 
 app.use(require('./routes/helpers/error-handler'));

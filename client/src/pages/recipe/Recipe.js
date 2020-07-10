@@ -57,10 +57,6 @@ export default () => {
   const [servings, setServings] = useState(passedServings || recipe.servings);
   const [keepAwake, setAwake] = useState(false);
 
-  useEffect(() => {
-    document.title = recipe.title;
-  }, [recipe]);
-
   const back = () => {
     const { state } = history.location;
     if (state && state.fromHome) {
@@ -160,7 +156,6 @@ export default () => {
               navigator.share({
                 url: window.location.href,
                 title: recipe.title,
-                text: recipe.title,
               });
             }}
           />
