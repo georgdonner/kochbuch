@@ -8,7 +8,7 @@ module.exports = async (recipe) => {
   content = content.replace('__OG_TITLE__', title);
   if (recipe) {
     content = content.replace(
-      /property="og:image" content=".*"/,
+      /property="og:image" content=".*?"/,
       `property="og:image" content="${recipe.image.replace(/\d+.jpg/, '800.jpg')}"`,
     );
   }
