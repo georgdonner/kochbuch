@@ -138,7 +138,8 @@ const sanitizeItem = (value) => value
 
 const getCustomMatch = (item) => {
   const map = new Map();
-  map.set(/\Wtk(\W|$)/i, 'tk'); // match "tk"
+  map.set(/(\W|^)tk(\W|$)/i, 'tk'); // match "tk"
+  map.set(/tief\w*kühl/, 'tk');
   map.set(/(glas|dose|büchse)$/i, 'konserven');
   for (const [regex, category] of map) {
     if (item.match(regex)) {
