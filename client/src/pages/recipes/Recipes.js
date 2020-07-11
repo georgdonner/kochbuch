@@ -85,9 +85,13 @@ export default () => {
         />
       </div>
       <div id="recipe-list-wrapper">
-        <div id="recipe-list">
-          {sliced.map((recipe) => <RecipeCard key={recipe._id} recipe={recipe} />)}
-        </div>
+        {sliced.length ? (
+          <div id="recipe-list">
+            {sliced.map((recipe) => <RecipeCard key={recipe._id} recipe={recipe} />)}
+          </div>
+        ) : (
+          <div style={{ marginTop: '2.5rem' }}>Keine Rezepte gefunden</div>
+        )}
       </div>
       {user.authenticated ? (
         <Link to="/recipes/new" id="new-recipe">+</Link>
