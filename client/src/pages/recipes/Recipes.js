@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 
 import Nav, { NavButton } from '../../components/Nav';
 import Searchbar from './components/Searchbar';
@@ -23,10 +23,25 @@ const isElementInViewport = (el) => {
 export default () => {
   const { recipes: allRecipes, user } = useContext(MainContext);
   const history = useHistory();
+  const location = useLocation();
 
   const [query, setQuery] = useState(window.sessionStorage.getItem('query') || '');
   const [page, setPage] = useState(+window.sessionStorage.getItem('page') || 1);
   const [recipes, setRecipes] = useState(null);
+
+  const search = (val) => {
+    const login = val === 'login';
+    const value = login ? '' : val;
+    setPage(1);
+    setQuery(value);
+    setRecipes(searchRecipes(allRecipes, value));
+    window.sessionStorage.setItem('page', 1);
+    window.sessionStorage.setItem('query', value);
+    window.scroll(0, 0);
+    if (login) {
+      history.push('/login');
+    }
+  };
 
   useEffect(() => {
     setTimeout(() => {
@@ -42,7 +57,11 @@ export default () => {
   }, []);
 
   useEffect(() => {
-    setRecipes(searchRecipes(allRecipes, query));
+    if (location.state && location.state.query) {
+      search(location.state.query);
+    } else {
+      setRecipes(searchRecipes(allRecipes, query));
+    }
   }, [allRecipes]);
 
   const onScroll = () => {
@@ -68,21 +87,7 @@ export default () => {
         <Nav page="recipes">
           {window.navigator.onLine ? <NavButton icon="settings" link="/settings" /> : null}
         </Nav>
-        <Searchbar
-          onSearch={(val) => {
-            const login = val === 'login';
-            const value = login ? '' : val;
-            setPage(1);
-            setQuery(value);
-            setRecipes(searchRecipes(allRecipes, value));
-            window.sessionStorage.setItem('page', 1);
-            window.sessionStorage.setItem('query', value);
-            if (login) {
-              history.push('/login');
-            }
-          }}
-          query={query}
-        />
+        <Searchbar onSearch={search} query={query} />
       </div>
       <div id="recipe-list-wrapper">
         {sliced.length ? (

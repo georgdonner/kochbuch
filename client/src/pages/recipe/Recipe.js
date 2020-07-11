@@ -93,7 +93,9 @@ export default () => {
               {`${recipe.duration} Minuten`}
             </div>
             <div className="categories">
-              {recipe.categories.map((ctg) => <span key={ctg}>{ctg}</span>)}
+              {recipe.categories.map((ctg) => (
+                <Link key={ctg} to={{ pathname: '/', state: { query: ctg } }}>{ctg}</Link>
+              ))}
             </div>
           </div>
 
