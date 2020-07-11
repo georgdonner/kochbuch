@@ -87,7 +87,7 @@ const ListProfiles = ({ profiles, updateList }) => {
             <h3>Reihenfolge anpassen</h3>
             <ReactSortable
               list={categories} id="profile-categories"
-              setList={setCategories} delay={750} delayOnTouchOnly
+              setList={setCategories} delay={250} delayOnTouchOnly
             >
               {categories.map(({ id, category }, index) => (
                 <div key={id} className="profile-category">
