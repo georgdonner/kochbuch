@@ -39,3 +39,9 @@ export const arrayEquals = (arr1, arr2) => {
  * @returns {Array}
  */
 export const toArray = (value) => Array.isArray(value) ? value : [value];
+
+/**
+ * @param {string} string
+ * @returns {string}
+ */
+export const escapeRegex = (string) => string.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');

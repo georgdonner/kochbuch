@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { openDb } from './db';
 import api from './api';
-import { withTimeout, toArray } from '../utils';
+import { withTimeout, toArray, escapeRegex } from '../utils';
 import {
   removeQuantity, adjustQuantity, getBaseMetricQuantity, convertToBaseMetric,
 } from '../utils/calcServings';
@@ -58,8 +58,8 @@ const checkDuplicate = (newItem, list) => {
     .filter((item) => getBaseMetricQuantity(item.name) > 0)
     .map((item) => ({ ...item, noQuantity: removeQtyWithMetric(item.name) }))
     .find(({ noQuantity }) => (
-      name.match(new RegExp(`^${noQuantity}\\w?\\w?$`))
-      || name.match(new RegExp(`^${noQuantity.slice(0, Math.max(2 - noQuantity.length, -2))}\\w?\\w?$`))
+      name.match(new RegExp(`^${escapeRegex(noQuantity)}\\w?\\w?$`))
+      || name.match(new RegExp(`^${escapeRegex(noQuantity.slice(0, Math.max(2 - noQuantity.length, -2)))}\\w?\\w?$`))
     ));
 };
 
