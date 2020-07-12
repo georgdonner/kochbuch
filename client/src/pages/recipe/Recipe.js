@@ -36,6 +36,7 @@ export default () => {
         listDb.removeItems(removed.id);
       }
     };
+    toast.dismiss();
     toast(<ToastUndo undo={undo} label={`${item} hinzugefügt.`} />, {
       closeOnClick: false,
     });
