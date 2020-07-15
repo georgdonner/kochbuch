@@ -17,8 +17,6 @@ import './Recipe.scss';
 
 const noSleep = new NoSleep();
 
-const ingrToStr = ({ name, hint }) => `${name}${hint ? ` (${hint})` : ''}`;
-
 export default () => {
   const location = useLocation();
   const { id } = useParams();
@@ -57,6 +55,8 @@ export default () => {
   const passedServings = +(new URLSearchParams(location.search)).get('servings');
   const [servings, setServings] = useState(passedServings || recipe.servings);
   const [keepAwake, setAwake] = useState(false);
+
+  const ingrToStr = ({ name, hint }) => `${calcServings(name, recipe.servings, servings)}${hint ? ` (${hint})` : ''}`;
 
   const back = () => {
     const { state } = history.location;
