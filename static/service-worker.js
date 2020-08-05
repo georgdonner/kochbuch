@@ -98,7 +98,7 @@ const imageHandler = async ({ url, event }) => {
     return cached;
   }
   try {
-    const res = await fetch(request);
+    const res = await fetch(request.url, { mode: 'cors' });
     if (res && res.ok) {
       await cache.put(uuid, res);
       cached = await cache.match(uuid);
