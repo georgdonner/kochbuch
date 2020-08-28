@@ -49,8 +49,8 @@ const ImageSelect = ({ updateImg }) => {
       const serverCrop = {
         left: Math.round(crop.x * scaleX),
         top: Math.round(crop.y * scaleY),
-        width: Math.round(crop.width * scaleX),
-        height: Math.round(crop.height * scaleY),
+        width: Math.min(Math.round(crop.width * scaleX), image.naturalWidth),
+        height: Math.min(Math.round(crop.height * scaleX), image.naturalHeight),
       };
       let url = '/api/upload/image';
       if (
