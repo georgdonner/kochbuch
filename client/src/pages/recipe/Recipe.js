@@ -152,7 +152,7 @@ export default () => {
           </button>
         )}
       >
-        {navigator.canShare ? (
+        {navigator.share ? (
           <NavButton
             icon="share"
             onClick={() => {
