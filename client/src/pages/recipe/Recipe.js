@@ -106,7 +106,9 @@ export default () => {
               <h2 className="servings-header">
                 <span>Zutaten</span>
                 <div className="servings-control">
-                  <button type="button" className="down" onClick={() => setServings(servings - 1)}>-</button>
+                  {servings > 1 ? (
+                    <button type="button" className="down" onClick={() => setServings(servings - 1)}>-</button>
+                  ) : null}
                   <span id="servings">{servings}</span>
                   <button type="button" className="up" onClick={() => setServings(servings + 1)}>+</button>
                 </div>
