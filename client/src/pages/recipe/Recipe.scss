@@ -9,9 +9,10 @@
   display: flex;
   justify-content: space-between;
   margin: 0 auto;
-  padding: 1rem 1.5rem;
+  padding: 1rem;
   padding-bottom: 0;
   #back  {
+    padding: 0;
     .icon {
       margin-right: .5rem;
       font-size: 10pt;
