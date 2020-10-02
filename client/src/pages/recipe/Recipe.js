@@ -76,7 +76,7 @@ export default () => {
               <Icon name="arrowLeft" />
               Alle Rezepte
             </button>
-            <Link id="add-to-plan" to={`/plan/new?recipe=${recipe._id}&servings=${recipe.servings}`}>
+            <Link id="add-to-plan" to={`/plan/new?recipe=${recipe._id}&servings=${servings}`}>
               <span>+</span>
               Zum Wochenplan
             </Link>
