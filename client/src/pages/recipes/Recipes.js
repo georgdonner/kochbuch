@@ -44,6 +44,7 @@ export default () => {
   };
 
   useEffect(() => {
+    document.title = 'Kochbuch';
     setTimeout(() => {
       const lastViewed = window.sessionStorage.getItem('lastViewedRecipe');
       if (lastViewed) {

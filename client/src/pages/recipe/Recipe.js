@@ -40,7 +40,10 @@ export default () => {
     });
   };
 
+  const recipe = recipes.find(({ _id }) => _id === id);
+
   useEffect(() => {
+    document.title = recipe.title;
     window.scrollTo(0, 0);
     window.sessionStorage.setItem('lastViewedRecipe', id);
     const checkList = async () => {
@@ -49,8 +52,6 @@ export default () => {
     };
     checkList();
   }, []);
-
-  const recipe = recipes.find(({ _id }) => _id === id);
 
   const passedServings = +(new URLSearchParams(location.search)).get('servings');
   const [servings, setServings] = useState(passedServings || recipe.servings);
