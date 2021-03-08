@@ -12,9 +12,14 @@ const RecipeSchema = new Schema({
   servings: Number,
   duration: Number,
   difficulty: Number,
+  sections: [{
+    _id: String,
+    name: String,
+  }],
   ingredients: [{
     name: String,
     hint: String,
+    s: String,
   }],
   description: String,
   categories: {

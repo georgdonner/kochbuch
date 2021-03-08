@@ -151,7 +151,11 @@ export default class RecipeForm extends Component {
               {this.getVeggieOption('Vegan')}
             </div>
           </div>
-          <Ingredients ingredients={this.state.ingredients} onChange={(v) => this.onChange(v, 'ingredients')} />
+          <Ingredients
+            ingredients={this.state.ingredients}
+            sections={this.state.sections}
+            onChange={this.onChange}
+          />
           <Description value={this.state.description} onChange={(v) => this.onChange(v, 'description')} />
           <Categories categories={this.state.categories} onChange={(v) => this.onChange(v, 'categories')} />
           <button
