@@ -24,6 +24,13 @@ const SectionList = ({
           targetSectionID: to.id,
         });
       }}
+      onRemove={({ oldIndex, newIndex, to }) => {
+        moveIngredient({
+          oldIndex: (ingredients[0]?.index || 0) + oldIndex,
+          targetSectionIndex: newIndex,
+          targetSectionID: to.id,
+        });
+      }}
     >
       {list.map(({ name, hint, index }) => (
         <div className="row" key={name}>

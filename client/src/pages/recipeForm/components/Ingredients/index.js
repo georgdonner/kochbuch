@@ -118,7 +118,6 @@ const Ingredients = ({ sections, ingredients, onChange }) => {
         return ingr;
       });
 
-    console.log(newIngredients);
     onChange(newSections, 'sections');
     onChange(newIngredients, 'ingredients');
   };
