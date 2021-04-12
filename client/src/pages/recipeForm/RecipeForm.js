@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import MainContext from '../../services/context';
 import api from '../../services/api';
 import Loading from '../../components/Loading';
-import Ingredients from './components/Ingredients';
+import Ingredients from './components/Ingredients/index';
 import Description from './components/Description';
 import Categories from './components/Categories';
 import ImageSelect from './components/ImageSelect';

@@ -328,7 +328,6 @@ export default class List extends Component {
       );
     }
 
-
     return (
       <>
         {this.getNav()}

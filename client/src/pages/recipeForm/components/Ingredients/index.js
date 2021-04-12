@@ -2,6 +2,7 @@ import React, { useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import './Ingredients.scss';
+import SectionList from './SectionList';
 
 const defaultIngr = { name: '', hint: '' };
 const defaultSection = { name: '' };
@@ -24,7 +25,7 @@ const Ingredients = ({ sections, ingredients, onChange }) => {
   const newIngrRef = useRef(null);
 
   const ingredientsIndexed = ingredients.map((ingr, index) => ({ ...ingr, index }));
-  const bySection = sections
+  const bySection = sections?.length
     ? sections.map((section) => ({
       ...section,
       ingredients: ingredientsIndexed.filter((ingr) => ingr.s === section._id),
@@ -46,7 +47,7 @@ const Ingredients = ({ sections, ingredients, onChange }) => {
   const addIngredient = ({ key }) => {
     if (key === 'Enter' && newIngr.name) {
       const ingredient = { ...newIngr };
-      if (sections && sections.length) {
+      if (sections?.length) {
         ingredient.s = sections[sections.length - 1]._id;
       }
       onChange(ingredients.concat(ingredient), 'ingredients');
@@ -57,6 +58,21 @@ const Ingredients = ({ sections, ingredients, onChange }) => {
 
   const removeIngredient = (index) => {
     onChange(ingredients.filter((_, i) => i !== index), 'ingredients');
+  };
+
+  const moveIngredient = ({ oldIndex, targetSectionIndex, targetSectionID }) => {
+    const targetSection = bySection.find(({ _id }) => _id === targetSectionID) || bySection[0];
+    const newIndex = (targetSection.ingredients[0]?.index || 0) + targetSectionIndex;
+    const ingredient = {
+      ...ingredients[oldIndex],
+      ...(targetSectionID ? { s: targetSectionID } : {}),
+    };
+
+    const ingredientsCopy = [...ingredients];
+    ingredientsCopy.splice(oldIndex, 1);
+    ingredientsCopy.splice(newIndex, 0, ingredient);
+
+    onChange(ingredientsCopy, 'ingredients');
   };
 
   const onSectionChange = (id, { name }) => {
@@ -74,9 +90,7 @@ const Ingredients = ({ sections, ingredients, onChange }) => {
         ...newSection,
         _id: newSectionID(sections),
       };
-      console.log(sections);
-      if (!sections || !sections.length) {
-        console.log('map the ingredients');
+      if (!sections?.length) {
         onChange(ingredients.map((ingr) => ({ ...ingr, s: section._id })), 'ingredients');
       }
       onChange((sections || []).concat(section), 'sections');
@@ -99,11 +113,12 @@ const Ingredients = ({ sections, ingredients, onChange }) => {
         }
         const { s, ...ingr } = ingredient;
         if (newSections.length) {
-          ingr.s = newSections[Math.min(0, removedIndex - 1)];
+          ingr.s = newSections[Math.min(0, removedIndex - 1)]._id;
         }
         return ingr;
       });
 
+    console.log(newIngredients);
     onChange(newSections, 'sections');
     onChange(newIngredients, 'ingredients');
   };
@@ -130,28 +145,12 @@ const Ingredients = ({ sections, ingredients, onChange }) => {
                   </button>
                 </div>
               ) : null}
-              {section.ingredients.map(({ name, hint, index }) => (
-                <div className="row" key={index}>
-                  <input
-                    type="text" placeholder="Zutat" value={name}
-                    onChange={
-                      ({ target }) => onIngrChange(index, { name: target.value, hint }, section._id)
-                    }
-                  />
-                  <input
-                    type="text" placeholder="Hinweis" value={hint}
-                    onChange={
-                      ({ target }) => onIngrChange(index, { name, hint: target.value }, section._id)
-                    }
-                  />
-                  <button
-                    type="button" className="remove"
-                    onClick={() => removeIngredient(index)}
-                  >
-                    x
-                  </button>
-                </div>
-              ))}
+              <SectionList
+                ingredients={section.ingredients} sectionID={section._id}
+                moveIngredient={moveIngredient}
+                removeIngredient={removeIngredient}
+                onIngrChange={onIngrChange}
+              />
             </div>
           ))}
         </div>
