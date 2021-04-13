@@ -16,9 +16,16 @@ const s3 = new AWS.S3({
   secretAccessKey: process.env.AWS_SECRET,
 });
 
-const castQuery = (query) => Object.fromEntries(
-  Object.entries(query).map(([key, val]) => [key, +val]),
-);
+const validateQuery = (query) => {
+  const cast = Object.fromEntries(
+    Object.entries(query).map(([key, val]) => [key, +val]),
+  );
+
+  if (cast.height === 0 || cast.width === 0) {
+    return null;
+  }
+  return cast;
+};
 
 const getResizeStream = ({ width, extract }) => {
   const stream = sharp()
@@ -54,7 +61,7 @@ router.post('/upload/image', checkAuth, fileUpload(), async (req, res, next) => 
     const images = await Promise.all(IMG_WIDTHS.map(async (imgWidth) => {
       const readStream = Readable.from(file.data);
 
-      const extract = Object.keys(req.query).length ? castQuery(req.query) : null;
+      const extract = Object.keys(req.query).length ? validateQuery(req.query) : null;
       const resizeStream = getResizeStream({ width: imgWidth, extract });
 
       const { writeStream, uploadPromise } = getWriteStream({ Key: `${uuid}_${imgWidth}.jpg` });

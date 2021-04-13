@@ -1,8 +1,36 @@
-.ReactModal__Content {
-  h2 {
+.image-modal {
+  position: absolute;
+  inset: 15px;
+  border: 1px solid rgb(204, 204, 204);
+  background: rgb(255, 255, 255) none repeat scroll 0% 0%;
+  overflow: auto;
+  border-radius: 4px;
+  outline: currentcolor none medium;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h2, p {
     margin-top: 0;
+  }
+  h2 {
+    margin-bottom: .66rem;
+  }
+  p {
+    text-align: center;
   }
   button {
     margin-top: 1rem;
+  }
+}
+
+@media (orientation: portrait) {
+  .image-modal {
+    inset: unset;
+    top: 20%;
+    left: 10px;
+    right: 10px;
+    padding: 20px 5px;
   }
 }

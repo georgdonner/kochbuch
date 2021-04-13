@@ -8,14 +8,6 @@ import Loading from '../../../components/Loading';
 
 Modal.setAppElement('#root');
 
-const modalStyles = {
-  content: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
-};
-
 const ImageSelect = ({ updateImg }) => {
   const fileRef = useRef(null);
   const imgRef = useRef(null);
@@ -23,9 +15,7 @@ const ImageSelect = ({ updateImg }) => {
   const [imgData, setImgData] = useState(null);
   const [imgFile, setImgFile] = useState(null);
   const [uploading, setUploading] = useState(false);
-  const [crop, setCrop] = useState({
-    unit: '%', width: 100, height: 100,
-  });
+  const [crop, setCrop] = useState({});
 
   const onLoad = useCallback((img) => {
     imgRef.current = img;
@@ -49,8 +39,10 @@ const ImageSelect = ({ updateImg }) => {
       const serverCrop = {
         left: Math.round(crop.x * scaleX),
         top: Math.round(crop.y * scaleY),
-        width: Math.min(Math.round(crop.width * scaleX), image.naturalWidth),
-        height: Math.min(Math.round(crop.height * scaleX), image.naturalHeight),
+        width: Math.min(Math.round(crop.width * scaleX), image.naturalWidth)
+            || image.naturalWidth,
+        height: Math.min(Math.round(crop.height * scaleX), image.naturalHeight)
+            || image.naturalHeight,
       };
       let url = '/api/upload/image';
       if (
@@ -92,12 +84,11 @@ const ImageSelect = ({ updateImg }) => {
   ) : (
     <>
       <h2>Bild zuschneiden</h2>
+      <p>Zum Zuschneiden den gewünschten Ausschnitt über das Bild ziehen.</p>
       <ReactCrop
         src={imgData} crop={crop}
         onChange={(newCrop) => setCrop(newCrop)}
         onImageLoaded={onLoad}
-        imageStyle={{ height: '100%' }}
-        style={{ display: 'flex', maxWidth: imgRef.current ? `${imgRef.current.width}px` : '100%' }}
       />
       <button type="button" className="button inverted" onClick={save}>Speichern</button>
     </>
@@ -108,8 +99,8 @@ const ImageSelect = ({ updateImg }) => {
       <input ref={fileRef} type="file" accept="image/*" onChange={onSelectFile} style={{ display: 'none' }} />
       <button type="button" className="button" onClick={() => fileRef.current.click()}>Neues Bild</button>
       <Modal
+        className="image-modal"
         isOpen={Boolean(imgData)}
-        style={modalStyles}
         onRequestClose={() => setImgData(null)}
         contentLabel="Bild zuschneiden"
       >
