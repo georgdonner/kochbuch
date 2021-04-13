@@ -17,8 +17,12 @@ const s3 = new AWS.S3({
 });
 
 const validateQuery = (query) => {
+  const keys = ['height', 'width', 'top', 'left'];
   const cast = Object.fromEntries(
-    Object.entries(query).map(([key, val]) => [key, +val]),
+    Object
+      .entries(query)
+      .filter(([key]) => keys.includes(key))
+      .map(([key, val]) => [key, +val]),
   );
 
   if (cast.height === 0 || cast.width === 0) {
