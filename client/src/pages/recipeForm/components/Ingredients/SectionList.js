@@ -13,6 +13,13 @@ const SectionList = ({
     setList(ingredients.map((ingr) => ({ ...ingr, id: ingr.name })));
   }, [ingredients]);
 
+  const localIngrChange = (index, { name, hint }) => {
+    const ingredientsCopy = [...list];
+    ingredientsCopy[index].name = name;
+    ingredientsCopy[index].hint = hint;
+    setList(ingredientsCopy);
+  };
+
   return (
     <ReactSortable
       list={list} setList={setList}
@@ -32,19 +39,27 @@ const SectionList = ({
         });
       }}
     >
-      {list.map(({ name, hint, index }) => (
-        <div className="row" key={name}>
+      {list.map(({
+        name, hint, index, id,
+      }, localIndex) => (
+        <div className="row" key={id}>
           <Icon name="menu" color="#333" />
           <input
             type="text" placeholder="Zutat" value={name}
-            onChange={({ target }) => onIngrChange(
-              index, { name: target.value, hint }, sectionID,
+            onChange={(e) => localIngrChange(
+              localIndex, { name: e.target.value, hint },
+            )}
+            onBlur={() => onIngrChange(
+              index, { name, hint }, sectionID,
             )}
           />
           <input
             type="text" placeholder="Hinweis" value={hint}
-            onChange={({ target }) => onIngrChange(
-              index, { name, hint: target.value }, sectionID,
+            onChange={({ target }) => localIngrChange(
+              localIndex, { name, hint: target.value },
+            )}
+            onBlur={() => onIngrChange(
+              index, { name, hint }, sectionID,
             )}
           />
           <button
