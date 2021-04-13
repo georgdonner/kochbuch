@@ -11,5 +11,9 @@ export const recipe = PropTypes.shape({
     name: PropTypes.string.isRequired,
     hint: PropTypes.string,
   })),
+  sections: PropTypes.arrayOf(PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+  })),
   categories: PropTypes.arrayOf(PropTypes.string).isRequired,
 });

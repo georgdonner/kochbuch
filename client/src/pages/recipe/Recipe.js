@@ -59,6 +59,15 @@ export default () => {
 
   const ingrToStr = ({ name, hint }) => `${calcServings(name, recipe.servings, servings)}${hint ? ` (${hint})` : ''}`;
 
+  const ingredientsBySection = recipe.sections?.length
+    ? recipe.sections.map((section) => ({
+      ...section,
+      ingredients: recipe.ingredients.filter((ingr) => ingr.s === section._id),
+    }))
+    : [{
+      ingredients: recipe.ingredients,
+    }];
+
   const back = () => {
     const { state } = history.location;
     if (state && state.fromHome) {
@@ -114,21 +123,30 @@ export default () => {
                 </div>
               </h2>
 
-              <ul id="ingredients">
-                {recipe.ingredients.map((ingr) => (
-                  <li key={ingr.name}>
-                    <div className="content">
-                      <span className="name">{calcServings(ingr.name, recipe.servings, servings)}</span>
-                      <span className="hint">{ingr.hint ? ` (${ingr.hint})` : ''}</span>
-                    </div>
-                    {hasList ? (
-                      <button className="cart" type="button" onClick={() => addItem(ingrToStr(ingr))}>
-                        <Icon name="addCart" />
-                      </button>
+              <>
+                {ingredientsBySection.map((section) => (
+                  <div key={section._id || 'none'}>
+                    {section._id ? (
+                      <h3>{section.name}</h3>
                     ) : null}
-                  </li>
+                    <ul>
+                      {section.ingredients.map((ingr) => (
+                        <li key={ingr.name}>
+                          <div className="content">
+                            <span className="name">{calcServings(ingr.name, recipe.servings, servings)}</span>
+                            <span className="hint">{ingr.hint ? ` (${ingr.hint})` : ''}</span>
+                          </div>
+                          {hasList ? (
+                            <button className="cart" type="button" onClick={() => addItem(ingrToStr(ingr))}>
+                              <Icon name="addCart" />
+                            </button>
+                          ) : null}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 ))}
-              </ul>
+              </>
             </div>
 
             <Description recipe={recipe} servings={servings} />
