@@ -1,3 +1,4 @@
+const { Readable, PassThrough } = require('stream');
 const express = require('express');
 const fileUpload = require('express-fileupload');
 const sharp = require('sharp');
@@ -19,6 +20,30 @@ const castQuery = (query) => Object.fromEntries(
   Object.entries(query).map(([key, val]) => [key, +val]),
 );
 
+const getResizeStream = ({ width, extract }) => {
+  const stream = sharp()
+    .rotate();
+  if (extract) {
+    stream.extract(extract);
+  }
+  return stream
+    .resize(width)
+    .toFormat('jpeg');
+};
+
+const getWriteStream = ({ Key }) => {
+  const pass = new PassThrough();
+  return {
+    writeStream: pass,
+    uploadPromise: s3.upload({
+      Body: pass,
+      Bucket: process.env.AWS_BUCKET,
+      ContentType: 'image/jpeg',
+      Key,
+    }).promise(),
+  };
+};
+
 router.post('/upload/image', checkAuth, fileUpload(), async (req, res, next) => {
   const { file } = req.files;
   if (!file) {
@@ -27,22 +52,18 @@ router.post('/upload/image', checkAuth, fileUpload(), async (req, res, next) => 
   const uuid = uuidv4();
   try {
     const images = await Promise.all(IMG_WIDTHS.map(async (imgWidth) => {
-      const sharpImg = sharp(file.data).rotate();
-      if (Object.keys(req.query).length) {
-        sharpImg.extract(castQuery(req.query));
-      }
-      const resized = await sharpImg
-        .resize(imgWidth)
-        .jpeg()
-        .toBuffer();
+      const readStream = Readable.from(file.data);
 
-      const params = {
-        Bucket: process.env.AWS_BUCKET,
-        Key: `${uuid}_${imgWidth}.jpg`,
-        Body: resized,
-        ContentType: 'image/jpeg',
-      };
-      const data = await s3.upload(params).promise();
+      const extract = Object.keys(req.query).length ? castQuery(req.query) : null;
+      const resizeStream = getResizeStream({ width: imgWidth, extract });
+
+      const { writeStream, uploadPromise } = getWriteStream({ Key: `${uuid}_${imgWidth}.jpg` });
+
+      readStream
+        .pipe(resizeStream)
+        .pipe(writeStream);
+
+      const data = await uploadPromise;
       return data;
     }));
 
