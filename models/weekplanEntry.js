@@ -31,7 +31,6 @@ module.exports.updateEntry = (entryId, update) => (
 
 module.exports.deleteEntry = (entryId) => WeekplanEntry.findByIdAndDelete(entryId);
 
-
 module.exports.getWeek = async (planId, week) => {
   const from = moment().startOf('isoweek').add(week * 7, 'd').subtract(1, 'minute');
   const until = moment(from).add(7, 'd').add(1, 'minute');
@@ -43,6 +42,16 @@ module.exports.getWeek = async (planId, week) => {
     },
   });
 };
+
+module.exports.getNextEntries = async (planId, next = 1) => WeekplanEntry
+  .find({
+    weekplan: planId,
+    date: {
+      $gte: moment(),
+    },
+  })
+  .sort({ date: 1 })
+  .limit(next);
 
 module.exports.getNextDay = async (planId) => {
   const firstPossibleDay = moment().hour() < 18 ? moment() : moment().add(1, 'd');

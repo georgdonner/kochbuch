@@ -1,6 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
 
+import api from '../../services/api';
 import Nav, { NavButton } from '../../components/Nav';
 import Searchbar from './components/Searchbar';
 import RecipeCard from './components/RecipeCard';
@@ -28,6 +29,7 @@ export default () => {
   const [query, setQuery] = useState(window.sessionStorage.getItem('query') || '');
   const [page, setPage] = useState(+window.sessionStorage.getItem('page') || 1);
   const [recipes, setRecipes] = useState(null);
+  const [nextEntries, setNextEntries] = useState([]);
 
   const search = (val) => {
     const login = val === 'login';
@@ -64,6 +66,29 @@ export default () => {
       setRecipes(searchRecipes(allRecipes, query));
     }
   }, [allRecipes]);
+
+  useEffect(() => {
+    const fetchNextEntries = async () => {
+      const entries = await api.get('/plan?next=3');
+
+      if (entries.length) {
+        const recipesMap = Object.fromEntries(allRecipes.map((recipe) => ([
+          recipe._id,
+          recipe,
+        ])));
+
+        const _nextEntries = entries.map((entry) => ({
+          ...entry,
+          recipe: (entry.recipe && recipesMap[entry.recipe.id]) || entry.recipe,
+        }));
+        setNextEntries(_nextEntries);
+      }
+    };
+
+    if (user.planCode) {
+      fetchNextEntries();
+    }
+  }, [user.planCode]);
 
   const onScroll = () => {
     const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;

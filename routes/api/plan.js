@@ -23,8 +23,15 @@ const getPlan = async (code) => {
 // Get weekplan
 router.get('/plan', checkPlanAuth, async (req, res, next) => {
   try {
-    const week = Number(req.query.week) || 0;
     const plan = await getPlan(req.session.planCode);
+
+    const nextEntries = Number(req.query.next) || 0;
+    if (nextEntries) {
+      const entries = await WeekplanEntry.getNextEntries(plan._id, nextEntries);
+      return res.json(entries);
+    }
+
+    const week = Number(req.query.week) || 0;
     const entries = await WeekplanEntry.getWeek(plan._id, week);
     return res.json(entries);
   } catch (error) {
