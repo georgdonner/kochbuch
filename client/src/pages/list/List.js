@@ -268,10 +268,13 @@ export default class List extends Component {
                     this.submitItem();
                   }
                 }}
+                enterkeyhint="done"
               />
               {this.state.availableCategories && editing && isSorted ? (
                 <div className="select">
+                  <label htmlFor="select-category">Kategorie</label>
                   <select
+                    id="select-category"
                     value={(editing.category && editing.category._id) || 'none'}
                     onChange={({ target }) => {
                       this.listDb.updateItem(editing.id,
