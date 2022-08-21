@@ -79,6 +79,7 @@ export default () => {
 
         const _nextEntries = entries.map((entry) => ({
           ...entry,
+          date: new Date(entry.date),
           recipe: (entry.recipe && recipesMap[entry.recipe.id]) || entry.recipe,
         }));
         setNextEntries(_nextEntries);
@@ -118,6 +119,11 @@ export default () => {
       <div id="recipe-list-wrapper">
         {sliced.length ? (
           <div id="recipe-list">
+            {!query && nextEntries?.length
+              ? nextEntries.map(({ recipe, date, servings }) => (
+                <RecipeCard key={recipe._id} recipe={recipe} date={date} servings={servings} />
+              ))
+              : null}
             {sliced.map((recipe) => <RecipeCard key={recipe._id} recipe={recipe} />)}
           </div>
         ) : (
