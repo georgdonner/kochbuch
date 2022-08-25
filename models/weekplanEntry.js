@@ -47,8 +47,11 @@ module.exports.getNextEntries = async (planId, next = 1) => WeekplanEntry
   .find({
     weekplan: planId,
     date: {
-      $gte: moment(),
+      $gte: moment().set({
+        hour: 0, minute: 0, second: 0, millisecond: 0,
+      }),
     },
+    recipe: { $exists: true },
   })
   .sort({ date: 1 })
   .limit(next);
