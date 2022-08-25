@@ -37,7 +37,8 @@ const RecipeCard = ({ recipe, date, servings }) => {
     <Link
       className="recipe-card" id={recipe._id}
       to={{
-        pathname: `/recipe/${recipe._id}${servings ? `?servings=${servings}` : ''}`,
+        pathname: `/recipe/${recipe._id}`,
+        ...(servings && { search: `?servings=${servings}` }),
         state: { fromHome: true },
       }}
     >
