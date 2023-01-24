@@ -1,5 +1,5 @@
 const express = require('express');
-const Dropbox = require('dropbox');
+const { Dropbox } = require('dropbox');
 
 const router = express.Router();
 const Recipe = require('../models/recipe');
