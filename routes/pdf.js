@@ -1,7 +1,7 @@
 const express = require('express');
 const PdfPrinter = require('pdfmake');
 const request = require('request-promise-native');
-const markdown = require('mark-twain');
+const markdown = require('markdown-it')();
 const Recipe = require('../models/recipe');
 
 const fonts = {
@@ -17,30 +17,32 @@ const router = express.Router();
 const printer = new PdfPrinter(fonts);
 
 const formatDescription = (description) => {
-  const parsed = markdown(description);
-  const content = parsed.content.filter((el) => el.includes('p'));
+  const [parsed] = markdown.parseInline(description);
   const items = [];
-  content.forEach((p) => {
-    p.shift(); // remove 'p'
-    p.forEach((el, index) => {
-      const isLast = p.length - 1 === index;
-      const item = { fontSize: 10 };
-      if (Array.isArray(el)) {
-        item.text = isLast ? `${el[1]}\n\n` : el[1];
-        switch (el[0]) {
-          case 'strong':
-            item.bold = true; break;
-          case 'em':
-            item.italics = true; break;
-          default:
-            break;
-        }
-      } else {
-        item.text = isLast ? `${el}\n\n` : el;
-      }
+
+  let item = { fontSize: 10 };
+  const pushItem = () => {
+    if (item.text) {
       items.push(item);
-    });
-  });
+      item = { fontSize: 10 };
+    }
+  };
+
+  for (const token of parsed.children) {
+    if (token.type === 'text' && token.content) {
+      item.text = token.content;
+    } else if (token.type === 'strong_open' || token.type === 'em_open') {
+      pushItem();
+      item[token.type === 'strong_open' ? 'bold' : 'italics'] = true;
+    } else if (token.type === 'strong_close' || token.type === 'em_close') {
+      pushItem();
+    } else if (token.type === 'softbreak' && item.text) {
+      item.text += '\n\n';
+      pushItem();
+    }
+  }
+  pushItem();
+
   return items;
 };
 
@@ -70,7 +72,7 @@ const getDoc = (recipe) => ({
           width: '*',
           text: [
             ...formatDescription(recipe.description),
-            { text: `Zubereitungszeit: ${recipe.duration} Minuten, Zutaten für ${recipe.servings} Portionen, `, fontSize: 10 },
+            { text: `\n\nZubereitungszeit: ${recipe.duration} Minuten, Zutaten für ${recipe.servings} Portionen`, fontSize: 10 },
           ],
         },
       ],
