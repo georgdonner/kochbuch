@@ -32,7 +32,6 @@
     "dropbox": "^2.5.13",
     "express": "^4.17.1",
     "express-fileupload": "^1.1.7-alpha.4",
-    "express-sslify": "^1.2.0",
     "idb": "^5.0.4",
     "markdown-it": "^13.0.1",
     "mobile-drag-drop": "^2.3.0-rc.2",

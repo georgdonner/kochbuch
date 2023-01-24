@@ -6,11 +6,11 @@ const path = require('path');
 const cors = require('cors');
 const bodyParser = require('body-parser');
 const cookieSession = require('cookie-session');
-const enforce = require('express-sslify');
 const mongoose = require('mongoose');
 const compression = require('compression');
 const morgan = require('morgan');
 
+const enforceHttps = require('./routes/helpers/enforce-https');
 const getIndexFile = require('./routes/helpers/get-index-file');
 const Recipe = require('./models/recipe');
 
@@ -22,9 +22,7 @@ mongoose.connect(process.env.MONGODB_URI, {
 const app = express();
 
 // middleware
-app.use(enforce.HTTPS({
-  trustProtoHeader: process.env.NODE_ENV !== 'development',
-}));
+app.use(enforceHttps());
 app.use(cookieSession({
   name: 'session',
   keys: [process.env.SECRET_KEY || 'yeet'],
