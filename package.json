@@ -35,7 +35,7 @@
     "express-sslify": "^1.2.0",
     "idb": "^5.0.4",
     "mark-twain": "^2.0.3",
-    "markdown-it": "^10.0.0",
+    "markdown-it": "^12.3.2",
     "mobile-drag-drop": "^2.3.0-rc.2",
     "moment": "^2.27.0",
     "mongoose": "^5.9.25",
