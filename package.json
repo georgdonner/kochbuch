@@ -48,8 +48,6 @@
     "react-router-dom": "^5.2.0",
     "react-sortablejs": "^2.0.11",
     "react-toastify": "^6.0.8",
-    "request": "^2.88.2",
-    "request-promise-native": "^1.0.9",
     "sharp": "^0.31.3",
     "string-similarity": "^4.0.1",
     "uuid": "^8.2.0"

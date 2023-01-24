@@ -1,6 +1,5 @@
 const express = require('express');
 const PdfPrinter = require('pdfmake');
-const request = require('request-promise-native');
 const markdown = require('markdown-it')();
 const Recipe = require('../models/recipe');
 
@@ -103,11 +102,9 @@ const getPdf = async (recipe) => {
   const imageWidth = getImageWidth(recipe);
   if (recipe.image && imageWidth > 200) {
     try {
-      const imageRes = await request.get(recipe.image, {
-        encoding: null,
-        resolveWithFullResponse: true,
-      });
-      const imageData = `data:${imageRes.headers['content-type']};base64,${Buffer.from(imageRes.body).toString('base64')}`;
+      const imageRes = await fetch(recipe.image);
+      const buff = await imageRes.arrayBuffer();
+      const imageData = `data:${imageRes.headers.get('content-type')};base64,${Buffer.from(buff).toString('base64')}`;
       const image = {
         image: imageData, width: imageWidth, alignment: 'center', margin: [0, 0, 0, 16],
       };
