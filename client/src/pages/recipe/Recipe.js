@@ -2,20 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import {
   useHistory, useLocation, useParams, Link,
 } from 'react-router-dom';
-import NoSleep from 'nosleep.js';
 import { toast } from 'react-toastify';
 
-import Nav, { NavButton } from '../../components/Nav';
 import Icon from '../../components/Icon';
 import ToastUndo from '../../components/ToastUndo';
 import RecipeImage from './components/Image';
 import Description from './components/Description';
+import RecipeNav from './components/RecipeNav';
 import MainContext from '../../services/context';
 import ListDb from '../../services/list';
 import calcServings from '../../utils/calcServings';
 import './Recipe.scss';
-
-const noSleep = new NoSleep();
 
 export default () => {
   const location = useLocation();
@@ -23,8 +20,46 @@ export default () => {
   const history = useHistory();
   const { recipes, user } = useContext(MainContext);
 
+  const [recipe, setRecipe] = useState();
   const [hasList, setHasList] = useState(false);
+  const [servings, setServings] = useState(2);
   const listDb = new ListDb(user.listCode);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    window.sessionStorage.setItem('lastViewedRecipe', id);
+    const checkList = async () => {
+      const list = await listDb.getLocalList();
+      setHasList(Boolean(list));
+    };
+    checkList();
+  }, []);
+
+  useEffect(() => {
+    if (recipes) {
+      const _recipe = recipes.find(({ _id }) => _id === id);
+      if (_recipe) {
+        setRecipe(_recipe);
+        document.title = _recipe.title;
+      }
+    }
+  }, [recipes]);
+
+  useEffect(() => {
+    const passedServings = Number(new URLSearchParams(location.search).get('servings'));
+    setServings(passedServings || recipe?.servings || 2);
+  }, [recipe]);
+
+  const ingrToStr = ({ name, hint }) => `${calcServings(name, recipe.servings, servings)}${hint ? ` (${hint})` : ''}`;
+
+  const getIngredientsBySection = () => recipe.sections?.length
+    ? recipe.sections.map((section) => ({
+      ...section,
+      ingredients: recipe.ingredients.filter((ingr) => ingr.s === section._id),
+    }))
+    : [{
+      ingredients: recipe.ingredients,
+    }];
 
   const addItem = async (item) => {
     const { list } = await listDb.addItems(item);
@@ -39,34 +74,6 @@ export default () => {
       closeOnClick: false,
     });
   };
-
-  const recipe = recipes.find(({ _id }) => _id === id);
-
-  useEffect(() => {
-    document.title = recipe.title;
-    window.scrollTo(0, 0);
-    window.sessionStorage.setItem('lastViewedRecipe', id);
-    const checkList = async () => {
-      const list = await listDb.getLocalList();
-      setHasList(Boolean(list));
-    };
-    checkList();
-  }, []);
-
-  const passedServings = +(new URLSearchParams(location.search)).get('servings');
-  const [servings, setServings] = useState(passedServings || recipe.servings);
-  const [keepAwake, setAwake] = useState(false);
-
-  const ingrToStr = ({ name, hint }) => `${calcServings(name, recipe.servings, servings)}${hint ? ` (${hint})` : ''}`;
-
-  const ingredientsBySection = recipe.sections?.length
-    ? recipe.sections.map((section) => ({
-      ...section,
-      ingredients: recipe.ingredients.filter((ingr) => ingr.s === section._id),
-    }))
-    : [{
-      ingredients: recipe.ingredients,
-    }];
 
   const back = () => {
     const { state } = history.location;
@@ -124,7 +131,7 @@ export default () => {
               </h2>
 
               <>
-                {ingredientsBySection.map((section) => (
+                {getIngredientsBySection().map((section) => (
                   <div key={section._id || 'none'}>
                     {section._id ? (
                       <h3>{section.name}</h3>
@@ -165,38 +172,10 @@ export default () => {
 
   return (
     <>
-      <Nav
-        page="recipes"
-        menuButton={(
-          <button type="button" className="menu-button" onClick={back}>
-            <Icon name="arrowLeft" color="#333" />
-          </button>
-        )}
-      >
-        {navigator.share ? (
-          <NavButton
-            icon="share"
-            onClick={() => {
-              navigator.share({
-                url: window.location.href,
-                title: recipe.title,
-              });
-            }}
-          />
-        ) : null}
-        <NavButton
-          icon="keepAwake"
-          onClick={() => {
-            const action = keepAwake ? 'disable' : 'enable';
-            noSleep[action]();
-            toast.info(!keepAwake
-              ? 'Kochmodus aktiviert - Display schaltet sich nicht automatisch aus'
-              : 'Kochmodus deaktiviert - Display kann sich wieder automatisch ausschalten');
-            setAwake(!keepAwake);
-          }}
-          hasActiveState
-        />
-      </Nav>
+      <RecipeNav
+        onBack={back}
+        recipeTitle={recipe?.title || 'Rezept'}
+      />
       {content}
     </>
   );
