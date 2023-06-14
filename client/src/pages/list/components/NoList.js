@@ -1,10 +1,20 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+
+import MainContext from '../../../services/context';
+import api from '../../../services/api';
 
 const NoList = ({ onUpdate }) => {
   const [code, setCode] = useState('');
+  const { updateUser } = useContext(MainContext);
 
-  const updateCode = () => {
+  const updateCode = async () => {
+    const user = await api.post('/user', {
+      body: {
+        listCode: code,
+      },
+    });
+    updateUser(user);
     onUpdate(code.trim());
   };
 
