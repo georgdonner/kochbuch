@@ -8,15 +8,8 @@ const Weekplan = require('../../models/weekplan');
 const router = express.Router();
 router.get('/auth', checkAuth, (req, res) => res.sendStatus(200));
 
-const getUser = (req) => ({
-  ...req.session,
-  ...req.session.authenticated ? {
-    uploadcareKey: process.env.UPLOADCARE_PUBLIC_KEY,
-  } : {},
-});
-
 router.get('/user', (req, res) => {
-  res.json(getUser(req));
+  res.json(req.session);
 });
 
 router.post('/user', async (req, res, next) => {
@@ -42,7 +35,7 @@ router.post('/user', async (req, res, next) => {
       return Promise.resolve();
     });
     await Promise.all(promises);
-    return res.json(getUser(req));
+    return res.json(req.session);
   } catch (error) {
     return next(error);
   }
