@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 const { compareTwoStrings: distance } = require('string-similarity');
-require('dotenv').config();
 
 const LookupCategory = require('./lookupCategory');
 const ListLookup = require('./listLookup');

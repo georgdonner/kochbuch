@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
 
 // Weekplan Schema
 const { Schema } = mongoose;

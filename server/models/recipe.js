@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-require('dotenv').config();
 
 // Recipe Schema
 const { Schema } = mongoose;

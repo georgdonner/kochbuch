@@ -5,8 +5,8 @@ const sharp = require('sharp');
 const AWS = require('aws-sdk');
 const { v4: uuidv4 } = require('uuid');
 
-const checkAuth = require('../helpers/check-auth');
-const StatusError = require('../helpers/status-error');
+const checkAuth = require('../middleware/check-auth');
+const StatusError = require('../middleware/status-error');
 
 const IMG_WIDTHS = [400, 800, 1000, 1600, 2000];
 

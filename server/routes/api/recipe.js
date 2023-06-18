@@ -4,8 +4,8 @@ const markdown = require('markdown-it')();
 
 const router = express.Router();
 
-const checkAuth = require('../helpers/check-auth');
-const StatusError = require('../helpers/status-error');
+const checkAuth = require('../middleware/check-auth');
+const StatusError = require('../middleware/status-error');
 const Recipe = require('../../models/recipe');
 
 const toHtml = (recipe) => ({

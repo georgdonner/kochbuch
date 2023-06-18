@@ -1,7 +1,7 @@
 const express = require('express');
 
-const checkAuth = require('../helpers/check-auth');
-const StatusError = require('../helpers/status-error');
+const checkAuth = require('../middleware/check-auth');
+const StatusError = require('../middleware/status-error');
 const Shoppinglist = require('../../models/shoppinglist');
 const Weekplan = require('../../models/weekplan');
 

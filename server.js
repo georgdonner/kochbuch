@@ -10,9 +10,8 @@ const mongoose = require('mongoose');
 const compression = require('compression');
 const morgan = require('morgan');
 
-const enforceHttps = require('./routes/helpers/enforce-https');
-const getIndexFile = require('./routes/helpers/get-index-file');
-const Recipe = require('./models/recipe');
+const enforceHttps = require('./server/routes/middleware/enforce-https');
+const clientRoute = require('./server/routes/client');
 
 mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.MONGODB_URI, {
@@ -32,7 +31,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(compression());
-app.use(express.static(path.join(__dirname, 'static')));
+app.use(express.static(path.join(__dirname, 'server/static')));
 app.use(express.static(path.join(__dirname, 'build')));
 
 if (process.env.NODE_ENV === 'development') {
@@ -40,24 +39,13 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // set our routes
-app.use('/api', require('./routes/api'));
-app.use('/pdf', require('./routes/pdf'));
-app.use(require('./routes/backup'));
+app.use('/api', require('./server/routes/api'));
+app.use('/pdf', require('./server/routes/pdf'));
+app.use(require('./server/routes/backup'));
 
-app.get('*', async (req, res) => {
-  const match = req.path.match(/^\/recipe\/(\w+)$/);
-  let recipe;
-  if (match) {
-    const recipeId = match[1];
-    recipe = await Recipe.getRecipeById(recipeId);
-  }
-  const content = await getIndexFile(recipe);
-  res.type('text/html');
-  res.status(200);
-  return res.send(content);
-});
+app.get('*', clientRoute);
 
-app.use(require('./routes/helpers/error-handler'));
+app.use(require('./server/routes/middleware/error-handler'));
 
 const port = process.env.PORT || 3000;
 /* eslint-disable no-console */
