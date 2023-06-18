@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-const moment = require('moment');
 require('dotenv').config();
 
 // Weekplan Schema
@@ -32,8 +31,12 @@ module.exports.updateEntry = (entryId, update) => (
 module.exports.deleteEntry = (entryId) => WeekplanEntry.findByIdAndDelete(entryId);
 
 module.exports.getWeek = async (planId, week) => {
-  const from = moment().startOf('isoweek').add(week * 7, 'd').subtract(1, 'minute');
-  const until = moment(from).add(7, 'd').add(1, 'minute');
+  const from = new Date();
+  from.setDate(from.getDate() - ((from.getDay() + 6) % 7) + (week * 7));
+  from.setUTCHours(0, 0, 0, 0);
+  const until = new Date(from);
+  until.setDate(until.getDate() + 7);
+
   return WeekplanEntry.find({
     weekplan: planId,
     date: {
@@ -43,36 +46,46 @@ module.exports.getWeek = async (planId, week) => {
   });
 };
 
-module.exports.getNextEntries = async (planId, next = 1) => WeekplanEntry
-  .find({
-    weekplan: planId,
-    date: {
-      $gte: moment().set({
-        hour: 0, minute: 0, second: 0, millisecond: 0,
-      }),
-    },
-    recipe: { $exists: true },
-  })
-  .sort({ date: 1 })
-  .limit(next);
+module.exports.getNextEntries = async (planId, next = 1) => {
+  const from = new Date();
+  from.setUTCHours(0, 0, 0, 0);
+
+  return WeekplanEntry
+    .find({
+      weekplan: planId,
+      date: {
+        $gte: from,
+      },
+      recipe: { $exists: true },
+    })
+    .sort({ date: 1 })
+    .limit(next);
+};
 
 module.exports.getNextDay = async (planId) => {
-  const firstPossibleDay = moment().hour() < 18 ? moment() : moment().add(1, 'd');
+  const from = new Date();
+  from.setUTCHours(0, 0, 0, 0);
+
   const nextEntries = await WeekplanEntry.find({
     weekplan: planId,
     date: {
-      $gte: moment().hours(0).minutes(0).seconds(0),
+      $gte: from,
     },
   });
+
+  const firstPossibleDay = new Date();
+  if (firstPossibleDay.getHours() > 18) {
+    firstPossibleDay.setDate(firstPossibleDay.getDate() + 1);
+  }
+
   let nextDay;
-  let i = 0;
   while (!nextDay) {
     // eslint-disable-next-line no-loop-func
-    const entry = nextEntries.find((e) => moment(firstPossibleDay).add(i, 'd').isSame(e.date, 'day'));
+    const entry = nextEntries.find((e) => firstPossibleDay.getDay() === e.date.getDay());
     if (!entry) {
-      nextDay = firstPossibleDay.add(i, 'd').toISOString();
+      nextDay = firstPossibleDay.toISOString();
     }
-    i += 1;
+    firstPossibleDay.setDate(firstPossibleDay.getDate() + 1);
   }
   return nextDay;
 };

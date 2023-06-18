@@ -35,7 +35,6 @@
     "idb": "^5.0.4",
     "markdown-it": "^13.0.1",
     "mobile-drag-drop": "^2.3.0-rc.2",
-    "moment": "^2.27.0",
     "mongoose": "^5.9.25",
     "morgan": "^1.10.0",
     "nosleep.js": "^0.11.0",

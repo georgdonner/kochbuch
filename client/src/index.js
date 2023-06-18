@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 import { toast } from 'react-toastify';
 import { polyfill } from 'mobile-drag-drop';
@@ -35,72 +35,66 @@ toast.configure({
   hideProgressBar: true,
 });
 
-class Root extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      allRecipes: null,
-      user: null,
+const Root2 = () => {
+  const [recipes, setRecipes] = useState();
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    const emptyFn = () => {};
+    window.addEventListener('touchmove', emptyFn);
+    return () => window.removeEventListener('touchmove', emptyFn);
+  }, []);
+
+  useEffect(() => {
+    const initialSync = async () => {
+      const localRecipes = await getAll();
+      setRecipes(localRecipes);
+
+      const timeout = 5000;
+      const [recipesRes, userRes] = await Promise.allSettled([
+        syncDatabase(timeout),
+        withTimeout(getUser, { timeout, defaultValue: { authenticated: false } }),
+      ]);
+
+      setUser(userRes.value ? { ...userRes.value, fetched: true } : { authenticated: false });
+      setRecipes(recipesRes.value);
     };
-  }
+    initialSync();
+  }, []);
 
-  async componentDidMount() {
-    window.addEventListener('touchmove', () => {});
-    const localRecipes = await getAll();
-    this.setState({
-      allRecipes: localRecipes,
+  const addRecipe = (recipe) => {
+    const newRecipes = recipes.concat(recipe);
+    setRecipes(newRecipes);
+    refreshDatabase(newRecipes);
+  };
+
+  const updateRecipe = (recipe) => {
+    const newRecipes = recipes.map((it) => it._id === recipe._id ? recipe : it);
+    setRecipes(newRecipes);
+    refreshDatabase(newRecipes);
+  };
+
+  const updateUser = (updatedUser) => {
+    setUser({
+      ...user,
+      ...updatedUser,
     });
-    const timeout = 5000;
-    const [recipesRes, userRes] = await Promise.allSettled([
-      syncDatabase(timeout),
-      withTimeout(getUser, { timeout, defaultValue: { authenticated: false } }),
-    ]);
+  };
 
-    this.setState({
-      allRecipes: recipesRes.value,
-      user: userRes.value ? { ...userRes.value, fetched: true } : null || { authenticated: false },
-    });
-  }
-
-  addRecipe = (recipe) => {
-    this.setState((state) => ({
-      allRecipes: state.allRecipes.concat(recipe),
-    }));
-    refreshDatabase(this.state.allRecipes);
-  }
-
-  updateRecipe = (recipe) => {
-    this.setState((state) => ({
-      allRecipes: state.allRecipes.map((r) => r._id === recipe._id ? recipe : r),
-    }));
-    refreshDatabase(this.state.allRecipes);
-  }
-
-  updateUser = (user) => {
-    this.setState((state) => ({
-      user: {
-        ...state.user,
-        ...user,
-      },
-    }));
-  }
-
-  render() {
-    const context = {
-      recipes: this.state.allRecipes,
-      addRecipe: this.addRecipe,
-      updateRecipe: this.updateRecipe,
-      user: this.state.user,
-      updateUser: this.updateUser,
-    };
-    return this.state.allRecipes && this.state.user ? (
-      <MainContext.Provider value={context}>
-        <App />
-      </MainContext.Provider>
-    ) : <Loading />;
-  }
-}
+  return recipes && user ? (
+    <MainContext.Provider
+      value={{
+        recipes,
+        addRecipe,
+        updateRecipe,
+        user,
+        updateUser,
+      }}
+    >
+      <App />
+    </MainContext.Provider>
+  ) : <Loading />;
+};
 
 const root = document.getElementById('root');
-
-ReactDOM.render(<Root />, root);
+ReactDOM.render(<Root2 />, root);

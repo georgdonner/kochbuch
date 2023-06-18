@@ -109,7 +109,7 @@ const imageHandler = async ({ url, event }) => {
   }
 };
 
-// Cache uploadcare images
+// Cache images
 workbox.routing.registerRoute(
   ({ url }) => url.origin.match(/amazonaws.com/),
   imageHandler,
