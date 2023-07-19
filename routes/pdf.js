@@ -3,6 +3,9 @@ const PdfPrinter = require('pdfmake');
 const markdown = require('markdown-it')();
 const Recipe = require('../models/recipe');
 
+const router = express.Router();
+const printer = new PdfPrinter(fonts);
+
 const fonts = {
   Roboto: {
     normal: 'fonts/Roboto-Regular.ttf',
@@ -11,9 +14,6 @@ const fonts = {
     bolditalics: 'fonts/Roboto-MediumItalic.ttf',
   },
 };
-
-const router = express.Router();
-const printer = new PdfPrinter(fonts);
 
 const formatDescription = (description) => {
   const [parsed] = markdown.parseInline(description);
