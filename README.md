@@ -1,33 +1,37 @@
-# Georgs recipes
+Welcome to Georg's Recipes!
 
-Collect your recipes, plan your next meals and organise your grocery shopping with a shopping list.
+Discover a delightful way to collect your favorite recipes, plan your meals, and organize your grocery shopping all in one place. With the power of an Express server, the elegance of React for rendering, and the efficiency of a MongoDB database for storage, Georg's Recipes brings you a seamless culinary experience. Plus, thanks to service workers, you can search and view recipes even when you're offline. For an enhanced experience, install Georg's Recipes as a Progressive Web App (PWA) on your phone!
 
-Powered by an Express server, rendered with React and data stored in a MongoDB database. Thanks to service workers, you can search and view recipes even when you are offline. If you are convinced, install it as a PWA (progressive web app) on your phone for an even better experience!
+To unlock the full features of adding and updating recipes, as well as utilizing the weekplan and shopping list functionalities, you need to log in. Simply type "login" into the search field, press Enter, and enter the provided password on the subsequent page (or visit /login). If you don't have the password, kindly reach out to the administrator for assistance.
 
-In order to add/update recipes and use the weekplan & shopping list in the frontend, you need to login. To do that, type "login" into the search field, hit Enter and enter the password on the next page (or go to /login). If you don't know the password, kindly ask the admin about it ;)
+### Local Build Instructions
 
-## How to build locally
-
-You can run a server with your own recipe database:
+To run a server with your own recipe database, follow these steps:
 
 ### Prerequisites
 
-* Node.js and NPM, Version 10 is highly recommended
-* A MongoDB database
-* HTTPS correctly set up, even on localhost - more info below
+Ensure you have the following prerequisites in place:
 
-### Set up environment variables
+* Node.js and NPM (Version 10 is highly recommended)
+* MongoDB database
+* Proper HTTPS setup, even on localhost (more information below)
 
-Create a file named `.env` at the root of the project and put `MONGODB_URI=mongodb://whateveryourmongodburiis` in there.
+### Setting Up Environment Variables
 
-To set up a zauberwort, you need to create a variable for it as well: `ZAUBERWORT=test`. The zauberwort is required for users in the frontend to add/update recipes.
+Create a file named `.env` at the project's root directory and add the following line: `MONGODB_URI=mongodb://<your-mongodb-uri>`. This specifies the URI of your MongoDB database.
 
-For the image upload to an AWS bucket, add its name as `AWS_BUCKET` and your `AWS_KEY` and `AWS_SECRET` to the `.env` file.
+To set up a "zauberwort" (magic word) required for users in the frontend to add/update recipes, create a variable named `ZAUBERWORT` in the `.env` file. For example: `ZAUBERWORT=test`.
 
-### Development server
+If you plan to upload images to an AWS bucket, include its name as `AWS_BUCKET` and provide your `AWS_KEY` and `AWS_SECRET` in the `.env` file.
 
-- `npm install` to install all required packages.
-- `npm start` to start the server.
-- `npm run client` to render the client side files and reload on change (`npm run build` for the production build)
+### Development Server
 
-For service workers and PWAs to work properly, HTTPS is required. That's why all http traffic gets redirected. For that to work on localhost, make sure `NODE_ENV` is set to `development` before starting the server and you have a trusted *.crt* and *.key* file in the `certs` folder.
+Follow these steps to start the development server:
+
+1. Run `npm install` to install all the required packages.
+2. Execute `npm start` to start the server.
+3. Run `npm run client` to render the client-side files and enable live reloading on changes (use `npm run build` for the production build).
+
+To ensure proper functionality of service workers and PWAs, HTTPS is required. Consequently, all HTTP traffic is redirected. To make this work on localhost, set `NODE_ENV` to `development` before starting the server, and make sure you have trusted `*.crt` and `*.key` files in the `certs` folder.
+
+Enjoy an impressive cooking experience with Georg's Recipes!
