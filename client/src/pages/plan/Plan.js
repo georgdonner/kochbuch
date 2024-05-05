@@ -35,7 +35,7 @@ export default () => {
     }
   }, [week, user]);
 
-  let content = user.fetched && !user.planCode ? (
+  let content = !user.planCode ? (
     <NoPlan
       onUpdate={async (code) => {
         const updatedUser = await api.post('/user', {

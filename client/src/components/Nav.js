@@ -9,6 +9,7 @@ const PAGES = {
   recipes: 'Rezepte',
   list: 'Einkaufsliste',
   plan: 'Wochenplan',
+  profile: 'Profil',
 };
 
 const Nav = ({ page, children, menuButton }) => {
@@ -26,9 +27,15 @@ const Nav = ({ page, children, menuButton }) => {
         <div className="right-buttons">{children}</div>
       </div>
       <div className={open ? 'open' : ''} id="nav-wrapper">
-        <Link className={page === 'recipes' ? 'active' : ''} to="/">Rezepte</Link>
-        <Link className={page === 'list' ? 'active' : ''} to="/list">Einkaufsliste</Link>
-        <Link className={page === 'plan' ? 'active' : ''} to="/plan">Wochenplan</Link>
+        {Object.entries(PAGES).map(([key, label]) => (
+          <Link
+            key={key}
+            className={page === key ? 'active' : ''}
+            to={key === 'recipes' ? '/' : `/${key}`}
+          >
+            {label}
+          </Link>
+        ))}
         <div className="right-buttons">{children}</div>
       </div>
     </nav>

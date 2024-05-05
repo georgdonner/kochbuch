@@ -16,6 +16,10 @@ const clientRoute = require('./server/routes/client');
 mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false,
+}).then((res) => {
+  console.log('mongoose connected', res);
+}).catch((res) => {
+  console.log('mongoose failed', res);
 });
 
 const app = express();
@@ -24,9 +28,12 @@ const app = express();
 app.use(enforceHttps());
 app.use(cookieSession({
   name: 'session',
-  keys: [process.env.SECRET_KEY || 'yeet'],
+  keys: [process.env.SECRET_KEY],
   maxAge: 24 * 60 * 60 * 1000 * 365, // 1 year
+  httpOnly: true,
+  secure: true,
 }));
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 const { compareTwoStrings: distance } = require('string-similarity');
 
+const User = require('./user');
 const LookupCategory = require('./lookupCategory');
 const ListLookup = require('./listLookup');
 
@@ -12,6 +13,12 @@ const ShoppinglistSchema = new Schema({
     type: String,
     required: true,
   },
+
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: User.modelName,
+  },
+
   list: {
     default: [],
     type: [{
@@ -25,6 +32,7 @@ const ShoppinglistSchema = new Schema({
       ignoreSort: Boolean,
     }],
   },
+
   profiles: {
     default: undefined,
     type: [{

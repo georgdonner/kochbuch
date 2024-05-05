@@ -23,7 +23,7 @@ export default () => {
   const [recipe, setRecipe] = useState();
   const [hasList, setHasList] = useState(false);
   const [servings, setServings] = useState(2);
-  const listDb = new ListDb(user.listCode);
+  const listDb = new ListDb(user?.listCode);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -86,7 +86,7 @@ export default () => {
 
   const content = recipe ? (
     <>
-      {user.planCode ? (
+      {user?.planCode ? (
         <div id="top-bar-container">
           <div id="top-bar">
             <button type="button" id="back" onClick={back}>
@@ -160,7 +160,7 @@ export default () => {
           </div>
 
           <div id="buttons">
-            {user.authenticated && window.navigator.onLine ? (
+            {user?.role === 'creator' && window.navigator.onLine ? (
               <Link to={`/recipe/${id}/edit`} className="button">Bearbeiten</Link>
             ) : null}
             <a href={`/pdf/recipe/${id}`} className="button" download>PDF</a>

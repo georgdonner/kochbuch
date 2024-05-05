@@ -18,14 +18,16 @@ export default () => {
   const [list, setList] = useState(null);
 
   useEffect(() => {
-    const { planCode = '', listCode = '' } = user;
-    setCodes({ planCode, listCode });
-    if (listCode && !list) {
-      const fetchList = async () => {
-        const fetched = await api.get('/list');
-        setList(fetched);
-      };
-      fetchList();
+    if (user) {
+      const { planCode = '', listCode = '' } = user;
+      setCodes({ planCode, listCode });
+      if (listCode && !list) {
+        const fetchList = async () => {
+          const fetched = await api.get('/list');
+          setList(fetched);
+        };
+        fetchList();
+      }
     }
   }, [user]);
 

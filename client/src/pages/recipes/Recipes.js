@@ -86,10 +86,10 @@ export default () => {
       }
     };
 
-    if (user.planCode) {
+    if (user?.planCode) {
       fetchNextEntries();
     }
-  }, [user.planCode]);
+  }, [user?.planCode]);
 
   const onScroll = () => {
     const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
@@ -130,7 +130,7 @@ export default () => {
           <div style={{ marginTop: '2.5rem' }}>Keine Rezepte gefunden</div>
         )}
       </div>
-      {user.authenticated ? (
+      {user?.role === 'creator' ? (
         <Link to="/recipes/new" id="new-recipe">+</Link>
       ) : null}
     </>

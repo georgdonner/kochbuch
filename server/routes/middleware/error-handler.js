@@ -8,7 +8,7 @@ module.exports = (err, req, res, next) => {
 
   // logging
   console.error(`Error: ${message}\n${stack}`);
-  if (req.path.startsWith('/api')) {
+  if (req.path.startsWith('/api') || req.path.startsWith('/auth')) {
     return res.status(status).json({ error: { message } });
   }
   return res.status(status).render('error', {

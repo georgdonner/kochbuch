@@ -1,15 +1,28 @@
 const express = require('express');
 
-const checkAuth = require('../middleware/check-auth');
 const StatusError = require('../middleware/status-error');
 const Shoppinglist = require('../../models/shoppinglist');
 const Weekplan = require('../../models/weekplan');
+const UserService = require('../../services/user');
 
 const router = express.Router();
-router.get('/auth', checkAuth, (req, res) => res.sendStatus(200));
 
-router.get('/user', (req, res) => {
-  res.json(req.session);
+router.get('/user', async (req, res, next) => {
+  try {
+    if (!req.session.userId) {
+      return res.sendStatus(204);
+    }
+
+    const user = await UserService
+      .get({
+        userId: req.session.userId,
+        throwNotFound: true,
+      });
+
+    return res.json(user);
+  } catch (error) {
+    return next(error);
+  }
 });
 
 router.post('/user', async (req, res, next) => {

@@ -53,10 +53,12 @@ const Root2 = () => {
       const timeout = 5000;
       const [recipesRes, userRes] = await Promise.allSettled([
         syncDatabase(timeout),
-        withTimeout(getUser, { timeout, defaultValue: { authenticated: false } }),
+        withTimeout(getUser, { timeout }),
       ]);
 
-      setUser(userRes.value ? { ...userRes.value, fetched: true } : { authenticated: false });
+      if (userRes.value?.user) {
+        setUser(userRes.value.user);
+      }
       setRecipes(recipesRes.value);
     };
     initialSync();
@@ -81,7 +83,7 @@ const Root2 = () => {
     });
   };
 
-  return recipes && user ? (
+  return recipes ? (
     <MainContext.Provider
       value={{
         recipes,
