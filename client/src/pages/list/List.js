@@ -38,7 +38,7 @@ const List = () => {
     setProfiles(dbList.profiles);
   };
 
-  const listDb = useRef(new ListDb(user.listCode, {
+  const listDb = useRef(new ListDb(user?.listCode, {
     onUpdate: updateList,
   }));
 
@@ -49,11 +49,13 @@ const List = () => {
 
   const fetchList = async () => {
     let dbList = await listDb.current.getList(5000);
-    if (user.listCode && !dbList) {
+    if (user?.listCode && !dbList) {
       dbList = { name: user.listCode, list: [] };
       await listDb.current.updateLocalList(dbList);
     }
-    updateList(dbList);
+    if (dbList) {
+      updateList(dbList);
+    }
   };
 
   useEffect(() => {
@@ -67,15 +69,18 @@ const List = () => {
 
   useEffect(() => {
     const fetchAll = async () => {
-      await fetchList();
-      await fetchCategories();
-      setLoading(false);
+      try {
+        await fetchList();
+        await fetchCategories();
+      } finally {
+        setLoading(false);
+      }
     };
 
     fetchAll();
 
     return toast.dismiss;
-  }, [user.listCode]);
+  }, [user]);
 
   useEffect(() => {
     const onRemove = () => {
@@ -162,7 +167,7 @@ const List = () => {
       {(!loading && !list) && (
         <NoList onUpdate={onUpdateCode} />
       )}
-      {!loading && (
+      {!loading && list && (
         <div id="list-wrapper">
           <ProfileModal
             show={showProfileModal}

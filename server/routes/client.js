@@ -1,7 +1,16 @@
 const path = require('path');
 const fs = require('fs').promises;
-
+const express = require('express');
 const Recipe = require('../models/recipe');
+
+const router = express.Router();
+
+const redirectIfAuthenticated = (req, res, next) => {
+  if (req.session.userId) {
+    return res.redirect('/');
+  }
+  return next();
+};
 
 const getIndexFile = async (recipe) => {
   let content = await fs.readFile(path.resolve('build', 'index.html'), { encoding: 'utf-8' });
@@ -17,7 +26,7 @@ const getIndexFile = async (recipe) => {
   return content;
 };
 
-module.exports = async (req, res) => {
+const clientRoute = async (req, res) => {
   const match = req.path.match(/^\/recipe\/(\w+)$/);
   let recipe;
   if (match) {
@@ -29,3 +38,14 @@ module.exports = async (req, res) => {
   res.status(200);
   return res.send(content);
 };
+
+router.get('/login', redirectIfAuthenticated, clientRoute);
+router.get('/signup', redirectIfAuthenticated, clientRoute);
+router.get('/logout', (req, res) => {
+  delete req.session;
+  return res.redirect('/');
+});
+
+router.get('*', clientRoute);
+
+module.exports = router;

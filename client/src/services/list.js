@@ -173,7 +173,7 @@ export default class ListDb {
       } else {
         listDoc = await updateAndFetch();
       }
-      if (listDoc) {
+      if (listDoc?.name) {
         await this.updateLocalList(listDoc);
         return listDoc;
       }

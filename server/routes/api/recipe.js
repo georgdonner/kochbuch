@@ -16,7 +16,6 @@ const toHtml = (recipe) => ({
 // Get all recipes
 router.get('/recipes', compression(), async (req, res) => {
   const { format = 'markdown' } = req.query;
-  console.log('get all recipes');
   const recipes = await Recipe.getAllRecipes();
   const formatted = format === 'html' ? recipes.map((r) => toHtml(r)) : recipes;
   return res.json(formatted);

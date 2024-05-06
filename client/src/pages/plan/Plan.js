@@ -30,12 +30,12 @@ export default () => {
   }, []);
 
   useEffect(() => {
-    if (user.planCode) {
+    if (user?.planCode) {
       updateEntries();
     }
   }, [week, user]);
 
-  let content = !user.planCode ? (
+  let content = !user?.planCode ? (
     <NoPlan
       onUpdate={async (code) => {
         const updatedUser = await api.post('/user', {

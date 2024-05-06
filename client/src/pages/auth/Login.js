@@ -16,8 +16,10 @@ export default () => {
   const login = async () => {
     const data = await api
       .post('/login', {
-        email,
-        password,
+        body: {
+          email,
+          password,
+        },
       });
 
     if (data?.error?.message) {

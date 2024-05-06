@@ -11,15 +11,10 @@ const compression = require('compression');
 const morgan = require('morgan');
 
 const enforceHttps = require('./server/routes/middleware/enforce-https');
-const clientRoute = require('./server/routes/client');
 
 mongoose.set('useCreateIndex', true);
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false,
-}).then((res) => {
-  console.log('mongoose connected', res);
-}).catch((res) => {
-  console.log('mongoose failed', res);
 });
 
 const app = express();
@@ -49,8 +44,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api', require('./server/routes/api'));
 app.use('/pdf', require('./server/routes/pdf'));
 app.use(require('./server/routes/backup'));
-
-app.get('*', clientRoute);
+app.use(require('./server/routes/client'));
 
 app.use(require('./server/routes/middleware/error-handler'));
 
@@ -58,8 +52,8 @@ const port = process.env.PORT || 3000;
 /* eslint-disable no-console */
 if (process.env.NODE_ENV === 'development') {
   const certOptions = {
-    key: fs.readFileSync(path.resolve('cert/server.key')),
-    cert: fs.readFileSync(path.resolve('cert/server.cert')),
+    key: fs.readFileSync(path.resolve('cert/rootCA-key.pem')),
+    cert: fs.readFileSync(path.resolve('cert/rootCA.pem')),
   };
   https
     .createServer(certOptions, app)

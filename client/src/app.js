@@ -20,6 +20,12 @@ export default () => (
       <Switch>
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route
+          path="/logout"
+          component={() => {
+            window.location.reload();
+          }}
+        />
         <Route path="/profile" component={Profile} />
 
         <Route path="/list" component={List} />

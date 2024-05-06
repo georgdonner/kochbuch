@@ -17,9 +17,11 @@ export default () => {
   const signup = async () => {
     const data = await api
       .post('/signup', {
-        username,
-        email,
-        password,
+        body: {
+          username,
+          email,
+          password,
+        },
       });
 
     if (data?.error?.message) {

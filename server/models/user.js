@@ -31,6 +31,8 @@ const schema = new Schema({
     default: USER_ROLES.member,
   },
 
+  listCode: String,
+  planCode: String,
   diet: String,
 });
 

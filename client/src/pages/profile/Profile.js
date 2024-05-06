@@ -1,22 +1,27 @@
 import React, { useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 import MainContext from '../../services/context';
 
 export default () => {
-  const { user } = useContext(MainContext);
+  const { user, updateUser } = useContext(MainContext);
+  const history = useHistory();
 
-  console.log(user);
-
-  if (!user) {
+  if (!user?.email) {
     return (
       <Redirect to="/login" />
     );
   }
 
+  const logout = () => {
+    updateUser(null);
+    history.replace('/logout');
+  };
+
   return (
     <div>
-      {user.username}
+      {user.email}
+      <button className="button inverted" type="button" onClick={logout}>Logout</button>
     </div>
   );
 };

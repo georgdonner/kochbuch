@@ -35,9 +35,10 @@ toast.configure({
   hideProgressBar: true,
 });
 
-const Root2 = () => {
+const Root = () => {
   const [recipes, setRecipes] = useState();
   const [user, setUser] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const emptyFn = () => {};
@@ -56,10 +57,11 @@ const Root2 = () => {
         withTimeout(getUser, { timeout }),
       ]);
 
-      if (userRes.value?.user) {
-        setUser(userRes.value.user);
+      if (userRes.value && !userRes.value.error) {
+        setUser(userRes.value);
       }
       setRecipes(recipesRes.value);
+      setLoading(false);
     };
     initialSync();
   }, []);
@@ -77,13 +79,21 @@ const Root2 = () => {
   };
 
   const updateUser = (updatedUser) => {
-    setUser({
-      ...user,
-      ...updatedUser,
-    });
+    if (updatedUser === null) {
+      setUser(undefined);
+    } else {
+      setUser({
+        ...user,
+        ...updatedUser,
+      });
+    }
   };
 
-  return recipes ? (
+  if (loading) {
+    return <Loading />;
+  }
+
+  return (
     <MainContext.Provider
       value={{
         recipes,
@@ -95,8 +105,8 @@ const Root2 = () => {
     >
       <App />
     </MainContext.Provider>
-  ) : <Loading />;
+  );
 };
 
 const root = document.getElementById('root');
-ReactDOM.render(<Root2 />, root);
+ReactDOM.render(<Root />, root);

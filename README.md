@@ -20,8 +20,6 @@ You can run a server with your own recipe database:
 
 Create a file named `.env` at the root of the project and put `MONGODB_URI=mongodb://whateveryourmongodburiis` in there.
 
-To set up a zauberwort, you need to create a variable for it as well: `ZAUBERWORT=test`. The zauberwort is required for users in the frontend to add/update recipes.
-
 For the image upload to an AWS bucket, add its name as `AWS_BUCKET` and your `AWS_KEY` and `AWS_SECRET` to the `.env` file.
 
 ### Development server

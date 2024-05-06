@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const Joi = require('joi');
 
+const util = require('../util');
 const User = require('../models/user');
 const StatusError = require('../routes/middleware/status-error');
 
@@ -63,7 +64,7 @@ const signupSchema = loginSchema.append({
 });
 
 module.exports.signup = async ({ body = {} }) => {
-  const { username, email, password } = signupSchema.validateAsync(body);
+  const { username, email, password } = await signupSchema.validateAsync(body);
 
   const user = await getUser({ email });
 
@@ -97,4 +98,27 @@ module.exports.isAuthorized = async ({ role, userId }) => {
   }
 
   return false;
+};
+
+module.exports.update = async (userId, update = {}) => {
+  const user = await getUser({
+    userId,
+  });
+
+  if (!user) {
+    return null;
+  }
+
+  const picked = util.pick(update, 'listCode', 'planCode', 'diet');
+
+  if (!Object.keys(picked).length) {
+    return user;
+  }
+
+  return User
+    .findOneAndUpdate(
+      { _id: userId },
+      picked,
+      { new: true },
+    );
 };
