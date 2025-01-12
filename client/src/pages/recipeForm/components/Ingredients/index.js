@@ -166,11 +166,13 @@ const Ingredients = ({ sections, ingredients, onChange }) => {
                 type="text" placeholder="Zutat" value={newIngr.name}
                 onChange={({ target }) => setNewIngr({ name: target.value, hint: newIngr.hint })}
                 onKeyDown={addIngredient} ref={newIngrRef}
+                enterkeyhint="done"
               />
               <input
                 type="text" placeholder="Hinweis" value={newIngr.hint}
                 onChange={({ target }) => setNewIngr({ name: newIngr.name, hint: target.value })}
                 onKeyDown={addIngredient}
+                enterkeyhint="done"
               />
             </>
           ) : (
