@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { useAuth } from '@clerk/clerk-react';
 
 import Icon, { iconList } from './Icon';
 import './Nav.scss';
@@ -12,22 +13,30 @@ const PAGES = {
   profile: 'Profil',
 };
 
-const Nav = ({ page, children, menuButton }) => {
+const Nav = ({ page, children, menuButton: customMenuButton }) => {
+  const { isSignedIn } = useAuth();
+
+  const pages = isSignedIn ? PAGES : {
+    recipes: PAGES.recipes,
+  };
+
   const [open, setOpen] = useState(false);
+
+  const menuButton = customMenuButton || (
+    <button type="button" className="menu-button" onClick={() => setOpen(!open)}>
+      <Icon name="menu" color="#333" />
+    </button>
+  );
 
   return (
     <nav>
       <div id="menu">
-        {!menuButton ? (
-          <button type="button" className="menu-button" onClick={() => setOpen(!open)}>
-            <Icon name="menu" color="#333" />
-          </button>
-        ) : menuButton}
+        {isSignedIn ? menuButton : null}
         <div className={open ? 'hidden' : ''} id="current-page">{PAGES[page]}</div>
         <div className="right-buttons">{children}</div>
       </div>
       <div className={open ? 'open' : ''} id="nav-wrapper">
-        {Object.entries(PAGES).map(([key, label]) => (
+        {Object.entries(pages).map(([key, label]) => (
           <Link
             key={key}
             className={page === key ? 'active' : ''}

@@ -1,8 +1,10 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link, useHistory, useLocation } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
 
 import api from '../../services/api';
-import Nav, { NavButton } from '../../components/Nav';
+import AccountButton from '../../components/AccountButton';
+import Nav from '../../components/Nav';
 import Searchbar from './components/Searchbar';
 import RecipeCard from './components/RecipeCard';
 import searchRecipes from './modules/searchRecipes';
@@ -22,7 +24,8 @@ const isElementInViewport = (el) => {
 };
 
 export default () => {
-  const { recipes: allRecipes, user } = useContext(MainContext);
+  const { recipes: allRecipes } = useContext(MainContext);
+  const { user } = useUser();
   const history = useHistory();
   const location = useLocation();
 
@@ -86,10 +89,10 @@ export default () => {
       }
     };
 
-    if (user?.planCode) {
+    if (user?.publicMetadata.planCode) {
       fetchNextEntries();
     }
-  }, [user?.planCode]);
+  }, [user?.publicMetadata.planCode]);
 
   const onScroll = () => {
     const nearBottom = window.innerHeight + window.scrollY >= document.body.offsetHeight - 300;
@@ -112,7 +115,7 @@ export default () => {
     <>
       <div style={{ position: 'sticky', top: 0, zIndex: 11 }}>
         <Nav page="recipes">
-          {window.navigator.onLine ? <NavButton icon="settings" link="/settings" /> : null}
+          <AccountButton />
         </Nav>
         <Searchbar onSearch={search} query={query} />
       </div>
@@ -130,7 +133,7 @@ export default () => {
           <div style={{ marginTop: '2.5rem' }}>Keine Rezepte gefunden</div>
         )}
       </div>
-      {user?.role === 'creator' ? (
+      {user?.publicMetadata.role === 'creator' ? (
         <Link to="/recipes/new" id="new-recipe">+</Link>
       ) : null}
     </>

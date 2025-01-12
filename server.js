@@ -9,6 +9,7 @@ const cookieSession = require('cookie-session');
 const mongoose = require('mongoose');
 const compression = require('compression');
 const morgan = require('morgan');
+const { clerkMiddleware } = require('@clerk/express');
 
 const enforceHttps = require('./server/routes/middleware/enforce-https');
 
@@ -33,6 +34,7 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(compression());
+app.use(clerkMiddleware());
 app.use(express.static(path.join(__dirname, 'server/static')));
 app.use(express.static(path.join(__dirname, 'build')));
 

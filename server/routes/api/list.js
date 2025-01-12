@@ -1,31 +1,24 @@
 const express = require('express');
+const { getAuth } = require('@clerk/express');
 
 const router = express.Router();
 
 const Shoppinglist = require('../../models/shoppinglist');
 const LookupCategory = require('../../models/lookupCategory');
 const CategoryLog = require('../../models/categoryLog');
-const UserService = require('../../services/user');
 const StatusError = require('../middleware/status-error');
 
 const checkListAuth = (req, res, next) => {
-  if (req.session.userId || req.session.listCode) {
+  const auth = getAuth(req);
+  if (auth.sessionClaims?.metadata?.listCode) {
     return next();
   }
   return res.sendStatus(401);
 };
 
-const getListCode = async (session) => {
-  let listCode;
-
-  if (session.userId) {
-    const user = await UserService
-      .get({ userId: session.userId });
-
-    listCode = user?.listCode;
-  } else if (session.listCode) {
-    listCode = session.listCode;
-  }
+const getListCode = async (req) => {
+  const auth = getAuth(req);
+  const listCode = auth.sessionClaims?.metadata?.listCode;
 
   if (!listCode) {
     throw new StatusError('Could not resolve list code', 404);
@@ -37,7 +30,7 @@ const getListCode = async (session) => {
 // Get Shopping List
 router.get('/list', checkListAuth, async (req, res, next) => {
   try {
-    const listCode = await getListCode(req.session);
+    const listCode = await getListCode(req);
     const list = await Shoppinglist.getByName(listCode);
     return res.json(list);
   } catch (error) {
@@ -59,7 +52,7 @@ router.post('/lists', async (req, res, next) => {
 // Update Shopping List
 router.put('/list', checkListAuth, async (req, res, next) => {
   try {
-    const listCode = await getListCode(req.session);
+    const listCode = await getListCode(req);
     const updList = new Shoppinglist({ ...req.body });
     const newData = updList.toObject();
     delete newData._id;
@@ -74,7 +67,7 @@ router.put('/list', checkListAuth, async (req, res, next) => {
 const listUpdates = async (req, res, next) => {
   try {
     const updates = req.body || [];
-    const listCode = await getListCode(req.session);
+    const listCode = await getListCode(req);
     await Promise.all(updates
       .filter((update) => update.action === 'updated' && update.update.category)
       .map(async ({ update, id }) => {
@@ -97,7 +90,7 @@ router.post('/list/updates', checkListAuth, listUpdates);
 
 router.post('/list', checkListAuth, async (req, res, next) => {
   try {
-    const listCode = await getListCode(req.session);
+    const listCode = await getListCode(req);
     const list = await Shoppinglist.addItem(listCode, req.body.item);
     return res.json(list);
   } catch (error) {
@@ -108,7 +101,7 @@ router.post('/list', checkListAuth, async (req, res, next) => {
 router.get('/list/sort', checkListAuth, async (req, res, next) => {
   const { profile } = req.query;
   try {
-    const listCode = await getListCode(req.session);
+    const listCode = await getListCode(req);
     const sorted = await Shoppinglist.sortList(listCode, profile);
     return res.json(sorted);
   } catch (error) {
@@ -118,7 +111,7 @@ router.get('/list/sort', checkListAuth, async (req, res, next) => {
 
 router.put('/list/profile', checkListAuth, async (req, res, next) => {
   try {
-    const listCode = await getListCode(req.session);
+    const listCode = await getListCode(req);
     const listObj = req.body._id
       ? await Shoppinglist.updateProfile(listCode, req.body)
       : await Shoppinglist.addProfile(listCode, req.body);
@@ -130,7 +123,7 @@ router.put('/list/profile', checkListAuth, async (req, res, next) => {
 
 router.delete('/list/profile/:id', checkListAuth, async (req, res, next) => {
   try {
-    const listCode = await getListCode(req.session);
+    const listCode = await getListCode(req);
     const listObj = await Shoppinglist.deleteProfile(listCode, req.params.id);
     return res.json(listObj);
   } catch (error) {

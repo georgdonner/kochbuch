@@ -1,6 +1,6 @@
 import api from './api';
 
-export const checkAuth = async () => {
+export const withAuth = async () => {
   const { ok } = await api.get('/auth', {
     fullResponse: true,
   });

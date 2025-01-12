@@ -23,6 +23,9 @@
   "author": "Georg Donner",
   "private": true,
   "dependencies": {
+    "@clerk/clerk-react": "^5.11.0",
+    "@clerk/express": "^1.2.1",
+    "@clerk/localizations": "^3.1.2",
     "aws-sdk": "^2.717.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.19.0",
@@ -42,8 +45,8 @@
     "nosleep.js": "^0.11.0",
     "pdfmake": "^0.1.66",
     "prop-types": "^15.7.2",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-image-crop": "^8.6.4",
     "react-modal": "^3.11.2",
     "react-router-dom": "^5.2.0",
@@ -64,7 +67,8 @@
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.20.3",
     "eslint-plugin-react-hooks": "^2.5.1",
-    "parcel": "^2.8.3"
+    "parcel": "^2.8.3",
+    "process": "^0.11.10"
   },
   "license": "MIT",
   "bugs": {

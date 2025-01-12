@@ -3,6 +3,7 @@ import {
   useHistory, useLocation, useParams, Link,
 } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useUser } from '@clerk/clerk-react';
 
 import Icon from '../../components/Icon';
 import ToastUndo from '../../components/ToastUndo';
@@ -18,12 +19,13 @@ export default () => {
   const location = useLocation();
   const { id } = useParams();
   const history = useHistory();
-  const { recipes, user } = useContext(MainContext);
+  const { recipes } = useContext(MainContext);
+  const { user } = useUser();
 
   const [recipe, setRecipe] = useState();
   const [hasList, setHasList] = useState(false);
   const [servings, setServings] = useState(2);
-  const listDb = new ListDb(user?.listCode);
+  const listDb = new ListDb(user?.publicMetadata.listCode);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -86,7 +88,7 @@ export default () => {
 
   const content = recipe ? (
     <>
-      {user?.planCode ? (
+      {user?.publicMetadata.planCode ? (
         <div id="top-bar-container">
           <div id="top-bar">
             <button type="button" id="back" onClick={back}>
@@ -160,7 +162,7 @@ export default () => {
           </div>
 
           <div id="buttons">
-            {user?.role === 'creator' && window.navigator.onLine ? (
+            {user?.publicMetadata.role === 'creator' && window.navigator.onLine ? (
               <Link to={`/recipe/${id}/edit`} className="button">Bearbeiten</Link>
             ) : null}
             <a href={`/pdf/recipe/${id}`} className="button" download>PDF</a>

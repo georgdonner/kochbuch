@@ -1,0 +1,61 @@
+#profile-container {
+  background: #fff;
+}
+#profile {
+  margin: 0 auto;
+  max-width: 1200px;
+  padding: 1.5rem;
+  padding-bottom: 3rem;
+
+  & > .tabs {
+    flex-direction: row;
+    margin-bottom: 2rem;
+
+    button {
+      background: none;
+      margin-right: 1.5rem;
+      border: none;
+      border-bottom: 2px transparent solid;
+      padding: .5rem 0;
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    button.active {
+      border-bottom: 2px #333 solid;
+    }
+  }
+
+  h2 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+  & > * {
+    display: flex;
+    flex-direction: column;
+    max-width: 800px;
+  }
+  label {
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+  input {
+    color: #333;
+    margin-bottom: 1rem;
+    border: none;
+    border-bottom: 2px #d9d9d9 solid;
+    padding: .5rem .25rem;
+    font-size: 1.25rem;
+  }
+  select {
+    color: #333;
+    margin-bottom: 1rem;
+    background: #fff;
+    border: none;
+    border-bottom: 2px #d9d9d9 solid;
+    padding: .5rem .25rem;
+    font-size: 1.25rem;
+  }
+}

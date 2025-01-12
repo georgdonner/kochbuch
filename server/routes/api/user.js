@@ -1,5 +1,7 @@
 const express = require('express');
+const { clerkClient } = require('@clerk/express');
 
+const { requireAuth } = require('../middleware/auth');
 const Shoppinglist = require('../../models/shoppinglist');
 const Weekplan = require('../../models/weekplan');
 const UserService = require('../../services/user');
@@ -28,14 +30,16 @@ router.get('/user', async (req, res, next) => {
   }
 });
 
-router.post('/user', async (req, res, next) => {
+router.post('/user', requireAuth(), async (req, res, next) => {
   try {
     const body = req.body || {};
-    let user;
+    let userData = req.auth.sessionClaims.metadata;
 
-    if (req.session.userId && body) {
-      user = await UserService
-        .update(req.session.userId, body);
+    if (Object.keys(body).length) {
+      const user = await clerkClient.users.updateUserMetadata(req.auth.userId, {
+        publicMetadata: body,
+      });
+      userData = user.publicMetadata;
     }
 
     if (body?.listCode) {
@@ -43,11 +47,6 @@ router.post('/user', async (req, res, next) => {
       if (!list) {
         await Shoppinglist.addList(body.listCode);
       }
-      if (!req.session.userId) {
-        req.session.listCode = body.listCode;
-      }
-    } else if (req.session.listCode && 'listCode' in body) {
-      delete req.session.listCode;
     }
 
     if (body?.planCode) {
@@ -55,14 +54,9 @@ router.post('/user', async (req, res, next) => {
       if (!plan) {
         await Weekplan.addPlan(body.planCode);
       }
-      if (!req.session.userId) {
-        req.session.planCode = body.planCode;
-      }
-    } else if (req.session.planCode && 'planCode' in body) {
-      delete req.session.planCode;
     }
 
-    return res.json(user || req.session);
+    return res.json(userData);
   } catch (error) {
     return next(error);
   }

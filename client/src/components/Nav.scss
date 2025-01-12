@@ -19,7 +19,7 @@ nav {
   padding-right: 3rem;
 }
 
-#nav-wrapper > a, #menu #current-page {
+#nav-wrapper > a, #menu #current-page, .link {
   color: #666;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -101,7 +101,7 @@ nav .icon {
   .right-buttons .nav-button:hover {
     color: #ef6461;
   }
-  
+
   .right-buttons .nav-button.active:hover {
     color: #666;
   }

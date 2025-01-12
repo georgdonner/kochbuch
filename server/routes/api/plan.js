@@ -1,30 +1,23 @@
 const express = require('express');
+const { getAuth } = require('@clerk/express');
 
 const router = express.Router();
 
 const Weekplan = require('../../models/weekplan');
 const WeekplanEntry = require('../../models/weekplanEntry');
-const UserService = require('../../services/user');
 const StatusError = require('../middleware/status-error');
 
 const checkPlanAuth = (req, res, next) => {
-  if (req.session.userId || req.session.planCode) {
+  const auth = getAuth(req);
+  if (auth.sessionClaims?.metadata?.planCode) {
     return next();
   }
   return res.sendStatus(401);
 };
 
-const getPlan = async (session) => {
-  let planCode;
-
-  if (session.userId) {
-    const user = await UserService
-      .get({ userId: session.userId });
-
-    planCode = user?.planCode;
-  } else if (session.planCode) {
-    planCode = session.planCode;
-  }
+const getPlan = async (req) => {
+  const auth = getAuth(req);
+  const planCode = auth.sessionClaims?.metadata?.planCode;
 
   if (!planCode) {
     throw new StatusError('Could not resolve plan code', 404);
@@ -34,13 +27,14 @@ const getPlan = async (session) => {
   if (!plan) {
     plan = await Weekplan.addPlan(planCode);
   }
+
   return plan;
 };
 
 // Get weekplan
 router.get('/plan', checkPlanAuth, async (req, res, next) => {
   try {
-    const plan = await getPlan(req.session);
+    const plan = await getPlan(req);
 
     const nextEntries = Number(req.query.next) || 0;
     if (nextEntries) {
@@ -68,7 +62,7 @@ router.post('/plans', async (req, res, next) => {
 
 router.post('/plan', checkPlanAuth, async (req, res, next) => {
   try {
-    const plan = await getPlan(req.session);
+    const plan = await getPlan(req);
     const update = req.body;
     if (!update.date) {
       update.date = await WeekplanEntry.getNextDay(plan._id);
@@ -82,7 +76,7 @@ router.post('/plan', checkPlanAuth, async (req, res, next) => {
 
 router.get('/plan/nextday', checkPlanAuth, async (req, res, next) => {
   try {
-    const plan = await getPlan(req.session);
+    const plan = await getPlan(req);
     const nextDay = await WeekplanEntry.getNextDay(plan._id);
     return res.json({ day: nextDay });
   } catch (error) {

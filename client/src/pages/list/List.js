@@ -1,9 +1,9 @@
 import React, {
-  useState, useRef, useEffect, useContext,
+  useState, useRef, useEffect,
 } from 'react';
 import { toast } from 'react-toastify';
+import { useUser } from '@clerk/clerk-react';
 
-import MainContext from '../../services/context';
 import api from '../../services/api';
 import ListDb, { sendRemovedItemBeacon } from '../../services/list';
 
@@ -17,7 +17,7 @@ import ProfileModal from './components/ProfileModal';
 import './List.scss';
 
 const List = () => {
-  const { user } = useContext(MainContext);
+  const { user } = useUser();
 
   const [loading, setLoading] = useState(true);
   const [list, setList] = useState();
@@ -38,7 +38,7 @@ const List = () => {
     setProfiles(dbList.profiles);
   };
 
-  const listDb = useRef(new ListDb(user?.listCode, {
+  const listDb = useRef(new ListDb(user?.publicMetadata.listCode, {
     onUpdate: updateList,
   }));
 
@@ -49,8 +49,8 @@ const List = () => {
 
   const fetchList = async () => {
     let dbList = await listDb.current.getList(5000);
-    if (user?.listCode && !dbList) {
-      dbList = { name: user.listCode, list: [] };
+    if (user?.publicMetadata.listCode && !dbList) {
+      dbList = { name: user.publicMetadata.listCode, list: [] };
       await listDb.current.updateLocalList(dbList);
     }
     if (dbList) {
@@ -80,7 +80,7 @@ const List = () => {
     fetchAll();
 
     return toast.dismiss;
-  }, [user]);
+  }, [user?.publicMetadata]);
 
   useEffect(() => {
     const onRemove = () => {

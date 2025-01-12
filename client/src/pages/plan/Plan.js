@@ -1,5 +1,6 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useUser } from '@clerk/clerk-react';
 
 import api from '../../services/api';
 import MainContext from '../../services/context';
@@ -16,7 +17,7 @@ const filterByDay = (entries, day) => (
 );
 
 export default () => {
-  const { user, updateUser } = useContext(MainContext);
+  const { user } = useUser();
   const [entries, setEntries] = useState(null);
   const [week, setWeek] = useState(0);
 
@@ -30,20 +31,20 @@ export default () => {
   }, []);
 
   useEffect(() => {
-    if (user?.planCode) {
+    if (user?.publicMetadata.planCode) {
       updateEntries();
     }
-  }, [week, user]);
+  }, [week, user?.publicMetadata]);
 
-  let content = !user?.planCode ? (
+  let content = !user?.publicMetadata.planCode ? (
     <NoPlan
       onUpdate={async (code) => {
-        const updatedUser = await api.post('/user', {
+        await api.post('/user', {
           body: {
             planCode: code,
           },
         });
-        updateUser(updatedUser);
+        user.reload();
       }}
     />
   ) : null;

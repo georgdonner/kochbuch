@@ -1,20 +1,21 @@
 import React, { useContext, useState } from 'react';
 import PropTypes from 'prop-types';
+import { useUser } from '@clerk/clerk-react';
 
 import MainContext from '../../../services/context';
 import api from '../../../services/api';
 
 const NoList = ({ onUpdate }) => {
   const [code, setCode] = useState('');
-  const { updateUser } = useContext(MainContext);
+  const { user } = useUser();
 
   const updateCode = async () => {
-    const user = await api.post('/user', {
+    await api.post('/user', {
       body: {
         listCode: code,
       },
     });
-    updateUser(user);
+    user.reload();
     onUpdate(code.trim());
   };
 

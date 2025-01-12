@@ -1,15 +1,13 @@
 import React, { lazy, Suspense } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { SignIn } from '@clerk/clerk-react';
 
-import Login from './pages/auth/Login';
-import Signup from './pages/auth/Signup';
 import Profile from './pages/profile/Profile';
 import Recipes from './pages/recipes/Recipes';
 import Recipe from './pages/recipe/Recipe';
 import List from './pages/list/List';
 import Plan from './pages/plan/Plan';
 import PlanForm from './pages/planForm/PlanForm';
-import Settings from './pages/settings/Settings';
 import Loading from './components/Loading';
 
 const RecipeForm = lazy(() => import('./pages/recipeForm/RecipeForm'));
@@ -18,14 +16,8 @@ export default () => (
   <Suspense fallback={<Loading />}>
     <Router>
       <Switch>
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-        <Route
-          path="/logout"
-          component={() => {
-            window.location.reload();
-          }}
-        />
+        <Route path="/login" component={SignIn} />
+
         <Route path="/profile" component={Profile} />
 
         <Route path="/list" component={List} />
@@ -37,8 +29,6 @@ export default () => (
         <Route path="/recipes/new" component={RecipeForm} />
         <Route path="/recipe/:id/edit" component={RecipeForm} />
         <Route path="/recipe/:id" component={Recipe} />
-
-        <Route path="/settings" component={Settings} />
 
         <Route path="/" component={Recipes} />
       </Switch>

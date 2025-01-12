@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { toast } from 'react-toastify';
+import { ClerkProvider, useAuth } from '@clerk/clerk-react';
+import { deDE } from '@clerk/localizations';
 import { polyfill } from 'mobile-drag-drop';
 import 'react-toastify/dist/ReactToastify.min.css';
 
@@ -11,6 +13,12 @@ import { syncDatabase, refreshDatabase, getAll } from './services/recipes';
 import { getUser } from './services/auth';
 import { withTimeout } from './utils';
 import './index.scss';
+
+console.log(process.env.CLERK_PUBLISHABLE_KEY);
+
+if (!process.env.CLERK_PUBLISHABLE_KEY) {
+  throw new Error('Missing Clerk Publishable Key');
+}
 
 polyfill({
   forceApply: true,
@@ -37,8 +45,8 @@ toast.configure({
 
 const Root = () => {
   const [recipes, setRecipes] = useState();
-  const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
+  const { isLoaded: userLoaded } = useAuth();
 
   useEffect(() => {
     const emptyFn = () => {};
@@ -52,14 +60,10 @@ const Root = () => {
       setRecipes(localRecipes);
 
       const timeout = 5000;
-      const [recipesRes, userRes] = await Promise.allSettled([
+      const [recipesRes] = await Promise.allSettled([
         syncDatabase(timeout),
-        withTimeout(getUser, { timeout }),
       ]);
 
-      if (userRes.value && !userRes.value.error) {
-        setUser(userRes.value);
-      }
       setRecipes(recipesRes.value);
       setLoading(false);
     };
@@ -78,18 +82,7 @@ const Root = () => {
     refreshDatabase(newRecipes);
   };
 
-  const updateUser = (updatedUser) => {
-    if (updatedUser === null) {
-      setUser(undefined);
-    } else {
-      setUser({
-        ...user,
-        ...updatedUser,
-      });
-    }
-  };
-
-  if (loading) {
+  if (loading || !userLoaded) {
     return <Loading />;
   }
 
@@ -99,8 +92,6 @@ const Root = () => {
         recipes,
         addRecipe,
         updateRecipe,
-        user,
-        updateUser,
       }}
     >
       <App />
@@ -108,5 +99,10 @@ const Root = () => {
   );
 };
 
-const root = document.getElementById('root');
-ReactDOM.render(<Root />, root);
+const domNode = document.getElementById('root');
+const root = createRoot(domNode);
+root.render(
+  <ClerkProvider localization={deDE} publishableKey={process.env.CLERK_PUBLISHABLE_KEY} afterSignOutUrl="/">
+    <Root />
+  </ClerkProvider>,
+);

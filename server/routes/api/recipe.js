@@ -4,7 +4,7 @@ const markdown = require('markdown-it')();
 
 const router = express.Router();
 
-const checkAuth = require('../middleware/check-auth');
+const { requireAuth } = require('../middleware/auth');
 const StatusError = require('../middleware/status-error');
 const Recipe = require('../../models/recipe');
 
@@ -14,7 +14,7 @@ const toHtml = (recipe) => ({
 });
 
 // Get all recipes
-router.get('/recipes', compression(), async (req, res) => {
+router.get('/recipes', requireAuth('creator'), compression(), async (req, res) => {
   const { format = 'markdown' } = req.query;
   const recipes = await Recipe.getAllRecipes();
   const formatted = format === 'html' ? recipes.map((r) => toHtml(r)) : recipes;
@@ -78,7 +78,7 @@ router.get('/recipes/categories', async (req, res, next) => {
   }
 });
 
-router.post('/recipe', checkAuth, async (req, res, next) => {
+router.post('/recipe', async (req, res, next) => {
   try {
     const { format = 'markdown' } = req.query;
     const newRecipe = new Recipe({ ...req.body });
@@ -90,7 +90,7 @@ router.post('/recipe', checkAuth, async (req, res, next) => {
   }
 });
 
-router.put('/recipe/:id', checkAuth, async (req, res, next) => {
+router.put('/recipe/:id', async (req, res, next) => {
   try {
     const { format = 'markdown' } = req.query;
     const {

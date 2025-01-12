@@ -5,7 +5,7 @@ const sharp = require('sharp');
 const AWS = require('aws-sdk');
 const { v4: uuidv4 } = require('uuid');
 
-const checkAuth = require('../middleware/check-auth');
+const { requireAuth } = require('../middleware/auth');
 const StatusError = require('../middleware/status-error');
 
 const IMG_WIDTHS = [400, 800, 1000, 1600, 2000];
@@ -55,7 +55,7 @@ const getWriteStream = ({ Key }) => {
   };
 };
 
-router.post('/upload/image', checkAuth, fileUpload(), async (req, res, next) => {
+router.post('/upload/image', requireAuth('creator'), fileUpload(), async (req, res, next) => {
   const { file } = req.files;
   if (!file) {
     return res.status(400).send('No image file provided');
