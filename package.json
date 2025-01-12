@@ -35,7 +35,7 @@
     "idb": "^5.0.4",
     "markdown-it": "^13.0.1",
     "mobile-drag-drop": "^2.3.0-rc.2",
-    "mongoose": "^5.9.25",
+    "mongoose": "^6.13.5",
     "morgan": "^1.10.0",
     "nosleep.js": "^0.11.0",
     "pdfmake": "^0.1.66",
@@ -47,7 +47,7 @@
     "react-router-dom": "^5.2.0",
     "react-sortablejs": "^2.0.11",
     "react-toastify": "^6.0.8",
-    "sharp": "^0.31.3",
+    "sharp": "^0.33.5",
     "string-similarity": "^4.0.1",
     "uuid": "^8.2.0"
   },

@@ -14,10 +14,7 @@ const enforceHttps = require('./routes/helpers/enforce-https');
 const getIndexFile = require('./routes/helpers/get-index-file');
 const Recipe = require('./models/recipe');
 
-mongoose.set('useCreateIndex', true);
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false,
-});
+mongoose.connect(process.env.MONGODB_URI);
 
 const app = express();
 
