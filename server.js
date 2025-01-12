@@ -60,8 +60,8 @@ const port = process.env.PORT || 3000;
 /* eslint-disable no-console */
 if (process.env.NODE_ENV === 'development') {
   const certOptions = {
-    key: fs.readFileSync(path.resolve('cert/server.key')),
-    cert: fs.readFileSync(path.resolve('cert/server.cert')),
+    key: fs.readFileSync(path.resolve('cert/key.pem')),
+    cert: fs.readFileSync(path.resolve('cert/cert.pem')),
   };
   https
     .createServer(certOptions, app)
