@@ -1,13 +1,11 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import Nav, { NavButton } from '../../../components/Nav';
 import Icon from '../../../components/Icon';
 
 const RecipeNav = ({ onBack, recipeTitle }) => {
-  const location = useLocation();
   const [wakelock, setWakelock] = useState();
 
   return (
@@ -24,7 +22,7 @@ const RecipeNav = ({ onBack, recipeTitle }) => {
           icon="share"
           onClick={() => {
             navigator.share({
-              url: location.href,
+              url: window.location.href,
               title: recipeTitle,
               text: recipeTitle,
             });
