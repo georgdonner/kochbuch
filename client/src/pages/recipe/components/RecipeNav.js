@@ -26,6 +26,7 @@ const RecipeNav = ({ onBack, recipeTitle }) => {
             navigator.share({
               url: location.href,
               title: recipeTitle,
+              text: recipeTitle,
             });
           }}
         />
