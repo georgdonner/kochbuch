@@ -10,7 +10,6 @@ const mongoose = require('mongoose');
 const compression = require('compression');
 const morgan = require('morgan');
 
-const enforceHttps = require('./routes/helpers/enforce-https');
 const getIndexFile = require('./routes/helpers/get-index-file');
 const Recipe = require('./models/recipe');
 
@@ -19,7 +18,6 @@ mongoose.connect(process.env.MONGODB_URI);
 const app = express();
 
 // middleware
-app.use(enforceHttps());
 app.use(cookieSession({
   name: 'session',
   keys: [process.env.SECRET_KEY || 'yeet'],
